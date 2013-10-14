@@ -1,0 +1,12 @@
+Correção do erro que acontecia (dependendo da versão do MySQL) na hora da exibição da listagem de softwares cadastrados no sistema;
+Correção do surgimento de caracteres entranhos no momento do encerramento de um chamado;
+
+Relatório de trocas de peças no período;
+
+Correção para o tratamento de caracteres de escape nos chamados, ex: barras (/ | \) e aspas simples;
+
+Possibilidade de abertura de sub-chamados no sistema;
+
+Indicação visual sobre chamados vinculados;
+
+Armazenamento do tempo de documentação de cada chamado, separado por tipo de documentação e técnico;

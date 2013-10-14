@@ -1,0 +1,118 @@
+
+
+
+
+= Ocomon 2.0 - Changelog da versão =
+
+== Principais mudanças ==
+
++ Padronização e Segurança +
+
+- Re-escrita do código do sistema para atender às recomendações do PHP quanto às diretivas //register_globals// e //Error_reporting//;
+
+
++ Internacionalização +
+
+- Suporte a multi-idiomas (por enquanto apenas Português e Inglês);
+
+
++ Layout do Sistema +
+
+++ Refinamento do layout e ergonomia do sistema; ++
+
+- Personalização do esquema de cores do sistema;
+
+	- é possível criar esquemas de cores através do próprio ocomon;
+
+	- é possível salvar e carregar esquemas de cores salvos;
+
+	- é possível liberar para que cada usuário possa escolher um tema existente;
+
+- Novo sistema de calendário, mais elegante e integrado ao layout.
+
+- Tela inicial do sistema: Balões indicam a descrição dos chamados truncados na tela inicial;
+
+- Ordenação das colunas na tela principal das ocorrências com indicação visual da coluna ordenada;
+
+- Collapse na ocorrências vinculadas ao operador;
+
+- Collapse dos assentamentos nos chamados;
+
+- Diversos ajustes nas telas do sistema;
+
+
++ Diversos +
+
+- Aperfeiçoamento da busca de soluções, agora é possível definir se queremos que o retorno traga chamados que possam todos os termos pesquisados ou pelo menos um dos termos em qualquer das tabelas vinculadas às ocorrências. Além disso o retorno vem destacando (//highlight//) os termos pesquisados, facilitando sua identificação.
+
+- Tela de listagem de equipamentos: agora a checkbox de navegação encadeada permanece com a última seleção realizada;
+
+- Aprimoramento do comportamento dos botões de navegação;
+
+- Na tela dos meus chamados (menu Home) agora também é possível visualizar os chamados concluídos por mim.
+
+- Melhoramento do cadastro de feriados, agora é possível definir se o feriado é uma data fixa (se repete anualmente) ou não.
+
+- Help contextual. A maioria das telas possui um ícone de help onde há uma explicação sobre as funções das mesmas. Aos poucos todas as telas terão o seu próprio help.
+
+- Gerenciamento de modelos de configurações de equipamentos, antes não éra possível editar as informações do modelo de configuração;
+
+- Criação de até 3 níveis de agrupamentos por tipo de problema;
+
+- Relatório de problemas por agrupamentos;
+
+- Mudança do formato do campo para telefone para suportar formatos com traço (expressão regular);
+
+- Mudança do formato do campo para login e senha para suportar pontos e underlines (expressão regular);
+
+- Pesquisa de equipamentos a partir de uma data específica de compra ou cadastro (antes só retornava equipamentos da data específica);
+
+- Alerta para edição de chamado já em edição por outro operador;
+
+- Mais diretivas podem ser configuradas no menu de administração;
+
+	- Barra de formatação wysiwyg para edição de chamados (configurável);
+
+	- Seleção de Idioma
+
+	- Upload de arquivos: agora é possível definir os tipos de arquivos permitidos para upload (ODF, PDF, OpenOffice.Org, MS Office, RTF ou TXT) além das imagens;
+
+	- Permitir ou bloquear a seleção de esquemas de cores para os operadores/usuários;
+
+	- Definição do endereço no seu site interno para acesso ao Ocomon, essa configuração ficava no arquivo config.inc,php;
+
+	- Configuração do número de registros por página (nas telas de inventário), antes isso era fixo (//hard-coded//) no código no sistema;
+
+
++ Correções de Bugs +
+
+- Correção da exclusão de equipamentos - verificação de ocorrências vinculadas;
+
+- Correção da tela dos meus chamados, quando era dado o refresh na tela, ficavam aparecendo apenas as ocorrências ATIVAS;
+
+- Correção do erro que era gerado ao tentar alterar as informações de usuários auto-cadastrados;
+
+- Tratamento do erro gerado ao tentar encerrar uma ocorrência já encerrada previamente;
+
+- Diversas outras correções de bugs menores.
+
+
++ FALTA ARRUMAR +
+
+NOVOS CADASTRADOS:
+
+	tipos de itens de estoque
+
+	tamanho de monitores
+
+	resolução de scanners
+
+	tipos de impressoras
+
+	tempo de garantia
+
+	dependências de chamados
+
+	LDAP + AD
+
+	Outros....

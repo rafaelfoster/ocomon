@@ -1,0 +1,35 @@
+Changelog da versão 1.30
+
+Principais alterações:
+
+    * Interface para configurações globais de envio de e-mail pelo sistema;
+          - Agora o sistema pode enviar e-mails por smtp (ao invés da função mail do PHP) 
+		  com ou sem autenticação sem a necessidade de configuração do php.ini (seus problemas se acabaram-se) :)
+    
+	* Interface para customização das mensagens de e-mail:
+          - Agora é possível customizar todas as mensagens de e-mail enviadas pelo sistema (seja para as áreas, 
+		  operadores ou usuários) com ou sem formação HTML e com variáveis de ambiente utilizando uma interface 
+		  WYSIWYG para edição;
+    
+	* Aproveitamento da área HOME, com informações de chamados das áreas do Operador e chamados abertos por ele no sistema;
+    
+	* Mural de avisos com edição WYSIWYG;
+	
+	* Exibição de data e hora nas telas do sistema (perfuramaria) :)
+	
+
+
+Bugs corrigidos:
+
+    * Ordenação das colunas na tela de retorno de consulta de equipamentos (perdia o valor do modelo quando clicado em 
+		alguma coluna para ordenação);
+    * bug na tela de consulta de chamados quando o chamado era aberto pelo usuário final (as ocorrências em aberto não
+		 apareciam);
+    * bug na tela de configuração de abertura de chamados quando existiam mais de nove áreas cadastradas;
+    * Bug da exibição dos equipamentos cadastrados para locais onde não existiam reitorias definidas;
+    * Edição de chamados: agora quando um técnico edita um chamado que esteja para outro operador o campo operador é 
+		atualizado automaticamente;
+    * Vários bugs menores e re-escrita de alguns scripts;
+
+
+

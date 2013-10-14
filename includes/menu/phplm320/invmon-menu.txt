@@ -1,0 +1,43 @@
+.|Iniciar|abertura.php|Tela inicial do Sistema
+.|Cadastrar
+..|Equipamento
+..|Documento
+..|Item de estoque
+..|Local
+..|Usuário
+.|Visualizar
+..|Equipamentos
+..|Documentos
+..|Estoque
+.|Consultar
+..|Consulta rápida
+..|Consulta Especial
+..|Histórico
+...|Por Etiqueta
+...|Localização anterior
+.|Estatíticas e Relatórios
+.|Senha
+.|Admin
+..|Componentes
+...|CD-Rom
+...|DVD
+...|Gravador
+...|HD
+...|Placa mãe
+...|Memória
+...|Placa de modem
+...|Processador
+...|Placa de rede
+...|Placa de som
+...|Vídeo
+..|Fabricantes
+..|Fornecedores
+..|Softwares
+..|Configurações
+..|Estoque
+.|Exemplo
+..|Submenu
+...|submenu
+....|Item|link|Title ou Hint|invmon-favicon.ico|Target
+....|---
+....|Item|link|Title ou Hint|invmon-favicon.ico|Target

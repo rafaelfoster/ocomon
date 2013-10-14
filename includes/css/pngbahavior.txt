@@ -1,0 +1,66 @@
+Available at:
+http://www.scss.com.au/family/andrew/webdesign/pngbehavior/
+
+Improved PNG Behavior
+Introduction
+
+Sometime around August/September in 2003 I became aware of Erik Arvidsson's PNG Behavior technique to allow Internet Explorer to support alpha-transparent PNG graphics.
+
+I (and many others) thought it was fabulous, however, there were some things I didn't like:
+
+    * It needed an external GIF file.
+    * PNG images would not appear in the print preview or on printouts. [I don't know if this issue only affects me or not - I've never heard of any complaints about this]
+    * I occasionally saw a Javascript error related to the non-initialisation of the realSrc variable. [I've never heard of any complaints about this, either]
+    * It has no effect on PNG images in style sheets.
+
+Improved Version
+
+The printing problems in particular annoyed me. Towards the end of April 2004 I decided to have a go at fixing it. I was able to resolve the top three of the four issues listed above:
+
+    * I replaced the reference to a GIF file with the inline XBM technique used by Dean Edwards in his IE7 project. Due to new 'security' restrictions in XP SP2, the javascript: URLs used to generate this inline image are no longer supported - so it's back to a 1×1 transparent GIF.
+    * I added printing event detection and disabled the alpha image loader for the duration of the printing. This resolved all the printing issues I had. Of course, alpha transparent images look a bit uglier when printed, but at least you can see them now!
+    * I added extra checks to ensure realSrc was initialised before it was used.
+
+Best of all, I was able to fix these features while keeping the usage of it identical to the original. Simply replace your existing file with my new one.
+Download
+
+pngbehavior.htc - Improved alpha transparent PNG image support (3.6K)
+
+NOTE: This is the actual file that I use to provide PNG support on my site. I've modified it to only process images where their filenames end in "-trans.png". It brings this behavior into line with the default behavior of IE7, which I expect I'll be switching to when some issues are sorted out. See the IS_PNG regular expression.
+
+blank.gif - Right-click on the name and save it. You'll need to modify the behavior file to refer to the correct file. See the blankSrc variable.
+Usage
+
+Use just like Erik's, except that I would wrap it inside an IE conditional comment:
+
+    <!--[if IE]><style type="text/css"> img { behavior: url(pngbehavior.htc); } </style><![endif]-->
+
+Alternatively, you might maintain a special "Internet Explorer" CSS file ("ie.css"):
+
+    /* Internet Explorer CSS hacks */ img { behavior: url(pngbehavior.htc); }
+
+and refer to it in your web page code like:
+
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="ie.css"><![endif]-->
+
+The Internet Explorer conditional comment has the dual benefits of:
+
+   1. Ensuring only Internet Explorer sees the behavior, saving other browsers the cost of downloading it.
+   2. Hiding it from the CSS validator, ensuring your pages can still validate.
+
+MIME Types
+
+The recent release of the Windows XP SP2 update has created a new issue - the HTC behavior file is only recognized by Internet Explorer when it is served with the MIME type "text/x-component". You will need to ensure your web site server is correctly configured to do so. For example, if you're using Apache as your web server and can create a ".htaccess" file, then add the following to it:
+
+    AddType text/x-component .htc
+
+Of course, if you can reconfigure the global types file for Apache, you'd be better off doing that, but if your site is hosted by someone else, the ".htaccess" file may be your only option.
+Alternatives
+
+    * PNG in Windows IE
+    * Cross-Browser Variable Opacity with PNG
+    * Cross-Browser Semi-Transparent Backgrounds
+
+Notes
+
+Adding support for PNG images in style sheets would be a lot of extra work. Dean has already done most of it in his IE7 project. In fact, I expect his project to obsolete this technique in the near future! I've made Dean aware of what I've done here, so I hope he'll incorporate the printing fixes into IE7.

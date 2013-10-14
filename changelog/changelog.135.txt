@@ -1,0 +1,28 @@
+- Quadro de estatíticas de tipos de usuários cadastrados no sistema (Em: Admin->Usuários->Resumo);
+
+- Filtro de usuários por categoria (Em: Admin->Usuários);
+
+- Estatística de chamados abertos por usuários somente abertura (Em: Ocorrências->Relatórios->Chamados abertos pelo usuário-final);
+
+- Relatório de SLAs para chamados abertos por usuários somente abertura (A partir da tela de estatísticas de chamados abertos pelo usuário-final);
+
+- possibilidade de confirmar ou cancelar, diretamente pelo sistema, o cadastro de usuários somente abertura (Em: Admin->Usuários->Resumo);
+
++upload de imagens: 
+	- na abertura e edição de chamados;
+	- no cadastro e edição de modelos de equipamentos;
+	- no cadastro e edição de equipamentos;
+(imagens carregadas nos chamados ficam automaticamente associadas aos equipamentos correspondentes);
+(imagens carregadas para um modelo ficam automaticamente associadas aos equipamentos correspondentes);
+	
+- interface de configuração para upload de imagens (Em Admin->Configurações->Configurações gerais);
+
+- correção do script de busca de soluções no sistema (não estava retornando todas as ocorrências com o termo pesquisado);
+
+- Possibilidade de filtrar a busca de soluções por somente chamados que contenham imagens anexas (Ocorrências->Soluções);
+
+- O campo para armazenar o nome de usuário para autenticação SMTP foi aumentado para 40 caracteres, 
+(Em alguns sistemas os nomes devem ir completos (com o '@') e ficam maiores do que 20 caracteres, ficando truncados no banco).
+
+- correções de bugs menores;
+

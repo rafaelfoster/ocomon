@@ -1,0 +1,17 @@
+
+=======================
+Ocomon 2.0 Alpha1 - Know Issues
+=======================
+
+Essa versão do Ocomon é uma versão Alpha e ainda está em desenvolvimento, portanto ainda há uma série de detalhes que precisam ser ajustados até a liberação da versão 2.0 Final.
+
+Descrevo a seguir as principais situações que precisam e deverão ser ajustadas até a versão 2.0 Final:
+
+- Suporte a múltiplos idiomas: essa característica ainda não está 100% pois ainda existem alguns scripts que não estão com esse suporte.
+
+- Compatibilidade com o Internet Explorer: ainda é necessário uma série de ajustes para possibilitar o correto funcionamento nesse navegador. Recomendo fortemente que seja utilizado o navegador Firefox.
+
+- No cadastro de feriados, a opção "permanente" ainda não está sendo considerada para o cálculo de horas válidas.
+
+- Há também uma série de detalhes menores que deverão ser ajustados até o fechamento da release 2.0.
+

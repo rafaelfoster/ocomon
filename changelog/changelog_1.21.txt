@@ -1,0 +1,26 @@
+Changelog da versão 1.20
+
+- Validação de todos os campos dos formulários do sistema - agora há controle sobre os tipos de dados de entrada em cada
+campo evitando erros de inserção no banco de dados;
+
+- Melhor controle de segurança contra HTML/SQL Injection;
+
+- Abertura de chamados pelo usuário final com cadastro pelo próprio usuário e confirmação por e-mail;
+
+- Além de abrir chamados, o usuário pode acompanhar seus chamados pelo sistema;
+
+- Tela de configuração para a abertura de chamados pelo usuário final, parametrização dos campos que estarão disponíveis
+para o usuário final na tela de abertura de chamados;
+
+- Envio de e-mails para o usuário final na abertura,a cada edição, e no encerramento de cada chamado (essa funcionalidade só
+fica habilitada se o chamado for aberto pelo próprio usuário). 
+
+- Possibilidade de criar usuários administradores de suas áreas (ainda não há vantagens no sistema para esse nível de usuário,
+essas implementações serão criadas nas próximas atualizações do sistema);
+
+- Vários scripts foram re-escritos para permitir a utilização da diretiva register_globals como Off (o sistema ainda está sendo
+re-escrito portando ainda é necessário que a diretiva esteja setada como On);
+
+- Otimização de scripts diversos;
+
+- Correções de bugs menores;

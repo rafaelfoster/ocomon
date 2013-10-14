@@ -1,0 +1,8 @@
+- Quadro de estatíticas de tipos de usuários cadastrados no sistema;
+- relatório de chamados abertos por usuários somente abertura;
+- Relatório de SLAs para chamados abertos por usuários somente abertura;
+- possibilidade de confirmar, diretamente pelo sistema, o cadastro de usuários somente abertura;
+
+- upload de imagens na abertura e edição de chamados;
+- correções de bugs menores;
+

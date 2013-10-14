@@ -1,0 +1,413 @@
+.|Acadêmico
+..|Graduação
+...|Ingresso Extra-Vestibular
+....|Inscrição para Ingresso Extra-Vestibular|modulos/graduacao/cadInscIngExtVest.php|||corpo
+....|Impressão de Documentação de Matrícula para Ingresso Extra-Vestibular|modulos/graduacao/relDocumMatrExtraVestib.php|||corpo
+...|Ingresso e Rematrículas
+....|Matrícula de Alunos Veteranos|modulos/graduacao/matriculaVeteranos.php|||corpo
+....|Consulta de Matrícula de Alunos|modulos/pessoa/consMatriculaAluno.php|||corpo
+....|Listagem de Alunos Matriculados|modulos/graduacao/relAlunosMatriculados.php|||corpo
+....|Listagem de Alunos Matriculados com situação|academico/rel_matriculas_situacao.php|||corpo
+....|Listagem de Matriculados com Nº de Créditos|modulos/graduacao/matriculadosNroCred.php|||corpo
+....|Listagem de Alunos com Matrícula Confirmada/Não Confirmada|academico/rel_matriculas_geral.php|||corpo
+....|Consulta de Matrículas Não Confirmadas c/ Motivo|academico/rel_matriculas_nao_confirmadas.php|||corpo
+....|Consulta de Matrículas sem Contrato|academico/rel_matriculas_sem_contrato.php|||corpo
+....|Listagem de Alunos com irregularidades de matrícula por Pré-Requisitos|academico/rel_requisitos_nao_cumpridos.php|||corpo
+....|Listagem de alunos que cursam disciplinas fora do curso|academico/rel_alunos_disciplina_fora_curso.php|||corpo
+....|Listagem de Alunos não matriculados, sem registro de débitos e aptos para rematrícula|modulos/graduacao/relAlunosNaoMatriculados.php|||corpo
+...|Cursos
+....|Cadastro de Espécie de Curso|modulos/graduacao/cadEspeciesCursos.php|||corpo
+....|Relatório de Disciplinas por Curso|modulos/graduacao/relDisciplinasporCurso.php|||corpo
+....|Cadastro de Curso|modulos/graduacao/cadCursoGraduacao.php|||corpo
+....|Cadastro de Turnos|modulos/graduacao/cadTurnos.php|||corpo
+....|Relatório Resumido de Cursos|modulos/graduacao/relResumidoCursos.php|||corpo
+....|Cadastro de Observações de Cursos|modulos/graduacao/cadObsCursos.php|||corpo
+....|Relatório de Cursos - Assessoria técnica|modulos/graduacao/relCursosAsstec.php|||corpo
+....|Rélatório de Acompanhamento de Processos de Cursos|modulos/graduacao/relAcompanhamentoCursosGrad.php|||corpo
+....|Quadro de renovações e reconhecimento de cursos|modulos/graduacao/relQuadroReconCursosGrad.php|||corpo
+...|Currículos
+....|Relatório de Disciplinas|modulos/graduacao/relDisciplinas.php|||corpo
+....|Relatório de Cadeiras Básicas|modulos/graduacao/relCadeirasBasicas.php|||corpo
+....|Relatório de Áreas Básicas|modulos/graduacao/relAreasBasicas.php|||corpo
+....|Consulta dos Quadros de Equivalência|modulos/graduacao/rel_quadro_equivalencia.php|||corpo
+....|Relatório de Alunos em Currículos Extintos com Situação Normal|modulos/graduacao/relAlunosCrrExtintosNormal.php|||corpo
+...|Históricos
+....|Consulta de Disciplinas não Cursadas|modulos/graduacao/disc_nao_cursadas.php|||corpo
+....|Cadastro de Trabalhos de Conclusão|modulos/graduacao/cad_trabalho_conclusao.php|||corpo
+....|Listagem de Possíveis Formandos|modulos/graduacao/relPossiveisFormandos.php|||corpo
+....|Relatório de Atividades Complementares por Aluno|modulos/graduacao/atividadesComplementaresPorAluno.php|||corpo
+....|Relatório de Atividades Complementares|modulos/graduacao/relAtividadesComplementares.php|||corpo
+...|Ocorrências
+....|Cadastro de Exercícios Domiciliares e Exame em Época Especial|modulos/graduacao/cadExercioDomiciliarExameEspecial.php|||corpo
+....|Exclusão de Exercicios Domiciliares e Exame em Época Especial|modulos/graduacao/exclusaoExercioDomiciliarExameEspecial.php|||corpo
+....|Relatório de Alunos Formandos|modulos/graduacao/relRelacaoFormandos.php|||corpo
+...|Período Letivo
+....|Parâmetros Acadêmicos|modulos/graduacao/cadParametrosAcademicos.php|||corpo
+....|Consulta e Desbloqueio de lançamento de notas dos professores|modulos/graduacao/relDesbloqueioTurmaUni.php|||corpo
+....|Liberações de Matrícula|modulos/graduacao/cadLibMatricula.php|||corpo
+....|Cadastro de Períodos da Graduação|modulos/graduacao/cadPeriodosGraduacao.php|||corpo
+....|Cadastro de Dias Letivos da Graduação|modulos/graduacao/cadDiasLetivosGraduacao.php|||corpo
+....|Atas de Exame|modulos/graduacao/relAtasExameGrad.php|||corpo
+..|Pós-graduação e Extensão
+...|Pós-graduação - Consultas
+....|Consulta de Cursos e Edições|posext/rel_cursos_pos.php?sisid=10|||corpo
+....|Consulta de alunos por Ano|posext/rel_alunos_pos.php?sisid=10|||corpo
+...|Extensão - Consultas
+....|Consulta de Cursos e Edições|posext/rel_cursos_pos.php?sisid=11|||corpo
+....|Consulta de alunos por Ano|posext/rel_alunos_pos.php?sisid=11|||corpo
+....|Consulta de Inscrições de Seminários|modulos/extpos/inscricoes.php?sisid=11|||corpo
+....|Avaliação do VII Sefic - Salão e Feira de Iniciação Científica do UNILASALLE|posext/avaliacaoSefic7.php|||corpo
+....|Avaliação do EREPLEM - Encontro Regional de Professores Lassalistas do Ensino de Matemática|posext/avaliacaoEreplem.php|||corpo
+....|Avaliação do EREPLA - Encontro Regional de Professores Lassalistas|posext/avaliacaoErepla.php|||corpo
+....|Inscrições Internas para cursos de Extensão|modulos/extpos/inscricaoInterna.php|||corpo
+...|Semana Acadêmica
+....|Listagem de Inscritos por Dia, Horário, Sala e Atividade|modulos/alocacao/relInscritosAtividadesSemAcad.php|||corpo
+....|Estatística de Inscritos|modulos/alocacao/relEstInscritos.php|||corpo
+....|Listagem de Inscritos para Certificado|modulos/alocacao/relListagemAlunosCertificado.php|||corpo
+....|Inscrições Internas em Eventos|modulos/graduacao/inscricaoInternaEventos.php|||corpo
+....|Cadastro de Presenças em Eventos|modulos/extpos/cadPresencasEventos.php|||corpo
+..|Processo de Seleção
+...|Inscrições
+....|Cadastro de Inscrição do Processo de Seleção|modulos/proc_selecao/inscricaoProcessoSelecao.php|||corpo
+...|Cadastros
+....|Ficha Sócio-cultural|modulos/proc_selecao/cadFichaSocioCultural.php|||corpo
+....|Prova Mestre|modulos/proc_selecao/cadProvaMestre.php|||corpo
+....|Provas|modulos/proc_selecao/cadProvas.php|||corpo
+....|Cursos do Processo de Seleção|modulos/proc_selecao/cadCursosProcessoSelecao.php|||corpo
+....|Período de Aplicação de Provas|modulos/proc_selecao/cadPeriodosProvas.php|||corpo
+...|Relatórios
+....|Desempenho das escolas no Processo de Seleção|processoselecao/desempenho_escolas.php|||corpo
+....|Desempenho por Local de Inscrição|processoselecao/desempenho_local_inscricao.php|||corpo
+....|Mapa de candidatos|processoselecao/mapa_candidatos.php|||corpo
+....|Informações sócio-culturais|modulos/proc_selecao/rel_info_socio_cultural.php|||corpo
+....|Relatório de Candidatos não Confirmados|modulos/proc_selecao/rel_nao_confirmados.php|||corpo
+....|Gerar Email para inscritos|modulos/proc_selecao/geraEMailInscritos.php|||corpo
+....|Gabaritos|modulos/proc_selecao/relGabaritos.php|||corpo
+....|Etiquetas|modulos/proc_selecao/relEtiquetasPS.php|||corpo
+....|Relatório de Candidatos|modulos/proc_selecao/relCandidatosProcessoSelecao.php|||corpo
+....|Lista Geral de vestibulandos|modulos/proc_selecao/relGeralVestibulandos.php|||corpo
+....|Lista de Classificados|modulos/proc_selecao/relListaClassificados.php|||corpo
+....|Boletim de Desempenho|modulos/proc_selecao/relBoletimDesempenho.php|||corpo
+..|Simulado
+...|Cadastros Básicos
+....|Cursos|simulado/cursos.php|||corpo
+....|Locais de Inscrição|simulado/local_inscricao.php|||corpo
+....|Provas|simulado/provas.php|||corpo
+...|Administar Edições
+....|Inscrição de Candidatos|modulos/proc_simulado/cadInscrSimuladoSGU.php|||corpo
+....|Edições|simulado/admin_edicoes.php|||corpo
+....|Cursos da Edição|simulado/ofertar_cursos.php|||corpo
+....|Alocar Salas|simulado/alocar_salas.php|||corpo
+....|Locais de Inscrição do Simulado|simulado/elencar_postos_inscricao.php|||corpo
+....|Provas da Edição|simulado/admin_provas.php|||corpo
+....|Gabaritos|simulado/gabarito.php|||corpo
+...|Relatórios
+....|Listagem de Inscritos|simulado/rel_inscritos.php|||corpo
+....|Listagem para Exposição|simulado/rel_list_exposicao.php|||corpo
+....|Ata de Freqüência|simulado/imp_ata_frequencia.php|||corpo
+....|Mapa de Resultados|simulado/rel_mapa_resultados.php|||corpo
+....|Classificação|simulado/rel_classificacao.php|||corpo
+....|Boletim de Desempenho|simulado/imp_boletim_desempenho.php|||corpo
+....|Estatística|simulado/estatistica.php|||corpo
+....|Estatística das provas|simulado/simprovas.php|||corpo
+.|Colégio
+..|Financeiro
+...|Informações Básicas
+....|Valores do Curso Técnico|colegio/cad_valores_tecnico.php|||corpo
+....|Complementos Genéricos dos Cursos Técnicos|colegio/cad_complemento_generico.php|||corpo
+....|Cadastro de Classes de Lançamentos|modulos/colegio/cadClassesLancamentos.php|||corpo
+....|Listagem de Lançamentos Financeiros do Colégio|colegio/rel_lancamentos_colegio.php|||corpo
+....|Listagem de Lançamentos Financeiros do Colégio - Agrupados por Currículo|colegio/rel_lancamentos.php|||corpo
+...|Convênios e Benefícios
+....|Consulta de Descontos|colegio/rel_descontos.php|||corpo
+....|Consulta de Descontos (Rematrícula)|colegio/rel_descontos_rem.php|||corpo
+...|Faturamento
+....|Relatório de DOCs Cancelados|financeiro/rel_docs_cancelados.php|||corpo
+....|Relatório de DOCs com valor específico|financeiro/rel_docs_espec.php|||corpo
+....|Relatório de DOCs com Movimentos de Situação|financeiro/rel_docs_com_restricao.php|||corpo
+....|Consulta e Valores dos Cursos Técnicos|colegio/rel_valores_tecnico.php|||corpo
+....|Consulta de parcelas não geradas|colegio/rel_parc_col_nao_geradas.php|||corpo
+....|Cadastro de mensagens para geração de arquivo remessa de DOCs|modulos/colegio/cad_generico_msg_doc_colegio.php|||corpo
+....|Geração de Arquivo de Remessa de DOCs - Santander|modulos/financeiro/remessaCobrancaColegio.php|||corpo
+...|Baixas e Recebimentos
+....|Cadastro de Borderôs|modulos/colegio/cadBorderoColegio.php|||corpo
+....|Baixa de Docs Automática (Bco Santander)|modulos/financeiro/cadbaixaAutomatica.php|||corpo
+....|Geração de Arquivo de Remessa p/ Baixa|modulos/financeiro/baixa_titulos.php|||corpo
+....|Relatório de Arrecadação de Tarifa Bancária|colegio/rel_tarifas_col.php|||corpo
+....|Relatório de Arrecadação de Tarifa Bancária por Borderô|colegio/rel_tarifas_col_bordero.php|||corpo
+....|Relatório de Recebimentos do Colégio por Período|modulos/financeiro/relRecColegioPeriodo.php|||corpo
+...|Cobrança
+....|Confirmação de Matrícula Manual|colegio/confirm_matric_nao_confirm.php|||corpo
+....|Liberação de Matrícula de Inscritos|colegio/cad_liberacao_matricula_inscritos.php|||corpo
+....|Bloqueios do Colégio|colegio/cad_bloqueios_colegio.php|||corpo
+....|Bloqueios Financeiros|colegio/cad_bloqueios_financeiros_colegio.php|||corpo
+...|Consultas e Relatórios
+....|Listagem de Alunos p/ Sorteio de meia Bolsa - 2003|colegio/rel_sorteio_meia_bolsa.php|||corpo
+...|Caixa e Negociação
+....|Parcelamento de DOCs|modulos/colegio/cadParcDocColegio.php|||corpo
+..|Secretaria/Pedagógico
+...|Alunos e Responsáveis
+....|Listagem de alunos Bloqueios|colegio/listagem_bloqueios_col.php|||corpo
+....|Relatório de Conferência de Endereços|/portal/modulos/colegio/relEnderecoCobranca.php|||corpo
+....|Impressão de Etiquetas|modulos/colegio/imp_etiquetas.php|||corpo
+....|Consulta de responsáveis por alunos com telefone|colegio/rel_alunos_por_responsaveis.php|||corpo
+....|Relatório de responsáveis com mais de um aluno|colegio/rel_responsaveis_alunos.php|||corpo
+....|Relatório de Atualização de Responsáveis do Colégio|/portal/modulos/colegio/relAtualizRespColegio.php|||corpo
+....|Relatório de Autorização de Uso de Imagem|/portal/modulos/colegio/relAutorizacaoUsoImagemCol.php|||corpo
+...|Pedagógico
+....|Cadastro de Informações Pedagógicas do Aluno|modulos/colegio/cad_info_pedagogicas.php|||corpo
+....|Cadastro de Atividades e Eventos do Colégio|modulos/colegio/cad_atividades_col.php|||corpo
+...|Ingressos e Rematrículas
+....|Listagem de Alunos Matriculados|modulos/colegio/matriculadosCol.php|||corpo
+....|Relatório de alunos do Colégio com matrícula não confirmada|modulos/colegio/relalunosNaoConfCol.php|||corpo
+....|Consulta de Turno de matrícula dos Alunos|colegio/rel_alunos_turno.php?tur=2|||corpo
+....|Relatório de Matriculados por Turma|modulos/colegio/relMatrTurmaResp.php|||corpo
+....|Consulta de matrículas por Data de matrícula|colegio/rel_alunos_matriculados.php|||corpo
+...|Períodos Letivos
+....|Bloquear Visualização da Nota pelo Portal do Aluno|modulos/colegio/bloqueiaNotaWeb.php|||corpo
+....|Relatório de Edições|modulos/colegio/relEdicoes.php|||corpo
+...|Cursos Técnicos
+....|Boletim do Curso Técnico|modulos/colegio/relImpBolTecSGU.php|||corpo
+...|Secretaria
+....|Relatório de Estabelecimentos|/portal/modulos/colegio/relEstabelecimentos.php|||corpo
+..|Estatísticas
+...|Estatística|colegio/ano.php|||corpo
+...|Estatística de Turmas|colegio/estat_turmas.php|||corpo
+...|Quadro de Vagas - Previsão|colegio/rel_quadro_vagas.php|||corpo
+...|Estatística de Aprovação|colegio/estatresultadofinal.php|||corpo
+...|Estatística para Censo|colegio/selano.php|||corpo
+...|Estatística dos Maiores Devedores do Colégio|financeiro/est_maiores_devedores.php|||corpo
+.|Financeiro
+..|Informações Básicas
+...|Complementos Genéricos|modulos/financeiro/cadComplementoGenerico.php|||corpo
+...|Formas de Pagamento|modulos/financeiro/cadFormaPgto.php|||corpo
+...|Grupos Financeiros|modulos/financeiro/cadGrupoFinanceiro.php|||corpo
+...|Vincular Cursos à Grupos Financeiros|modulos/financeiro/vincCursoGrupoFinanceiro.php|||corpo
+...|Relatório de Grupos Financeiros|financeiro/rel_grupo_financeiro.php|||corpo
+..|Convênios e Benefício
+...|Cadastro de Tipo de Benefício|modulos/financeiro/cadTipoBeneficio.php|||corpo
+...|Liberação de Ajuste de Matricula para Conveniados|modulos/graduacao/ajusteMatricula.php|||corpo
+...|Relatório de Inconsistências de Descontos|modulos/financeiro/relConsistenciaDescontos.php|||corpo
+...|Relatório de Alunos por aproveitamento de créditos para FIES|academico/rel_aproveitamento_beneficios.php|||corpo
+...|Listagem de Alunos e Descontos|financeiro/rel_descontos_geral.php|||corpo
+...|Relatório de Valores dos Convênios|modulos/financeiro/relValoresConvenios.php|||corpo
+..|Faturamento
+...|Cadastro de mensagens para geração de arquivo remessa de DOCs|modulos/financeiro/cad_generico_msg_doc.php|||corpo
+...|Simulação de Geração de Débitos|modulos/financeiro/simulacaoIndividualDebitos.php|||corpo
+...|Geração Individual de Débitos|modulos/financeiro/geracaoIndividualDebitos.php|||corpo
+...|Geração Débitos - Geral|modulos/financeiro/geracaoGeralDebitos.php|||corpo
+...|Cadastro de Devolução de Créditos|modulos/financeiro/cadDevolucaoCreditos.php|||corpo
+...|Listagem de Lançamentos|financeiro/rel_lancamentos_uni.php|||corpo
+...|Listagem de Alunos com Complemento não gerado|financeiro/rel_complementos_nao_gerados.php|||corpo
+...|Consulta de Parcelas não geradas|financeiro/rel_parc_uni_nao_geradas.php|||corpo
+...|Relatório de Docs por Situação|modulos/financeiro/rel_docs_situacao.php|||corpo
+...|Relatório de Docs com Movimentos de Situação|financeiro/rel_docs_com_restricao2.php|||corpo
+...|Relatório de Docs com Valor Específico|financeiro/rel_docs_espec.php|||corpo
+...|Listagem de Alunos do Intensivo c/ Créditos Acumuláveis e não Gerados|financeiro/rel_creditos_intensivo_acum_nao_gerado.php|||corpo
+...|Relatório de Alunos com Créditos Acumulados|financeiro/rel_creditos_acumulados.php|||corpo
+...|Relatório de Alunos do Intensivo com Créditos NÃO ACUMULAVEIS|financeiro/rel_creditos_intensivo_nao_acumulado.php|||corpo
+..|Baixas e Recebimentos
+...|Cadastro de Borderôs|modulos/financeiro/cadBorderos.php|||corpo
+...|Cadastro de Pagamento Antecipado|modulos/financeiro/cad_pgto_antecipado.php|||corpo
+...|Baixa de Docs Vestibular|modulos/financeiro/baixa_doc_vestibular.php|||corpo
+...|Baixa Genérica de DOCS (Seminários, inscrições e afins)|modulos/financeiro/baixa_doc_generico.php|||corpo
+...|Geração de Arquivo de Remessa p/ Baixa|modulos/financeiro/baixa_titulos.php|||corpo
+...|Relatório de Recebimentos da Graduação por Período|modulos/financeiro/relRecGraduacaoPeriodo.php|||corpo
+...|Relatório de Arrecadação de Tarifa Bancária por Bordero|financeiro/rel_tarifas_uni_bordero.php|||corpo
+...|Listagem de Arrecadação de Contribuição do DCE|financeiro/rel_contrib_dce.php|||corpo
+...|Listagem dos Alunos pagantes da Contribuição do DCE|modulos/financeiro/rel_pagantes_dce.php|||corpo
+...|Candidatos pagantes por tipo de Desconto|modulos/financeiro/consultaDocVestibular.php|||corpo
+..|Cobrança
+...|Condições de Pagamento|modulos/financeiro/cadCondNegociacao.php |||corpo
+...|Confirmação de Matrículas / Alteração de Confirmação de Matrícula|financeiro/confirm_matric_nao_confirm.php|||corpo
+...|Relatório de Alunos com parcelas em aberto|modulos/financeiro/rel_parcelas_aberto.php|||corpo
+...|Listagem de Alunos Matriculados com situação (Confirmadas / Não Confirmadas)|academico/rel_matriculas_geral.php|||corpo
+...|Listagem de Alunos Matriculados com situação (Normal, Trancado, etc...)|academico/rel_matriculas_situacao.php|||corpo
+..|Caixa e Negociação
+...|Parcelamento de DOCs|modulos/financeiro/cadParcDocGraduacao.php|||corpo
+..|Consultas e Relatórios
+...|Relatório de Matriculados por Forma de Pagamento|financeiro/rel_alunos_forma_pgto.php|||corpo
+...|Consulta dos registros de Contrato Único|modulos/financeiro/relentrega_contratos.php|||corpo
+...|Consulta de Matrículas sem Contrato|academico/rel_matriculas_sem_contrato.php|||corpo
+...|Exemplo de Bloqueto de Cobrança com Bônus|financeiro/exemplos/Bloqueto1.htm|||corpo
+...|Consulta de Matrículas NÃO Confirmadas c/ Motivo|academico/rel_matriculas_nao_confirmadas.php|||corpo
+...|Relatório de Rateio de Parcelas|financeiro/rel_rateios_parcelas_uni.php|||corpo
+...|Relatório p/ DECLARAÇÃO de IMPOSTO de RENDA|financeiro/rel_declaracao_ir.php|||corpo
+..|Gratuidades e Contabilização
+...|Cadastro de Modelo de Contabilização|modulos/financeiro/cadModeloContabil.php|||corpo
+...|Geração de Slip de Contabilização do Colégio|modulos/financeiro/geracaoSlipContabColegio.php|||corpo
+...|Geração da Slip de Contabilização da Graduação|modulos/financeiro/geracaoSlipContabGraduacao.php|||corpo
+...|Exclusão de Relatório de Gratuidade da Graduação|modulos/financeiro/exclusaoRelatorioGratuidadeGra.php|||corpo
+...|Exclusão de Relatório de Gratuidade do Colégio|modulos/financeiro/exclusaoRelatorioGratuidadeCol.php|||corpo
+...|Impressão de Slip Contábil|modulos/financeiro/imprimeSlip.php|||corpo
+.|Recursos
+..|Oferta de Vagas da Graduação
+...|Cadastro de Horários/Turmas da Graduação|academico/horario_coordenador.php|||corpo
+...|Cancelamento de Disciplinas|modulos/alocacao/cadCancelamentoDscGrad.php|||corpo
+...|Remanejos de Turmas da Graduação|modulos/alocacao/cadRemanejoTurmasGrad.php|||corpo
+...|Listagem de Alunos matriculados em Disciplinas Canceladas|modulos/alocacao/relAlunosDscCanceladasGrad.php|||corpo
+...|Listagem de Turmas por Categoria de Disciplinas|modulos/alocacao/relTurmasPorCategoriaDsc.php|||corpo
+...|Emissão de Etiquetas de Turmas da Graduação|modulos/alocacao/relEtiquetasTurmasGraduacao.php|||corpo
+...|Listagem de Turmas da Graduação|modulos/alocacao/relListagemTurmasGraduacao.php|||corpo
+...|Relação de Turmas da Graduação|modulos/alocacao/relRelacaoTurmasGraduacao.php|||corpo
+..|Multimeios
+...|Cadastro de Equipamentos|modulos/alocacao/cadEquipamentoMultimeios.php|||corpo
+...|Cadastro de Status de Equipamentos|modulos/alocacao/cadStatusEquipamentosMultimeios.php|||corpo
+...|Cadastro de Tipos de Equipamentos|modulos/alocacao/cadTiposEquipamentosMultimeios.php|||corpo
+...|Restrição de Reserva de Equipamentos em Salas|modulos/alocacao/cadRestrReservaEquip.php|||corpo
+...|Reserva de Equipamentos|modulos/alocacao/cadAgendReservasEquipamentos.php|||corpo
+..|Espaços Físicos
+...|Tipos de Estabelecimentos|modulos/alocacao/cadTipoEstabelecimento.php|||corpo
+...|Estabelecimentos|modulos/alocacao/cadEstabelecimentos.php|||corpo
+...|Prédios|modulos/alocacao/cadPredios.php|||corpo
+...|Salas|modulos/alocacao/cadSalas.php|||corpo
+...|Reservas de Salas|modulos/alocacao/cadReservaSalas.php|||corpo
+...|Alocação de Salas para a graduação|modulos/alocacao/cadAlocacaoSalaGraduacao.php|||corpo
+...|Relatório de Número máximo de Alunos por Sala|academico/rel_maximo_sala.php|||corpo
+...|Relatório de Salas Utilizadas pela Graduação|modulos/alocacao/relSalasUtilizadasGrad.php|||corpo
+...|Mapa de Alocação de Salas para Graduação|modulos/alocacao/relMapaAlocacaoSalaGraduacao.php|||corpo
+...|Cadastro de dias letivos da graduação|modulos/graduacao/cadDiasLetivosGraduacao.php|||corpo
+...|Manutenção de Lotação de Salas|modulos/alocacao/cadManutencaoLotacaoSalaGraduacao.php|||corpo
+...|Relatório de Salas Vagas|modulos/alocacao/relSalasVagasGraduacao.php|||corpo
+..|Consultas e Relatórios
+...|Listagem de endereços dos alunos matriculados UNILASALLE (Planejamento de Rotas)|academico/rel_geral_enderecos_para_rotas.php|||corpo
+...|Listagem de endereços dos alunos matriculados COLÉGIO (Planejamento de Rotas)|academico/rel_geral_enderecos_para_rotas_colegio.php|||corpo
+.|Inf. Gerenciais
+..|Alunos
+...|Estatística de Alunos por Sexo|academico/estat_alunosXsexo.php|||corpo
+...|Estatística de registro de fotos de alunos|academico/estat_reg_fotos.php|||corpo
+...|Estatística de Alunos por Idade|academico/rel_idade.php|||corpo
+...|Estatística de Alunos por Média de Idade|academico/rel_idade_media.php|||corpo
+...|Listagem de Alunos Matriculados SEM Registro de FOTO|modulos/graduacao/rel_matriculados_sfoto.php|||corpo
+...|Estatística de aproveitamento de alunos da graduação|academico/estat_aproveitamento.php|||corpo
+...|Indicadores de Estágios|modulos/gerenciais/relEstatisticaEstagios.php|||corpo
+..|Alocação de Recursos
+...|Estatística de Ocupação de Salas|modulos/alocacao/estatOcupacaoSalas.php|||corpo
+...|Previsão de Vagas por Curso|estatisticas/matriculas/estatmatcursoprev.php|||corpo
+...|Matriculados por Dia e turno|estatisticas/matriculas/estatmatdia.php|||corpo
+...|Estatística de Turmas com disciplinas Comuns|academico/estat_turmas_disciplinas_comuns.php|||corpo
+...|Estatística de Salas Cheias da Graduação|modulos/alocacao/relSalasCheiasGraduacao.php|||corpo
+..|Matrículas
+...|Estatística de Disciplinas|academico/estat_disciplinas.php|||corpo
+...|Estatística de Liberação de Matrícula|academico/estat_liberacao.php|||corpo
+...|Quadro de Situação de Matrícula|academico/rel_quadro_sit_matr.php|||corpo
+...|Matriculados por Data|estatisticas/matriculas/estatmatdata.php|||corpo
+...|Matriculados por Curso|estatisticas/matriculas/estatmatcurso.php|||corpo
+...|Matriculados Geral|estatisticas/matriculas/estatmatinst.php|||corpo
+...|Matriculados por Tipo de Ingresso|estatisticas/matriculas/estatmatingresso.php|||corpo
+...|Matriculados por Número de Créditos|estatisticas/matriculas/estatmatcred.php|||corpo
+...|Comparativo de matrículas entre semestres por Curso|estatisticas/matriculas/comparativocurso.php|||corpo
+...|Posição de Matrículas|modulos/graduacao/posicaoMatriculas.php|||corpo
+...|..|modulos/graduacao/relEstatisticoAcademico.php|||corpo
+..|Processo de Seleção
+...|Comparativo da Evolução das inscrições entre vestibulares de verão|modulos/proc_selecao/relEstatisticaVestibularEvolucao.php?sem=1|||corpo
+...|Comparativo da Evolução das inscrições entre vestibulares de inverno|modulos/proc_selecao/relEstatisticaVestibularEvolucao.php?sem=2|||corpo
+...|Resumo das inscrições de todos os processos de seleção por Semestre|modulos/proc_selecao/relEstatisticaVestibularResumo.php|||corpo
+...|Inscrições|modulos/proc_selecao/relEstatisticaVestibularInscricoes.php|||corpo
+...|Inscritos por data pela Internet|modulos/proc_selecao/relEstatisticaVestibularInternetDia.php|||corpo
+...|Inscritos por Município|modulos/proc_selecao/relEstatisticaVestibularCidade.php|||corpo
+...|Inscritos por Data|modulos/proc_selecao/relEstatisticaVestibularDia.php|||corpo
+...|Inscritos por Opção de Língua Estrangeira|modulos/proc_selecao/relEstatisticaVestibularLingua.php|||corpo
+...|Inscritos por Local de inscrição|modulos/proc_selecao/relEstatisticaVestibularLocal.php|||corpo
+...|Inscritos por Sexo|modulos/proc_selecao/relEstatisticaVestibularSexo.php|||corpo
+...|Abstenção nas Provas|modulos/proc_selecao/relEstatisticaVestibularAbstencao.php|||corpo
+...|Classificados por Localidade|modulos/proc_selecao/relEstatisticaVestibularClassifCidade.php|||corpo
+...|Preenchimento de Vagas (matrículas)|modulos/proc_selecao/relEstatisticaVestibularClassifCurso.php|||corpo
+...|Classificados por Idade|modulos/proc_selecao/relEstatisticaVestibularIdade.php|||corpo
+...|Classificados por Local de Inscrição|modulos/proc_selecao/relEstatisticaVestibularLocalInscricao.php|||corpo
+...|Média das Provas|modulos/proc_selecao/relEstatisticaVestibularProvas.php|||corpo
+..|Períodos Letivos
+...|Indicadores do Lançamento de Notas|modulos/graduacao/IndLancNotas.php|||corpo
+...|Estatística de Ocorrências|modulos/proc_selecao/relEstatisticaOcorrencias.php|||corpo
+..|Censo da Educação Superior - INEP
+...|Questões do Censo da Educação Superior|academico/censo/relCenso.php|||corpo
+...|Censo dos Professores|academico/censo/inf_professores.php|||corpo
+..|Financeiro
+...|Geração de Receita - Graduação|modulos/financeiro/receitaLiqAcumAluno.php|||corpo
+...|Geração de Receita - Colégio|modulos/colegio/receitaGeradaColegio.php|||corpo
+...|Estatística de Inadimplência por Data|financeiro/est_inad_data.php|||corpo
+...|Estatística de Inadimplência|financeiro/est_inad_data.php|||corpo
+...|Demonstrativo de Inadimplência - Unilasalle|modulos/financeiro/relDemonstrativoInadimplencia.php|||corpo
+...|Demonstrativo de Inadimplência - Colégio|modulos/colegio/relDemonstrativoInadimplenciaColegio.php|||corpo
+...|Estatística dos Maiores Devedores do UNILASALLE|financeiro/est_maiores_devedores.php|||corpo
+...|Estatística dos Maiores Devedores|financeiro/est_maiores_devedores.php|||corpo
+.|Pessoas
+..|Física / Jurídica
+...|Cadastro de Pessoa Física|modulos/pessoa/cadPessoaFisica.php|||corpo
+...|Cadastro de Pessoa Jurídica|modulos/pessoa/cadPessoaJuridica.php|||corpo
+...|Pesquisa de CEP - Correios|cep/busca_cep.php|||corpo
+...|Cadastro de Religião|modulos/pessoa/cadReligiao.php|||corpo
+...|Cadastro de Arquivo de Documentos|modulos/pessoa/cadArquivosDocumentos.php|||corpo
+...|Cadastro de Países|modulos/pessoa/cadPaises.php|||corpo
+...|Cadastro de Cidades|modulos/pessoa/cadCidades.php|||corpo
+...|Relatório de arquivos de documentos|modulos/pessoa/relArquivos.php|||corpo
+..|Alunos
+...|Registros
+....|Cadastro de Alunos|modulos/pessoa/cadAluno.php|||corpo
+....|Alteração de Senha de Auto-Atendimento|modulos/pessoa/cadAlteracaoSenhaAutoAtendimAlunos.php|||corpo
+...|Observações e Bloqueios
+....|Cadastro de Observações / Bloqueios / Documentos Pendentes de alunos|modulos/pessoa/cadBloqPendAlunos.php|||corpo
+....|Relatório de Observações de Alunos|modulos/pessoa/relObsAlunos.php|||corpo
+....|Listagem de alunos com Bloqueio|academico/listagem_bloqueios.php|||corpo
+....|Listagem de Alunos não matriculados, sem registro de débitos e aptos para rematrícula|modulos/graduacao/relAlunosNaoMatriculados.php|||corpo
+...|Consultas e Relatórios
+....|Ficha Acadêmica|modulos/pessoa/consFichaAcademica.php|||corpo
+....|Consulta de Matrícula de Alunos|modulos/pessoa/consMatriculaAluno.php|||corpo
+....|Consulta de Ocorrências de Aluno da Graduação
+Consulta de Registro de Recebimento de Contratos|modulos/graduacao/consOcorrenciaAluno.php|||corpo
+....|Consulta de aniversariantes da graduação|academico/rel_aniv_graduacao.php|||corpo
+....|Listagem de Inconsistências de cadastro de aluno para Emissão de Remessa p/ Banco SANTANDER|academico/rel_inconsistencias_santander.php|||corpo
+....|Listagem de Alunos com Deficiência|academico/rel_alunos_deficiencia.php|||corpo
+....|Listagem de endereços dos alunos matriculados (Planejamento de Rotas)|academico/rel_geral_enderecos_para_rotas.php|||corpo
+....|Enviar E-Mail para Alunos|modulos/pessoa/geraEMailAlunosGrad.php|||corpo
+....|Emissão de Etiquetas de Alunos|modulos/pessoa/emissaoEtiquetasAlunos.php|||corpo
+....|Consulta de Situação de Remessa/Retorno - Cartão Estudantil|modulos/pessoa/relSituacaoCartaoEstudantil.php|||corpo
+...|Egressos
+....|Cadastro de Alunos Egressos|modulos/pessoa/cadEgressos.php|||corpo
+....|Enviar E-Mail para Alunos|modulos/pessoa/geraEMailAlunosGrad.php|||corpo
+....|Emissão de Etiquetas de Alunos|modulos/pessoa/emissaoEtiquetasAlunos.php|||corpo
+...|Estágios
+....|Cadastro de Agente Integrador|modulos/pessoa/cadAgenteIntegrador.php|||corpo
+....|Cadastro de Contrato de Estágio|modulos/pessoa/cadContratoEstagio.php|||corpo
+....|Relatório de Contratos de Estágio|modulos/pessoa/relContratosEstagio.php|||corpo
+....|Atualização de Contratos de Estágio|modulos/pessoa/cadAtualizacaoContratosEstagios.php|||corpo
+..|Professores/Funcionários
+...|Registros
+....|Cadastro de Professores/Funcionários|modulos/pessoa/cadFuncionario.php|||corpo
+....|Cadastro de Tipos de Lotação Acadêmica|modulos/pessoa/cadTipoLotacaoAcad.php|||corpo
+....|Cadastro de Tipos de Projetos de Pesquisa|modulos/pessoa/cadTipoProjetoPesquisa.php|||corpo
+....|Cadastro de Projetos de Pesquisa|modulos/pesquisa/cadProjetosPesquisa.php|||corpo
+....|Cadastro de Tipo de Regime de Trabalho|modulos/pessoa/cadTipoRegimeTrabalho.php |||corpo
+....|Cadastro de Tipo de Vínculos|modulos/pessoa/cadTipoVinculoProf.php|||corpo
+...|Alocação e Titulação
+....|Indicadores de titulações e lotações de professores|modulos/pessoa/relIndicadoresTitulacaoLotacao.php|||corpo
+....|Relatório de Titulação de Professores|modulos/pessoa/relTitulacoes.php|||corpo
+....|Relatório de Validação de Titulações|modulos/pessoa/relValidacaoTitulacoes.php|||corpo
+....|Relatório de Lotação de Professores|modulos/pessoa/relLotacaoProfGrad.php|||corpo
+....|Relatório de Carga Horária de Professores por Tipo de Lotação|modulos/pessoa/relCHporLotacao.php|||corpo
+....|Relatório com distribuição da carga horária de professores|modulos/pessoa/relDistribuicaoCargaHorPrf.php|||corpo
+....|Relatório de Comunicação para Professores com Comissionamento|modulos/pessoa/relComissionamentoProf.php|||corpo
+....|Comunicação Sobre Responsabilidade de Disciplinas|modulos/pessoa/relComRespDisciplina.php|||corpo
+....|Mapa de Horários de Professores da Graduação|modulos/alocacao/relMapaHorariosProfGraduacao.php|||corpo
+...|Seleção
+....|Edital de Seleção - Currículos|modulos/pessoa/consEditalSelecao.php|||corpo
+...|Consultas
+....|Relatório de Professores com Turma|modulos/pessoa/relProfessoresComTurma.php|||corpo
+....|Relatório de Professores com Endereço|modulos/pessoa/relProfessoresComEndereco.php|||corpo
+....|Listagem de Professores com Foto|academico/lista_prof_foto.php?pano=2004|||corpo
+....|Histórico do Professor|modulos/pessoa/relDadosComplProf.php|||corpo
+....|Relatório de orientações de Trabalho de Conclusão|modulos/pessoa/rel_trabalho_conclusao.php|||corpo
+....|Emissão de Etiquetas|modulos/pessoa/emissaoEtiquetasProf.php|||corpo
+..|Usuários
+...|Alteração de Senha do SGL|modulos/pessoa/SguChangePassword.php|||corpo
+...|Cadastro de Grupos de Usuários|modulos/pessoa/cadGruposUsuarios.php|||corpo
+...|Relatório de Permissões de Acesso|modulos/pessoa/relPermissoes.php|||corpo
+.|Protocolo
+..|Cadastro de tipos de requerimento|modulos/graduacao/cadTipoRequerimento.php|||corpo
+..|Registro de Requerimentos|modulos/graduacao/cadregistroRequerimentos.php|||corpo
+..|Movimento de Registro de Requerimentos|modulos/graduacao/movimentoRegistroRequerimentos.php|||corpo
+..|Cadastro de Documentos para Checklist|modulos/graduacao/cadChecklist.php|||corpo
+..|Gerador de Relatório|modulos/graduacao/relGeradorRelatorio.php|||corpo
+..|Gerenciador de Relatórios - Modelos|modulos/graduacao/verCategorias.php|||corpo
+..|Estatística de Requerimentos por Data|modulos/graduacao/relRequerimentos.php|||corpo
+ 

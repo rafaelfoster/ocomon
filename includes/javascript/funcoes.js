@@ -1,0 +1,591 @@
+<script type="text/javascript">
+<!--
+    //Funções javascript
+
+	var GLArray = new Array();
+
+	function popup(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=no,statusbar=no,resizable=no');
+		x.moveTo(10,10);
+
+		return false
+	}
+
+	function popupS(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=yes,statusbar=no,resizable=no');
+		x.moveTo(10,10);
+
+		return false
+	}
+
+	function popupWH(pagina,larg,altur)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'Gráfico','dependent=yes,width='+(larg+20)+',height='+(altur+20)+',scrollbars=no,statusbar=no,resizable=no');
+		x.moveTo(10,10);
+
+		return false
+	}
+
+
+	function popup_alerta(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'_blank','dependent=yes,width=600,height=400,scrollbars=yes,statusbar=no,resizable=yes');
+
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+	function popup_wide(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'_blank','dependent=yes,width=600,height=200,scrollbars=yes,statusbar=no,resizable=yes');
+
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+	function mini_popup(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'_blank','dependent=yes,width=400,height=250,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+
+	function popup_alerta_wide(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'_blank','dependent=yes,width=800,height=400,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+
+	function mensagem(msg){
+		alert(msg);
+		return false
+	}
+
+
+	function redirect(url){
+		window.location.href=url;
+	}
+
+	function redirectLoad(url, id){
+		var obj = document.getElementById(id);
+		window.location.href=url+obj.value;
+	}
+
+	//criar acesso ao submit de excluir
+	function confirma(msg,url){
+		if (confirm(msg)){
+			redirect(url);
+		}
+	}
+
+
+	function confirmaAcao (msg, url, param){ //variavel php
+		if (confirm(msg)){
+			url += '?'+param;
+			redirect(url);
+		}
+		return false;
+	}
+
+
+	function cancelLink () {
+		return false;
+	}
+
+	function disableLink (link) {
+		if (link.onclick)
+			link.oldOnClick = link.onclick;
+		link.onclick = cancelLink;
+		if (link.style)
+			link.style.cursor = 'default';
+	}
+
+	function enableLink (link) {
+		link.onclick = link.oldOnClick ? link.oldOnClick : null;
+		if (link.style)
+			link.style.cursor =
+			document.all ? 'hand' : 'pointer';
+	}
+	function toggleLink (link) {
+	  if (link.disabled)
+		enableLink (link)
+	  else
+		disableLink (link);
+	  link.disabled = !link.disabled;
+	}
+
+	function desabilitaLinks(permissao){
+		if (permissao!=1) {
+			for (i=0; i<(document.links.length); i++) {
+				toggleLink (document.links[i]);
+			}
+		}
+	}
+
+	function par(n) {
+		var na = n;
+		var nb = (na / 2);
+		nb = Math.floor(nb);
+		nb = nb * 2;
+		if ( na == nb ) {
+			return(1);
+		} else {
+			return(0);
+		}
+	}
+
+
+	function corNatural(id) {//F8F8F1
+		var obj = document.getElementById(id);
+		//obj.style.background = obj.getAttributeNode('cN').value; /* Para ser usado lendo propriedade cN='cor' do objeto */
+		if (navigator.userAgent.indexOf('MSIE') !=-1){ //M$ IE
+			var classe = obj.getAttributeNode('class').value;
+			//obj.style.background = classe;
+			//var classe = obj.className;
+		} else
+			var classe ='';
+
+		if ( classe != '') {
+			//if ( classe == 'lin_par'  ) {  obj.style.background = 'url("../../includes/css/header_bar.gif")';  } else //'#EAE6D0'//
+			if ( classe == 'lin_par'  ) {  obj.style.background = '#E3E1E1';  } else
+			if ( classe == 'lin_impar' ) { obj.style.background = '#F6F6F6' ;} //'#F8F8F1' #F6F6F6
+
+			//if ( classe == 'lin_par'  ) {  obj.className = "linha_2";  } else
+			//if ( classe == 'lin_impar' ) { obj.className = "linha_1";} //'#F8F8F1' #F6F6F6
+
+
+		}
+		else { obj.style.background = '' }
+	}
+
+		function listItems()
+		{
+			var items = listItems.arguments.length
+			document.write("<UL>\n")
+			for (i = 0;i < items;i++)
+			{
+				document.write("<LI>" + listItems.arguments[i] + "\n")
+			}
+			document.write("</UL>\n")
+		}
+
+		function setBGColor(id){
+			var obj = document.getElementById(id);
+
+			if (obj.value!="IMG_DEFAULT")
+				obj.style.background="";
+			obj.style.backgroundColor = obj.value;
+
+			return false;
+		}
+
+		function destaca(){
+
+			var args = destaca.arguments.length;
+			var id = destaca.arguments[0];
+
+			if (args==1){
+				//var color = "#CCCCFF";
+				var color = "";
+			} else
+				var color = destaca.arguments[1];
+
+			if ( verificaArray('', id) == false ) {
+				var obj = document.getElementById(id);
+				//obj.style.background = '#CCCCFF';// #CCFFCC #C7C8C6 #A3A352 '#D5D5D5'  #CCFFCC   #FDFED8
+				obj.style.background = color;
+			}
+		}
+
+		function libera(id){
+			if ( verificaArray('', id) == false ) {
+				var obj = document.getElementById(id);
+				//obj.style.background = '';
+				corNatural(id); /* retorna à cor natural */
+			}
+		}
+
+
+		function marca(){
+			var args = marca.arguments.length;
+			var id = marca.arguments[0];
+
+			var obj = document.getElementById(id);
+			if (args==1){
+				//var color = "#FFCC99";
+				var color = "";
+			} else
+				var color = marca.arguments[1];
+
+
+			if ( verificaArray('', id) == false ) {
+				verificaArray('marca', id)
+
+				//obj.style.background = '#FFCC99';
+				obj.style.background = color;
+			} else {
+				verificaArray('desmarca', id)
+				//obj.style.background = '';
+				destaca(id);
+			}
+
+		}
+
+		function verificaArray(acao, id) {
+			var i;
+			var tamArray = GLArray.length;
+			var existe = false;
+
+			for(i=0; i<tamArray; i++) {
+				if ( GLArray[i] == id ) {
+					existe = true;
+					break;
+				}
+			}
+
+			if ( (acao == 'marca') && (existe==false) ) {
+				GLArray[tamArray] = id;
+			} else if ( (acao == 'desmarca') && (existe==true) ) {
+				var temp = new Array(tamArray-1); //-1
+				var pos = 0;
+				for(i=0; i<tamArray; i++) {
+					if ( GLArray[i] != id ) {
+						temp[pos] = GLArray[i];
+						pos++;
+					}
+				}
+
+				GLArray = new Array();
+				var pos = temp.length;
+				for(i=0; i<pos; i++) {
+					GLArray[i] = temp[i];
+				}
+			}
+
+			return existe;
+		}
+
+	function loadDefaultValue(id, valor){
+		var obj = document.getElementById(id);
+		obj.value = valor;
+		return false;
+	}
+
+
+
+function validaForm(id,tipo,campo,obrigatorio){
+	var regINT = /^[1-9]\d*$/; //expressão para validar numeros inteiros não iniciados com zero
+	var regINTFULL = /^\d*$/; //expressão para validar numeros inteiros quaisquer
+	var regDATA = /^((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2}$/;
+	var regDATA_ = /^((0?[1-9]|[12]\d)\-(0?[1-9]|1[0-2])|30\-(0?[13-9]|1[0-2])|31\-(0?[13578]|1[02]))\-(19|20)?\d{2}$/;
+	var regDATAHORA = /^(((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2})[ ]([0-1]\d|2[0-3])+:[0-5]\d:[0-5]\d$/;
+	var regEMAIL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;
+	var regMOEDA = /^\d{1,3}(\.\d{3})*\,\d{2}$/;
+	var regMOEDASIMP = /^\d*(\,|\.)\d{2}$/;
+	var regETIQUETA = /^[1-9]\d*(\,\d+)*$/; //expressão para validar consultas separadas por vírgula;
+	var regALFA = /^[A-Z]|[a-z]([A-Z]|[a-z])*$/;
+	var regALFANUM = /^([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*\.?([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*$/; //Valores alfanumérias aceitando separação com no máximo um ponto.
+	var regALFAFULL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*$/;
+	//var regFone = /^([\d]*([-]|[\s])?[\d]+)+([,][\s][\d]*([-]|[\s])?[\d]+)*$/;
+	var regFone = /^(([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)+([,][\s]([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)*$/;
+	var regCor = /^([#]([A-F]|[a-f]|[\d]){6,6})|([I][M][G][_][D][E][F][A][U][L][T])$/;
+	//var d = document.cadastro;
+
+	var obj = document.getElementById(id);
+	var valor = obj.getAttributeNode('name').value;
+
+	//alert (obj);
+
+	//verificar se está preenchido
+
+
+	if ((obj.value == "")&&(obrigatorio==1)){
+		alert("O campo " + campo + " deve ser preenchido!");
+		obj.focus();
+		return false;
+	}
+
+
+
+	if ((tipo == "INTEIRO")&&(obj.value != "")) {
+		//validar dados numéricos
+		if (!regINT.test(obj.value)){
+			alert ("O campo "+ campo +" deve conter apenas numeros inteiros não iniciados por ZERO!");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "COMBO")&&(obj.value != "")) {
+		//validar dados numéricos
+		if (!regINT.test(obj.value)){
+			alert ("O campo "+ campo +" deve ser selecionado!");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "INTEIROFULL")&&(obj.value != "")) {
+		//validar dados numéricos
+		if (!regINTFULL.test(obj.value)){
+			alert ("O campo "+ campo +" deve conter apenas numeros inteiros!");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "DATA")&&(obj.value != "")) {
+		//validar data
+		if (!regDATA.test(obj.value)){
+			alert("Formato de data invalido! dd/mm/aaaa");
+			obj.focus();
+			return false;
+			}
+	} else
+
+	if ((tipo == "DATA-")&&(obj.value != "")) {
+		//validar data
+		if (!regDATA_.test(obj.value)){
+			alert("Formato de data invalido! dd-mm-aaaa");
+			obj.focus();
+			return false;
+			}
+	} else
+	if ((tipo == "DATAHORA")&&(obj.value != "")) {
+		//validar data
+		if (!regDATAHORA.test(obj.value)){
+			alert("Formato de data invalido! dd/mm/aaaa H:m:s");
+			obj.focus();
+			return false;
+			}
+	} else
+
+
+	if ((tipo == "EMAIL")&&(obj.value != "")){
+		//validar email(verificao de endereco eletrônico)
+		if (!regEMAIL.test(obj.value)){
+			alert("Formato de e-mail inválido!");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "MOEDA")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regMOEDA.test(obj.value)){
+			alert("Formato de moeda inválido!");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "MOEDASIMP")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regMOEDASIMP.test(obj.value)){
+			alert("Formato de moeda inválido! XXXXXX,XX");
+			obj.focus();
+			return false;
+		}
+	} else
+
+	if ((tipo == "ETIQUETA")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regETIQUETA.test(obj.value)){
+			alert("o Formato deve ser de valores inteiros não iniciados por Zero e separados por vírgula!");
+			obj.focus();
+			return false;
+		}
+	}	else
+
+	if ((tipo == "ALFA")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regALFA.test(obj.value)){
+			alert("Esse campo só aceita carateres do alfabeto sem espaços!");
+			obj.focus();
+			return false;
+		}
+	}	else
+
+	if ((tipo == "ALFANUM")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regALFANUM.test(obj.value)){
+			alert("Esse campo só aceita valores alfanuméricos sem espaços ou separados por um ponto(no máximo um)!");
+			obj.focus();
+			return false;
+		}
+	}
+
+	if ((tipo == "ALFAFULL")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regALFAFULL.test(obj.value)){
+			alert("Esse campo só aceita valores alfanuméricos sem espaços!");
+			obj.focus();
+			return false;
+		}
+	}
+
+	if ((tipo == "FONE")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regFone.test(obj.value)){
+			alert("Esse campo só aceita valores formatados para telefones (algarismos, traços e espaços) separados por vírgula.");
+			obj.focus();
+			return false;
+		}
+	}
+	if ((tipo == "COR")&&(obj.value != "")){
+		//validar valor monetário
+		if (!regCor.test(obj.value)){
+			alert("Esse campo só aceita valores formatados para cores HTML! Ex: #FFCC99");
+			obj.focus();
+			return false;
+		}
+	}
+
+
+         return true;
+}
+
+	function exibeEscondeImg(obj) {
+		var item = document.getElementById(obj);
+		if (item.style.display=='none'){
+			item.style.display='';
+		} else {
+			item.style.display='none';
+		}
+	}
+
+	function exibeEscondeHnt(obj) {
+
+/*		if (document.all) {
+			document.this.x.value=window.event.clientX;
+			document.this.y.value=window.event.clientY;
+		}
+		else if (document.layers) {
+			document.this.x.value=e.pageX;
+			document.this.y.value=e.pageY;
+		}*/
+
+
+		if (document.all) {
+			var x = window.event.clientX;
+			var y = window.event.clientY;
+		} else if (document.layers) {
+			var x = pageX;
+			var y = pageY;
+		}
+
+		var item = document.getElementById(obj);
+		if (item.style.display=='none'){
+			item.style.display='';
+			item.style.top = y;
+		} else {
+			item.style.display='none';
+		}
+	}
+
+
+	function invertView(id) {
+		var element = document.getElementById(id);
+		var elementImg = document.getElementById('img'+id);
+		var address = '../../includes/icons/';
+
+		if (element.style.display=='none'){
+			element.style.display='';
+			elementImg.src = address+'close.png';
+		} else {
+			element.style.display='none';
+			elementImg.src = address+'open.png';
+		}
+	}
+
+
+
+
+	function addEvent( id, type, fn ) {
+		var obj = document.getElementById(id);
+
+		if ( obj.attachEvent ) {
+			obj['e'+type+fn] = fn;
+			obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
+			obj.attachEvent( 'on'+type, obj[type+fn] );
+		} else
+			obj.addEventListener( type, fn, false );
+	}
+
+	function removeEvent( id, type, fn ) {
+		var obj = document.getElementById(id);
+		if ( obj.detachEvent ) {
+			obj.detachEvent( 'on'+type, obj[type+fn] );
+			obj[type+fn] = null;
+		} else
+			obj.removeEventListener( type, fn, false );
+	}
+
+
+	function Mouse() {
+		var isIE = document.all;
+		var ns6  = document.getElementById && !document.all;
+		var ieTB = (document.compatMode && document.compatMode!="BackCompat")?document.documentElement:document.body;
+		var px = null;
+		var py = null;
+
+
+		this.setEvent = function(e) {
+			px = (ns6)?e.pageX:event.clientX+ieTB.scrollLeft;
+			py = (ns6)?e.pageY:event.clientY+ieTB.scrollTop;
+		}
+
+		this.x = function() { return px; }
+
+		this.y = function() { return py; }
+	}
+
+	function mouseMoveManager(e) {
+		mouse.setEvent(e);
+		//document.title = "Cursor_x: "+mouse.x()+" | Cursor_y: "+mouse.y();
+	}
+
+	function fecha()
+	{
+// 		if (history.back){
+// 			return history.back();
+// 		} else
+// 			window.close();
+
+		if (window.opener){
+			return window.close();
+		} else
+			return history.back();
+	}
+
+
+	function showToolTip(e,text,id1, id2){
+		if(document.all)e = event;
+
+		var obj = document.getElementById(id1);
+		var obj2 = document.getElementById(id2);
+		obj2.innerHTML = text;
+		obj.style.display = 'block';
+		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+		if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0;
+		var leftPos = e.clientX - 100;
+		if(leftPos<0)leftPos = 0;
+		obj.style.left = leftPos + 'px';
+		obj.style.top = e.clientY - obj.offsetHeight -1 + st + 'px';
+	}
+
+	function hideToolTip(id)
+	{
+		document.getElementById(id).style.display = 'none';
+
+	}
+
+	function replaceAll( str, from, to ) {
+		var idx = str.indexOf( from );
+		while ( idx > -1 ) {
+			str = str.replace( from, to );
+			idx = str.indexOf( from );
+		}
+		return str;
+	}
+
+//-->
+</script>
