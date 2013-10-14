@@ -24,7 +24,11 @@
 
 	print "<HTML><BODY bgcolor='".BODY_COLOR."'>";
 	$auth = new auth;
-	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
+
+	if (isset($_GET['INDIV'])) {
+		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
+	} else
+		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
 
 	if (isset($_POST['numero'])) {
@@ -33,7 +37,7 @@
 	if (isset($_GET['numero'])){
 		$COD = $_GET['numero'];
 	} else {
-		print "ERRO: ESSE SCRIPT NÃO PODE SER EXECUTADO DE FORMA INDEPENDENTE!";
+		print "".TRANS('MSG_ERR_NOT_EXECUTE')."";
 		exit;
 	}
 
@@ -46,14 +50,14 @@
         $resultado2 = mysql_query($query2);
         $linhas=mysql_numrows($resultado2);
 
-	if ($_SESSION['s_nivel'] == 1) $linkEdita = "<td align='right' width='10%' ><a href='altera_dados_ocorrencia.php?numero=".$COD."'>Editar como admin</a>&nbsp;|&nbsp;</td>"; else //&nbsp;|&nbsp;
+	if ($_SESSION['s_nivel'] == 1) $linkEdita = "<td align='right' width='10%' ><a href='altera_dados_ocorrencia.php?numero=".$COD."'>".TRANS('FIELD_EDIT_ADMIN')."</a>&nbsp;|&nbsp;</td>"; else //&nbsp;|&nbsp;
 		$linkEdita = "";
 
 	$sqlPai = "select * from ocodeps where dep_filho = ".$COD." ";
-	$execpai = mysql_query($sqlPai) or die ('NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DE DEPENDÊNCIAS DO CHAMADO!');
+	$execpai = mysql_query($sqlPai) or die (TRANS('ERR_QUERY'));
 	$rowPai = mysql_fetch_array($execpai);
 	if ($rowPai['dep_pai']!=""){
-		$msgPai = "<img src='".ICONS_PATH."view_tree.png' width='16' height='16' title='Chamado com vínculos'><u><a onClick=\"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$rowPai['dep_pai']."')\">Esta ocorrência é um sub-chamado da ocorrência ".$rowPai['dep_pai']."</a></u>";
+		$msgPai = "<img src='".ICONS_PATH."view_tree.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND')."'><u><a onClick=\"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$rowPai['dep_pai']."')\">".TRANS('FIELD_OCCO_SUB_CALL')."".$rowPai['dep_pai']."</a></u>";
 	} else
 		$msgPai = "";
 
@@ -83,73 +87,110 @@
 	<?
 
 
-	print "<BR><B>Consulta de Ocorrências</B><BR>".$msgPai."</br>";
+	print "<BR><B>".TRANS('TTL_CONS_OCCO')."</B><BR>".$msgPai."</br>";
 
 	if (isset($_GET['justOpened']) && $_GET['justOpened']==true) {
-		$msg = "Ocorrência incluída com sucesso! ";
+		$msg = TRANS('MSG_OCCO_INCLUDE_SUCESS');
 		//$msg.="<br><a align='center' onClick=\"exibeEscondeImg('idAlerta');\"><img src='".ICONS_PATH."/stop.png' width='16px' height='16px'>&nbsp;Fechar</a>";
 		print "</table>";//#EFEFE7
-		print "<div class='alerta' id='idAlerta'><table class='divAlerta'><tr><td colspan='2'><a align='center' onClick=\"exibeEscondeImg('idAlerta');\" title='Ocultar'><img src='".ICONS_PATH."/ok.png' width='16px' height='16px'><b>".$msg."</b></a></td></tr></table></div>";
+		print "<div class='alerta' id='idAlerta'><table class='divAlerta'><tr><td colspan='2'><a align='center' onClick=\"exibeEscondeImg('idAlerta');\" title='".TRANS('FIELD_HIDE')."'><img src='".ICONS_PATH."/ok.png' width='16px' height='16px'><b>".$msg."</b></a></td></tr></table></div>";
 		//exit;
 	}
 
 
 	if ($row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
-		print "<TD align='right' width='10%' ><a href='encerramento.php?numero=".$row['numero']."'>Encerrar ocorrência</a>&nbsp;|&nbsp;</TD>"; //
+		print "<TD align='right' width='10%' ><a href='encerramento.php?numero=".$row['numero']."'>".TRANS('FIELD_FINISH_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //
 	}
 
-	print "<TD align='right' width='10%' ><a href='mostra_relatorio_individual.php?numero=".$row['numero']."' target='_blank'>Imprimir ocorrência</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
+	print "<TD align='right' width='10%' ><a href='mostra_relatorio_individual.php?numero=".$row['numero']."' target='_blank'>".TRANS('FIELD_PRINT_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
 	if ($_SESSION['s_nivel'] < 3)
-		print "<TD align='right' width='10%' ><a href='encaminhar.php?numero=".$row['numero']."'>Editar ocorrência</a>&nbsp;|&nbsp;</TD>".$linkEdita.""; //&nbsp;|&nbsp;
+		print "<TD align='right' width='10%' ><a href='encaminhar.php?numero=".$row['numero']."'>".TRANS('FIELD_EDIT_OCCO')."</a>&nbsp;|&nbsp;</TD>".$linkEdita.""; //&nbsp;|&nbsp;
 
 	if (($row['status_cod']!=2) && ($row['status_cod']!=4) && ($_SESSION['s_nivel'] < 3)) {
-		print "<TD align='right' width='10%' ><a href='atender.php?numero=".$COD."'>Atender</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
+		print "<TD align='right' width='10%' ><a href='atender.php?numero=".$COD."'>".TRANS('FIELD_ADVERT')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
 	}
 
-	print "<TD align='right' width='10%' ><a onClick=\"javascript:popup('mostra_sla_definido.php?popup=true&numero=".$row['numero']."')\">SLA</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+	print "<TD align='right' width='10%' ><a onClick=\"javascript:popup('mostra_sla_definido.php?popup=true&numero=".$row['numero']."')\">".TRANS('COL_SLA')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
 
 	if ($row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
 		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."' ><a onClick=\"javascript:popup_alerta('incluir.php?popup=true".
 				"&pai=".$row['numero']."&invTag=".$row['etiqueta']."&invInst=".$row['unidade_cod']."&invLoc=".$row['setor_cod']."".
-				"&telefone=".$row['telefone']."')\">Abrir sub-chamado</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+				"&telefone=".$row['telefone']."')\">".TRANS('FIELD_OPEN_SUBCALL')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
 	}
 
+	if ($row['status_cod']==4 && $_SESSION['s_allow_reopen']) {//CHECAGEM PARA PERMITIR QUE O CHAMADO SEJA REABERTO NO SISTEMA.
+		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."' >".
+			"<a onClick=\"confirma('".TRANS('ENSURE_REOPEN')."?','".$_SERVER['PHP_SELF']."?action=reopen&numero=".$COD."')\">
+				".TRANS('FIELD_REOPEN_CALL')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+
+		if (isset($_GET['action']) && ($_GET['action']=="reopen")) {
+
+			$qryDelSolution = "DELETE FROM solucoes WHERE numero = ".$COD."";
+			$execDelSolution = mysql_query($qryDelSolution) or die(TRANS('ERR_QUERY'));
+
+			$qryUpdStatus = "UPDATE ocorrencias SET `status`=1,data_fechamento=NULL WHERE numero=".$COD."";
+			$execUpdStatus = mysql_query($qryUpdStatus) or die(TRANS('ERR_QUERY'));
+
+			print "<script>redirect('".$_SERVER['PHP_SELF']."?numero=".$COD."')</script>";
+		}
+	}
+
+
 	print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."'  ><a onClick=\"javascript:popup('tempo_doc.php?popup=true".
-			"&cod=".$row['numero']."')\">Tempo de documentação</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+			"&cod=".$row['numero']."')\">".TRANS('FIELD_TIME_DOCUMENTATION')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+
+	if ($_SESSION['s_nivel'] < 3) {
+		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."'><a onClick=\"javascript:popupS('form_send_mail.php?popup=true".
+			"&numero=".$row['numero']."')\">".TRANS('SEND_EMAIL')."</a></TD>"; //&nbsp;|&nbsp;
+	}
+
 
 	//print "</table>";
 	//print "</tr>";
 
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
         	print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>Número:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
                 	print "<TD width='30%' align='left'><input class='disable' value='".$row['numero']."' disabled></TD>";
-                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>Área responsável:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
                 	print "<TD colspan='3' width='30%' align='left'  ><input class='disable' value='".$row['area']."' disabled></TD>";
 		print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
                 print "<TD width='30%' align='left' ><input class='disable' value='".$row['problema']."' disabled></TD>";
-		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>Aberto Por:</TD>";
+		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('FIELD_OPEN_BY').":</TD>";
                 print "<TD colspan='3' width='30%' align='left' ><input class='disable' value='".$row['aberto_por']."' disabled></TD>";
         print "</TR>";
+
+        		$qryCatProb = "SELECT * FROM problemas as p ".
+					"LEFT JOIN sistemas as s on p.prob_area = s.sis_id ".
+					"LEFT JOIN sla_solucao as sl on sl.slas_cod = p.prob_sla ".
+					"LEFT JOIN prob_tipo_1 as pt1 on pt1.probt1_cod = p.prob_tipo_1 ".
+					"LEFT JOIN prob_tipo_2 as pt2 on pt2.probt2_cod = p.prob_tipo_2 ".
+					"LEFT JOIN prob_tipo_3 as pt3 on pt3.probt3_cod = p.prob_tipo_3 ".
+					" WHERE p.prob_id = ".$row['prob_cod']." ";
+			$execCatprob = mysql_query($qryCatProb) or die ($qryCatProb);
+			$rowCatProb = mysql_fetch_array($execCatprob);
+
+		print "<tr><TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_CAT_PROB')."</td><td colspan='3'>".$rowCatProb['probt1_desc']." | ".$rowCatProb['probt2_desc']." | ".$rowCatProb['probt3_desc']."</td></tr>";
+
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Descrição:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_DESC').":</TD>";
 
 		if (isset($_GET['destaca'])){
 			print "<TD  colspan='2' valign='top' align='left'  class='wide'>".destaca($_GET['destaca'], nl2br($row['descricao']))."</TD>";
 		} else
                 	//print "<TD  colspan='2' valign='top' align='left'  class='textareaDisable'>".nl2br($row['descricao'])."</TD>";//textareaDisable
-                	print "<TD  colspan='2' valign='top' align='left' class='wide'>".nl2br($row['descricao'])."</TD>";//textareaDisable
-                print "<TD colspan='3' width='40%' align='left' >&nbsp;</TD>";
+                	print "<TD  colspan='4' valign='top' align='left' class='wide'>".nl2br($row['descricao'])."</TD>";//textareaDisable
+                //print "<TD width='40%' align='left' >&nbsp;</TD>";
         print "</TR>";
 
 
 	print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
                 print "<TD width='30%' align='left'><input class='disable' value='".$row['unidade']."' disabled></TD>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Etiqueta do equipamento:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TAG_EQUIP').":</TD>";
 		print "<TD  width='30%' align='left'>".
 				"<a onClick=\"popup_alerta('../../invmon/geral/mostra_consulta_inv.php?".
 				"comp_inst=".$row['unidade_cod']."&comp_inv=".$row['etiqueta']."&popup=true')\">".
@@ -158,28 +199,51 @@
 		print "<TD colspan='2' align='left'>&nbsp;</td>";
 		print "</TR>";
 		print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Contato:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_CONTACT').":</TD>";
                 print "<TD width='30%' align='left' ><input class='disable' value='".$row['contato']."' disabled></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ramal:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PHONE').":</TD>";
                 print "<TD colspan='3' width='30%' align='left' ><input class='disable' value='".$row['telefone']."' disabled></TD>";
 	print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_LOCAL').":</TD>";
                 print "<TD width='30%' align='left'><input class='disable' value='".$row['setor']."' disabled></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Último operador:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_LAST_OPERATOR').":</TD>";
                 print "<TD colspan='3' width='30%' align='left' ><input class='disable' value='".$row['nome']."' disabled></TD>";
 	print "</TR>";
 
         if ($row['status_cod'] == 4)
 	{
+
+		if ($row['data_abertura'] != $row['oco_real_open_date'] && $row['oco_real_open_date']!='0000-00-00 00:00:00'){
+			print "<TR>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LAST_SCHEDULE').":</TD>";
+				print "<TD  align='left' ><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_DATE_CLOSING').":</TD>";
+				print "<TD  width='30%' colspan='3' align='left' ><input class='disable' value='".formatDate($row['data_fechamento'])."' disabled></TD>";
+			print "</tr>";
+
+			print "<TR>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_REAL_DATE_OPEN').":</TD>";
+				print "<TD  align='left' ><input class='disable' value='".formatDate($row['oco_real_open_date'])."' disabled></TD>";
+			print "</tr>";
+		} else {
+			print "<TR>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
+				print "<TD  align='left' ><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_DATE_CLOSING').":</TD>";
+				print "<TD  width='30%' colspan='3' align='left' ><input class='disable' value='".formatDate($row['data_fechamento'])."' disabled></TD>";
+			print "</tr>";
+		}
+
+
+
 		print "<TR>";
-			print "<TD  align='left' bgcolor='".TD_COLOR."'>Data de abertura:</TD>";
-			print "<TD  align='left' ><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
-			print "<TD  align='left' bgcolor='".TD_COLOR."'>Data de encerramento:</TD>";
-			print "<TD  width='30%' colspan='3' align='left' ><input class='disable' value='".formatDate($row['data_fechamento'])."' disabled></TD>";
+			print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SCRIPT_SOLUTION').":</TD>";
+			print "<TD  align='left' colspan='6'>".$row['script_desc']."</TD>";
 		print "</tr>";
+
 		print "<tr>";
-			print "<TD  align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+			print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_STATUS').":</TD>";
 			print "<TD colspan='5' align='left'  >".
 					"<font color='blue'><u><a onClick=\"popup_alerta_mini('mostra_hist_status.php?numero=".$COD."&popup=true')\">".
 					"".$row['chamado_status']."</u></a></font>".
@@ -190,22 +254,47 @@
 	}
         else
 	{
+
+		if ($row['oco_scheduled']==1){
+			$os_DataAbertura = formatDate($row['oco_real_open_date']);
+			$os_DataAgendamento = formatDate($row['data_abertura']);
+		} else {
+			$os_DataAbertura = formatDate($row['data_abertura']);
+			$os_DataAgendamento = formatDate($row['data_abertura']);
+		}
+
+		print "<tr>";
+		if ($row['data_abertura'] != $row['oco_real_open_date'] && $row['oco_real_open_date']!='0000-00-00 00:00:00' && !empty($row['oco_real_open_date'])){
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LAST_SCHEDULE').":</TD>";
+				print "<TD  align='left' ><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
+				print "<TD  align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_REAL_DATE_OPEN').":</TD>";
+				print "<TD  width='30%' colspan='3' align='left' ><input class='disable' value='".formatDate($row['oco_real_open_date'])."' disabled></TD>";
+		} else {
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
+			print "<TD width='30%' align='left' ><input class='disable' value='".$os_DataAbertura."' disabled></TD>";
+		}
+		print "</tr>";
+
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de abertura:</TD>";
-			print "<TD width='30%' align='left' ><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_STATUS').":</TD>";
 			print "<TD width='30%' align='left'  >".
 					"<b><font color='blue'><u><a onClick=\"popup_alerta_mini('mostra_hist_status.php?numero=".$COD."&popup=true')\">".
 					"".$row['chamado_status']."</u></a></font></b>".
 				"</TD>";
 			print "<TD colspan='2' align='left'>&nbsp;</td>";
 		print "</TR>";
+
+		if ($row['oco_scheduled']==1){
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SCHEDULED_TO').":</TD>";
+			print "<TD width='30%' align='left' ><input class='disable' value='".$os_DataAgendamento."' disabled></TD>";
+		}
+
 	}
 
 	if ($linhas != 0) { //ASSENTAMENTOS DO CHAMADO
 		print "<tr><td colspan='6'><IMG ID='imgAssentamento2' SRC='../../includes/icons/close.png' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento2')\">&nbsp;<b>Existe(m) <font color='red'>".$linhas."</font>".
-				" assentamento(s) para essa ocorrência.</b></td></tr>";
+				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento2')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas."</font>".
+				" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 		//style='{padding-left:5px;}'
 		print "<tr><td colspan='6' ><div id='Assentamento2' >"; //style='{display:none}'
@@ -215,7 +304,7 @@
 			$printCont = $i+1;
 			print "<TR>";
 			print "<TD width='20%' ' bgcolor='".TD_COLOR."' valign='top'>".
-					"Assentamento ".$printCont." de ".$linhas." por ".$rowAssentamento2['nome']." em ".
+					"".TRANS('FIELD_NESTING')." ".$printCont." de ".$linhas." por ".$rowAssentamento2['nome']." em ".
 					//"".datab($rowAssentamento2['data'])."".
 					"".formatDate($rowAssentamento2['data'])."".
 				"</TD>";
@@ -231,9 +320,79 @@
 		print "</table></div></td></tr>";
 	}
 
+		######################################################
+		## E-MAILS ENVIADOS SOBRE ESSA OCORRÊNCIA
+		$qryMail = "SELECT * FROM mail_hist m, usuarios u WHERE m.mhist_technician=u.user_id AND ".
+					"m.mhist_oco=".$_REQUEST['numero']." ORDER BY m.mhist_date";
+		$execMail = mysql_query($qryMail) or die (TRANS('ERR_QUERY'));
+
+		if (mysql_num_rows($execMail) != 0)
+		{
+
+
+			print "<tr STYLE=\"{cursor: pointer;}\" onClick=\"invertView('idMail');\"><TD width='20%' bgcolor='".TD_COLOR."'>".
+					"<img src='../../includes/icons/mail_generic.png' width='16px' height='16px' border='0'>&nbsp;".
+					"".TRANS('MAIL_SENT').":&nbsp;<IMG ID='imgidMail' SRC='../../includes/icons/open.png' width='9' height='9'>&nbsp;</td>".
+					"<td colspan='3'></td></tr>";
+
+
+			print "<tr><td colspan='6' ><div id='idMail' style='{display:none}'>"; //style='{display:none}'
+			print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
+
+
+
+					print "<TABLE border='0' cellpadding='1' cellspacing='0' width='90%'>";
+					print "<tr class='header'>";
+					print "<td class='line'>".TRANS('MHIST_SUBJECT')."</td><td class='line'>".TRANS('MHIST_LISTS')."</td>".
+						"<td class='line'>".TRANS('MHIST_BODY')."</td>".
+						"<td class='line'>".TRANS('MHIST_DATE')."</td>".
+						"</td><td class='line'>".TRANS('MHIST_TECHNICIAN')."</td>";
+					print "</tr>";
+
+					$j = 2;
+					while ($rowMail = mysql_fetch_array($execMail)) {
+						if ($j % 2) {
+								$trClass = "lin_par";
+						}
+						else {
+								$trClass = "lin_impar";
+						}
+						$j++;
+
+						$limite = 30;
+						$shortBody = trim($rowMail['mhist_body']);
+						if (strlen($shortBody)>$limite) {
+							$shortBody = substr($shortBody,0,($limite-4))."...";
+						}
+
+						print "<tr class=".$trClass." id='imglinhax".$j."' onMouseOver=\"destaca('imglinhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('imglinhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('imglinhax".$j."','".$_SESSION['s_colorMarca']."');\" onClick=\"invertView('linhax".$j."');\" STYLE=\"{cursor: pointer;}\">";
+						print "<td class='line'>".$rowMail['mhist_subject']."</td><td class='line'>".NVL($rowMail['mhist_listname'])."</td>".
+							"<td class='line'>".$shortBody."</td>".
+							"<td class='line'>".formatDate($rowMail['mhist_date'])."</td><td class='line'>".$rowMail['nome']."</td>";
+						print "</tr>";
+
+
+						print "<tr><td colspan='6' ><div id='linhax".$j."' style='{display:none}'>"; //style='{display:none}'
+						print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
+
+							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_TO').":</b> ".$rowMail['mhist_address']."</td></tr>";
+							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_CC').":</b> ".$rowMail['mhist_address_cc']."</td></tr>";
+							print "<tr><td class='textarea'>".nl2br($rowMail['mhist_body'])."</td></tr>";
+							//print "<tr><td>".$rowMail['mhist_body']."</td></tr>";
+							NL();
+
+						print "</table></div></td></tr>";
+					}
+
+					print "</table>";
+			print "</table></div></td></tr>";
+		}
+		//FIM DO TRECHO SOBRE OS E-MAIL ENVIADOS
+		#############################################################
+
 
 	$qryTela = "select * from imagens where img_oco = ".$row['numero']."";
-	$execTela = mysql_query($qryTela) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+	$execTela = mysql_query($qryTela) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 	//$rowTela = mysql_fetch_array($execTela);
 	$isTela = mysql_num_rows($execTela);
 	$cont = 0;
@@ -257,16 +416,16 @@
 				"".$rowTela['img_nome']."</a>".$viewImage."</TD>";
 		print "</tr>";
 	}
-
+	print "<br>";
 
         $qrySubCall = "select * from ocodeps where dep_pai = ".$row['numero']."";
-        $execSubCall = mysql_query($qrySubCall) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE SUB-CHAMADOS!<br>'.$qrySubCall);
+        $execSubCall = mysql_query($qrySubCall) or die(TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$qrySubCall);
 	$existeSub = mysql_num_rows($execSubCall);
 	if ($existeSub>0) {
 		$comDeps = false;
 		while ($rowSubPai = mysql_fetch_array($execSubCall)){
 			$sqlStatus = "select o.*, s.* from ocorrencias o, `status` s  where o.numero=".$rowSubPai['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3) ";
-			$execStatus = mysql_query($sqlStatus) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS<br>'.$sqlStatus);
+			$execStatus = mysql_query($sqlStatus) or die (TRANS('MSG_ERR_RESCUE_INFO_STATUS_CALL_SON').'<br>'.$sqlStatus);
 			$regStatus = mysql_num_rows($execStatus);
 			if ($regStatus > 0) {
 				$comDeps = true;
@@ -279,13 +438,13 @@
 		}
 
 		print "<tr><td  colspan='6'><IMG ID='imgSubCalls' SRC='../../includes/icons/open.png' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('SubCalls')\">&nbsp;<b><img src='".$imgSub."' width='16' height='16' title='Chamado com vínculos'>Sub-Chamados / Dependências:</b></td></tr>";//<span style=\"background:yellow\">
+				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('SubCalls')\">&nbsp;<b><img src='".$imgSub."' width='16' height='16' title='".TRANS('FIELD_CALL_SUBCALL_DEPEND').":</b></td></tr>";//<span style=\"background:yellow\">
 
 		print "<tr><td colspan='6'></td></tr>";
 		print "<tr><td colspan='6'><div id='SubCalls' style='{display:none}'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
-		print "<TABLE border='0' style='{padding-left:10px;}' cellpadding='5' cellspacing='0' align='left' width='100%'>";
-		print "<tr class='header'><td class='line'>Número<br>Área</td><td class='line'>Problema</td><td class='line'>Contato<br>ramal</td><td class='line'>Local<br>Descricão</td><td class='line'>Último operador<br>Status</td></tr>";
+		print "<TABLE border='0' style='{padding-left:10px;}' cellpadding='5' cellspacing='0' align='left' width='90%'>";
+		print "<tr class='header'><td class='line'>".TRANS('OCO_FIELD_NUMBER')."<br>".TRANS('OCO_AREA')."</td><td class='line'>".TRANS('OCO_FIELD_PROB')."</td><td class='line'>".TRANS('OCO_FIELD_CONTACT')."<br>".TRANS('OCO_PHONE')."</td><td class='line'>".TRANS('OCO_LOCAL')."<br>".TRANS('OCO_DESC')."</td><td class='line'>".TRANS('FIELD_LAST_OPERATOR')."<br>".TRANS('OCO_STATUS')."</td></tr>";
 		$j=2;
 		$execSubCall = mysql_query($qrySubCall);
 		while ($rowSub = mysql_fetch_array($execSubCall)) {
@@ -298,11 +457,10 @@
 			$j++;
 
 			$qryDetail = $QRY["ocorrencias_full_ini"]." WHERE  o.numero = ".$rowSub['dep_filho']." ";
-			$execDetail = mysql_query($qryDetail) or die ('ERRO NA TENTATIVA DE RECUPERAR OS DADOS DAS OCORRÊNCIAS! '.$qryDetail);
+			$execDetail = mysql_query($qryDetail) or die (TRANS('MSG_ERR_RESCUE_DATA_OCCO').$qryDetail);
 			$rowDetail = mysql_fetch_array($execDetail);
 
-			//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<tr class=".$trClass." id='linhaxy".$j."' onMouseOver=\"destaca('linhaxy".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhaxy".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhaxy".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 			print "<td class='line'><a onClick=\"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$rowDetail['numero']."')\"><b>".$rowDetail['numero']."</b></a><br>".$rowDetail['area']."</TD>";
 			print "<td class='line'>".$rowDetail['problema']."</TD>";
@@ -315,9 +473,7 @@
 			print "<td class='line'><b>".$rowDetail['nome']."</b><br>".$rowDetail['chamado_status']."</TD>";
 			print "</tr>";
 		}
-		print "</tr>";
-		print "</table>";
-		print "</div>";
+		print "</table></div></td></tr>";
 	}
 
 print "</TABLE>";

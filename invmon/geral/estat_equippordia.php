@@ -24,7 +24,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -54,13 +54,13 @@
 
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
-		print "<tr><td width='60%' align='center'><b>Quantidade de equipamentos cadastrados por dia:</b></td></tr>";
+		print "<tr><td width='60%' align='center'><b>".TRANS('TTL_QTD_EQUIP_FOR_DAY').":</b></td></tr>";
 
 
         	print "<td class='line'>";
-        	print "<fieldset><legend>Cadastros por dia</legend>";
+        	print "<fieldset><legend>".TRANS('TTL_CAD_FOR_DAY')."</legend>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='60%' bgcolor='".$cor3."'>";
-        	print "<TR><TD bgcolor='".$cor3."'><b>Data</TD><TD bgcolor='".$cor3."'><b>Quantidade</TD></tr>";
+        	print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('OCO_DATE')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_QTD')."</TD></tr>";
 		$i=0;
 		$j=2;
 
@@ -76,7 +76,7 @@
 			print "</TR>";
 			$i++;
 		}
-        	print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>Total: ".$total."</TD></tr>";
+        	print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>".TRANS('TOTAL').": ".$total."</TD></tr>";
 		print "</TABLE>";
 		print "</fieldset>";
 
@@ -95,7 +95,7 @@
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
 
-		print "<tr><td width='80%' align='center'><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+		print "<tr><td width='80%' align='center'><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
 		print "</TABLE>";
 
 print "</BODY>";

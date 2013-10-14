@@ -45,7 +45,7 @@
 
 
 
-	print "<BR><B>".TRANS('ADM_MANUFACTURES')."</B><BR>";
+	print "<BR><B>".TRANS('TTL_ADMIN_MANUFAC')."</B><BR>";
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
@@ -74,20 +74,17 @@
 
 	if ((!isset($_GET['action'])) && empty($_POST['submit'])) {
 
-		//print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>Cadastrar novo Fabricante</a></TD></TR>";
-		print "<TR><TD><input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_RECORD','',0)."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\"></TD></TR>";
+		print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>".TRANS('TXT_CAD_MANUFAC')."</a></TD></TR>";
 		if (mysql_num_rows($resultado) == 0)
 		{
-			print "<tr><td>";
-			print mensagem(TRANS('MSG_NO_RECORDS'));
-			print "</tr></td>";
+			echo mensagem(TRANS('MSG_NOT_REG_CAD'));
 		}
 		else
 		{
 			$PAGE->execSQL();
 
 			print "<tr><td class='line'>";
-			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('RECORDS_IN_SYSTEM').".</td>";
+			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('TXT_MANUFAC_CAD')."</td>";
 			print "</tr>";
 			print "<TR class='header'><td class='line'>".TRANS('COL_MANUFACTURE')."</TD><td class='line'>".TRANS('COL_TYPE')."</TD>".
 				"<td class='line'>".TRANS('COL_EDIT')."</TD><td class='line'>".TRANS('COL_DEL')."</TD></tr>";
@@ -105,13 +102,12 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				print "<td class='line'>".$row['fab_nome']."</td>";
 				print "<td class='line'>".$row['tipo_it_desc']."</td>";
 				print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cod=".$row['fab_cod']."&cellStyle=true')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></td>";
-				print "<td class='line'><a onClick=\"confirmaAcao('".TRANS('ENSURE_DEL')."?','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['fab_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
+				print "<td class='line'><a onClick=\"confirmaAcao('".TRANS('MSG_DEL_REG')."','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['fab_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 
 				print "</TR>";
 			}
@@ -124,7 +120,7 @@
 	} else
 	if ((isset($_GET['action'])  && ($_GET['action'] == "incluir") )&& empty($_POST['submit'])) {
 
-		print "<BR><B>".TRANS('CADASTRE_MANUFACTURE')."</B><BR>";
+		print "<BR><B>".TRANS('SUBTTL_CAD_MANUFAC')."</B><BR>";
 
 		print "<TR>";
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_MANUFACTURE').":</TD>";
@@ -148,9 +144,9 @@
 
 		print "<TR>";
 
-		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('bt_cadastrar')."' name='submit'>";
+		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_CAD')."' name='submit'>";
 		print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
 
 		print "</TR>";
 
@@ -160,7 +156,7 @@
 
 		$row = mysql_fetch_array($resultado);
 
-		print "<BR><B>".TRANS('TTL_EDIT_RECORD')."</B><BR>";
+		print "<BR><B>".TRANS('SUBTTL_EDIT_MANUFAC')."</B><BR>";
 
 		print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_MANUFACTURE').":</TD>";
@@ -194,7 +190,7 @@
 		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='cod' value='".$_GET['cod']."'>";
 			print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."r' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
 
 		print "</TR>";
 
@@ -217,8 +213,8 @@
 
 		if ($total!=0)
 		{
-			print "<script>mensagem('".TRANS('MSG_CANT_DEL').": ".$texto." ".TRANS('LINKED_TABLE')."!');
-				redirect('fabricantes.php');</script>";
+			print "<script>mensagem('".TRANS('MSG_NOT_DEL_MANUFAC') .$texto. TRANS('MSG_ASSOC_IT')."');
+				redirect('".$_SERVER['PHP_SELF']."');</script>";
 		}
 		else
 		{
@@ -240,7 +236,7 @@
 
 	} else
 
-	if ($_POST['submit'] == TRANS('bt_cadastrar')){
+	if ($_POST['submit'] == TRANS('BT_CAD')){
 
 		$erro=false;
 
@@ -250,7 +246,7 @@
 
 		if ($linhas > 0)
 		{
-				$aviso = TRANS('MSG_RECORD_EXISTS');
+				$aviso = TRANS('MSG_EXIST_REG_CAD_SYSTEM');
 				$erro = true;;
 		}
 
@@ -280,11 +276,11 @@
 
 		if ($resultado2 == 0)
 		{
-			$aviso =  TRANS('ERR_EDIT');
+			$aviso = TRANS('ERR_EDIT');
 		}
 		else
 		{
-			$aviso =  TRANS('OK_EDIT');
+			$aviso = TRANS('OK_EDIT');
 		}
 
 		echo "<script>mensagem('".$aviso."'); redirect('".$_SERVER['PHP_SELF']."');</script>";

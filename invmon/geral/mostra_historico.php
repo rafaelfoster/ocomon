@@ -21,7 +21,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -40,7 +40,7 @@
 		$BT_TEXT = "Voltar";
 		$GETOUT = "javascript:history.back()";
 	} else {
-		$BT_TEXT = "Fechar";
+		$BT_TEXT = TRANS('LINK_CLOSE');
 		$GETOUT = "javascript:self.close()";
 	}
 
@@ -70,33 +70,33 @@
 
         if ($linhas == 0)
 	{
-		echo mensagem("Não foi encontrado nenhum equipamento cadastrado no sistema.");
+		echo mensagem(TRANS('TXT_NOT_FOUND_EQUIP_CAD_SYSTEM'));
 		exit;
 	} else
         if ($linhas>1){
-                $texto = 'Locais';//Perfumaria: Apenas imprime o nome da coluna no plural se existirem mais de um local no histórico.
+                $texto = TRANS('TXT_PLACES');//Perfumaria: Apenas imprime o nome da coluna no plural se existirem mais de um local no histórico.
 		print "<table border='0' cellspacing='1' summary=''";
 		print "<TR>";
-		print "<TD colspan='3' align='left' ><B>Foram econtrados ".$linhas." registros de localização para esse equipamento.</B></TD>";
+		print "<TD colspan='3' align='left' ><B>".TRANS('FOUND')." ".$linhas." ".TRANS('TXT_REG_OF_LOCALIZATION_FOR_EQUIP')."</B></TD>";
 		print "</tr>";
 		print "</table>";
-		print "<tr><p><TD bgcolor='".$cor1."'><b>Etiqueta:\t</b>".$row['etiqueta']."</TD></tr><br>";
-		print "<tr><TD bgcolor='".$cor1."'><b>Unidade:\t</b>".$row['instituicao_nome']."</TD></tr><br>";
-		print "<tr><TD bgcolor='".$cor1."'><b>Tipo de equipamento:</b>\t".$row['equipamento']."</TD></tr><br></p>";
+		print "<tr><p><TD bgcolor='".$cor1."'><b>".TRANS('OCO_FIELD_TAG').":\t</b>".$row['etiqueta']."</TD></tr><br>";
+		print "<tr><TD bgcolor='".$cor1."'><b>".TRANS('OCO_FIELD_UNIT').":\t</b>".$row['instituicao_nome']."</TD></tr><br>";
+		print "<tr><TD bgcolor='".$cor1."'><b>".TRANS('FIELD_TYPE_EQUIP').":</b>\t".$row['equipamento']."</TD></tr><br></p>";
 
 	}
 	else {
-		$texto = 'Local';
-		print "<TR><TD bgcolor='".$cor1."'><B>Foi encontrado somente 1 registro de localização para este equipamento.</B></TD></TR>";
-		print "<tr><p><TD bgcolor='".$cor1."'><b>Etiqueta:\t</b>".$row['etiqueta']."</TD></tr><br>";
-		print "<tr><TD bgcolor='".$cor1."'><b>Unidade:\t</b>".$row['instituicao_nome']."</TD></tr><br>";
-		print "<tr><TD bgcolor='".$cor1."'><b>Tipo de equipamento:</b>\t".$row['equipamento']."</TD></tr><br></p>";
+		$texto = TRANS('OCO_LOCAL');
+		print "<TR><TD bgcolor='".$cor1."'><B>".TRANS('TXT_FOUND_ONLY_ONE_REG_OF_LOCALIZATION_FOR_EQUIP')."</B></TD></TR>";
+		print "<tr><p><TD bgcolor='".$cor1."'><b>".TRANS('OCO_FIELD_TAG').":\t</b>".$row['etiqueta']."</TD></tr><br>";
+		print "<tr><TD bgcolor='".$cor1."'><b>".TRANS('OCO_FIELD_UNIT').":\t</b>".$row['instituicao_nome']."</TD></tr><br>";
+		print "<tr><TD bgcolor='".$cor1."'><b>".TRANS('FIELD_TYPE_EQUIP').":</b>\t".$row['equipamento']."</TD></tr><br></p>";
 	}
 	print "</TD>";
 
         print "<td class='line'>";
         print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
-        print "<TR class='header'><td class='line'><b>".$texto."</TD><td class='line'><b>Data</TD>";
+        print "<TR class='header'><td class='line'><b>".$texto."</TD><td class='line'><b>".TRANS('OCO_DATE')."</TD>";
         $i=0;
         $j=2;
 
@@ -127,11 +127,11 @@
 		}
 		$j++;
 		if ($i==0) {
-			$atualmente = "<font ".$alerta.">[Local Atual]</font>";  //Perfumaria: Serve para identificar para o usuário o local atual onde o equipamento está!!!
+			$atualmente = "<font ".$alerta.">[".TRANS('TXT_CURRENT_PLACE')."]</font>";  //Perfumaria: Serve para identificar para o usuário o local atual onde o equipamento está!!!
 		} else
 			$atualmente = '';
 
-		print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+		print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 		print "<td class='line'><a ".$alerta." onClick= \"javascript: window.opener.location.href='mostra_consulta_comp.php?comp_local=".$row['local_cod']."&comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta'\">".$row['locais']." </a><b><font color='green'>".$atualmente."</font></b></td>";
 		print "<td class='line'><font ".$alerta.">".$row['DIA']."/".$row['MES']."/".$row['ANO']."</font></td>";
 

@@ -30,7 +30,7 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Administração de itens emprestados</B><BR>";
+	print "<BR><B>".TRANS('TLT_ADMIN_LOAN')."</B><BR>";
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
@@ -47,27 +47,25 @@
 			$query.= " AND e.empr_id= ".$_GET['cod']." ";
 		}
 		$query .=" ORDER  BY data_devol";
-		$resultado = mysql_query($query) or die('ERRO NA EXECUÇÃO DA QUERY DE CONSULTA!<br>'.$query);
+		$resultado = mysql_query($query) or die(TRANS('ERR_QUERY').'<br>'.$query);
 		$registros = mysql_num_rows($resultado);
 
 	if ((!isset($_GET['action'])) && !isset($_POST['submit'])) {
 
 		print "<TR><TD bgcolor='".BODY_COLOR."'>".
-				//"<a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>Incluir empréstimo</a>".
-				"<input type='button' class='button' id='idBtIncluir' value='Novo Empréstimo' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\">".
+				"<input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_LOAN')."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\">".
 				"</TD></TR>";
 		if (mysql_num_rows($resultado) == 0) {
-			//$msg = "<p class='msg'>Não há nenhum empréstimo cadastrado!</p>";
-			echo "<tr><td align='center'>".mensagem("Não há nenhum empréstimo cadastrado!")."</td></tr>";
+			echo "<tr><td align='center'>".mensagem("".TRANS('MSG_NO_LOAN')."")."</td></tr>";
 		} else {
 			$cor=TD_COLOR;
 			$cor1=TD_COLOR;
 			print "<tr><td class='line'>";
-			print "Existe(m) <b>".$registros."</b> empréstimos cadastrados.</td>";
+			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('TLT_CAD_LOAN').".</td>";
 			print "</tr>";
-			print "<TR class='header'><td class='line'>Material</TD><td class='line'>Responsável</TD><td class='line'>Data do empréstimo</TD>";
-			print "<td class='line'>Data de devolução</TD><td class='line'>Quem</TD><td class='line'>Local</TD><td class='line'>Ramal</TD>
-				<td class='line'>Alterar</TD><td class='line'>Excluir</TD></TR>";
+			print "<TR class='header'><td class='line'>".TRANS('COL_MAT')."</TD><td class='line'>".TRANS('OCO_RESP')."</TD><td class='line'>".TRANS('COL_DATE_LOAN')."</TD>";
+			print "<td class='line'>".TRANS('COL_DATE_DEV')."</TD><td class='line'>".TRANS('COL_WHO')."</TD><td class='line'>".TRANS('OCO_LOCAL')."</TD><td class='line'>".TRANS('OCO_PHONE')."</TD>
+				<td class='line'>".TRANS('COL_EDIT')."</TD><td class='line'>".TRANS('COL_DEL')."</TD></TR>";
 
 			$j=2;
 			while ($row = mysql_fetch_array($resultado)) {
@@ -80,7 +78,7 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				print "<td class='line'>".$row['material']."</td>";
 				print "<td class='line'>".$row['nome']."</td>";
@@ -89,8 +87,8 @@
 				print "<td class='line'>".$row['quem']."</td>";
 				print "<td class='line'>".$row['local_nome']."</td>";
 				print "<td class='line'>".$row['ramal']."</td>";
-				print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cod=".$row['empr_id']."&cellStyle=true')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='Editar o registro'></a></td>";
-				print "<td class='line'><a onClick=\"confirmaAcao('Tem Certeza que deseja excluir esse registro do sistema?','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['empr_id']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></a></TD>";
+				print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cod=".$row['empr_id']."&cellStyle=true')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></td>";
+				print "<td class='line'><a onClick=\"confirmaAcao('".TRANS('MSG_DEL_REG')."','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['empr_id']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 
 				print "</TR>";
 			}
@@ -100,24 +98,24 @@
 	} else
 	if ((isset($_GET['action'])  && ($_GET['action'] == "incluir") )&& !isset($_POST['submit'])) {
 
-		print "<BR><B>Cadastro de empréstimo de material</B><BR>";
+		print "<BR><B>".TRANS('TLT_CAD_LOAN')."</B><BR>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Material:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_MAT').":</TD>";
                 print "<TD colspan='3' width='80%' align='left' bgcolor='".BODY_COLOR."'><TEXTAREA class='textarea' name='material' id='idMaterial'></textarea></TD>";
 		print "</TR>";
 		print "<tr>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Para Quem:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_FOR_WHO').":</TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='quem' id='idQuem' ></td>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ramal *:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PHONE')." *:</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='ramal' id='idRamal'></TD>";
 		print "</tr>";
 
 		print "<tr>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_LOCAL').":</TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<select class='select' name='local' id='idLocal'>";
-			print "<option value=-1>Selecione o local</option>";
+			print "<option value=-1>".TRANS('OCO_SEL_LOCAL')."</option>";
 
 				$sql="select * from localizacao order by local";
 				$commit = mysql_query($sql);
@@ -127,20 +125,20 @@
 		print "</select>";
 		print "</td>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de saída:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_EXIT').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text'  class='text' name='saida' id='idDataSaida' value='".date("d/m/Y")."'></TD>";
 
 		print "</tr>";
 
         	print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de devolução:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_DATE_DEV').":</TD>";
                 print "<TD width='30%' colspan='3' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text'  class='text' name='volta' id='idDataDevolucao' value='".date("d/m/Y")."'></TD>";
         	print "</TR>";
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 		print "<TR>";
-		print "<TD colspan='2' align='center' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='Cadastrar' name='submit'>";
+		print "<TD colspan='2' align='center' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_CAD')."' name='submit'>";
 		print "</TD>";
-		print "<TD colspan='2' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='Cancelar' name='cancelar' onClick=\"redirect('".$_SERVER['PHP_SELF']."')\"></TD>";
+		print "<TD colspan='2' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"redirect('".$_SERVER['PHP_SELF']."')\"></TD>";
 
 		print "</TR>";
 
@@ -150,37 +148,37 @@
 
 		$row = mysql_fetch_array($resultado);
 
-		print "<BR><B>Edição de empréstimos</B><BR>";
+		print "<BR><B>".TRANS('COL_EDIT_LOAN')."</B><BR>";
 
 		print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Material:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_MAT').":</TD>";
                 print "<TD width='80%' colspan='3' align='left' bgcolor='".BODY_COLOR."'><textarea class='textarea' name='material' id='idMaterial'>".$row['material']."</textarea></td>";
         	print "</TR>";
 
         	print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Para quem:</TD>".
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('OCO_FIELD_FOR_WHO').":</TD>".
 			"<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='quem' id='idQuem' value='".$row['quem']."'>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ramal *:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PHONE')." *:</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='ramal' id='idRamal' value='".$row['ramal']."'></TD>";
 
 		print "</tr>";
 
         	print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de saída:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_EXIT').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='saida' id='idDataSaida' value='".datab($row['data_empr'])."'></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de devolução:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_WHO').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' name='volta' class='text' id='idDataDevolucao' value='".datab($row['data_devol'])."'></TD>";
 		print "</tr>";
 
         	print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Operador:</TD>".
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('MNS_OPERADOR').":</TD>".
 			"<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><select class='select' name='responsavel' id='idResponsavel'>";
 
 			$sql = "select * from usuarios where user_id=".$row['responsavel']."";
 			$commit = mysql_query($sql);
 			$rowR = mysql_fetch_array($commit);
-				print "<option value=-1 >Selecione o responsável</option>";
+				print "<option value=-1 >".TRANS('OCO_SEL_OPERATOR')."</option>";
 					$sql="select * from usuarios order by nome";
 					$commit = mysql_query($sql);
 					while($rowB = mysql_fetch_array($commit)){
@@ -194,7 +192,7 @@
 		print "</select>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_LOCAL').":</TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<select class='select' name='local' id='idLocal'>";
 			print "<option value='-1'>Selecione o local</option>";
@@ -215,10 +213,10 @@
 
 		print "<tr><td colspan='4'>&nbsp;</td></tr>";
 		print "<TR>";
-		print "<TD align='center' width='20%' colspan='2' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='Alterar' name='submit'>";
+		print "<TD align='center' width='20%' colspan='2' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='cod' value='".$_GET['cod']."'>";
 			print "</TD>";
-		print "<TD align='center' colspan='2' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='Cancelar' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
+		print "<TD align='center' colspan='2' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
 
 		print "</TR>";
 
@@ -232,19 +230,18 @@
 
 		if ($resultado2 == 0)
 		{
-			$aviso = "ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!";
+			$aviso = TRANS('ERR_DEL');
 		}
 		else
 		{
-			$aviso = "OK. REGISTRO EXCLUÍDO COM SUCESSO!";
+			$aviso = TRANS('OK_DEL');
 		}
 		print "<script>mensagem('".$aviso."'); redirect('".$_SERVER['PHP_SELF']."');</script>";
 
 
 	} else
 
-	if ($_POST['submit'] == "Cadastrar"){
-
+	if ($_POST['submit'] == TRANS('BT_CAD')){
 		$erro=false;
 
 		if (!$erro)
@@ -253,15 +250,15 @@
 			$query = "INSERT INTO emprestimos (material, responsavel, data_empr, data_devol, quem, local, ramal) values".
 				" ('".noHtml($_POST['material'])."', '".$_SESSION['s_uid']."','".datam($_POST['saida'])."','".datam($_POST['volta'])."',".
 				"'".$_POST['quem']."', '".$_POST['local']."', '".$_POST['ramal']."')";
-			$resultado = mysql_query($query) or die ('ERRO NA TENTATIVA DE INCLUIR O REGISTRO!<br>'.$query);
+			$resultado = mysql_query($query) or die (TRANS('ERR_QUERY').'<br>'.$query);
 
 			if ($resultado == 0)
 			{
-				$aviso = "ERRO NA TENTATIVA DE INCLUIR O REGISTRO!<br>".$query;
+				$aviso = "".TRANS('ERR_INSERT')."<br>".$query;
 			}
 			else
 			{
-				$aviso = "OK. REGISTRO INCLUÍDO COM SUCESSO!.";
+				$aviso = TRANS('OK_INSERT');
 			}
 		}
 
@@ -269,7 +266,7 @@
 
 	} else
 
-	if ($_POST['submit'] == "Alterar"){
+	if ($_POST['submit'] == TRANS('BT_ALTER')){
 
                 $query2 = "UPDATE emprestimos SET material='".noHtml($_POST['material'])."', responsavel='".noHtml($_POST['responsavel'])."', ".
                 	"ramal = '".$_POST['ramal']."', local = ".$_POST['local'].", data_empr='".datam($_POST['saida'])."', data_devol='".datam($_POST['volta'])."', ".
@@ -278,11 +275,11 @@
 
 		if ($resultado2 == 0)
 		{
-			$aviso =  "ERRO NA TENTATIVA DE ALTERAR O REGISTRO!";
+			$aviso =  TRANS('ERR_EDIT');
 		}
 		else
 		{
-			$aviso =  "REGISTRO ALTERADO COM SUCESSO!";
+			$aviso =  TRANS('OK_EDIT');
 		}
 
 		echo "<script>mensagem('".$aviso."'); redirect('".$_SERVER['PHP_SELF']."');</script>";

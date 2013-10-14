@@ -75,6 +75,7 @@
 		$j++;
 		print "<tr id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  ".
 				"onMouseDown=\"marca('linha".$j."');\">";
+		//print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 			print "<td><a href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."' title='".TRANS('hint_geral','',0)."'>".$row['Equipamento']."</a></TD>";
 			print "<td>".$row['Quantidade']."</TD>";
 			print "<td>".round($row['Percentual'],2)."%</TD>";

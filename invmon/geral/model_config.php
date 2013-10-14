@@ -48,77 +48,6 @@
 
 
 
-// 	$queryA = "SELECT
-//
-// 		mold.mold_marca as padrao,
-// 		mold.mold_inv as etiqueta, mold.mold_sn as serial, mold.mold_nome as nome,
-// 		mold.mold_nf as nota,
-//
-// 		mold.mold_coment as comentario, mold.mold_valor as valor, mold.mold_data_compra as
-// 		data_compra, mold.mold_ccusto as ccusto,
-//
-// 		inst.inst_nome as instituicao, inst.inst_cod as cod_inst,
-//
-// 		equip.tipo_nome as equipamento, equip.tipo_cod as equipamento_cod,
-//
-// 		t.tipo_imp_nome as impressora, t.tipo_imp_cod as impressora_cod,
-//
-// 		loc.local as local, loc.loc_id as local_cod,
-//
-//
-//
-// 		proc.mdit_fabricante as fabricante_proc, proc.mdit_desc as processador, proc.mdit_desc_capacidade as clock, proc.mdit_cod as cod_processador,
-// 		hd.mdit_fabricante as fabricante_hd, hd.mdit_desc as hd, hd.mdit_desc_capacidade as hd_capacidade,hd.mdit_cod as cod_hd,
-// 		vid.mdit_fabricante as fabricante_video, vid.mdit_desc as video, vid.mdit_cod as cod_video,
-// 		red.mdit_fabricante as rede_fabricante, red.mdit_desc as rede, red.mdit_cod as cod_rede,
-// 		modm.mdit_fabricante as fabricante_modem, modm.mdit_desc as modem, modm.mdit_cod as cod_modem,
-// 		cd.mdit_fabricante as fabricante_cdrom, cd.mdit_desc as cdrom, cd.mdit_cod as cod_cdrom,
-// 		grav.mdit_fabricante as fabricante_gravador, grav.mdit_desc as gravador, grav.mdit_cod as cod_gravador,
-// 		dvd.mdit_fabricante as fabricante_dvd, dvd.mdit_desc as dvd, dvd.mdit_cod as cod_dvd,
-// 		mb.mdit_fabricante as fabricante_mb, mb.mdit_desc as mb, mb.mdit_cod as cod_mb,
-// 		memo.mdit_desc as memoria, memo.mdit_cod as cod_memoria,
-// 		som.mdit_fabricante as fabricante_som, som.mdit_desc as som, som.mdit_cod as cod_som,
-//
-//
-// 		fab.fab_nome as fab_nome, fab.fab_cod as fab_cod,
-//
-// 		fo.forn_cod as fornecedor_cod, fo.forn_nome as fornecedor_nome,
-//
-// 		model.marc_cod as modelo_cod, model.marc_nome as modelo,
-//
-// 		pol.pole_cod as polegada_cod, pol.pole_nome as polegada_nome,
-//
-// 		res.resol_cod as resolucao_cod, res.resol_nome as resol_nome
-//
-//
-// 	FROM ((((((((((((((((((moldes as mold
-// 		left join  tipo_imp as t on	t.tipo_imp_cod = mold.mold_tipo_imp)
-// 		left join polegada as pol on mold.mold_polegada = pol.pole_cod)
-// 		left join resolucao as res on mold.mold_resolucao = res.resol_cod)
-// 		left join fabricantes as fab on fab.fab_cod = mold.mold_fab)
-// 		left join fornecedores as fo on fo.forn_cod = mold.mold_fornecedor)
-//
-// 		left join modelos_itens as proc on proc.mdit_cod = mold.mold_proc)
-// 		left join modelos_itens as hd on hd.mdit_cod = mold.mold_modelohd)
-// 		left join modelos_itens as vid on vid.mdit_cod = mold.mold_video)
-// 		left join modelos_itens as red on red.mdit_cod = mold.mold_rede)
-// 		left join modelos_itens as modm on modm.mdit_cod = mold.mold_modem)
-// 		left join modelos_itens as cd on cd.mdit_cod = mold.mold_cdrom)
-// 		left join modelos_itens as grav on grav.mdit_cod = mold.mold_grav)
-// 		left join modelos_itens as dvd on dvd.mdit_cod = mold.mold_dvd)
-// 		left join modelos_itens as mb on mb.mdit_cod = mold.mold_mb)
-// 		left join modelos_itens as memo on memo.mdit_cod = mold.mold_memo)
-// 		left join modelos_itens as som on som.mdit_cod = mold.mold_som)
-//
-// 		left join instituicao as inst on inst.inst_cod = mold.mold_inst)
-// 		left join localizacao as loc on loc.loc_id = mold.mold_local),
-//
-//
-// 		marcas_comp as model, tipo_equip as equip
-// 	WHERE
-//
-// 		(mold.mold_tipo_equip = equip.tipo_cod) and
-// 		(mold.mold_marca = model.marc_cod) order by fab_nome";
 
 	$queryA = "SELECT ".
 		"mold.mold_marca as padrao, mold.mold_inv as etiqueta, mold.mold_sn as serial, mold.mold_nome as nome, ".
@@ -205,7 +134,7 @@
 				$trClass = "lin_impar";
 			}
 			$j++;
-			print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 			print "<td class='line'>".$row['fab_nome']." ".$row['modelo']."</td>";
 			print "<td class='line'>".$row['equipamento']."</td>";

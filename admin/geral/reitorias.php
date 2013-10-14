@@ -31,17 +31,17 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],1);
 
-	print "<BR><B>Reitorias:</B><BR>";
+	print "<BR><B>".TRANS('COL_MAJOR')."s:</B><BR>";
 
 	$query = "SELECT * from reitorias order by reit_nome";
         $resultado = mysql_query($query);
 
 	if ((!isset($_GET['action'])) and !isset($_POST['submit'])) {
 
-        print "<TD align='right'><a href='reitorias.php?action=incluir'>Incluir reitoria.</a></TD><BR>";
+        print "<TD align='right'><a href='".$_SERVER['PHP_SELF']."?action=incluir'>".TRANS('TXT_INCLUDE_MAJOR').".</a></TD><BR>";
         if (mysql_numrows($resultado) == 0)
         {
-                echo mensagem("Não existem reitorias cadastradas no sistema!");
+                echo mensagem(TRANS('MSG_NOT_MAJOR_IN_SYSTEM'));
         }
         else
         {
@@ -49,9 +49,9 @@
                 $cor1=TD_COLOR;
                 $linhas = mysql_numrows($resultado);
                 print "<td class='line'>";
-                print "Existe(m) <b>".$linhas."</b> reitoria(s) cadastrado(s) no sistema.<br>";
+                print "".TRANS('THERE_IS_ARE')." <b>".$linhas."</b> ".TRANS('TXT_MAJOR_IN_SYSTEM')."<br>";
                 print "<TABLE border='0' cellpadding='5' cellspacing='0'  width='50%'>";
-                print "<TR class='header'><td class='line'>Reitoria</TD><td class='line'><b>Alterar</b></TD><td class='line'><b>Excluir</b></TD>";
+                print "<TR class='header'><td class='line'>".TRANS('COL_MAJOR')."</TD><td class='line'><b>".TRANS('COL_EDIT')."</b></TD><td class='line'><b>".TRANS('COL_DEL')."</b></TD>";
                 $j=2;
                 while ($row=mysql_fetch_array($resultado))
                 {
@@ -65,10 +65,10 @@
                         }
                         $j++;
 
-                        print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-						print "<td class='line'>".$row['reit_nome']."</TD>";
-                        print "<td class='line'><a onClick=\"redirect('reitorias.php?action=alter&cod=".$row['reit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='Editar o registro'></a></TD>";
-                        print "<td class='line'><a onClick=\"confirma('Tem Certeza que deseja excluir essa reitoria do sistema?','reitorias.php?action=excluir&cod=".$row['reit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></a></TD>";
+                        print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<td class='line'>".$row['reit_nome']."</TD>";
+                        print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cod=".$row['reit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></TD>";
+                        print "<td class='line'><a onClick=\"confirma('".TRANS('MSG_DEL_MAJOR_SYSTEM')."','".$_SERVER['PHP_SELF']."?action=excluir&cod=".$row['reit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
                         print "</TR>";
 				}
                 print "</TABLE>";
@@ -77,16 +77,16 @@
 	} else
 	if ((isset($_GET['action'])  && $_GET['action']=="incluir") && (!isset($_POST['submit']))) {
 
-		print "<B>Cadastro de Reitorias:<br><a href='reitorias.php'>Listagem Geral</a>  <br>";
+		print "<B>".TRANS('TTL_CAD_MAJOR').":<br><a href='".$_SERVER['PHP_SELF']."'>".TRANS('TXT_LIST_GENERAL')."</a>  <br>";
 		print "<form name='incluir' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' width='50%'>";
 		print "<tr>";
-		print "<td width='10%'bgcolor=".TD_COLOR.">Reitoria</td><td class='line'><input type='text' class='text' name='descricao' id='idDesc'></td>";
+		print "<td width='10%'bgcolor=".TD_COLOR.">".TRANS('COL_MAJOR')."</td><td class='line'><input type='text' class='text' name='descricao' id='idDesc'></td>";
 		print "</tr>";
 
-		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='Incluir'></td>";
+		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_INCLUDE')."'></td>";
 
-		print "<td class='line'><input type='reset'  class='button' name='reset' value='Cancelar' onclick=\"javascript:history.back()\"></td></tr>";
+		print "<td class='line'><input type='reset'  class='button' name='reset' value='".TRANS('BT_CANCEL')."' onclick=\"javascript:history.back()\"></td></tr>";
 
 		print "</table>";
 		print "</form>";
@@ -97,17 +97,17 @@
 		$exec = mysql_query($qry);
 		$rowAlter = mysql_fetch_array($exec);
 
-		print "<B>Alteração do nome da reitoria:<br>";
+		print "<B>".TRANS('TTL_ALTER_NAME_MAJOR').":<br>";
 		print "<form name='alter' method='post'  action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		print "<TABLE border='0' cellpadding='1' cellspacing='0' width='50%'>";
 		print "<tr>";
-		print "<td bgcolor=".TD_COLOR."><b>Reitoria</b></td><td class='line'><input type='text' class='text' name='descricao' id='idDesc' value='".$rowAlter['reit_nome']."'>";
+		print "<td bgcolor=".TD_COLOR."><b>".TRANS('COL_MAJOR')."</b></td><td class='line'><input type='text' class='text' name='descricao' id='idDesc' value='".$rowAlter['reit_nome']."'>";
 
 		print " <input type='hidden' name='cod' value='".$_GET['cod']."'></td>";
 		print "</tr>";
 
-		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='Alterar'></td>";
-		print "<td class='line'><input type='reset' name='reset'  class='button' value='Cancelar' onclick=\"javascript:history.back()\"></td></tr>";
+		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_ALTER')."r'></td>";
+		print "<td class='line'><input type='reset' name='reset'  class='button' value='".TRANS('BT_CANCEL')."' onclick=\"javascript:history.back()\"></td></tr>";
 
 		print "</table>";
 		print "</form>";
@@ -119,80 +119,58 @@
 		$exec = mysql_query($qry);
 		$linhas = mysql_numrows($exec);
 		if ($linhas!=0) {
-			print "<script>mensagem('Essa reitoria não pode ser excluída pois existem departamentos associados a ela');
-					redirect('reitorias.php')</script>";
+			print "<script>mensagem('".TRANS('MSG_NOT_DEL_MAJOR_DEP_ASSOC')."');
+					redirect('".$_SERVER['PHP_SELF']."')</script>";
 		} else {
 
 
 
 			$qry = "DELETE FROM reitorias where reit_cod = ".$_GET['cod']."";
-			$exec = mysql_query($qry) or die ('Erro na tentativa de deletar o registro!');
-			?>
-			<script language="javascript">
-			<!--
-				mensagem('Registro excluído com sucesso!');
-				window.opener.location.reload();
-				window.location.href='reitorias.php';
-			//-->
-			</script>
-			<?
+			$exec = mysql_query($qry) or die (TRANS('MSG_ERR_DEL_REG'));
+
+			print "<script>mensagem('".TRANS('OK_DEL')."'); window.opener.location.reload(); window.location.href='".$_SERVER['PHP_SELF']."';</script>";
+
 		}
 	} else
 
-	if ($_POST['submit']=="Incluir"){
+	if ($_POST['submit']== TRANS('BT_INCLUDE')){
 		if (!empty($_POST['descricao'])){
 			$qry = "select * from reitorias where reit_nome = '".$_POST['descricao']."'";
 			$exec= mysql_query($qry);
 			$achou = mysql_numrows($exec);
 			if ($achou){
-				?>
-				<script language="javascript">
-				<!--
-					mensagem('Essa reitoria já está cadastrada no sistema!');
-					history.go(-2)();
-				//-->
-				</script>
-				<?
+
+				print "<script>mensagem('".TRANS('MSG_MAJOR_EXIST_IN_SYSTEM')."'); history.go(-2)();</script>";
+
 			} else {
 
 				//$data = str_replace("-","/",$data);
 				//$data = converte_dma_para_amd($data);
 
 				$qry = "INSERT INTO reitorias (reit_nome) values ('".noHtml($_POST['descricao'])."')";
-				$exec = mysql_query($qry) or die ('Erro na inclusão do registro!'.$qry);
-				print "<script>mensagem('Dados incluídos com sucesso!');window.opener.location.reload(); redirect('reitorias.php');</script>";
+				$exec = mysql_query($qry) or die (TRANS('MSG_ERR_INCLUDE_REG'). $qry);
+				print "<script>mensagem('".TRANS('MSG_DATA_INCLUDE_OK')."');window.opener.location.reload(); redirect('".$_SERVER['PHP_SELF']."');</script>";
 				}
 		} else {
-				print "<script>mensagem('Dados incompletos!'); redirect('reitorias.php');</script>";
+				print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."!'); redirect('".$_SERVER['PHP_SELF']."');</script>";
 		}
 
 	} else
 
-	if ($_POST['submit'] = "Alterar"){
+	if ($_POST['submit'] = TRANS('BT_ALTER')){
 		if ((!empty($_POST['descricao']))){
 
 				//$data = str_replace("-","/",$data);
 				//$data = converte_dma_para_amd($data);
 			$qry = "UPDATE reitorias set reit_nome='".noHtml($_POST['descricao'])."' where reit_cod=".$_POST['cod']."";
-			$exec= mysql_query($qry) or die('Não foi possível alterar os dados do registro!'.$qry);
-				?>
-				<script language="javascript">
-				<!--
-					mensagem('Dados alterados com sucesso!');
-					window.opener.location.reload();
-					history.go(-2)();
-				//-->
-				</script>
-				<?
+			$exec= mysql_query($qry) or die(TRANS('MSG_NOT_ALTER_REG'). $qry);
+
+				print "<script>mensagem('".TRANS('MSG_DATA_INCLUDE_OK')."'); window.opener.location.reload(); history.go(-2)();</script>";
+
 		} else {
-			?>
-			<script language="javascript">
-			<!--
-				mensagem('Dados incompletos!');
-				history.go(-2)();
-			//-->
-			</script>
-			<?
+
+			print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."s!'); history.go(-2)(); </script>";
+
 		}
 	}
 

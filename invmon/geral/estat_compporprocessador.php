@@ -23,7 +23,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -40,19 +40,19 @@
 	$linhasInst = mysql_num_rows($resultadoInst);
 
 		print "<div id='Layer2' style='position:absolute; left:80%; top:176px; width:15%; height:40%; z-index:2; '>";//  <!-- Ver: overflow: auto    não funciona para o Mozilla-->
-			print "<b>Unidade:</font></font></b>";
+			print "<b>".TRANS('OCO_FIELD_UNIT').":</font></font></b>";
 			print "<FORM name='form1' method='post' action='".$_SERVER['PHP_SELF']."'>";
 			$sizeLin = $linhasInst+1;
 			print "<select style='background-color: ".$cor3."; font-family:tahoma; font-size:11px;' name='instituicao[]' size='".$sizeLin."' multiple='yes'>";
 
 
-			print "<option value='-1' selected>TODAS</option>";
+			print "<option value='-1' selected>".TRANS('ALL')."</option>";
 			while ($rowInst = mysql_fetch_array($resultadoInst))
 			{
 				print "<option value='".$rowInst['inst_cod']."'>".$rowInst['inst_nome']."</option>";
 			}
 			print "</select>";
-			print "<br><input style='background-color: ".$cor1."' type='submit' class='button' value='Aplicar' name='OK'>";
+			print "<br><input style='background-color: ".$cor1."' type='submit' class='button' value='".TRANS('BT_APPLY')."' name='OK'>";
 
 			print "</form>";
 		print "</div>";
@@ -71,7 +71,7 @@
 		if (($saida=="")||($saida=="-1")) {
 			$clausula = "";
 			$clausula2 = "";
-			$msgInst = "TODAS";
+			$msgInst = TRANS('ALL');
 		} else {
 			$sqlA ="select inst_nome as inst from instituicao where inst_cod in (".$saida.")";
 			$resultadoA = mysql_query($sqlA);
@@ -103,12 +103,12 @@
 
 			print "<tr><td class='line'></TD></tr>";
 			print "<tr><td class='line'></TD></tr>";
-			print "<tr><td width='80%' align='center'><b>Quantidade de computadores por processador. <p>Unidade: ".$msgInst.".</p></b></td></tr>";
+			print "<tr><td width='80%' align='center'><b>".TRANS('TTL_QTD_COMP_PROCESSOR')." <p>".TRANS('OCO_FIELD_UNIT').": ".$msgInst.".</p></b></td></tr>";
 
 			print "<td class='line'>";
-			print "<fieldset><legend>Computadores X processador</legend>";
+			print "<fieldset><legend>".TRANS('TTL_COMP_X_PROCESSOR')."</legend>";
 			print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='80%' bgcolor='".$cor3."'>";
-			print "<TR><TD bgcolor='".$cor3."'><b>Equipamento</TD><TD bgcolor='".$cor3."'><b>Processador</TD><TD bgcolor='".$cor3."'><b>Quantidade</TD><TD bgcolor='".$cor3."'><b>Percentual</TD></tr>";
+			print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('MNL_CAD_EQUIP')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('MNL_PROC')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_QTD')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_PORCENTEGE')."</TD></tr>";
 
 			$i=0;
 			$j=2;
@@ -126,7 +126,7 @@
 					print "</TR>";
 					$i++;
 			}
-			print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>Total: <font color='red'>".$totalFull."</font></TD><TD bgcolor='".$cor3."'><b>100%</b></TD></tr>";
+			print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>".TRANS('TOTAL').": <font color='red'>".$totalFull."</font></TD><TD bgcolor='".$cor3."'><b>100%</b></TD></tr>";
 			print "</TABLE>";
 			print "</fieldset>";
 
@@ -144,7 +144,7 @@
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
 
-		print "<tr><td width='80%' align='center'><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+		print "<tr><td width='80%' align='center'><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
 		print "</TABLE>";
 
 print "</BODY>";

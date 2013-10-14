@@ -57,6 +57,9 @@
 
 	if (isset($_POST['submit']))
 	{
+
+		print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+
 		//TESTA A EXPRESSÃO: IMPORTANTE CASO O JAVASCRIPT NÃO ESTEJA HABILITADO!
 		if (!valida(TRANS('OCO_FIELD_TAG'), $_POST['numero'], 'ETIQUETA', 1, $ERRO)) {
 			print "<script>mensagem('".$ERRO."'); history.back();</script>";
@@ -113,9 +116,13 @@
 						$imgSub = "";
 
 					//print "<TR class='".$trClass."'>";
-					//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-					print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
-						print "<td class='line'><a href='mostra_consulta.php?numero=".$row['numero']."'>".$row['numero']."</a>".$imgSub."</TD>";
+					print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+
+						print "<td class='line'><a onClick=\"ajaxFunction('idDivDetails', 'mostra_consulta.php', 'idLoad', 'numero=idNumero".$j."','INDIV=idINDIV');\">".$row['numero']."</a>".$imgSub."</TD>";
+						print "<input type='hidden' name='numeroAjax".$j."' id='idNumero".$j."' value='".$row['numero']."'>";
+						print "<input type='hidden' name='INDIV' id='idINDIV' value='INDIV'>";
+
+						//print "<td class='line'><a href='mostra_consulta.php?numero=".$row['numero']."'>".$row['numero']."</a>".$imgSub."</TD>";
 						print "<td class='line'>".$row['problema']."</TD>";
 						print "<td class='line'>".$row['contato']."</TD>";
 						print "<td class='line'>".$row['setor']."</TD>";
@@ -124,6 +131,10 @@
 					print "</tr>";
 					$j++;
 				}
+
+
+			print "<tr><td colspan='6'><div id='idDivDetails'></div></td></tr>";
+
 			}
 			print "</TABLE>";
 			print "</FORM>";

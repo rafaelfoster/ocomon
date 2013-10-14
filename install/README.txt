@@ -1,48 +1,60 @@
 #
-# OcoMon - versão 2.0 Alpha1
-# Data: Maio de 2007
-# Autor: Flávio Ribeiro (flavio@unilasalle.edu.br)
+# OcoMon - versão 2.0rc3_testing
+# Data: Agosto de 2008
+# Autor: Flávio Ribeiro (flaviorib@gmail.com)
 #
 # Linceça: GPL
 #
 
-Requisitos:
+REQUISITOS:
+============
+
+    * Sistema Operacional: Independente;
     * Servidor Web (preferencialmente Apache);
-    * Linguagem: PHP versão: >= 4.3x, HTML, CSS, Javascript;
-    * Banco de dados: MySQL versão: >= 4.1x;
+    * Linguagem: PHP versão:4.3x ou superior, HTML, CSS, Javascript;
+    * Banco de dados: MySQL versão: 4.1x ou superior;
+    * Navegador: Embora o sistema também funcione no Internet Explorer (com algumas limitações de layout), recomendo fortemente
+    	a utilização do mesmo no Firefox. Os principais testes do Ocomon são realizados utilizando o Firefox pois é um navegador multi-plataforma
+    	e bastante confiável. USE O OCOMON COM O FIREFOX!! :-)
 
 Notas importantes:
 
     * Para o sistema funcionar adequadamente é necessário que seu navegador permita que sistema rode funções
 		javascript e aceite cookies do sistema.
     * Para a visualização dos gráficos é necessário que o PHP esteja compilado com suporte à biblioteca GD;
-    * Para o upload de arquivos é necessário que essa propriedade esteja habilitada no arquivo de configurações do PHP (php.ini);
-    * Para que o sistema envie e-mails será necessário ter um servidor SMTP interno para possibilitar essa funcionalidade;
-    * Recomendo fortemente que o sistema seja utilizado com o navegador Firefox, onde o mesmo é largamente testado. Há vários problemas conhececidos relacionados ao uso do Ocomon no Internet Explorer.
-    * Após instalar o sistema, é recomendado que você remova a pasta install.
+    * Para o upload de imagens é necessário que essa propriedade esteja habilitada no arquivo de configurações do PHP (php.ini);
+    * Para o envio de e-mails o Ocomon pode utilizar um SMTP especificado por você. Caso você desabilite a opção de SMTP os e-mails
+    		serão enviados utilizando a função "mail" do PHP e o arquivo php.ini deve estar configurado corretamente para funcionar de
+    		maneira adequada.
 
-
-Instalação (considerando que você ainda não tenha o Ocomon instalado)
+INSTALAÇÃO
 ==========
 
-Copiar o diretório 'ocomon' para o seu web server (/usr/local/apache2/htdocs/ usualmente no FreeBSD ou var/www/htdocs, em sistemas Linux com Apache).
+Primeira instalação:
+
+Copiar o diretório 'ocomon_XX' para o seu web server (/usr/local/apache2/htdocs/ usualmente no FreeBSD ou var/www/html, em sistemas Linux com Apache).
 As permissões dos arquivos podem ser as default do seu servidor, apenas o diretório /includes/logs deve ter permissão de escrita
 para todos os usuários, pois é o diretório onde são gravados os arquivos de log do sistema.
 
+Criar um novo banco de dados no MySQL e nomeá-lo: 'ocomon' (ou qualquer ou nome sugestivo). É recomendável a criação de um usuário
+específico, no banco de dados, para manipulação da base do Ocomon.
 
-Criar um novo banco de dados no MySQL e nomeá-lo: 'ocomon'
+Ex:
+GRANT USAGE ON * . * TO 'ocomon_user'@'localhost' IDENTIFIED BY 'senha' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 ;
+GRANT SELECT , INSERT , UPDATE , DELETE ON `base_ocomon` . * TO 'ocomon_user'@'localhost';
+
 Dentro do diretório do MYSQL no seu servidor digite:
 mysql -u USERNAME -p create database ocomon
 
 Para a criação das tabelas, você precisa apenas rodar um único arquivo SQL para popular a base do sistema:
-o arquivo é: DB_OCOMON_2.0_FULL.sql (em ocomon/install/2.0/)
+o arquivo é: DB_OCOMON_2.0rc3_TESTING_FULL.sql (em ocomon/install/testing/)
 
-Você pode executar o script àcima através do próprio mysql (seguindo o mesmo procedimento citado abaixo) ou através de qualquer
+Você pode executar o script acima através do próprio mysql (seguindo o mesmo procedimento citado abaixo) ou através de algum
 gerenciador gráfico como o phpMyAdmin por exemplo.
 
 Você também pode rodar o script citado da seguinte forma:
 Dentro do diretório do MYSQL no seu servidor digite:
-mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0_FULL.sql (considerando que o script está dentro do diretório do mysql)
+mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0rc3_TESTING_FULL.sql (considerando que o script está dentro do diretório do mysql)
 
 Onde:
 	USERNAME=nome do usuário "root" do MySQL
@@ -51,33 +63,24 @@ Onde:
 	Você deverá digitar a senha de root para iniciar a execução dos scripts.
 
 
-Atualização (considerando que você já tenha a versão 1.40 instalada em seu ambiente)
-==============
-
-A atualização da versão do Ocomon 1.40 para a versão 2.0 é bastante simples, bastando sobreescreever todos os scripts do sistema e atualizar a base de dados. Para isso, recomendo que seja feito da seguinte forma:
-
-1 - Crie um backup do seu banco de dados do ocomon, essa é uma medida preventiva e sempre recomendada. Assim, em caso de problemas durante a atualização será possível retornar o banco no seu estágio anterior (funcionando!).
-
-2 - Dentro do pacote 2.0 do Ocomon, há um script de atualização da base 1.40 para a base 2.0. Acesse esse arquivo em ocomon/install/2.0/UPDATE_FROM_1.40_TO_2.0.SQL (é recomendável que você importe esse arquivo utilizando o phpMyAdmin, sendo assim, nas opções de importação selecione "latin1" para o conjunto de caracteres do arquivo).
-
-3 - Renomeie (não delete) a pasta ocomon (que está instalado no seu ambiente). Essa é uma medida de segurança caso você tenha realizado algum tipo de costumização no sistema, assim não perderá seus scripts.
-
-4 - Descompacte o pacote do Ocomon no mesmo diretório raiz onde você tinha a versão 1.40 rodando (que você renomeou no passo anterior).
-
-5 - Copie o arquivo config.inc.php da pasta antiga do Ocomon e cole no seu novo ocomon (ocomon/includes/).
-
-Cuidados a serem tomados:
-- Até a versão 1.40 a definição do endereço do seu site interno para acesso ao Ocomon era no arquivo config.inc.php. Na versão 2.0 essa definição deve ser feita no menu Admin->Configurações->Configurações gerais.
+Após a instalação, é recomendável a exclusão da pasta "install" dentro de ocomon/install;
 
 
-Configuração
+Atualização:
+
+Caso esteja atualizando apartir da versão 2.0a, a base a ser importada é a DB_UPDATE_FROM_2.0a.sql.
+
+
+CONFIGURAÇÃO
 ============
 
-As credenciais para conexão com o banco devem ser informadas no arquivo de configuração do Ocomon: config.inc.php
-você não conseguirá utilizar o OCOMON até ter configurado esse arquivo. Para isso é necessário criar uma cópia do arquivo
-config.inc.php-dist e renomeá-lo para config.inc.php. Quanto à sua configuração, o arquivo é auto-explicativo. :-)
+Todas as configurações necessárias deverao ser feitas no arquivo config.inc.php e no menu Admin->Configurações.
+você não conseguirá utilizar o OCOMON até ter configurado o arquivo config.inc.php. Para isso é necessário criar uma cópia do arquivo
+config.inc.php-dist e renomeá-lo para config.inc.php. Quanto à sua configuração, o arquivo é auto-explicativo. :)
 
-Iniciando o uso do OCOMON (primeira instalação):
+Iniciando o uso do OCOMON:
+
+Passo a passo:
 
 ACESSO
 usuário: admin
@@ -86,37 +89,53 @@ senha: admin (Não esqueça de alterar esse senha tão logo tenha acesso ao sistema
 Novos usuários podem ser criados no menu ADMIN-USUÁRIOS
 
 
-Infelizmente ainda não tive tempo de criar uma documentação do sistema, espero conseguir realizar essa tarefa com a ajuda da comunidade de usuários :-)
 
-Você pode obter maiores informações através dos seguintes meios:
-- Lista de discussão: http://svrmail.lasalle.tche.br/mailman/listinfo/ocomon-l
-- Fórum do sistema: http://softwarelivre.unilasalle.edu.br/ocomon_forum
+IMPORTANTE!!
+==============
+
+CONFIGURAÇÃO DE ABERTURA DE CHAMADOS PELO USUÁRIO FINAL:
+
+Para a abertura de chamados funcionar adequadamente é necessário observar os seguintes pontos:
+
+	1 - Cadastre uma nova área de atendimento, e desmarque a opção "Presta atendimento". Essa área será criada
+		especificamente pára abertura de chamados. O e-mail dessa área não precisa ser um e-mail válido pois
+		não será utilizado pelo sistema.
+
+	2 - Configure a área criada como "Área de nível somente abertura".
+
+	3 - Para cadastrar usuários como somente abertura de chamados, utilize o auto-cadastro na tela de login do sistema.
+		Se for cadastrar manualmente cada usuário de abertura observe que o nível deve ser definido como "Somente abertura"
+		e a área deve ser a área criada para abertura de chamados sem definições de áreas secundárias.
+
+
+	AGENDAMENTO DE CHAMADOS:
+
+	Para o controle de SLAs funcionar adequadamente, é necessário a criação de mais dois STATUS
+	(menu Admin->Ocorrências->Status) específicos, um para ser utilizado automaticamente no agendamento de chamados na
+	abertura dos mesmos e outro para ser utilizado automaticamente no agendamento de chamados já abertos(na edição).
+
+	- O status a ser criado para agendamento na abertura deverá, OBRIGATORIAMENTE, ter dependência igual a "SERVIÇO DE TERCEIROS" ou
+	"A ÁREA TÉCNICA".
+
+	- O status a ser criado para agendamento na edição deverá, OBRIGATORIAMENTE, ter dependência igual a "INDEPENDENTE" ou
+	"AO USUÁRIO".
+
+	Os status criados deverão ser utilizados no menu Admin->Configurações->Agendamento de chamados
+
+
+
+DOCUMENTAÇÃO:
+=============
+
+Atualmente, a principal fonte de documentação do sistema é o Fórum (http://softwarelivre.unilasalle.edu.br/ocomon_forum/). Além
+deste, há também a lista de discussão (http://svrmail.lasalle.tche.br/mailman/listinfo/ocomon-l).
+
 
 Espero que esse sistema lhe seja útil e lhe ajude no seu gerenciamento de suporte e equipamentos de informática
-da mesma forma que nos ajuda aqui no Unilasalle.
+da mesma forma que já ajuda uma série de empresas no Brasil.
 
 Bom uso!! :)
 
 Flávio Ribeiro
-flavio@unilasalle.edu.br
-
-
-
-=======================
-Ocomon 2.0 Alpha1 - Know Issues
-=======================
-
-Essa versão do Ocomon é uma versão Alpha e ainda está em desenvolvimento, portanto ainda há uma série de detalhes que precisam ser ajustados até a liberação da versão 2.0 Final.
-
-Descrevo a seguir as principais situações que precisam e deverão ser ajustadas até a versão 2.0 Final:
-
-- Suporte a múltiplos idiomas: essa característica ainda não está 100% pois ainda existem alguns scripts que não estão com esse suporte.
-
-- Compatibilidade com o Internet Explorer: ainda é necessário uma série de ajustes para possibilitar o correto funcionamento nesse navegador. Recomendo fortemente que seja utilizado o navegador Firefox.
-
-- No cadastro de feriados, a opção "permanente" ainda não está sendo considerada para o cálculo de horas válidas.
-
-- Há também uma série de detalhes menores que deverão ser ajustados até o fechamento da release 2.0.
-
-
+flaviorib@gmail.com
 

@@ -79,7 +79,65 @@
 				print "</tr>";
 				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
-						print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+				print "<tr><td colspan='2'><b>".TRANS('OPT_DATE_EDIT','EDIÇÃO DE DATAS')."</b></td></tr>";
+				print "<tr><td>".TRANS('OPT_ALLOW_DATE_EDIT','PERMITE QUE O ADMINISTRADOR ALTERE AS DATAS MANUALMENTE')."</td>";
+					if ($row['conf_allow_date_edit']) {
+						$allowDateEd = " checked ";
+					} else {
+						$allowDateEd = "";
+					}
+					print "<td><input type='checkbox' name='allowDateEdit' ".$allowDateEd." disabled</td></tr>";
+
+
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+
+				print "<tr><td colspan='2'><b>".TRANS('OPT_SCHEDULE')."</b></td></tr>";
+
+				$sqlStatus = "SELECT * FROM `status` WHERE stat_id=".$row['conf_schedule_status']."";
+				$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+				$rowStatus = mysql_fetch_array($execStatus);
+
+				print "<tr><td>".TRANS('OPT_SCHEDULE_STATUS')."</td>";
+				print "<td>".$rowStatus['status']."</td>";
+				print "</tr>";
+
+				//print "<tr><td colspan='2'>&nbsp;</td></tr>";
+				$sqlStatus = "SELECT * FROM `status` WHERE stat_id=".$row['conf_schedule_status_2']."";
+				$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+				$rowStatus = mysql_fetch_array($execStatus);
+
+				print "<tr><td>".TRANS('OPT_SCHEDULE_STATUS_2')."</td>";
+				print "<td>".$rowStatus['status']."</td>";
+				print "</tr>";
+
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+				print "<tr><td colspan='2'><b>".TRANS('OPT_FOWARD_STATUS')."</b></td></tr>";
+
+				print "<tr><td>".TRANS('SEL_FOWARD_STATUS')."</td>";
+					$sqlStatus = "SELECT * FROM `status` WHERE stat_id=".$row['conf_foward_when_open']."";
+					$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+					$rowStatus = mysql_fetch_array($execStatus);
+
+				print "<td>".$rowStatus['status']."</td>";
+				print "</tr>";
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+
+
+				print "<tr><td colspan='2'><b>".TRANS('OPT_REOPEN')."</b></td></tr>";
+				print "<tr><td>".TRANS('OPT_ALLOW_REOPEN')."</td>";
+					if ($row['conf_allow_reopen']) {
+						$allow = " checked ";
+					} else {
+						$allow = "";
+					}
+					print "<td><input type='checkbox' name='allowReopen' ".$allow." disabled</td></tr>";
+
+
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 				print "<tr><td colspan='2'><b>".TRANS('OPT_UPLOAD_TYPE')."</b></td></tr>";
 
 
@@ -127,6 +185,22 @@
 					$oco = "";
 				}
 				print "<input type='checkbox' name='formatOco' ".$oco." disabled</td></tr>";
+
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
+				print "<tr><td colspan='2'><b>".TRANS('OPT_SEND_MAIL_WRTY')."</b></td></tr>";
+				print "<tr><td>".TRANS('OPT_DAYS_BEFORE')."</td>";
+				print "<td>".$row['conf_days_bf']."</td></tr>";
+
+
+				$sqlArea = "SELECT * FROM sistemas WHERE sis_id = '".$row['conf_wrty_area']."'";
+				$execArea = mysql_query($sqlArea) OR die($sqlArea);
+				$rowA = mysql_fetch_array($execArea);
+
+				print "<tr><td>".TRANS('OPT_SEL_AREA','ÁREA QUE RECEBE OS E-MAILS')."</td>";
+				print "<td>".$rowA['sistema']."</td>";
+				print "</tr>";
+
+
 
 				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 				print "<tr><td colspan='2'><b>".TRANS('OPT_PROB_CATEG')."</b></td></tr>";
@@ -193,6 +267,85 @@
 		print "</tr>";
 
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+
+		print "<tr><td colspan='2'><b>".TRANS('OPT_DATE_EDIT')."</b></td></tr>";
+		print "<tr><td>".TRANS('OPT_ALLOW_DATE_EDIT')."</td>";
+			if ($row['conf_allow_date_edit']) {
+				$allowDateEd = " checked ";
+			} else {
+				$allowDateEd = "";
+			}
+			print "<td><input type='checkbox' name='allowDateEdit' ".$allowDateEd." </td></tr>";
+
+
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+		print "<tr><td colspan='2'><b>".TRANS('OPT_SCHEDULE')."</b></td></tr>";
+
+		print "<tr><td>".TRANS('OPT_SCHEDULE_STATUS')."</td>";
+		print "<td><select name='schedule_status' id='idScheduleStatus' class='select'>";
+			$sqlStatus = "SELECT * FROM `status` ORDER BY status";
+			$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+			while ($rowStatus = mysql_fetch_array($execStatus)) {
+				print "<option value='".$rowStatus['stat_id']."' ";
+					if ($rowStatus['stat_id'] == $row['conf_schedule_status'])
+						print " selected";
+					print ">".$rowStatus['status']."</option>";
+			}
+
+		print "</select>";
+		print "</td>";
+		print "</tr>";
+
+		print "<tr><td>".TRANS('OPT_SCHEDULE_STATUS_2')."</td>";
+		print "<td><select name='schedule_status_2' id='idScheduleStatus2' class='select'>";
+			$sqlStatus = "SELECT * FROM `status` ORDER BY status";
+			$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+			while ($rowStatus = mysql_fetch_array($execStatus)) {
+				print "<option value='".$rowStatus['stat_id']."' ";
+					if ($rowStatus['stat_id'] == $row['conf_schedule_status_2'])
+						print " selected";
+					print ">".$rowStatus['status']."</option>";
+			}
+
+		print "</select>";
+		print "</td>";
+		print "</tr>";
+
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+		print "<tr><td colspan='2'><b>".TRANS('OPT_FOWARD_STATUS')."</b></td></tr>";
+
+		print "<tr><td>".TRANS('SEL_FOWARD_STATUS')."</td>";
+		print "<td><select name='foward' id='idFoward' class='select'>";
+			$sqlStatus = "SELECT * FROM `status` ORDER BY status";
+			$execStatus = mysql_query($sqlStatus) OR die($sqlStatus);
+			while ($rowStatus = mysql_fetch_array($execStatus)) {
+				print "<option value='".$rowStatus['stat_id']."' ";
+					if ($rowStatus['stat_id'] == $row['conf_foward_when_open'])
+						print " selected";
+					print ">".$rowStatus['status']."</option>";
+			}
+
+		print "</select>";
+		print "</td>";
+		print "</tr>";
+
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+		print "<tr><td colspan='2'><b>".TRANS('OPT_REOPEN')."</b></td></tr>";
+		print "<tr><td>".TRANS('OPT_ALLOW_REOPEN')."</td>";
+			if ($row['conf_allow_reopen']) {
+				$allow = " checked ";
+			} else {
+				$allow = "";
+			}
+			print "<td><input type='checkbox' name='allowReopen' ".$allow."</td></tr>";
+
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+
 		print "<tr><td colspan='2'><b>".TRANS('OPT_UPLOAD_TYPE')."</b></td></tr>";
 
 
@@ -244,6 +397,26 @@
 			$oco = "";
 		}
 		print "<input type='checkbox' name='formatOco' ".$oco." </td></tr>";
+
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+		print "<tr><td colspan='2'><b>".TRANS('OPT_SEND_MAIL_WRTY')."</b></td></tr>";
+		print "<tr><td>".TRANS('OPT_DAYS_BEFORE')."</td>";
+		print "<td><input type='text' class='text' id='idDaysBF' name='daysBF' value='".$row['conf_days_bf']."'</td></tr>";
+
+		print "<tr><td>".TRANS('OPT_SEL_AREA','ÁREA QUE RECEBE OS E-MAILS')."</td>";
+		print "<td><select name='areaRcptMail' id='idAreaRcptMail' class='select'>"; //<input type='text' name='lang' id='idLang' class='text' value='".$row['conf_language']."'></td>";
+			$sqlArea = "SELECT * FROM sistemas WHERE sis_status = 1";
+			$execArea = mysql_query($sqlArea) OR die($sqlArea);
+			while ($rowA = mysql_fetch_array($execArea)) {
+				print "<option value='".$rowA['sis_id']."' ";
+					if ($rowA['sis_id'] == $row['conf_wrty_area'])
+						print " selected";
+					print ">".$rowA['sistema']."</option>";
+			}
+
+		print "</select>";
+		print "</td>";
+		print "</tr>";
 
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 		print "<tr><td colspan='2'><b>".TRANS('OPT_PROB_CATEG')."</b></td></tr>";
@@ -302,6 +475,28 @@
 			$execClean = mysql_query($sqlClean) or die (TRANS('ERR_QUERY'));
 		}
 
+		if (isset($_POST['page'])) {
+			$_SESSION['s_page_size'] = $_POST['page'];
+		}
+
+		if (isset($_POST['allowReopen'])){
+			$allowReopen = 1;
+			$_SESSION['s_allow_reopen'] =1;
+		} else {
+			$allowReopen = 0;
+			$_SESSION['s_allow_reopen'] = 0;
+		}
+
+
+		if (isset($_POST['allowDateEdit'])){
+			$allowDateEdit = 1;
+			$_SESSION['s_allow_date_edit'] =1;
+		} else {
+			$allowDateEdit = 0;
+			$_SESSION['s_allow_date_edit'] = 0;
+		}
+
+
 
 		$FILE_TYPES = "%%IMG%";
 		$FILE_TYPES.=isset($_POST['upld_txt'])?$_POST['upld_txt']."%":"";
@@ -323,12 +518,19 @@
 				"conf_allow_change_theme = '".$allowChangeTheme."', ".
 				"conf_language = '".$_POST['lang']."', ".
 				"conf_upld_file_types = '".$FILE_TYPES."', ".
-				"conf_date_format = '".$_POST['date_format']."' ".
+				"conf_date_format = '".$_POST['date_format']."', ".
+				"conf_days_bf = '".$_POST['daysBF']."', ".
+				"conf_wrty_area = '".$_POST['areaRcptMail']."', ".
+				"conf_allow_reopen = '".$allowReopen."', ".
+				"conf_allow_date_edit = '".$allowDateEdit."', ".
+				"conf_schedule_status = '".$_POST['schedule_status']."', ".
+				"conf_schedule_status_2 = '".$_POST['schedule_status_2']."', ".
+				"conf_foward_when_open = '".$_POST['foward']."' ".
 				" ";
 
 		//print $qry;
 		//exit;
-		$exec= mysql_query($qry) or die(TRANS('ERR_EDIT'));
+		$exec= mysql_query($qry) or die(TRANS('ERR_EDIT').$qry);
 
 		$_SESSION['s_language'] = $_POST['lang'];
 		//print "<script>mensagem('Configuração alterada com sucesso!'); window.open('../../index.php?LOAD=ADMIN','_parent',''); </script>";
@@ -350,6 +552,7 @@
 		if (ok) var ok =  validaForm('idCat1','QUALQUER','CATEGORIA 1',1);
 		if (ok) var ok =  validaForm('idCat2','QUALQUER','CATEGORIA 2',1);
 		if (ok) var ok =  validaForm('idCat3','QUALQUER','CATEGORIA 3',1);
+		if (ok) var ok =  validaForm('idDaysBF','INTEIROFULL','Dias de antecedência',1);
 
 		return ok;
 	}

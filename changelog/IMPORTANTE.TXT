@@ -1,0 +1,5 @@
+ATENÇÃO:
+
+PARA EVITAR ERROS DO TIPO "...headers already sent..." DURANTE O UPLOAD DE IMAGENS, É NECESSÁRIO EDITAR O ARQUIVO DE CONFIGURAÇÕES DO OCOMON (config.inc.php).
+
+REMOVA QUALQUER ESPAÇO QUE EXISTIR ANTES DA TAG <? (primeira tag do arquivo)  E QUALQUER ESPAÇO QUE EXISTIR APÓS A TAG ?>(última tag do arquivo).

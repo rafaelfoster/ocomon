@@ -39,21 +39,12 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 
         $hoje = date("Y-m-d H:i:s");
 
-
-	$qry = "SELECT * FROM ocorrencias WHERE numero = ".$_GET['numero']."";
-	$exec = mysql_query($qry);
-	$rowAb = mysql_fetch_array($exec);
-	$dataAbertura = $rowAb['data_abertura'];
-
-
 	$sql = "SELECT T.ts_ocorrencia as chamado, S.status as status,  sum(T.ts_tempo) as total, sec_to_time(sum(T.ts_tempo)) as tempo, ".
-		"\nSAT.status as status_atual, T.ts_status as codStat, O.status as codStatAtual, T.ts_data as data ".
-		"\nFROM ocorrencias as O, tempo_status as T, `status` as S, `status` as SAT ".
-		"\nWHERE O.numero = T.ts_ocorrencia and S.stat_id = T.ts_status and T.ts_ocorrencia = ".$_GET['numero']." and O.status = SAT.stat_id ".
-		"\nGROUP BY T.ts_ocorrencia, T.ts_status ".
-		"\nORDER BY T.ts_ocorrencia, T.ts_status";
-
-	//dump($sql);
+		"SAT.status as status_atual, T.ts_status as codStat, O.status as codStatAtual, T.ts_data as data ".
+		"FROM ocorrencias as O, tempo_status as T, `status` as S, `status` as SAT ".
+		"WHERE O.numero = T.ts_ocorrencia and S.stat_id = T.ts_status and T.ts_ocorrencia = ".$_GET['numero']." and O.status = SAT.stat_id ".
+		"GROUP BY T.ts_ocorrencia, T.ts_status ".
+		"ORDER BY T.ts_ocorrencia, T.ts_status";
 	$exec_sql = mysql_query($sql);
 	$qtd = mysql_num_rows($exec_sql);
 	$tempoTotalSec = 0;
@@ -64,18 +55,15 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 
 		print "<br><b>Histórico de status para a ocorrência <font color='red'>".$_GET['numero']."</font>:</b><br>";
 		print "<table cellspacing='1' border='1' cellpadding='1' align='left' width='100%'><tr><td class='line'><b>Status</b></td><td class='line'><b>Tempo</b></td></tr>";
-
 		while ($row = mysql_fetch_array($exec_sql)) {
 			$tempoTotalSec+=$row['total'];
 
 			if ($row['codStatAtual'] != 4){
 				if ($row['codStat'] == $row['codStatAtual']) {//Verifico o status atual para buscar a data
 					$data = $row['data']; //só preciso dessa data se o chamado não estiver encerrado!!
-				} else {
-					$data = $dataAbertura;
 				}
 			} else {
-				$data = $dataAbertura;
+			//.....//
 			}
 			$codStatAtual = $row['codStatAtual'];
 			$statAtual = $row['status_atual'];

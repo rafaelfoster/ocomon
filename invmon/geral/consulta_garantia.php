@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -40,23 +40,23 @@
 
 	$dias = date_diff_dias(date("Y-m-d"),$row['vencimento']);
 	if ($dias>=0) {
-		$status='Em garantia';
+		$status=TRANS('TXT_IN_GUARANTEE');
 		$statusColor='green';
-		if ($dias!=1) $s=' dias';  else
+		if ($dias!=1) $s=TRANS('TXT_DAYS');  else
 		$s=' dia';
 		$expira= $dias.$s;
 	}
 	else
 	{
-		$status='Garantia vencida';
+		$status=TRANS('TXT_VANQUISHED_GUARANTEE');
 		$statusColor='red';
-		$expira = 'Expirado';
+		$expira = TRANS('TXT_DIED');
 	}
 
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
 
 	print "<tr><td class='line'>&nbsp;</TD></tr>";
-	print "<tr><td width='100%' align='left'><b>Controle de garantias do fabricante.</b></td></tr>";
+	print "<tr><td width='100%' align='left'><b>".TRANS('SUBTTL_CONTROL_GUARANTEE_FOR_MANUFACTURE')."</b></td></tr>";
 
 	print "<td class='line'>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%' >";
@@ -66,9 +66,8 @@
 
 	if ($linhas == 0) {
 		print "<fieldset>".
-			"<table><p align='center'>Este equipamento <b>não</b> está cadastrado quando ao seu período de garantia! ".
-						"<br>É necessário que o equipamento possua a data de compra e o tempo de garantia cadastrados ".
-						"no sistema!<br><br>".
+			"<table><p align='center'>".TRANS('TXT_GUARANTEE_TEXT_1')." <b>".TRANS('TXT_NO')."</b> ".TRANS('TXT_GUARANTEE_TEXT_2')." ".
+						"<br>".TRANS('TXT_GUARANTEE_TEXT_3')."<br><br>".
 			//"<a href='javascript:self.close()' class='likebutton'>Fechar</a></p>".
 			"</table>".
 			"</fieldset>";
@@ -76,14 +75,14 @@
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%' bgcolor='".$cor3."'>";
 
  		print "<TR>";
-			print "<TD bgcolor='".$cor1."'><b>Etiqueta</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Garantia</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Tipo</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Fornecedor</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Contato</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Vencimento</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Tempo restante</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Status</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('OCO_FIELD_TAG')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('LINK_GUARANT')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('COL_TYPE')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('COL_VENDOR')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('OCO_CONTACT')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('TXT_EXPIRATION')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('TXT_REMAINING_TIME')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('MNL_STATUS')."</b></TD>";
 		print "</tr>";
 
 		print "<TR>";
@@ -98,7 +97,7 @@
 		print "</tr>";
 	}
 		print "<tr><td colspan='8'>&nbsp;</td></tr>";
-		print "<tr><td colspan='8' align='center'><input type='button' class='minibutton' value='Fechar' onClick=\"javascript:self.close()\"</td></tr>";
+		print "<tr><td colspan='8' align='center'><input type='button' class='minibutton' value='".TRANS('LINK_CLOSE')."' onClick=\"javascript:self.close()\"</td></tr>";
 		print "</table>";
 
 

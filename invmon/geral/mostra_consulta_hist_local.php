@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
@@ -38,7 +38,7 @@
 		$dInicio =substr(datam($dInicio),0,10);
 		$dFinal =substr(datam($dFinal),0,10);
 		$clausula = "and h.hist_data between '".$dInicio."' and '".$dFinal."'";
-		$msgData = "no período entre ".$min." e ".$max."";
+		$msgData = "".TRANS('TXT_IN_PERIOD_THIS')." ".$min." e ".$max."";
 	}
 
 	if (isset($_POST['comp_local']) && $_POST['comp_local']!=-1) {
@@ -91,21 +91,21 @@
 		if ($setorOk) {
 			$msg2= $row['locais'];
 		} else {
-			$msg2= "TODOS";
+			$msg2= TRANS('ALL');
 		}
 
 
         if ($linhas == 0)
         {
-		echo mensagem("Não foi encontrado nenhum registro de remanejamento de equipamento do tipo consultado apartir do setor selecionado!<br><a href=consulta_hist_local.php>Voltar</a>");
+		echo mensagem("".TRANS('MSG_NOT_FOUND_REG_EQUIP')."<br><a href=consulta_hist_local.php>".TRANS('TXT_RETURN')."</a>");
 		exit;
 	} else {
 		NL();
-		print "<TR><TD bgcolor='".TD_COLOR."'><B>Foram encontrados <font color=red>".$linhas."</font> registros de equipamentos do tipo </b><i>".$equip."</i><b> que foram remanejados a partir do setor <i><a href=mostra_consulta_comp.php?comp_local=".$row['local_cod']."&ordena=equipamento,fab_nome,modelo,etiqueta title='Exibe a listagem de equipamentos cadastrados no(a) ".$row['locais']."'>".$msg2."</a></i> ".$msgData.".</b></TD></TR>";
+		print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color=red>".$linhas."</font> ".TRANS('TXT_REG_EQUI_THIS_TYPE')." </b><i>".$equip."</i><b> ".TRANS('TXT_REG_EQUI_THIS_TYPE_2')." <i><a href=".$_SERVER['PHP_SELF']."?comp_local=".$row['local_cod']."&ordena=equipamento,fab_nome,modelo,etiqueta title='".TRANS('HNT_LIST_EQUIP_CAD_IN')." ".$row['locais']."'>".$msg2."</a></i> ".$msgData.".</b></TD></TR>";
 	}
 	print "<br><br>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%' >";
-	print "<TR class='header'><td class='line'><b>Etiqueta</TD><td class='line'><b>Unidade</TD><td class='line'><b>Tipo</TD><td class='line'>Modelo</TD><td class='line'><b>Localização atual</TD><td class='line'><b>Histórico</TD>";
+	print "<TR class='header'><td class='line'><b>".TRANS('OCO_FIELD_TAG')."</TD><td class='line'><b>".TRANS('OCO_FIELD_UNIT')."</TD><td class='line'><b>".TRANS('COL_TYPE')."</TD><td class='line'>".TRANS('COL_MODEL')."</TD><td class='line'><b>".TRANS('COL_CURRENT_LOCAL')."</TD><td class='line'><b>".TRANS('MNL_CON_HIST')."</TD>";
         $i=0;
         $j=2;
 	while ($row = mysql_fetch_array($resultado2)) {
@@ -139,12 +139,12 @@
 
 
 		print "<TR class='".$trClass."'>";
-		print "<td class='line'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['instituicao']."' title='Exibe os detalhes de cadastro desse equipamento.'>".$row['etiqueta']."</a></TD>";
-		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_inst=".$row['instituicao']."&ordena=equipamento,fab_nome,modelo,local,etiqueta' title='Exibe a listagem de equipamentos cadastrados para Unidade ".$row['instituicao_nome']."'>".$row['instituicao_nome']."</a></td>";
-		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta' title='Exibe a listagem de todos equipamentos do tipo ".$row['equipamento']." cadastrados no sistema.'>".$row['equipamento']."</a></td>";
-		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['tipo_marca']."&ordena=local,etiqueta' title='Exibe a listagem de todos equipamentos do modelo ".$row['fabricante']." ".$row['modelo']."'>".$row['fabricante']." ".$row['modelo']."</a></td>";
-		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta' title='Exibe a listagem de equipamentos cadastrados no(a) ".$rowB['loc_atual'].".'>".$rowB['loc_atual']."</a></td>";
-		print "<td class='line'><a ".$alerta." href='mostra_historico.php?comp_inst=".$row['instituicao']."&comp_inv=".$row['etiqueta']."' title='Exibe o histórico do equipamento selecionado.'>Histórico</a></td>";
+		print "<td class='line'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['instituicao']."' title='".TRANS('HNT_SHOW_DATEIL_EQUIP_CAD')."'>".$row['etiqueta']."</a></TD>";
+		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_inst=".$row['instituicao']."&ordena=equipamento,fab_nome,modelo,local,etiqueta' title='".TRANS('HNT_LIST_EQUIP_CAD_UNIT')." ".$row['instituicao_nome']."'>".$row['instituicao_nome']."</a></td>";
+		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta' title='".TRANS('HNT_LIST_ALL_EQUIP_TYPE')." ".$row['equipamento']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['equipamento']."</a></td>";
+		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['tipo_marca']."&ordena=local,etiqueta' title='".TRANS('HNT_LIST_ALL_EQUIP_MODEL')." ".$row['fabricante']." ".$row['modelo']."'>".$row['fabricante']." ".$row['modelo']."</a></td>";
+		print "<td class='line'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta' title='".TRANS('HNT_LIST_EQUIP_CAD_IN')." ".$rowB['loc_atual'].".'>".$rowB['loc_atual']."</a></td>";
+		print "<td class='line'><a ".$alerta." href='mostra_historico.php?comp_inst=".$row['instituicao']."&comp_inv=".$row['etiqueta']."' title='".TRANS('HNT_SHOW_HISTORY_EQUIP_SEL')."'>".TRANS('MNL_CON_HIST')."</a></td>";
 		print "</TR>";
 		$i++;
 
@@ -160,7 +160,7 @@
  	}
 
 	else { //Se não for passado o código de inventário e a Unidade como parâmetro!!
-		$aviso = "Dados incompletos, preencha todos os campos de consulta!";
+		$aviso = TRANS('MSG_INCOMPLETE_DATA_CONS_FIELDS');
 		print "<script>mensagem('".$aviso."'); redirect('consulta_hist_local.php');</script>";
 	}
 print "</BODY>";

@@ -216,6 +216,8 @@ print "table.estat80
 
 print "td.barra {padding:5px;} ";
 
+print "td.default {padding:3px;} ";
+
 print "td.wide {padding:8px;} ";
 
 print "td.barraMenu {border-right: thin solid ".$row['tm_color_barra_font'].";}"; //{border-right: thin solid #675E66;}
@@ -255,6 +257,9 @@ print "linha_1 {background-color:".$row['tm_color_lin_impar'].";  padding: 5px;}
 print "linha_2 {background-color:".$row['tm_color_lin_par'].";  padding:5px; }";
 
 print "tr.lin_alerta {background-color:#FF0000; color:yellow;}";
+
+print "tr.lin_alerta_par {background-color:".$row['tm_color_lin_par']."; color:#FF0000; font-style:italic; padding:5px;}";
+print "tr.lin_alerta_impar {background-color:".$row['tm_color_lin_impar']."; color:#FF0000; font-style:italic; padding:5px;}";
 
 print "td.cborda {height: 20px; }"; /*border: 1px solid #a4a4a4;*/
 
@@ -306,8 +311,20 @@ print ".select, .text, .select2, .text2, input.text
 	border: 1px solid #a4a4a4;
 }"; //#F1F1F1
 
+
+print ".select_sol
+{
+	height:20px;
+	background-color:".$formFieldColor.";
+	font-family: tahoma;
+	font-size:11px;
+	width:570px;
+	color: black;
+	border: 1px solid #a4a4a4;
+}";
+
 print ".select:focus, .text:focus, .select2:focus, .text2:focus, input.text:focus, .text3:focus, .textarea:focus, ".
-	".textarea2:focus, .mini:focus, .mini2:focus, .data:focus, .logon:focus, .help:focus
+	".textarea2:focus, .mini:focus, .mini2:focus, .data:focus, .logon:focus, .help:focus, .select_sol:focus
 {
 	background-color:white;
 }";
@@ -559,6 +576,11 @@ print ".alerta
 
 }";
 
+print ".loading
+{
+	position: absolute; top: 150px; left: 50%; width: 50%;  z-index:1;
+
+}";
 
 /*
 ESTILOS PARA AS TOOLTIPS

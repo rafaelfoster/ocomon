@@ -97,6 +97,8 @@
 			print "<tr><td>".TRANS('OPT_SCH_LOCAL','Link: PESQUISA POR LOCAL')."</td><td>".transbool($row['conf_scr_searchbylocal'])."</td></tr>";
 			print "<tr><td>".TRANS('OPT_FIELD_OPERATOR','Campo: OPERADOR')."</td><td>".transbool($row['conf_scr_operator'])."</td></tr>";
 			print "<tr><td>".TRANS('OPT_FIELD_DATE','Campo: DATA')."</td><td>".transbool($row['conf_scr_date'])."</td></tr>";
+			print "<tr><td>".TRANS('OPT_FIELD_SCHEDULE','Campo: AGENDAR')."</td><td>".transbool($row['conf_scr_schedule'])."</td></tr>";
+			print "<tr><td>".TRANS('OPT_FIELD_FOWARD','Campo: ENCAMINHAR')."</td><td>".transbool($row['conf_scr_foward'])."</td></tr>";
 			print "<tr><td>".TRANS('OPT_FIELD_STATUS','Campo: STATUS')."</td><td>".transbool($row['conf_scr_status'])."</td></tr>";
 
 			print "<tr><td>".TRANS('OPT_FIELD_ATTACH','Campo: ANEXAR IMAGEM')."</td><td>".transbool($row['conf_scr_upload'])."</td></tr>";
@@ -337,6 +339,28 @@
 		print "</select></td></tr>";
 
 
+		print "<tr><td>".TRANS('OPT_FIELD_SCHEDULE')."</td><td>";
+		print "<select name='date_schedule' class='select'>";
+		print "<option value='0'";
+		if ($row['conf_scr_schedule'] == 0) print " selected";
+		print ">".TRANS('NOT')."</option>";
+		print "<option value='1'";
+		if ($row['conf_scr_schedule'] == 1) print " selected";
+		print ">".TRANS('YES')."</option>";
+		print "</select></td></tr>";
+
+		print "<tr><td>".TRANS('OPT_FIELD_FOWARD')."</td><td>";
+		print "<select name='foward' class='select'>";
+		print "<option value='0'";
+		if ($row['conf_scr_foward'] == 0) print " selected";
+		print ">".TRANS('NOT')."</option>";
+		print "<option value='1'";
+		if ($row['conf_scr_foward'] == 1) print " selected";
+		print ">".TRANS('YES')."</option>";
+		print "</select></td></tr>";
+
+
+
 		print "<tr><td>".TRANS('OPT_FIELD_STATUS')."</td><td>";//.transbool($row['conf_scr_status'])."</td></tr>";
 		print "<select name='status' class='select'>";
 		print "<option value='0'";
@@ -416,6 +440,8 @@
 				"conf_scr_fone = ".$_POST['telefone'].", conf_scr_local = ".$_POST['local'].", ".
 				"conf_scr_btloadlocal = ".$_POST['loadlocal'].", conf_scr_searchbylocal = ".$_POST['searchlocal']." ,".
 				"conf_scr_operator = ".$_POST['operador'].", conf_scr_date = ".$_POST['data'].", ".
+				"conf_scr_schedule = ".$_POST['date_schedule'].", ".
+				"conf_scr_foward = ".$_POST['foward'].", ".
 				"conf_scr_status = ".$_POST['status'].", conf_scr_replicate = ".$_POST['replicar']." ,".
 				"conf_scr_upload = ".$_POST['upload']." ,".
 				"conf_scr_mail = ".$_POST['mail'].", conf_scr_msg = '".noHtml($_POST['msg'])."' ";

@@ -34,7 +34,7 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Mural de Avisos</B><BR><br>";
+	print "<BR><B>".TRANS('TLT_BOARD_NOTICE')."</B><BR><br>";
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
 	if (!isset($_GET['cellStyle'])) {
@@ -63,21 +63,20 @@
 	if ((!isset($_GET['action'])) && empty($_POST['submit'])) {
 
 		print "<tr><TD bgcolor=".BODY_COLOR.">".
-				//"<a href='avisos.php?action=incluir&cellStyle=true'>Incluir Aviso</a>".
-				"<input type='button' class='button' id='idBtIncluir' value='Novo Aviso' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\">".
+				"<input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_NOTICE')."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\">".
 			"</TD></tr>";
 
 		if ($registros == 0) {
-			echo "<tr><td align='center'>".mensagem("Não há nenhum aviso cadastrado no sistema.")."</td></tr>";
+			echo "<tr><td align='center'>".mensagem("".TRANS('MSG_NO_NOTICE')."")."</td></tr>";
 		} else {
 			$cor=TD_COLOR;
 			$cor1=TD_COLOR;
 			print "<tr>";
 			print "<td colspan='2'>";
-			print "Existe(m) <b>".$registros."</b> aviso(s) cadastrado(s) no Mural:<br>";
+			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('TLT_REGISTERS_NOTICES').":<br>";
 			print "</td>";
-			print "<TR class='header'><td class='line'>Data</TD><td class='line'>Aviso</TD><td class='line'>Responsável</td><td class='line'>Área</TD>";
-				print "<td class='line'>Prioridade</TD><td class='line'>Alterar</TD><td class='line'>Excluir</TD></TR>";
+			print "<TR class='header'><td class='line'>".TRANS('OCO_DATE')."</TD><td class='line'>".TRANS('OCO_NOTICE')."</TD><td class='line'>".TRANS('OCO_RESP')."</td><td class='line'>".TRANS('OCO_AREA')."</TD>";
+				print "<td class='line'>".TRANS('COL_PRIORITY')."</TD><td class='line'>".TRANS('COL_EDIT')."</TD><td class='line'>".TRANS('COL_DEL')."</TD></TR>";
 			$j=2;
 			while ($row = mysql_fetch_array($resultado)) {
 				if ($j % 2) {
@@ -86,7 +85,7 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 				print "<td class='line'>".datab($row['data'])."</td>";
 				print "<td class='line'>".$row['avisos']."</td>";
 				print "<td class='line'>".$row['nome']."</td>";
@@ -97,8 +96,8 @@
 
 				print "<td class='line'>".$area."</TD>";
 				print "<td class='line'>".$row['status']."</TD>";
-				print "<td class='line'><a onClick=\"redirect('avisos.php?action=alter&cellStyle=true&aviso_id=".$row['aviso_id']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='Alterar o registro'></a></td>";
-				print "<td class='line'><a onClick=\"javascript:confirmaAcao('Tem certeza que deseja excluir esse aviso?','avisos.php','action=excluir&aviso_id=".$row['aviso_id']."');\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></TD>";
+				print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cellStyle=true&aviso_id=".$row['aviso_id']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></td>";
+				print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('MSG_DEL_REG')."','avisos.php','action=excluir&aviso_id=".$row['aviso_id']."');\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></TD>";
 				print "</TR>";
 			}
 		}
@@ -106,10 +105,10 @@
 
 	if (isset($_GET['action']) && ($_GET['action'] == "incluir") && empty($_POST['submit'])) {
 
-		print "<BR><B>Inclusão de avisos no Mural</B><BR>";
+		print "<BR><B>".TRANS('TLT_INSERT_BOARD_NOTICE')."</B><BR>";
 
         	print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Aviso:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_NOTICE').":</TD>";
 			print "<TD colspan='3' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 
 			if (!$_SESSION['s_formatBarMural']) {
@@ -134,17 +133,17 @@
 			print "</TD>";
         	print "</TR>";
         	print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Prioridade:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_PRIORITY').":</TD>";
 			print "<TD width='30%' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				print "<SELECT class='select' name='status'>";
-				print "<option value='Normal'>Normal</option>";
-				print "<option value='Alta' selected>Alta</option>";
+				print "<option value='Normal'>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
+				print "<option value='Alta' selected>".TRANS('SEL_PRIORITY_HIGH')."</option>";
 	            print "</SELECT>";
 			print "</td>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Para a área:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_FOR_AREA').":</TD>";
 			print "<TD width='30%' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				print "<Select class='select' name='area'>";
-						print "<OPTION value=-1>-->Todas<--</OPTION>";
+						print "<OPTION value=-1>".TRANS('OPT_ALL')."</OPTION>";
 							$qry="select * from sistemas where sis_status not in (0) and sis_atende not in (0) order by sistema";
 							$exec=mysql_query($qry);
 						while($rowarea=mysql_fetch_array($exec)) {
@@ -158,9 +157,9 @@
         	print "</TR>";
         	print "<tr><td colspan='2'>&nbsp;</td></tr>";
         	print "<TR>";
-            	print "<TD align='center' colspan='2' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='Cadastrar' name='submit'>";
+            	print "<TD align='center' colspan='2' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_CAD')."' name='submit'>";
            	print "</TD>";
-            	print "<TD colspan='2' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='Cancelar' name='cancelar' onclick=\"javascript:redirect('avisos.php');\"></TD>";
+            	print "<TD colspan='2' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onclick=\"javascript:redirect('avisos.php');\"></TD>";
         	print "</TR>";
 	} else
 
@@ -168,10 +167,10 @@
 
 		$row = mysql_fetch_array($resultado);
 
-		print "<BR><B>Alterar dados do aviso</B><br>";
+		print "<BR><B>".TRANS('TLT_ALTER_NOTICE')."</B><br>";
 
 			print "<TR>";
-			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">Aviso:</TD>";
+			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_NOTICE').":</TD>";
 			print "<TD colspan='3' width='80%' align='left' bgcolor=".BODY_COLOR.">";
 			if (!$_SESSION['s_formatBarMural']) {
 				print "<TEXTAREA class='textarea' name='aviso2' id='idAviso'>".$row['avisos']."</textarea>";
@@ -195,27 +194,27 @@
 			print "</TD>";
 			print "</tr>";
 			print "<TR>";
-			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">Prioridade:</TD>";
+			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('COL_PRIORITY').":</TD>";
 			print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">";
 			print "<SELECT class='select' name='status' size=1>";
 				print "<option value='alta' ";
-					if (strtoupper($row['status'])=='ALTA')
+					if (strtoupper($row['status'])==TRANS('SEL_PRIORITY_HIGH'))
 						print " selected";
 				print ">Alta</option>";
 				print "<option value='normal' ";
-					if (strtoupper($row['status'])=='NORMAL')
+					if (strtoupper($row['status'])==TRANS('SEL_PRIORITY_NORMAL'))
 						print " selected";
 				print ">Normal</option>";
 			print "</select>";
 			print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">Área:</TD>";
+		print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_FOR_AREA').":</TD>";
 		print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">";
 
 			$query="select * from sistemas where sis_status not in (0) and sis_atende not in (0) order by sistema";
 			$result=mysql_query($query);
 		print "<select class='select' name='area_esc' size=1>";
-			print "<option value=-1 selected>-->Todas<--</option>";
+			print "<option value=-1 selected".TRANS('OPT_ALL')."</option>";
 			while ($rowarea = mysql_fetch_array($result)) {
 				print "<option value=".$rowarea['sis_id']." ";
 				if ($rowarea['sis_id']==$row['sis_id'])
@@ -227,10 +226,10 @@
 		print "</TR>";
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 		print "<TR>";
-		print "<TD align='center' colspan='2' width='20%' bgcolor=".BODY_COLOR."><input type='submit'  class='button' value='Alterar' name='submit'>";
+		print "<TD align='center' colspan='2' width='20%' bgcolor=".BODY_COLOR."><input type='submit'  class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='aviso_id' value='".$_GET['aviso_id']."'>";
 		print "</TD>";
-		print "<TD colspan='2' align='center' width='80%' bgcolor=".BODY_COLOR."><INPUT type='reset'  class='button' value='Cancelar' name='cancelar' onclick=\"javascript:redirect('avisos.php')\"></TD>";
+		print "<TD colspan='2' align='center' width='80%' bgcolor=".BODY_COLOR."><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onclick=\"javascript:redirect('avisos.php')\"></TD>";
 		print "</TR>";
 	} else
 
@@ -238,15 +237,15 @@
 		$row = mysql_fetch_array($resultado);
 
 		$query = "DELETE FROM avisos WHERE aviso_id=".$_GET['aviso_id']."";
-		$resultado = mysql_query($query) or die('Erro ao excluir o aviso do mural'.$query);
+		$resultado = mysql_query($query) or die(TRANS('ERR_QUERY').$query);
 
-		$texto = "Excluído: Aviso= ".$row['avisos']."";
+		$texto = "".TRANS('MSG_DEL_NOTICE')."= ".$row['avisos']."";
 			geraLog(LOG_PATH.'ocomon.txt',$hoje,$_SESSION['s_usuario'],'avisos.php?action=excluir',$texto);
 
-		print "<script>mensagem('Aviso excluído com sucesso!'); redirect('avisos.php'); </script>";
+		print "<script>mensagem('".TRANS('OK_DEL')."'); redirect('avisos.php'); </script>";
 	} else
 
-	if ($_POST['submit'] == "Cadastrar"){
+	if ($_POST['submit'] == TRANS('BT_CAD')){
 
 		$data = datam($hoje);
 		$query = "INSERT INTO avisos (avisos, data, origem, status, area) values (";
@@ -256,13 +255,13 @@
 			$query.= " '".noHtml($_POST['aviso2'])."',";
 		}
 		$query.=" '".date("Y-m-d H:i:s")."',".$_SESSION['s_uid'].",'".$_POST['status']."', ".$_POST['area'].")";
-		$resultado = mysql_query($query) or die ('ERRO AO TENTAR INCLUIR NOVO AVISO! '.$query);
+		$resultado = mysql_query($query) or die (TRANS('ERR_QUERY') .$query);
 
-		print "<script>mensagem('Aviso incluído com sucesso no mural!'); redirect('avisos.php'); </script>";
+		print "<script>mensagem('".TRANS('OK_INSERT')."'); redirect('avisos.php'); </script>";
 
 	} else
 
-	if ($_POST['submit'] == "Alterar") {
+	if ($_POST['submit'] == TRANS('BT_ALTER')) {
 
 		$query = "UPDATE avisos SET avisos=";
 		if ($_SESSION['s_formatBarMural']) {
@@ -271,9 +270,9 @@
 			$query.= " '".noHtml($_POST['aviso2'])."',";
 		}
 		$query.=" status='".$_POST['status']."', area=".$_POST['area_esc']." WHERE aviso_id = ".$_POST['aviso_id']."";
-		$resultado = mysql_query($query) or die ('ERRO AO TENTAR ALTERAR OS DADOS DO REGISTRO! '.$query);
+		$resultado = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
 
-		print "<script>mensagem('Registro alterado com sucesso!'); redirect('avisos.php'); </script>";
+		print "<script>mensagem('".TRANS('OK_EDIT')."'); redirect('avisos.php'); </script>";
 
 	}
 

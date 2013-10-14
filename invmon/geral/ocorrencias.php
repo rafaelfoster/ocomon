@@ -24,7 +24,7 @@
 
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 
@@ -50,9 +50,9 @@
 
 	if ($linhas == 0)
 	{
-		print "<b><p align=center>Nenhum chamado cadastrado no OCOMON para esse equipamento!</b></p>";
+		print "<b><p align=center>".TRANS('TXT_NONE_CALL_CAD_OCOMON_FOR_EQUIP')."</b></p>";
 		print "<table width='100%'>";
-		print "<tr><td align='left' width='80%'><a onClick= \"javascript:popup_alerta_wide('../../ocomon/geral/incluir.php?invTag=".$_GET['comp_inv']."&invInst=".$_GET['comp_inst']."&invLoc=".$rowLocal['comp_local']."')\">Abrir nova ocorrência para esse equipamento</a></td><td align='right'><input type='button' class='minibutton' value='Fechar' onClick=\"javascript:self.close()\"</td></tr>";
+		print "<tr><td align='left' width='80%'><a onClick= \"javascript:popup_alerta_wide('../../ocomon/geral/incluir.php?invTag=".$_GET['comp_inv']."&invInst=".$_GET['comp_inst']."&invLoc=".$rowLocal['comp_local']."')\">".TRANS('TXT_OPEN_NEW_OCCO_EQUIP')."</a></td><td align='right'><input type='button' class='minibutton' value='".TRANS('LINK_CLOSE')."' onClick=\"javascript:self.close()\"</td></tr>";
 		print "</table>";
 		exit;
 	}
@@ -61,7 +61,7 @@
 		print "<br>";
 		print "<table class='corpo'>";
 		print "<tr>";
-		print "<TD width='500' align='left'><B>Equipamento ".$_GET['comp_inv'].": <font color='red'>".$linhas."</font> chamado(s) no OCOMON:</B></TD>";
+		print "<TD width='500' align='left'><B>".TRANS('MNL_CAD_EQUIP')." ".$_GET['comp_inv'].": <font color='red'>".$linhas."</font> ".TRANS('TXT_CALL_IN_OCOMON').":</B></TD>";
 		print "<TD width='100' align='left'></td>";
 		print "<TD width='100' align='left'></TD>";
 		print "<TD width='200' align='left'></TD>";
@@ -70,7 +70,7 @@
 	}
 
 	print "<table class='corpo2'>";
-	print "<TR class='header'><td class='line'>Número</TD><td class='line'>Problema</TD><td class='line'>Abertura</TD><td class='line'>Fechamento</TD><td class='line'>Situação</TD>";
+	print "<TR class='header'><td class='line'>".TRANS('OCO_FIELD_NUMBER')."</TD><td class='line'>".TRANS('OCO_FIELD_PROB')."</TD><td class='line'>".TRANS('OCO_SEL_OPEN')."</TD><td class='line'>".TRANS('OCO_SEL_CLOSE')."</TD><td class='line'>".TRANS('COL_SITUAC')."</TD>";
 
 	$j=2;
 	$cont=0;
@@ -86,34 +86,34 @@
 			$trClass = "lin_impar";
 		}
 		$j++;
-		print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+		print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 		$sqlSubCall = "select * from ocodeps where dep_pai = ".$row['numero']." or dep_filho=".$row['numero']."";
-		$execSubCall = mysql_query($sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$sqlSubCall);
+		$execSubCall = mysql_query($sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$sqlSubCall);
 		$regSub = mysql_num_rows($execSubCall);
 		if ($regSub > 0) {
 			#É CHAMADO PAI?
 			$sqlSubCall = "select * from ocodeps where dep_pai = ".$row['numero']."";
-			$execSubCall = mysql_query($sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$sqlSubCall);
+			$execSubCall = mysql_query($sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$sqlSubCall);
 			$regSub = mysql_num_rows($execSubCall);
 			$comDeps = false;
 			while ($rowSubPai = mysql_fetch_array($execSubCall)){
 				$sqlStatus = "select o.*, s.* from ocorrencias o, `status` s  where o.numero=".$rowSubPai['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3) ";
-				$execStatus = mysql_query($sqlStatus) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS<br>'.$sqlStatus);
+				$execStatus = mysql_query($sqlStatus) or die (TRANS('MSG_ERR_RESCUE_INFO_STATUS_CALL_SON').'<br>'.$sqlStatus);
 				$regStatus = mysql_num_rows($execStatus);
 				if ($regStatus > 0) {
 					$comDeps = true;
 				}
 			}
 			if ($comDeps) {
-				$imgSub = "<img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'>";
+				$imgSub = "<img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_HANG')."'>";
 			} else
-				$imgSub =  "<img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'>";
+				$imgSub =  "<img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_NOT_HANG')."'>";
 		} else
 			$imgSub = "";
 
 		$qryImg = "select * from imagens where img_oco = ".$row['numero']."";
-		$execImg = mysql_query($qryImg) or die ("ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE IMAGENS!");
+		$execImg = mysql_query($qryImg) or die (TRANS('MSG_ERR_RESCUE_INFO_IMAGE'));
 		$rowTela = mysql_fetch_array($execImg);
 		$regImg = mysql_num_rows($execImg);
 		if ($regImg!=0) {
@@ -132,7 +132,7 @@
 	print "</TABLE>";
 
 	print "<table width='100%'>";
-	print "<tr><td align='left' width='80%'><a onClick= \"javascript:popup_alerta_wide('../../ocomon/geral/incluir.php?invTag=".$_GET['comp_inv']."&invInst=".$_GET['comp_inst']."&invLoc=".$rowLocal['comp_local']."&telefone=".$invRamal."')\">Abrir nova ocorrência para esse equipamento</a></td><td align='right'><input type='button' class='minibutton' value='Fechar' onClick=\"javascript:self.close()\"</td></tr>";
+	print "<tr><td align='left' width='80%'><a onClick= \"javascript:popup_alerta_wide('../../ocomon/geral/incluir.php?invTag=".$_GET['comp_inv']."&invInst=".$_GET['comp_inst']."&invLoc=".$rowLocal['comp_local']."&telefone=".$invRamal."')\">".TRANS('TXT_OPEN_NEW_OCCO_EQUIP')."</a></td><td align='right'><input type='button' class='minibutton' value='".TRANS('LINK_CLOSE')."' onClick=\"javascript:self.close()\"</td></tr>";
 	print "</table>";
 
 	$cab->set_foot();

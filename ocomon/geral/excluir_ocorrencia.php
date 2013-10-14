@@ -36,23 +36,23 @@ print "<BODY>";
 	if (isset($_GET['numero']) && $_SESSION['s_nivel'] ==1) {
 
 		$query = "DELETE FROM ocorrencias WHERE numero=".$_GET['numero']."";
-		$resultado = mysql_query($query) or die (TRANS('ERR_DEL')."!<BR>".$query);
+		$resultado = mysql_query($query) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query);
 
 		//$qryAssent = "SELECT * FROM assentamentos WHERE numero = ".$_GET['numero']."";
 		$query2 = "DELETE FROM assentamentos WHERE ocorrencia = ".$_GET['numero']."";
-		$resultado2 = mysql_query($query2) or die (TRANS('ERR_DEL')."!<BR>".$query2);
+		$resultado2 = mysql_query($query2) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query2);
 
 		$query3 = "DELETE FROM tempo_status WHERE ts_ocorrencia = ".$_GET['numero']."";
-		$resultado3 = mysql_query($query3) or die (TRANS('ERR_DEL')."!<BR>".$query3);
+		$resultado3 = mysql_query($query3) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query3);
 
 
 		if (($resultado == 0) || ($resultado2==0) || ($resultado3==0))
 		{
-			$aviso = TRANS('ERR_DEL');
+			$aviso = "Um erro ocorreu ao tentar excluir a ocorrência do sistema.";
 		}
 		else
 		{
-			$aviso = TRANS('OK_DEL');
+			$aviso = "OK. Ocorrência excluida com sucesso.";
 		}
 
 		print "<script>mensagem('".$aviso."'); redirect('ocorrencias.php');</script>";

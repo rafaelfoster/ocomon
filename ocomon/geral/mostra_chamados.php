@@ -72,7 +72,7 @@
 	$query.=" ORDER BY numero";
 
 	//dump($query);
-	$resultado = mysql_query($query);
+	$resultado = mysql_query($query) or die($query);
 	$linhas = mysql_numrows($resultado);
 	if ($linhas==0)
 	{
@@ -204,8 +204,7 @@
 			} else
 				$imgSub = "";
 
-			//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 			print "<TD ".$valign."><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a>".$imgSub."</TD>";
 			print "<TD ".$valign.">".$row['problema']."</TD>";
 			print "<TD ".$valign."><b>".$row['contato']."</b><br>".$row['operador']."</TD>";

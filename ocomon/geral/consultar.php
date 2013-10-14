@@ -31,21 +31,21 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
-	print "<br><B>Consulta de Ocorrências:</B><BR>";
+	print "<br><B>".TRANS('TLT_CONS_OCOR').":</B><BR>";
 
 	print "<FORM method='POST'  name='form1' action='mostra_resultado_consulta.php' onSubmit='return valida()'>";
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número inicial:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_NUM_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='numero_inicial' id='idNumeroInicial'></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número final:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_NUM_END').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='numero_final' id='idNumeroFinal'></TD>";
         print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                		print "<SELECT class='select' name='problema' size=1>";
-                		print "<option value=-1 selected>-  Selecione um problema -</option>";
+                		print "<option value=-1 selected>".TRANS('OCO_SEL_PROB')."</option>";
                 		$query = "SELECT * from problemas order by problema";
                 		$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
@@ -56,11 +56,11 @@
                 print "</td>";
 
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Área responsável:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
                 	print "<SELECT class='select' name='sistema' size=1>";
-				print "<option value=-1 selected>-  ÁREA RESPONSÁVEL -</option>";
+				print "<option value=-1 selected>".TRANS('OCO_SEL_AREA')."</option>";
 				$query = "SELECT * from sistemas order by sistema";
 				$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
@@ -72,17 +72,17 @@
         print "</TR>";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Descrição:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_DESC').":</TD>";
                 print "<TD width='30%' colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<TEXTAREA class='textarea' name='descricao' id='idDescricao'></textarea>";
                 print "</TD>";
         print "</TR>";
 
         print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='instituicao' size='1'>";
-				print "<option value=-1 selected>Selecione a Unidade</option>";
+				print "<option value=-1 selected>".TRANS('OCO_SEL_UNIT')."</option>";
 				$query2 = "SELECT * from instituicao order by inst_cod";
 				$resultado2 = mysql_query($query2);
 				while ($row = mysql_fetch_array($resultado2))
@@ -92,25 +92,25 @@
                 	print "</select>";
                 print "</td>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Etiqueta</b> do equipamento:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_TAG')."".TRANS('OCO_FIELD_OF_EQUIP')."</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<INPUT type='text' class='text' name='equipamento' id='idEtiqueta'>";
                 print "</TD>";
         print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Contato:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_CONTACT').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<INPUT type='text' class='text' name='contato' id='idContato'></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ramal:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_PHONE').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<INPUT type='text' class='text' name='telefone' id='idRamal'></TD>";
         print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LOCAL').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
                 	print "<SELECT class='select' name='local' size='1'>";
-                		print "<option value=-1 selected>-  Selecione um local -</option>";
+                		print "<option value=-1 selected".TRANS('OCO_SEL_LOCAL')."</option>";
                 		$query = "SELECT * from localizacao order by local";
 				$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
@@ -120,53 +120,53 @@
                 	print "</select>";
                 print "</td>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Operador:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_OPERATOR').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
                 print "<SELECT class='select' name='operador' size='1'>";
-                	print "<option value=-1 selected>-  Selecione um operador -</option>";
+                	print "<option value=-1 selected>".TRANS('OCO_SEL_OPERATOR')."</option>";
 			$query = "SELECT * from usuarios order by nome";
 			$resultado = mysql_query($query);
 			while ($rowU = mysql_fetch_array($resultado))
 			{
 				print "<option value='".$rowU['user_id']."'>".$rowU['nome']."</option>";
 			}
-                print "</select><input type='checkbox' name='opAbertura' title='Marque essa opção para buscar sobre o operador que abriu o chamado'>Origem";
+                print "</select><input type='checkbox' name='opAbertura' title='".TRANS('HNT_OPT_ORIGIN')."'>".TRANS('OCO_OPT_ORIGIN')."";
 	print "</td>";
 
         print "</TR>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data inicial:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<INPUT type=text class='data' name='data_inicial' id='idDataInicial'  ><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></TD>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data final:</TD>";
+                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_FINISH').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<INPUT type=text class='data' name='data_final' id='idDataFinal'  ><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></TD>";
+                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
 
 	print "</tr>";
 	print "<tr>";
-		print "<TD width='10%' align='left' bgcolor='".TD_COLOR."'>Data de:</TD>";
+		print "<TD width='10%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_DATE_THIS').":</TD>";
                 print "<TD width='20%' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<SELECT class='select' name='tipo_data' size='1'>";
-                		print "<option value='abertura' selected>Abertura</option>";
-                		print "<option value='fechamento'>Fechamento</option>";
+                		print "<option value='abertura' selected>".TRANS('OCO_SEL_OPEN')."</option>";
+                		print "<option value='fechamento'>".TRANS('OCO_SEL_CLOSE')."</option>";
                 	print "</SELECT>";
                 print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ordenar por:</TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_ORDER_BY').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
 			print "<SELECT class='select' name='ordem' size='1'>";
-				print "<option value='numero' selected>Número</option>";
-				print "<option value='problema'>Problema</option>";
-				print "<option value='area'>Área</option>";
-				print "<option value='etiqueta'>Equipamento</option>";
-				print "<option value='contato'>Contato</option>";
-				print "<option value='setor'>Local</option>";
-				print "<option value='nome'>Operador</option>";
-				print "<option value='data'>Data</option>";
+				print "<option value='numero' selected>".TRANS('OCO_FIELD_NUMBER')."</option>";
+				print "<option value='problema'>".TRANS('OCO_PROB')."</option>";
+				print "<option value='area'>".TRANS('OCO_AREA')."</option>";
+				print "<option value='etiqueta'>".TRANS('MNL_CAD_EQUIP')."</option>";
+				print "<option value='contato'>".TRANS('OCO_CONTACT')."</option>";
+				print "<option value='setor'>".TRANS('OCO_LOCAL')."</option>";
+				print "<option value='nome'>".TRANS('MNS_OPERADOR')."</option>";
+				print "<option value='data'>".TRANS('OCO_DATE')."</option>";
 			print "</SELECT>";
 
                 print "</TD>";
@@ -174,10 +174,10 @@
 	print "</TR>";
 
 	print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_STATUS').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 	                print "<SELECT class='select' name='status'>";
-        	        print "<option value='Em aberto'>Em aberto</option>";
+        	        print "<option value='".TRANS('OCO_IN_OPEN')."'>".TRANS('OCO_IN_OPEN')."</option>";
 			$query = "SELECT * from status order by status";
 			$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
@@ -189,21 +189,21 @@
                 	print "</select>";
                 print "</td>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Saída:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_EXIT').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 	                print "<SELECT class='select' name='saida'>";
-        	        print "<option value='1' selected>Padrão</option>";
-			print "<option value='2'>Detalhada</option>";
+        	        print "<option value='1' selected>".TRANS('OCO_STANDARD')."</option>";
+			print "<option value='2'>".TRANS('OCO_DETAIL')."</option>";
                 	print "</select>";
 		print "</td>";
 	print "</TR>";
-	print "<tr><td colspan='4'><input type='checkbox' name='novaJanela' title='Selecione para que a saída seja em uma nova janela.'>Nova Janela (para impressão)<td><tr>";
+	print "<tr><td colspan='4'><input type='checkbox' name='novaJanela' title='".TRANS('HNT_NEW_WINDOW')."'>".TRANS('OPT_NEW_WINDOW')."<td><tr>";
 	print "<TR>";
 		print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-				"<input type='submit' class='button' value='Ok' name='submit' onClick='javascript:submitForm()'>";
+				"<input type='submit' class='button' value='".TRANS('BT_OK')."' name='submit' onClick='javascript:submitForm()'>";
 		print "</TD>";
 		print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-				"<INPUT type='button'  class='button' value='Cancelar' name='cancela' onclick=\"redirect('abertura.php');\">";
+				"<INPUT type='button'  class='button' value='".TRANS('BT_CANCEL')."' name='cancela' onclick=\"redirect('abertura.php');\">";
 		print "</td>";
 	print "</TR>";
 

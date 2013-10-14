@@ -46,7 +46,7 @@
         $linhasTotal = mysql_num_rows($resultadoTotal);
 
 	$qry_page = "SELECT conf_page_size AS page FROM config";
-	$qry_page_exec = mysql_query($qry_page) or die (TRANS('ERR_QUERY'));
+	$qry_page_exec = mysql_query($qry_page) or die ('É NECESSÁRIO ATUALIZAR A TABELA CONF - VERSAO 1.50');
 	$rowConf = mysql_fetch_array($qry_page_exec);
 	$PAGE_SIZE = $rowConf['page'];
 
@@ -170,7 +170,7 @@
 	print "<table border='0' cellspacing='1' summary='' width='100%'>";
         if ($linhas == 0)
         {
-                print "<TR class='header'><td class='line'><B>".TRANS('MSG_NO_RECORDS')."</B></TD></TR>";
+                print "<TR class='header'><td class='line'><B>".TRANS('MSG_OCCO_NOT_FOUND')."</B></TD></TR>";
                 print "</table>";
                 exit;
         }
@@ -181,13 +181,13 @@
 				$min++;
 
 				print "<tr>";
-				print "<TD witdh='700' align='left'><B>".TRANS('THERE_IS_ARE')." <font color=red>".$linhasTotal."</font> ".TRANS('RECORDS_IN_SYSTEM').". ".
-					"".TRANS('mostrado')." <font color=red>".$base."</font> ".TRANS('ate')." <font color=red>".$top."</font>. </B></TD>";
+				print "<TD witdh='700' align='left'><B>".TRANS('TXT_REGISTER_FOUND')." <font color=red>".$linhasTotal."</font> ".TRANS('TXT_OCCORENCE')." ".
+					"".TRANS('TXT_SHOW_OF')." <font color=red>".$base."</font> a <font color=red>".$top."</font>. </B></TD>";
 				print "<TD colspan='2' width='300' align='right' ><input  type='submit' class='button' name='voltaInicio' value='<<' ".
-					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('FIRST_RECORDS').".'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
-					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('PREVIOUSLY_RECORDS').".'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
+					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('TXT_FIRTS_REG')."'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
+					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('TXT_PREVIOUS_REG').".'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
 					"title='".TRANS('VIEW_THE_NEXT')." ".$max." ".TRANS('RECORDS').".'> <input  type='submit' class='button'  name='avancaFim' value='>>' ".
-					"title='".TRANS('VIEW_THE_LAST')." ".$max." ".TRANS('RECORDS').".'> <input  type='submit' class='button'  name='avancaTodos' value='".TRANS('ALL')."' ".
+					"title='".TRANS('VIEW_THE_LAST')." ".$max." ".TRANS('RECORDS').".'> <input  type='submit' class='button'  name='avancaTodos' value='Todas' ".
 					"title='".TRANS('VIEW_ALL')." ".$linhasTotal." ".TRANS('RECORDS').".'></td>";
 				print "</tr>";
 				$min--;
@@ -201,7 +201,7 @@
 
 		}
 		else {
-                	print "<TR class='header'><td class='line'><B>".TRANS('THEREIS')." 1 ".TRANS('OCO').".</B></TD></TR>";
+                	print "<TR class='header'><td class='line'><B>".TRANS('TXT_OCCO_ONLY_FOUND')."</B></TD></TR>";
                 }
         //print "</TD>";
 
@@ -222,19 +222,18 @@
 			$trClass = "lin_impar";
                 }
                 $j++;
-                //print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-                print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+                print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
                 print "<td class='line'><a href='mostra_consulta.php?numero=".$row['numero']."'>".$row['numero']."</a></TD>";
                 print "<td class='line'>".$row['problema']."</TD>";
                 print "<td class='line'>".$row['setor']."</TD>";
                 print "<td class='line'>".$row['nome']."</TD>";
-                print "<td class='line'>".formatDate($row['data_abertura'])."</TD>";
+                print "<td class='line'>".datab($row['data_abertura'])."</TD>";
                 print "<td class='line'>".$row['chamado_status']."</TD>";
 
 
 		print "<td class='line'><a onClick=\"redirect('altera_dados_ocorrencia.php?numero=".$row['numero']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></TD>";
-		print "<td class='line'><a onClick=\"confirma('".TRANS('ENSURE_DEL')."?','excluir_ocorrencia.php?numero=".$row['numero']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
+		print "<td class='line'><a onClick=\"confirma('".TRANS('MSG_DEL_OCCO_SYSTEM')."','excluir_ocorrencia.php?numero=".$row['numero']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 		print "</TR>";
 		$i++;
         }

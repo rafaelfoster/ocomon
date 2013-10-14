@@ -83,6 +83,41 @@ $QRY["full_detail_ini"] = "SELECT c.comp_inv as etiqueta, c.comp_sn as serial, c
 
 $QRY["full_detail_fim"] = "\nGROUP BY comp_inv, comp_inst";
 
+
+
+$QRY["componenteXequip_ini"] =  "SELECT ".
+				"e.estoq_cod, e.estoq_tipo, e.estoq_desc, e.estoq_sn, e.estoq_comentario, e.estoq_tag_inv, e.estoq_tag_inst, ".
+				"e.estoq_nf, e.estoq_warranty, e.estoq_value, e.estoq_data_compra, e.estoq_partnumber,  ".
+				"i.item_nome,  ".
+				"f.forn_nome, f.forn_cod, ".
+				"t.tempo_meses, t.tempo_cod, ".
+				"c.descricao as ccusto, c.codigo,  ".
+				"m.mdit_fabricante as fabricante, m.mdit_desc as modelo, m.mdit_desc_capacidade as capacidade, m.mdit_sufixo as sufixo, ".
+				"l.local, l.loc_id, ".
+				"inst.inst_nome, ".
+				"s.situac_nome, s.situac_cod, ".
+				"eqp.eqp_equip_inv, eqp.eqp_equip_inst, ".
+				"instEquip.inst_nome as instEquipamento ".
+			"FROM ".
+				"estoque e ".
+				"left join instituicao as inst on inst.inst_cod = e.estoq_tag_inst ".
+				"left join equipXpieces as eqp on eqp.eqp_piece_id = e.estoq_cod ".
+				"left join instituicao as instEquip on instEquip.inst_cod = eqp.eqp_equip_inst ".
+				"left join fornecedores as f on f.forn_cod = e.estoq_vendor ".
+				"left join tempo_garantia as t on t.tempo_cod = e.estoq_warranty ".
+				"left join CCUSTO as c on c.codigo = e.estoq_ccusto ".
+				"left join situacao as s on s.situac_cod = e.estoq_situac, ".
+				"itens i, modelos_itens m, localizacao l ".
+			"WHERE ".
+				"e.estoq_tipo = i.item_cod ".
+				"and e.estoq_tipo = m.mdit_tipo ".
+				"and e.estoq_desc = m.mdit_cod ".
+				"and e.estoq_local = l.loc_id ";
+
+
+$QRY["componenteXequip_fim"] = " ORDER BY i.item_nome, e.estoq_desc";
+
+
 $QRY["garantia"] = "SELECT c.comp_inv as inventario, i.inst_nome as instituicao,
 			i.inst_cod as instituicao_cod,
 			c.comp_data_compra as aquisicao,
@@ -105,6 +140,46 @@ $QRY["garantia"] = "SELECT c.comp_inv as inventario, i.inst_nome as instituicao,
 			c.comp_data_compra<>'0000:00:00 00:00'  and
 			c.comp_inst=i.inst_cod ";
 
+$QRY["garantia_pieces"] = "SELECT
+
+			e.estoq_cod, e.estoq_partnumber,
+			e.estoq_data_compra as aquisicao,
+			t.tempo_meses as meses, date_add(e.estoq_data_compra, interval tempo_meses month)
+			as vencimento,
+			extract(day from date_add(e.estoq_data_compra,
+			interval tempo_meses month)) as dia,
+			extract(month from date_add(e.estoq_data_compra,
+			interval tempo_meses month)) as mes,
+			extract(year from date_add(e.estoq_data_compra,
+			interval tempo_meses month)) as ano,
+			f.forn_nome as fornecedor,
+			f.forn_fone as contato
+		FROM estoque as e
+			left join tempo_garantia as t on e.estoq_warranty = t.tempo_cod
+			left join fornecedores as f on f.forn_cod = e.estoq_vendor
+		WHERE e.estoq_warranty is not null and
+			e.estoq_data_compra<>'0000:00:00 00:00'";
+
+$QRY["garantia_pieces_OK"] = "SELECT
+
+			e.estoq_cod, e.estoq_partnumber,
+			e.estoq_data_compra as aquisicao,
+			t.tempo_meses as meses, date_add(estoq_data_compra, interval tempo_meses month)
+			as vencimento,
+			extract(day from date_add(estoq_data_compra,
+			interval tempo_meses month)) as dia,
+			extract(month from date_add(estoq_data_compra,
+			interval tempo_meses month)) as mes,
+			extract(year from date_add(estoq_data_compra,
+			interval tempo_meses month)) as ano,
+			f.forn_nome as fornecedor,
+			f.forn_fone as contato
+		FROM estoque as e
+			left join tempo_garantia as t on e.estoq_warranty = t.tempo_cod
+			left join fornecedores as f on f.forn_cod = e.estoq_vendor
+		WHERE e.estoq_warranty is not null and
+			e.estoq_data_compra<>'0000:00:00 00:00'";
+
 // monitores não inclusos
 $QRY["vencimentos"] = "SELECT count(*) AS quantidade,
                  date_add(date_format(comp_data_compra, '%Y-%m-%d') , INTERVAL tempo_meses MONTH) AS vencimento,
@@ -119,12 +194,86 @@ $QRY["vencimentos"] = "SELECT count(*) AS quantidade,
 		ORDER BY vencimento, modelo";
 
 
+
+$QRY["vencimentos_piecesOK"] = "SELECT count(*) AS quantidade, ".
+                "\n\ti.item_nome AS tipo, model.mdit_fabricante as fabricante, model.mdit_desc as modelo, ".
+                "\n\tmodel.mdit_desc_capacidade as capacidade, model.mdit_sufixo as sufixo, ".
+
+                "\n\tew.ew_sent_first_alert as first_alert, ew.ew_sent_last_alert as last_alert,".
+
+                "\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d') , INTERVAL t.tempo_meses MONTH) AS vencimento ".
+
+		"\n\tFROM  ".
+		"\n\testoque e  ".
+		"\n\tleft join email_warranty ew on e.estoq_cod = ew.ew_piece_id,  ".
+
+		"\n\ttempo_garantia t, modelos_itens model, itens i ".
+		"\n\tWHERE  ".
+
+		"\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d'), INTERVAL t.tempo_meses MONTH) >= ".
+		"\n\tdate_add(date_format(curdate(), '%Y-%m-%d'), INTERVAL 0 DAY) ".
+
+		"\n\tAND ".
+
+		"\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d'), INTERVAL t.tempo_meses MONTH) <= ".
+		"\n\tdate_add(date_format(curdate(), '%Y-%m-%d'), INTERVAL 30 DAY) ".
+
+
+                "\n\tAND e.estoq_warranty = t.tempo_cod AND e.estoq_tipo = i.item_cod ".
+                "\n\tAND e.estoq_desc = model.mdit_cod ".
+
+
+		"\n\tGROUP BY vencimento, modelo ".
+		"\n\tORDER BY vencimento, modelo";
+
+
+$QRY["vencimentos_pieces"] = "SELECT e.estoq_cod, e.estoq_sn, e.estoq_partnumber, ".
+				"\n\ti.item_nome AS tipo, model.mdit_fabricante as fabricante, model.mdit_desc as modelo, ".
+				"\n\tmodel.mdit_desc_capacidade as capacidade, model.mdit_sufixo as sufixo, ".
+
+				"\n\tew.ew_sent_first_alert as first_alert, ew.ew_sent_last_alert as last_alert,".
+
+				"\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d') , INTERVAL t.tempo_meses MONTH) AS vencimento ".
+
+				"\nFROM  ".
+				"\n\testoque e  ".
+				"\n\tleft join email_warranty ew on e.estoq_cod = ew.ew_piece_id,  ".
+
+				"\n\ttempo_garantia t, modelos_itens model, itens i ".
+				"\nWHERE  ".
+
+				"\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d'), INTERVAL t.tempo_meses MONTH) >= ".
+				"\n\tdate_add(date_format(curdate(), '%Y-%m-%d'), INTERVAL 0 DAY) ".
+
+				"\n\tAND ".
+
+				"\n\tdate_add(date_format(e.estoq_data_compra, '%Y-%m-%d'), INTERVAL t.tempo_meses MONTH) <= ".
+				"\n\tdate_add(date_format(curdate(), '%Y-%m-%d'), INTERVAL 30 DAY) ".
+
+
+				"\n\tAND e.estoq_warranty = t.tempo_cod AND e.estoq_tipo = i.item_cod ".
+				"\n\tAND e.estoq_desc = model.mdit_cod ".
+
+				"\n\t AND ((ew.ew_sent_first_alert is null OR ew.ew_sent_first_alert=0)".
+
+				"\n\t OR (ew.ew_sent_last_alert is null OR ew.ew_sent_last_alert=0))".
+
+				"\nORDER BY vencimento, modelo";
+
+
+
+
+
+
+
 $QRY["ocorrencias_full_ini"] = "SELECT
 				o.numero as numero, o.problema as prob_cod, o.descricao as descricao, o.equipamento as etiqueta,
 				o.sistema as area_cod, o.contato as contato, o.telefone as telefone, o.local as setor_cod,
 				o.operador as operador_cod, o.data_abertura as data_abertura, o.data_fechamento as data_fechamento,
 				o.status as status_cod, o.data_atendimento as data_atendimento, o.instituicao as unidade_cod,
-				o.aberto_por as aberto_por_cod,
+				o.aberto_por as aberto_por_cod, o.oco_scheduled, o.oco_real_open_date,
+
+				o.oco_script_sol,
 
 				i.inst_nome as unidade,
 
@@ -147,7 +296,10 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 
 				sls.slas_desc as sla_solucao, sls.slas_tempo as sla_solucao_tempo,
 
-				slr.slas_desc as sla_resposta, slr.slas_tempo as sla_resposta_tempo
+				slr.slas_desc as sla_resposta, slr.slas_tempo as sla_resposta_tempo,
+
+				sol.script_desc
+
 			FROM
 				ocorrencias as o left join sistemas as a on a.sis_id = o.sistema
 				left join localizacao as l on l.loc_id = o.local
@@ -159,7 +311,10 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 				left join problemas as p on p.prob_id = o.problema
 				left join sla_solucao as sls on sls.slas_cod = p.prob_sla
 				left join prioridades as pr on pr.prior_cod = l.loc_prior
-				left join sla_solucao as slr on slr.slas_cod = pr.prior_sla ";
+				left join sla_solucao as slr on slr.slas_cod = pr.prior_sla
+
+				left join script_solution as sol on sol.script_cod = o.oco_script_sol
+				";
 
 
 $QRY["useropencall"]= "SELECT c.*, a.*, b.sistema as ownarea, b.sis_id as ownarea_cod ".

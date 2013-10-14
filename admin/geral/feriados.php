@@ -68,8 +68,7 @@
 				}
 				$j++;
 
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 				print "<td class='line'>".datab2($row['data_feriado'])."</TD>";
 				print "<td class='line'>".$row['desc_feriado']."</TD>";
 				print "<td class='line'>".transbool($row['fixo_feriado'])."</TD>";
@@ -98,9 +97,9 @@
 				"</a>&nbsp;<input type='checkbox' name='permanente'>".TRANS('COL_PERSISTANT')."".
 			"</td>";
 		print "</tr>";
-		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('bt_cadastrar')."'></td>";
+		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_CAD')."'></td>";
 
-		print "<td class='line'><input type='reset'  class='button' name='reset' value='".TRANS('bt_cancelar')."' onClick=\"javascript:history.back()\"></td></tr>";
+		print "<td class='line'><input type='reset'  class='button' name='reset' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:history.back()\"></td></tr>";
 
 		print "</table>";
 		print "</form>";
@@ -150,7 +149,7 @@
 
 	} else
 
-	if (isset($_POST['submit']) && $_POST['submit'] == "Incluir") {
+	if (isset($_POST['submit']) && $_POST['submit'] == TRANS('bt_cadastrar')) {
 		if ((!empty($_POST['descricao'])) && (!empty($_POST['data']))){
 			$qry = "select * from feriados where desc_feriado = '".$_POST['descricao']."' and data_feriado = '".$_POST['data']."'";
 			$exec= mysql_query($qry);
@@ -178,7 +177,7 @@
 
 	} else
 
-	if (isset($_POST['submit']) && $_POST['submit'] = "Alterar") {
+	if (isset($_POST['submit']) && $_POST['submit'] == TRANS('BT_ALTER')) {
 		if ((!empty($_POST['descricao'])) && (!empty($_POST['data']))){
 
 			$data = str_replace("-","/",$_POST['data']);

@@ -23,7 +23,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 
@@ -38,18 +38,18 @@
 			$sql = "delete from hw_sw where hws_sw_cod=".$_GET['id']." and hws_hw_cod = ".$_GET['comp_inv']." and hws_hw_inst = ".$_GET['comp_inst']."";
 			$commit = mysql_query($sql);
 			if ($commit==0) {
-			    $aviso = "ERRO NA EXCLUSÃO DO REGISTRO!";
+			    $aviso = TRANS('ERR_DEL');
 			} else
-				$aviso = "Arquivo excluído com sucesso!";
+				$aviso = TRANS('OK_DEL');
 
 		} else
 		if ($_GET['acao']=="reseta") {
 			$sql = "delete from hw_sw where hws_hw_cod =".$_GET['comp_inv']." and hws_hw_inst =".$_GET['comp_inst']."";
 			$commit = mysql_query($sql);
 			if ($commit==0) {
-			    $aviso = "ERRO NA EXCLUSÃO DO REGISTRO!";
+			    $aviso = TRANS('ERR_DEL');
 			} else
-				$aviso = "Arquivo excluído com sucesso!";
+				$aviso = TRANS('OK_DEL');
 
 		} else
 		if ($_GET['acao']=="carrega") {
@@ -72,14 +72,14 @@
 				}
 			}
 			if (!$erro) {
-			    $aviso = "Dados cadastrados com sucesso!";
+			    $aviso = TRANS('OK_INSERT');
 			} else {
-				$aviso = "Ocorreram problemas na tentativa de cadastrar os softwares!";
+				$aviso = TRANS('MSG_PROBLEM_CAD_SFTWARES');
 			}
 		} else
 
 		if ($_GET['acao'] == "alt") {
-		 	$aviso = "Opção não disponível!";
+		 	$aviso = TRANS('MSG_OPTION_NOT_AVAILABLE');
 		 //--
 		}
 
@@ -102,8 +102,8 @@
 
 		if ($linhas == 0)
 		{
-			print "<b><p align=center>Nenhum software cadastrado para esse equipamento!</b><br><input type='button' value='Adicionar' class='minibutton' onClick= \"javascript:popup_alerta('incluir_hws.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></p>";
-			print "<p align=center><input type='button' value='Carregar' class='minibutton' onClick=\"javascript:confirmaAcao('Tem certeza que deseja carregar a configuração padrão?','".$_SERVER['PHP_SELF']."', 'acao=carrega&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></p>";
+			print "<b><p align=center>".TRANS('MSG_NONE_SW_CAD_EQUIP')."</b><br><input type='button' value='".TRANS('BT_ADD')."' class='minibutton' onClick= \"javascript:popup_alerta('incluir_hws.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></p>";
+			print "<p align=center><input type='button' value='".TRANS('BT_LOAD')."' class='minibutton' onClick=\"javascript:confirmaAcao('".TRANS('MSG_CONFIRM_STAND_CONFIG')."','".$_SERVER['PHP_SELF']."', 'acao=carrega&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></p>";
 			exit;
 		} else
 
@@ -111,17 +111,17 @@
 			print "<br>";
 			print "<table class=corpo>";
 			print "<tr>";
-			print "<TD width='350' align='left'><B>Equipamento ".$_GET['comp_inv'].": <font color='red'>".$linhas."</font> software(s).</B></TD>";
-			print "<TD width='200' align='left'><input type='button' value='Adicionar' class='minibutton' onClick= \"javascript:popup_alerta('incluir_hws.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></td>";
-			print "<TD width='200' align='left'><input type='button' value='Carregar' class='minibutton' onClick=\"javascript:confirmaAcao('Tem certeza que deseja carregar a configuração padrão?','".$_SERVER['PHP_SELF']."', 'acao=carrega&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></TD>";
+			print "<TD width='350' align='left'><B>".TRANS('MNL_CAD_EQUIP')." ".$_GET['comp_inv'].": <font color='red'>".$linhas."</font> ".TRANS('COL_SOFT')."(s).</B></TD>";
+			print "<TD width='200' align='left'><input type='button' value='".TRANS('BT_ADD')."' class='minibutton' onClick= \"javascript:popup_alerta('incluir_hws.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></td>";
+			print "<TD width='200' align='left'><input type='button' value='".TRANS('BT_LOAD')."' class='minibutton' onClick=\"javascript:confirmaAcao('".TRANS('MSG_CONFIRM_LOAD_CONFIG')."','".$_SERVER['PHP_SELF']."', 'acao=carrega&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></TD>";
 
-			print "<TD width='200' align='left'><input type='button' value='Resetar' class='minibutton' onClick=\"javascript:confirmaAcao('Tem certeza que deseja excluir todos softwares dessa configuração?','".$_SERVER['PHP_SELF']."', 'acao=reseta&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></TD>";
+			print "<TD width='200' align='left'><input type='button' value='".TRANS('BT_RESET')."' class='minibutton' onClick=\"javascript:confirmaAcao('".TRANS('MSG_CONFIRM_DEL_CONFIG')."','".$_SERVER['PHP_SELF']."', 'acao=reseta&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"></TD>";
 			print "</tr>";
 			print "</table><br>";
 		}
 
 		print "<table class=corpo2 >";
-		print "<TR class='header'><td class='line'><b>Fabricante</TD><td class='line'><b>Software</TD><td class='line'><b>Versao</TD><td class='line'><b>Categoria</TD><td class='line'><b>Licença</TD><td class='line'><b>Excluir</TD>";
+		print "<TR class='header'><td class='line'><b>".TRANS('COL_MANUFACTURE')."</TD><td class='line'><b>".TRANS('COL_SOFT')."</TD><td class='line'><b>".TRANS('MNS_MSG_VERSAO')."</TD><td class='line'><b>".TRANS('COL_CAT')."</TD><td class='line'><b>".TRANS('COL_LICENSE')."</TD><td class='line'><b>".TRANS('COL_DEL')."</TD>";
 
 		$j=2;
 		while ($row = mysql_fetch_array($commit))
@@ -142,7 +142,7 @@
 			print "<td class='line'>".$row['soft_versao']."</TD>";
 			print "<td class='line'>".$row['cat_desc']."</TD>";
 			print "<td class='line'>".$row['lic_desc']."</TD>";
-			print "<td class='line'><a onClick=\"javascript:confirmaAcao('Deletar ".$row['fab_nome']." ".$row['soft_desc']."?','".$_SERVER['PHP_SELF']."', 'acao=del&id=".$row['soft_cod']."&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></TD>";
+			print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('TXT_DELETE')."; ".$row['fab_nome']." ".$row['soft_desc']."?','".$_SERVER['PHP_SELF']."', 'acao=del&id=".$row['soft_cod']."&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."&popup=true')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></TD>";
 			print "</TR>";
 		}
 

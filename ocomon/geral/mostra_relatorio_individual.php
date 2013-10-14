@@ -46,22 +46,22 @@ print "<body>";
 
 	$linhas = 0;
 
-	print "<BR><B>OcoMon - Relatório para atendimento.</B><BR>";
+	print "<BR><B>".TRANS('TTL_OCOMON_REP_ATTEND')."</B><BR>";
 
 	print "<TABLE border='0' align='center' width='100%'>";
 		print "<TR>";
 		print "<hr>";
-			print "<TD width='20%' align='left'><b>Número:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_NUMBER').":</b></TD>";
 			print "<TD colspan='3' width='80%' align='left'>".$row['numero']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left'><b>Problema:<b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_PROB').":<b></TD>";
 			print "<TD style=\"{text-align:justify;}\" width='30%' align='left'>".$row['problema']."</TD>";
-			print "<TD width='20%' align='left'><b>Área de Atendimento:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('FIELD_AREA_ATTEND').":</b></TD>";
 			print "<TD width='30%' align='left'>".$row['area']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' valign='top'><b>Descrição:</b></TD>";
+			print "<TD width='20%' align='left' valign='top'><b>".TRANS('OCO_DESC').":</b></TD>";
 			print "<TD  colspan='3' width='80%' align='left'>".nl2br($row['descricao'])."</TD>";
 		print "</TR>";
 
@@ -76,7 +76,7 @@ print "<body>";
 				$rowOP = mysql_fetch_array($execOP) or die($qryOP);
 				$countAssentamento = $i+1;
 				print "<TR>";
-					print "<TD width='20%' align='left' valign='top'>Assentamento ".$countAssentamento." de ".$linhas2." por ".
+					print "<TD width='20%' align='left' valign='top'>".TRANS('FIELD_NESTING')." ".$countAssentamento." de ".$linhas2." por ".
 							"".$rowOP['nome']." em ".formatDate(mysql_result($resultado2,$i,3))."</TD>";
 					print "<TD style=\"{text-align:justify;}\" colspan='3' width='40%' align='left' valign='top'>".nl2br(mysql_result($resultado2,$i,2))."</TD>";
 				print "</TR>";
@@ -84,44 +84,44 @@ print "<body>";
 			}
 		}
 		print "<TR>";
-			print "<TD width='20%' align='left' valign='top'><b>Unidade:</b></TD>";
+			print "<TD width='20%' align='left' valign='top'><b>".TRANS('OCO_FIELD_UNIT').":</b></TD>";
 			print "<TD width='30%' align='left' valign='top'>".$row['unidade']."</TD>";
 
-			print "<TD width='20%' align='left' valign='top'><b>Etiqueta do equipamento:</b></TD>";
+			print "<TD width='20%' align='left' valign='top'><b>".TRANS('FIELD_TAG_EQUIP').":</b></TD>";
 			print "<TD width='30%' align='left' valign='top'>".$row['etiqueta']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left'><b>Contato:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_CONTACT').":</b></TD>";
 			print "<TD width='30%' align='left'>".$row['contato']."</TD>";
-			print "<TD width='20%' align='left'><b>Ramal:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_PHONE').":</b></TD>";
 			print "<TD width='30%' align='left'>".$row['telefone']."</TD>";
 		print "</tr>";
 		print "<TR>";
-			print "<TD width='20%' align='left'><b>Local:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_LOCAL').":</b></TD>";
 			print "<TD width='30%' align='left'>".$row['setor']."</TD>";
-			print "<TD width='20%' align='left'><b>Operador:</b></TD>";
+			print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_OPERATOR').":</b></TD>";
 			print "<TD width='30%' align='left'>".$row['nome']."</TD>";
 		print "</TR>";
 
 		if ($row['status_cod']== 4)
 		{
 			print "<TR>";
-				print "<TD width='20%' align='left'><b>Data de abertura:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_DATE_OPEN').":</b></TD>";
 				print "<TD width='30%' align='left'>".formatDate($row['data_abertura'])."</TD>";
-				print "<TD width='20%' align='left'><b>Data de encerramento:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('FIELD_DATE_CLOSING').":</b></TD>";
 				print "<TD width='30%' align='left'>".formatDate($row['data_fechamento'])."</TD>";
 			print "</tr>";
 			print "<tr>";
-				print "<TD width='20%' align='left'><b>Status:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_STATUS').":</b></TD>";
 				print "<TD colspan='3' width='80%' align='left' bgcolor='white'>".$row['chamado_status']."</TD>";
 			print "</TR>";
 		}
 		else
 		{
 			print "<TR>";
-				print "<TD width='20%' align='left'><b>Data de abertura:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_DATE_OPEN').":</b></TD>";
 				print "<TD width='30%' align='left'>".formatDate($row['data_abertura'])."</TD>";
-				print "<TD width='20%' align='left'><b>Status:<b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_STATUS').":<b></TD>";
 				print "<TD width='30%' align='left' bgcolor='white'>".$row['chamado_status']."</TD>";
 			print "</TR>";
 		}
@@ -130,9 +130,9 @@ print "<body>";
 		print "<TABLE border='0'  align='center' width='100%'>";
 		print "<hr>";
 			print "<tr>";
-				print "<TD width='20%' align='left'><b>Atendimento em:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('FIELD_ATTEND_IN').":</b></TD>";
 				print "<TD width='30%' align='left'>&nbsp;</TD>";
-				print "<TD width='20%' align='left'><b>Operador:</b></TD>";
+				print "<TD width='20%' align='left'><b>".TRANS('OCO_FIELD_OPERATOR').":</b></TD>";
 				print "<TD width='30%' align='left'>&nbsp;</TD>";
 			print "</tr>";
 		print "</table>";
@@ -158,9 +158,9 @@ print "<body>";
 			//print "<hr>";
 				print "<tr><td colspan='4'>&nbsp;</td></tr>";
 				print "<tr>";
-					print "<TD width='20%' align='left'>Nome do usuário:</TD>";
+					print "<TD width='20%' align='left'>".TRANS('FIELD_NAME_USER').":</TD>";
 					print "<TD width='30%' align='left'>&nbsp;</TD>";
-					print "<TD width='20%' align='left'>Assinatura do usuário:</TD>";
+					print "<TD width='20%' align='left'>".TRANS('FIELD_SIGNATURE_USER').":</TD>";
 					print "<TD width='30%' align='left'>&nbsp;</TD>";
 				print "</tr>";
 			print "</TABLE>";

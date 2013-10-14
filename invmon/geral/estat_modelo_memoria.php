@@ -23,7 +23,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -53,13 +53,13 @@
 
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
-		print "<tr><td width='80%' align='center'><b>Modelos de equipamento por distribuição de memória:</b></td></tr>";
+		print "<tr><td width='80%' align='center'><b>".TRANS('TTL_MODEL_EQUIP_DIST_MEMORY').":</b></td></tr>";
 
 
 		print "<td class='line'>";
-		print "<fieldset><legend>Modelo X memória</legend>";
+		print "<fieldset><legend>".TRANS('TTL_MODEL_X_MEMORY')."</legend>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='80%' bgcolor='".$cor3."'>";
-		print "<TR><TD bgcolor='".$cor3."'><b>Equipamento</TD><TD bgcolor='".$cor3."'><b>Modelo</TD><TD bgcolor='".$cor3."'><b>Memória</TD><TD bgcolor='".$cor3."'><b>Quantidade</TD><TD bgcolor='".$cor3."'><b>Percentual por modelo</TD></tr>";
+		print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('MNL_CAD_EQUIP')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_MODEL')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('MNL_MEMO')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_QTD')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('TTL_PORCENTEGE_FOR_MEMORY')."</TD></tr>";
 
 		while ($rowAux = mysql_fetch_array($resultadoAux)) {
 
@@ -94,8 +94,8 @@
 
 		print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>";
 		print "</TD><TD bgcolor='".$cor3."'><b></TD>";
-		print "<TD bgcolor='".$cor3."'><b>Total: ".$total."</TD>";
-		print "<TD bgcolor='".$cor3."'><b>100%</b></TD></tr>";
+		print "<TD bgcolor='".$cor3."'><b>".TRANS('TOTAL').": ".$total."</TD>";
+		print "<TD bgcolor='".$cor3."'><b>".TRANS('TXT_100')."</b></TD></tr>";
 		print "</TABLE>";
 		print "</fieldset>";
 
@@ -113,7 +113,7 @@
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
 
-		print "<tr><td width='80%' align='center'><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+		print "<tr><td width='80%' align='center'><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
 		print "</TABLE>";
 
 print "</BODY>";

@@ -30,7 +30,7 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],1);
 
-	print "<BR><B>Centros de Custo:</B><BR>";
+	print "<BR><B>".TRANS('TTL_CENTER_PERMISSIONS').":</B><BR>";
 
 	$query = "SELECT p.*, s.*, m.* FROM permissoes p, sistemas s, modulos m WHERE p.perm_area = s.sis_id and
 					p.perm_modulo = m.modu_cod order by s.sistema";
@@ -38,18 +38,18 @@
 
 	if ((!isset($_GET['action'])) and (!isset($_POST['submit']))) {
 
-		print "<TD align='right'><a href='permissoes.php?action=incluir'>Incluir permissão.</a></TD><BR>";
+		print "<TD align='right'><a href='".$_SERVER['PHP_SELF']."?action=incluir'>".TRANS('TXT_INCLUDE_PERMISSION')."</a></TD><BR>";
 		if (mysql_numrows($resultado) == 0)
 		{
-			echo mensagem("Não existem permissões cadastradas no sistema.");
+			echo mensagem("".TRANS('MSG_NOT_PERMISSION_CAD_SYSTEM')."");
 		}
         else
         {
                 $linhas = mysql_numrows($resultado);
                 print "<td class='line'>";
-                print "Existe(m) <b>".$linhas."</b> permissão(oes) cadastrada(s) no sistema.<br>";
+                print "".TRANS('THERE_IS_ARE')." <b>".$linhas."</b> ".TRANS('MSG_PERMISSION_CAD_SYSTEM').".<br>";
                 print "<TABLE border='0' cellpadding='5' cellspacing='0'  width='50%'>";
-                print "<TR class='header'><td class='line'><b>Área</b></TD><td class='line'><b>Módulo</b></TD><td class='line'><b>Excluir</b></TD>";
+                print "<TR class='header'><td class='line'><b>".TRANS('COL_AREA')."</b></TD><td class='line'><b>".TRANS('TXT_MODULE')."</b></TD><td class='line'><b>".TRANS('COL_DEL')."</b></TD>";
                 $j=2;
                 while ($row=mysql_fetch_array($resultado))
                 {
@@ -63,11 +63,10 @@
                         }
                         $j++;
 
-                        //print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-                        print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+                        print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
                         print "<td class='line'>".$row['sistema']."</TD>";
                         print "<td class='line'>".strtoupper($row['modu_nome'])."</TD>";
-                        print "<td class='line'><a onClick=\"confirma('Tem Certeza que deseja excluir essa permissão?','permissoes.php?action=excluir&cod=".$row['perm_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></a></TD>";
+                        print "<td class='line'><a onClick=\"confirma('".TRANS('MSG_DEL_PERMISSION')."','".$_SERVER['PHP_SELF']."?action=excluir&cod=".$row['perm_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."o'></a></TD>";
                         print "</TR>";
 				}
                 print "</TABLE>";
@@ -75,11 +74,11 @@
 
 	} else
 	if ((isset($_GET['action'])  && $_GET['action']=="incluir") && (!isset($_POST['submit']))) {
-		print "<B>Cadastro de permissões:<br>";
+		print "<B>".TRANS('SUBTTL_CAD_PERMISSIONS').":<br>";
 		print "<form name='incluir' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' width='50%'>";
-		print "<tr><td class='line'>Área:</td><td class='line'><select class='select' name='area' id='idArea'>";
-		print "<option value=-1>Área</option>";
+		print "<tr><td class='line'>".TRANS('COL_AREA').":</td><td class='line'><select class='select' name='area' id='idArea'>";
+		print "<option value=-1>".TRANS('SEL_AREA')."</option>";
 			$qry = "select * from sistemas order by sistema";
 			$exec = mysql_query($qry);
 			while ($row_area = mysql_fetch_array($exec)){
@@ -87,8 +86,8 @@
 			}
 		print "</select>";
 		print "</td></tr>";
-		print "<tr><td class='line'>Módulo:</td><td class='line'><select class='select' name='modulo' id='idModulo'>";
-		print "<option value=-1>Módulo</option>";
+		print "<tr><td class='line'>".TRANS('TXT_MODULE').":</td><td class='line'><select class='select' name='modulo' id='idModulo'>";
+		print "<option value=-1>".TRANS('SEL_MODULE')."</option>";
 			$qry = "select * from modulos order by modu_nome";
 			$exec = mysql_query($qry);
 			while ($row_modulo = mysql_fetch_array($exec)){
@@ -96,60 +95,40 @@
 			}
 		print "</select>";
 		print "</td></tr>";
-		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='Incluir'></td>";
-		print "<td class='line'><input type='reset'  class='button' name='reset' value='Cancelar' onclick=\"javascript:history.back()\"></td></tr>";
+		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_INCLUDE')."'></td>";
+		print "<td class='line'><input type='reset'  class='button' name='reset' value='".TRANS('BT_CANCEL')."' onclick=\"javascript:history.back()\"></td></tr>";
 
 		print "</table>";
 		print "</form>";
 	} else
 	if (isset($_GET['action']) && $_GET['action']=="excluir"){
 		$qry = "DELETE FROM permissoes where perm_cod = ".$_GET['cod']."";
-		$exec = mysql_query($qry) or die ('Erro na tentativa de deletar o registro!');
-		?>
-		<script language="javascript">
-		<!--
-			mensagem('Registro excluído com sucesso!');
-			window.location.href='permissoes.php';
-		//-->
-		</script>
-		<?
+		$exec = mysql_query($qry) or die (TRANS('MSG_ERR_DEL_REGISTER'));
+
+		print "<script>mensagem('".TRANS('OK_DEL')."'); window.location.href='".$_SERVER['PHP_SELF']."'; </script>";
+
 	} else
-	if ($_POST['submit']=="Incluir") {
+	if ($_POST['submit']== TRANS('BT_INCLUDE')) {
 		if (($_POST['area']!=-1)&& ($_POST['modulo']!=-1)){
 			$qry = "select * from permissoes where perm_area=".$_POST['area']." and perm_modulo=".$_POST['modulo']."";
 			$exec= mysql_query($qry);
 			$achou = mysql_numrows($exec);
 			if ($achou){
-				?>
-				<script language="javascript">
-				<!--
-					mensagem('Essas permissões já existem!');
-					history.go(-2)();
-				//-->
-				</script>
-				<?
+
+				print "<script>mensagem('".TRANS('MSG_THIS_PERMISSION_EXIST')."'); history.go(-2)(); </script>";
+
 			} else {
 
 				$qry = "INSERT INTO permissoes (perm_area,perm_modulo,perm_flag) values (".$_POST['area'].",".$_POST['modulo'].",1)";
-				$exec = mysql_query($qry) or die ('Erro na inclusão da permissão!'.$qry);
-				?>
-				<script language="javascript">
-				<!--
-					mensagem('Dados incluídos com sucesso!');
-					history.go(-2)();
-				//-->
-				</script>
-				<?
+				$exec = mysql_query($qry) or die (TRANS('MSG_ERR_INCLUDE_PERMISSION') .$qry);
+
+				print "<script>mensagem('".TRANS('MSG_DATA_INCLUDE_OK')."'); history.go(-2)(); </script>";
+
 			}
 		} else {
-			?>
-			<script language="javascript">
-			<!--
-				mensagem('Dados incompletos!');
-				history.go(-2)();
-			//-->
-			</script>
-			<?
+
+			print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."'); history.go(-2)(); </script>";
+
 		}
 
 	}

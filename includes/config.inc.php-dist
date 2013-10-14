@@ -25,7 +25,7 @@ define ( "CCUSTO_COD","codccusto"); //Campo referente ao código de Centro de Cus
 
 
 define ("INST_TERCEIRA", "-1"); //Define que UNIDADES  não devem aparecer na estatística geral da tela de abertura - o código deve ser extraido da tabela: INSTITUICOES. 
-	//Por padrão todas as unidades aparecem na estatística inicial.
+									//Por padrão todas as unidades aparecem na estatística inicial.
 
 define ( "LOG_PATH", "../../logs/logs.txt"); //Esse diretório deve ter permissão de escrita pra gravar os logs.
 define ( "LOGO_PATH", "../../includes/logos");
@@ -35,6 +35,8 @@ define ( "HELP_ICON", "".ICONS_PATH."solucoes2.png");
 define ( "HELP_PATH", "../../includes/help/");
 
 define ( "LANGUAGE", "pt_BR.php");
+//define ( "LANGUAGE", "en.php");
+
 
 //Define o tipo de autenticação do sistema , por padrão a altenticação é feita na tabela de usuários do próprio OCOMON, porém isso pode ser feito através de um serviço LDAP.
 //INICIALMENTE É NECESSÁRIO DEIXAR A AUTENTICAÇÃO LOCAL PARA QUE SEJA POSSÍVEL ACESSAR O SISTEMA PELA PRIMEIRA VEZ E CRIAR OS USUÁRIOS.
@@ -66,3 +68,4 @@ define ( "LDAP_PASSWORD", "");
 
 
 ?>
+

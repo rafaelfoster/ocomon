@@ -30,15 +30,15 @@
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 		print "	<BR><BR>";
-		print "	<B><center>:::Relatório de Indicadores por níveis de status dos chamados:::</center></B><BR><BR>";
+		print "	<B><center>:::".TRANS('TLT_INDICE_STATUS_CALL').":::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida()\" >"; //onSubmit=\"return valida()\"
 		print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Área Responsável:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 
 
 		print "					<td><Select name='area' class='select' size=1 onChange=\"fillSelectFromArray(this.form.operador, ((this.selectedIndex == -1) ? null : team[this.selectedIndex-1]));\">";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
 										$query="select * from sistemas where sis_status not in (0) order by sistema";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -53,9 +53,9 @@
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Operador:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('MNS_OPERADOR').":</td>";
 		print "					<td><Select name='operador' class='select' size='1'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
 										$query="select * from usuarios order by nome";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -72,9 +72,9 @@
 
 
 			print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Local:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_LOCAL').":</td>";
 		print "					<td><Select name='local' class='select' size='1'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
 										$query="select * from localizacao where loc_status not in (0) order by local";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -90,34 +90,34 @@
 
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
 		//print "					<td ><INPUT type='text' name='d_ini' class='data' id='idD_ini'><a href=\"javascript:cal1.popup();\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
-		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Tipo de relatório:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 		print "					<td><select name='saida' class='data'>";
-		print "							<option value=-1 selected>Normal</option>";
-	//	print "							<option value=1>Relatório 1 linha</option>";
+		print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
+
 		print "						</select>";
 		print "					</td>";
 		print "				</tr>";
-		print "<tr><td colspan='2'><input type='checkbox' name='novaJanela' title='Selecione para que a saída seja em uma nova janela.'>Nova Janela (para impressão)<td><tr>";
+		print "<tr><td colspan='2'><input type='checkbox' name='novaJanela' title='".TRANS('HNT_NEW_WINDOW').".'>".TRANS('OPT_NEW_WINDOW')."<td><tr>";
 		print "		</TABLE><br>";
 
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td>";
 		//print"					<input type='hidden' name='sis_name' value='$sis_name' ";
-		print "					<input type='submit'  class='button' value='Pesquisar' name='ok' >";//onClick=\"submitForm();\"
+		print "					<input type='submit'  class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onClick=\"submitForm();\"
 		print "	            </TD>";
 		print "	            <td>";
-		print "					<INPUT type='reset'  class='button' value='Limpar campos' name='cancelar'>";
+		print "					<INPUT type='reset'  class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";
 		print "				</TD>";
 		print "			</tr>";
 		print "	    </TABLE>";
@@ -131,16 +131,26 @@
 
 		print "<html><body class='relatorio'>";
 
+		//PARAMETRIZAR ESSES VALORES
+
 		//SLA 1 é menor do que o SLA 2 - VERDE
-		$sla3 = 6; //INICIO DO VERMELHO - Tempo de SOLUÇÃO
+		$sla3 = 6; //INICIO DO VERMELHO - Tempo de SOLUÇÃO EM HORAS
 		$sla2 = 4; //INÍCIO DO AMARELO
 		$slaR3 = 3600; //Tempo de RESPOSTA em segundos VERMELHO
 		$slaR2 = 1800; //AMARELO
+		$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
+
+		$sla3 = 6; //INICIO DO VERMELHO - Tempo de SOLUÇÃO EM HORAS
+		$sla2 = 4; //INÍCIO DO AMARELO
+		$slaR3 = 14400; //Tempo de RESPOSTA em segundos VERMELHO
+		$slaR2 = 7200; //AMARELO
+		$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
+
 
 		$corSla1 = "green";
 		$corSla2 = "orange";
 		$corSla3 = "red";
-		$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
+
 
 		$chamadosSgreen = array();
 		$chamadosSyellow = array();
@@ -153,11 +163,16 @@
 		$hora_inicio = ' 00:00:00';
 		$hora_fim = ' 23:59:59';
 
+
+		$qryUpdOco = "UPDATE ocorrencias SET data_abertura = oco_real_open_date WHERE data_abertura = '0000-00-00 00:00:00' ";
+		$execUpdoco = mysql_query($qryUpdOco);
+
+
 		$query = "";
 
     		$query = "SELECT o.numero, o.data_abertura, o.data_atendimento, o.data_fechamento, o.sistema as cod_area, ".
 					"s.sistema as area, 	p.problema as problema, sl.slas_desc as sla, sl.slas_tempo as tempo , l.*, pr.*, ".
-					"res.slas_tempo as resposta, 	u.nome as operador ".
+					"res.slas_tempo as resposta, res.slas_desc as resposta_desc, u.nome as operador ".
 				"FROM localizacao as l left join prioridades as pr on pr.prior_cod = l.loc_prior left join sla_solucao as res on ".
 					"res.slas_cod = pr.prior_sla, problemas as p left join sla_solucao as sl on p.prob_sla = sl.slas_cod, ".
 					"ocorrencias as o, sistemas as s, usuarios as u ".
@@ -181,7 +196,7 @@
 
 		} else
 		if (($_SESSION['s_nivel']!=1) && !isIn($_POST['area'], $_SESSION['s_uareas'] ) ) {
-			print "<script>window.alert('Você só pode consultar os dados da sua área!');</script>";
+			print "<script>window.alert('".TRANS('MSG_CONSULT_FOR_YOU_AREA')."');</script>";
 			print "<script>history.back();</script>";
 			exit;
 		}
@@ -189,7 +204,7 @@
 
 		if ((!isset($_POST['d_ini'])) || ((!isset($_POST['d_fim'])))) {
 
-			print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_PERIOD_INFO')."'); history.back();</script>";
 		} else {
 			$d_ini_nova = converte_dma_para_amd(str_replace("-","/",$_POST['d_ini']));
 			$d_fim_nova = converte_dma_para_amd(str_replace("-","/",$_POST['d_fim']));
@@ -205,9 +220,11 @@
 				$resultado = mysql_query($query);       // print "<b>Query--></b> $query<br><br>";
 				$linhas = mysql_num_rows($resultado);  //print "Linhas: $linhas";
 
+				//print $query."<br>";
+
 		    		if($linhas==0) {
 
-					print "<script>window.alert('Não há dados no período informado!'); history.back();</script>";
+					print "<script>window.alert('".TRANS('MSG_NO_REGISTER_PERIOD')."'); history.back();</script>";
 		       		} else  { //if($linhas==0)
 			   		$campos=array();
 
@@ -236,342 +253,351 @@
 						}
 							//echo "<br><br>";
 							$background = '#C7D0D9';
-							print "<p class='titulo'>RELATÓRIO DE SLAS: INDICADORES DE RESPOSTA e INDICADORES DE SOLUÇÃO".$criterio."</p>";
+							print "<p class='titulo'>".TRANS('TLT_REP_SLAS_INDICES')."".$criterio."</p>";
                             			print "<table class='centro' cellspacing='0' border='1' >";
 
-                           	 		print "<tr bgcolor='".$background."'><td ><B>NUMERO</td>
-							<td ><b><a title='tempo de resposta'>T RESPOSTA VALIDO</a></td>
-							<td ><b><a title='tempo de solução'>T SOLUCAO VALIDO</a></td></B>
-							<td ><b><a title='tempo definido para resposta para cada setor'>SLA Resposta</a></td></B>
-							<td ><b><a title='tempo definido para solução para cada problema'>SLA Solução</a></td></B>
-							<td ><b><a title='indicador de resposta'>Resposta</a></td></B>
-							<td ><b><a title='indicador de solução'>Solução</a></td></B>
-							<td ><b><a title='indicador de solução a partir da primeira resposta'>SOL - RESP</a></td></B>
-							<td ><b><a title='tempo em que o chamado esteve pendente no usuário'>Dependência ao usuário</a></td></B>
-							<td ><b><a title='tempo em que o chamado esteve pendente por algum serviço de terceiros'>Dependência de terceiros</a></td></B>
-							<td ><b><a title='tempo em equipamento de backup ou alterado após encerramento'>Fora de dependência</a></td></B>
-							<td ><b><a title='Tempo de solução menos o tempo em pendência do usuário'>T Solucao recalculado</a></td></B>
-							<td ><b><a title='indicador atualizado descontando a pendência do usuário'>Indicador atualizado</a></td></B>
+                           	 		print "<tr bgcolor='".$background."'><td ><B>".TRANS('OCO_FIELD_NUMBER')."</td>
+							<td ><b><a title='tempo de resposta'>".TRANS('COL_TIT_TEMP_VAL_RESP')."</a></td>
+							<td ><b><a title='tempo de solução'>".TRANS('COL_TIT_TEMP_VAL_SOL')."</a></td></B>
+							<td ><b><a title='tempo definido para resposta para cada setor'>".TRANS('COL_TIT_SLA_RESP')."</a></td></B>
+							<td ><b><a title='tempo definido para solução para cada problema'>".TRANS('COL_TIT_SLA_SOL')."</a></td></B>
+							<td ><b><a title='indicador de resposta'>".TRANS('COL_TIT_REPLY')."</a></td></B>
+							<td ><b><a title='indicador de solução'>".TRANS('COL_TIT_SOLUTION')."</a></td></B>
+							<td ><b><a title='indicador de solução a partir da primeira resposta'>".TRANS('COL_SOL_RESP')."</a></td></B>
+							<td ><b><a title='tempo em que o chamado esteve pendente no usuário'>".TRANS('COL_USER_DEPEN')."</a></td></B>
+							<td ><b><a title='tempo em que o chamado esteve pendente por algum serviço de terceiros'>".TRANS('COL_DEPEN_THIRD')."</a></td></B>
+							<td ><b><a title='tempo em equipamento de backup ou alterado após encerramento'>".TRANS('COL_IT_ARRE_DEPEN')."</a></td></B>
+							<td ><b><a title='Tempo de solução menos o tempo em pendência do usuário'>".TRANS('COL_RECALC_SOLUTION')."</a></td></B>
+							<td ><b><a title='indicador atualizado descontando a pendência do usuário'>".TRANS('COL_POINTER_UPDATE')."</a></td></B>
 							</tr>";
 
-                           //INICIALIZANDO CONTADORES!!
-                        $sla_green=0;
-			$sla_red=0;
-			$sla_yellow=0;
-			$slaR_green=0;
-			$slaR_red=0;
-			$slaR_yellow=0;
-			$c_slaS_blue = 0;
-			$c_slaS_yellow = 0;
-			$c_slaS_red = 0;
-			$c_slaR_blue = 0;
-			$c_slaR_yellow = 0;
-			$c_slaR_red = 0;
-			$c_slaM_blue = 0;
-			$c_slaM_yellow = 0;
-			$c_slaM_red = 0;
-			$c_slaR_checked = 0;
-			$c_slaS_checked = 0;
-			$c_slaM_checked = 0;
-			$imgSlaS = 'checked.png';
-			$imgSlaR = 'checked.png';
-			$imgSlaM = 'checked.png';
+						//INICIALIZANDO CONTADORES!!
+						$sla_green=0;
+						$sla_red=0;
+						$sla_yellow=0;
+						$slaR_green=0;
+						$slaR_red=0;
+						$slaR_yellow=0;
+						$c_slaS_blue = 0;
+						$c_slaS_yellow = 0;
+						$c_slaS_red = 0;
+						$c_slaR_blue = 0;
+						$c_slaR_yellow = 0;
+						$c_slaR_red = 0;
+						$c_slaM_blue = 0;
+						$c_slaM_yellow = 0;
+						$c_slaM_red = 0;
+						$c_slaR_checked = 0;
+						$c_slaS_checked = 0;
+						$c_slaM_checked = 0;
+						$imgSlaS = 'checked.png';
+						$imgSlaR = 'checked.png';
+						$imgSlaM = 'checked.png';
 
-			$c_slaSR_blue = 0;
-			$c_slaSR_yellow = 0;
-			$c_slaSR_red = 0;
-			$c_slaSR_checked = 0;
-
-			$dtS = new dateOpers; //solução
-			$dtR = new dateOpers; //resposta
-			$dtM = new dateOpers; //tempo entre resposta e solução
-                        $cont = 0;
-                        while ($row = mysql_fetch_array($resultado)) {
-				// if (array_key_exists($row['cod_area'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
-					// $area = $row['cod_area']; //Recebe o valor da área de atendimento do chamado
-				// } else $area = 1; //Carga horária default definida no arquivo config.inc.php
-				$areaReal=$row['cod_area'];
-				$area = "";
-				$area=testaArea($_POST['area'],$row['cod_area'],$H_horarios);
-
-				$dtR->setData1($row['data_abertura']);
-				$dtR->setData2($row['data_atendimento']);
-				$dtR->tempo_valido($dtR->data1,$dtR->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
-
-				$dtS->setData1($row['data_abertura']);
-				$dtS->setData2($row['data_fechamento']);
-				$dtS->tempo_valido($dtS->data1,$dtS->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
-				$t_horas = $dtS->diff["hValido"];
-
-				$dtM->setData1($row['data_atendimento']);
-				$dtM->setData2($row['data_fechamento']);
-				$dtM->tempo_valido($dtM->data1,$dtM->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
-
-				$sql_status = "SELECT sum(T.ts_tempo) as segundos, sec_to_time(sum(T.ts_tempo)) as tempo, ".
-								"T.ts_status as codStat, A.sistema as area, CAT.stc_desc as dependencia, CAT.stc_cod as cod_dependencia ".
-							"FROM ocorrencias as O, tempo_status as T, `status` as S, sistemas as A, status_categ as CAT ".
-							"WHERE O.numero = T.ts_ocorrencia and O.numero = ".$row['numero']." and S.stat_id = T.ts_status ".
-								"and S.stat_cat = CAT.stc_cod and O.sistema = A.sis_id and O.sistema =".$areaReal." and O.status = 4 ".
-								" and O.data_fechamento >= '".$d_ini_completa."' and O.data_fechamento <='".$d_fim_completa."' ".
-							"GROUP BY A.sis_id,CAT.stc_desc ".
-							"ORDER BY CAT.stc_cod";
-				$exec_sql_status = mysql_query($sql_status);
-
-				//PARA CHECAR O SLA DO PROBLEMA -  TEMPO DE SOLUÇÃO
-				$t_segundos_total = $dtS->diff["sValido"];
-
-				if ($row['tempo'] !=""){
-					if ($t_segundos_total <= ($row['tempo']*60))  { //transformando em segundos
-						//$corSLA = $corSla1;
-						$imgSlaS = 'sla1.png';
-						$c_slaS_blue++;
-					} else
-					if ($t_segundos_total <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
-						//$corSLA = $corSla2;
-						$imgSlaS = 'sla2.png';
-						$c_slaS_yellow++;
-					} else {
-						//$corSLA = $corSla3;
-						$imgSlaS = 'sla3.png';
-						$c_slaS_red++;
-					}
-				} else {
-					$imgSlaS = 'checked.png';
-					$c_slaS_checked++;
-				}
-				//PARA CHECAR O SLA DO SETOR - TEMPO DE RESPOSTA
-
-				$t_segundos_resposta = $dtR->diff["sValido"];
-				if ($row['resposta'] != "") {
-					if ($t_segundos_resposta <= ($row['resposta']*60))  { //transformando em segundos
-						//$corSLA = $corSla1;
-						$imgSlaR = 'sla1.png';
-						$c_slaR_blue++;
-						$chamadosRgreen[]=$row['numero'];
-					} else
-					if ($t_segundos_resposta <= ( ($row['resposta']*60) + (($row['resposta']*60) *$percLimit/100)) ){ //mais 20%
-						//$corSLA = $corSla2;
-						$imgSlaR = 'sla2.png';
-						$c_slaR_yellow++;
-						$chamadosRyellow[]=$row['numero'];
-					} else {
-						//$corSLA = $corSla3;
-						$imgSlaR = 'sla3.png';
-						$c_slaR_red++;
-						$chamadosRred[]=$row['numero'];
-					}
-				} else {
-					$c_slaR_checked++;
-					$imgSlaR = 'checked.png';
-				}
-
-				$t_segundos_m = $dtM->diff["sValido"];
-
-				if ($row['tempo'] !=""){ //está em minutos
-					if ($t_segundos_m <= ($row['tempo']*60))  { //transformando em segundos
-						$imgSlaM = 'sla1.png';
-						$c_slaM_blue++;
-					} else if ($t_segundos_m <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
-						$imgSlaM = 'sla2.png';
-						$c_slaM_yellow++;
-					} else {
-						$imgSlaM = 'sla3.png';
-						$c_slaM_red++;
-					}
-				} else {
-					$imgSlaM = 'checked.png';
-					$c_slaM_checked++;
-				}
-
-				if ($t_horas>=$sla3) {//>=6
-					$cor = $corSla3;
-					$sla_red++;
-				} else
-				if ($t_horas>=$sla2) {
-					$cor = $corSla2;
-					$sla_yellow++;
-				} else {
-					$cor = $corSla1;
-					$sla_green++;
-				}
-				$t_resp = $dtR->diff["sValido"];
-
-				if ($t_resp>=$slaR3) {//>=6
-					$corR = $corSla3;
-					$slaR_red++;
-				} else
-				if ($t_resp>=$slaR2) {
-					$corR = $corSla2;
-					$slaR_yellow++;
-				} else {
-					$corR = $corSla1;
-					$slaR_green++;
-				}
-
-				$total_sol_segundos = "";
-				$total_res_segundos = "";
-				$total_res_valido = "";
-				$total_sol_valido = "";
-
-				$total_sol_segundos+= $dtS->diff["sFull"];
-				$total_res_segundos+=$dtR->diff["sFull"];
-				$total_res_valido+=$dtR->diff["sValido"];
-				$total_sol_valido+=$dtS->diff["sValido"];
-
-				//Linhas de dados do relatório
-				print "<tr id='linha".$cont."' onMouseOver=\"destaca('linha".$cont."', '".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$cont."');\"  onMouseDown=\"marca('linha".$cont."', '".$_SESSION['s_colorMarca']."');\">";
-
-				print "<td ><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a></td>
-					<td ><font color='".$corR."'>".$dtR->tValido."</font></td>
-					<td ><font color='".$corR."'>".$dtS->tValido."</font></td>
-					<td >".$row['resposta']." minutos</font></td>
-					<td >".$row['sla']."</font></td>
-					<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></td>
-					<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></td>
-					<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaM."'></a></td>";
-
-				$dependUser = 0;
-				$dependTerc = 0;
-				$dependNone = 0;
-				while ($row_status = mysql_fetch_array($exec_sql_status)){
-					//print $row_status['dependencia'].": ".$row_status['tempo']." | ";
-					if ($row_status['cod_dependencia'] == 1) {//dependente ao usuário
-						$dependUser+= $row_status['segundos'];
-					} else
-					if ($row_status['cod_dependencia'] == 3 ){ //dependente de terceiros
-						$dependTerc+=$row_status['segundos'];
-					} else
-					if ($row_status['cod_dependencia'] == 4 ){ //dependente de terceiros
-						$dependNone+=$row_status['segundos'];
-					}
-				}
-				//print "</td>";
-				print "<td >";//coluna do tempo vinculado ao usuário
-				if ($dependUser != 0)
-					$dependUser = $dtS->secToHour($dependUser); else
-					$dependUser = "----";
-				print $dependUser;
-				print "</td>";
-				print "<td >";//coluna do tempo vinculado a terceiros
-				if ($dependTerc != 0)
-					$dependTerc = $dtS->secToHour($dependTerc); else
-					$dependTerc = "----";
-				print $dependTerc;
-				print "</td>";
-
-				print "<td >";//coluna do tempo independente (encerrados - em backup..)
-				if ($dependNone != 0)
-					$dependNone = $dtS->secToHour($dependNone); else
-					$dependNone = "----";
-				print $dependNone;
-				print "</td>";
-
-				print "<td >";//Solução recalculada
-				$solucTotal = $dtS->diff["sValido"];
-				//$solucRecalc = $dtS->secToHour($solucTotal);
-				$solucRecalc = $solucTotal;
-				$imgSlaSR=$imgSlaS;//Solução recalculada
-
-				if ((strpos($dependUser,":")) || (strpos($dependNone,":"))){
-					if (strpos($dependUser,":")) {
-						$dependUser = $dtS->hourToSec($dependUser);
-						$solucRecalc-=$dependUser;
-						//$solucRecalc = $dtS->secToHour($solucRecalc);
-					}
-					if (strpos($dependNone,":")) {
-						$dependNone = $dtS->hourToSec($dependNone);
-						$solucRecalc-=$dependNone;
-						//$solucRecalc = $dtS->secToHour($solucRecalc);
-					}
-				}
-				if ($solucRecalc <0) $solucRecalc*=-1;
-
-				$solucRecalc = $dtS->secToHour($solucRecalc);
-
-				print $solucRecalc; //Novo tempo de solução - recalculado tirando as dependências ao usuário ou status independentes
-
-				if ($row['tempo'] !=""){
-					if ($dtS->hourToSec($solucRecalc) <= ($row['tempo']*60))  { //transformando em segundos
-							$imgSlaSR = 'sla1.png';
-							$c_slaSR_blue++;
-							$chamadosSgreen[]= $row['numero'];
-					}
-					else if ($dtS->hourToSec($solucRecalc) <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
-							$imgSlaSR = 'sla2.png';
-							$c_slaSR_yellow++;
-							$chamadosSyellow[]= $row['numero'];
-					} else {
-						$imgSlaS = 'sla3.png';
-						$c_slaSR_red++;
-						$chamadosSred[]= $row['numero'];
-					}
-				} else {
-					$imgSlaSR = 'checked.png';
-					$c_slaSR_checked++;
-				}
-				print "</td>";
-				print "<td ><img height='14' width='14' src='../../includes/imgs/".$imgSlaSR."'></td>";
-
-				print "</tr>";
-				$cont++;
-			}//while chamados
-
-			$media_resposta_geral = $dtR->secToHour(floor($total_res_segundos/$linhas));
-			$media_solucao_geral = $dtS->secToHour(floor($total_sol_segundos/$linhas));
-			$media_resposta_valida = $dtR->secToHour(floor($total_res_valido/$linhas));
-			$media_solucao_valida = $dtS->secToHour(floor($total_sol_valido/$linhas));
-
-			print "<tr><td colspan=5><b>MÉDIAS -></td><td ><b>".$media_resposta_valida."</td><td ><B>".$media_solucao_valida."</td></tr>";
-
-			//MEDIAS DE SOLUÇÃO
-			$perc_ate_sla2=round((($sla_green*100)/$linhas),2);
-			$perc_ate_sla3=round((($sla_yellow*100)/$linhas),2);
-			$perc_mais_sla3=round((($sla_red*100)/$linhas),2);
-			//MEDIAS DE RESPOSTA
-			$perc_ate_slaR2=round((($slaR_green*100)/$linhas),2);
-			$perc_ate_slaR3=round((($slaR_yellow*100)/$linhas),2);
-			$perc_mais_slaR3=round((($slaR_red*100)/$linhas),2);
-
-			$slaR2M = $slaR2/60;
-			$slaR3M = $slaR3/60;
-			//TOTAL DE HORAS VÁLIDAS NO PERÍODO:
-			$area_fixa = 1;//Padrao
-			$dt = new dateOpers;
-			$dt->setData1($d_ini_completa);
-			$dt->setData2($d_fim_completa);
-			$dt->tempo_valido($dt->data1,$dt->data2,$H_horarios[$area_fixa][0],$H_horarios[$area_fixa][1],$H_horarios[$area_fixa][2],$H_horarios[$area_fixa][3],"H");
-			$hValido = $dt->diff["hValido"]+1; //Como o período passado não é arredondado (xx/xx/xx 23:59:59) é necessário arrendondar o total de horas.
-			print "</table>";
+						$c_slaSR_blue = 0;
+						$c_slaSR_yellow = 0;
+						$c_slaSR_red = 0;
+						$c_slaSR_checked = 0;
 
 
-			##TRANSFORMAÇÕES DOS ARRAYS
-
-			$numerosRed=putComma($chamadosSred);
-			$numerosYellow=putComma($chamadosSyellow);
-			$numerosGreen=putComma($chamadosSgreen);
-
-			$numerosRred=putComma($chamadosRred);
-			$numerosRyellow=putComma($chamadosRyellow);
-			$numerosRgreen=putComma($chamadosRgreen);
+						$total_sol_segundos = 0;
+						$total_res_segundos = 0;
+						$total_res_valido = 0;
+						$total_sol_valido = 0;
 
 
+						$dtS = new dateOpers; //solução
+						$dtR = new dateOpers; //resposta
+						$dtM = new dateOpers; //tempo entre resposta e solução
+						$cont = 0;
+						while ($row = mysql_fetch_array($resultado)) {
+							// if (array_key_exists($row['cod_area'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
+								// $area = $row['cod_area']; //Recebe o valor da área de atendimento do chamado
+							// } else $area = 1; //Carga horária default definida no arquivo config.inc.php
+							$areaReal=$row['cod_area'];
+							$area = "";
+							$area=testaArea($_POST['area'],$row['cod_area'],$H_horarios);
+
+							#TRABALHA SOBRE O TEMPO DE RESPOSTA
+							$dtR->setData1($row['data_abertura']);
+							$dtR->setData2($row['data_atendimento']);
+							$dtR->tempo_valido($dtR->data1,$dtR->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
+
+							#TRABALHA SOBRE O TEMPO DE SOLUÇÃO
+							$dtS->setData1($row['data_abertura']);
+							$dtS->setData2($row['data_fechamento']);
+							$dtS->tempo_valido($dtS->data1,$dtS->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
+							$t_horas = $dtS->diff["hValido"];
+
+							#TRABALHA SOBRE O TEMPO DE SOLUÇÃO A PARTIR DO TEMPO DE RESPOSTA
+							$dtM->setData1($row['data_atendimento']);
+							$dtM->setData2($row['data_fechamento']);
+							$dtM->tempo_valido($dtM->data1,$dtM->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
+
+							$sql_status = "SELECT sum(T.ts_tempo) as segundos, sec_to_time(sum(T.ts_tempo)) as tempo, ".
+											"T.ts_status as codStat, A.sistema as area, CAT.stc_desc as dependencia, CAT.stc_cod as cod_dependencia ".
+										"FROM ocorrencias as O, tempo_status as T, `status` as S, sistemas as A, status_categ as CAT ".
+										"WHERE O.numero = T.ts_ocorrencia and O.numero = ".$row['numero']." and S.stat_id = T.ts_status ".
+											"and S.stat_cat = CAT.stc_cod and O.sistema = A.sis_id and O.sistema =".$areaReal." and O.status = 4 ".
+											" and O.data_fechamento >= '".$d_ini_completa."' and O.data_fechamento <='".$d_fim_completa."' ".
+										"GROUP BY A.sis_id,CAT.stc_desc ".
+										"ORDER BY CAT.stc_cod";
+							$exec_sql_status = mysql_query($sql_status);
+							//print $sql_status."<br>";
+							//PARA CHECAR O SLA DO PROBLEMA -  TEMPO DE SOLUÇÃO
+							$t_segundos_total = $dtS->diff["sValido"];
+
+							if ($row['tempo'] !=""){
+								if ($t_segundos_total <= ($row['tempo']*60))  { //transformando em segundos
+									//$corSLA = $corSla1;
+									$imgSlaS = 'sla1.png';
+									$c_slaS_blue++;
+								} else
+								if ($t_segundos_total <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
+									//$corSLA = $corSla2;
+									$imgSlaS = 'sla2.png';
+									$c_slaS_yellow++;
+								} else {
+									//$corSLA = $corSla3;
+									$imgSlaS = 'sla3.png';
+									$c_slaS_red++;
+								}
+							} else {
+								$imgSlaS = 'checked.png';
+								$c_slaS_checked++;
+							}
+
+							//PARA CHECAR O SLA DO SETOR - TEMPO DE RESPOSTA
+							$t_segundos_resposta = $dtR->diff["sValido"];
+							if ($row['resposta'] != "") {
+								if ($t_segundos_resposta <= ($row['resposta']*60))  { //transformando em segundos
+									//$corSLA = $corSla1;
+									$imgSlaR = 'sla1.png';
+									$c_slaR_blue++;
+									$chamadosRgreen[]=$row['numero'];
+								} else
+								if ($t_segundos_resposta <= ( ($row['resposta']*60) + (($row['resposta']*60) *$percLimit/100)) ){ //mais 20%
+									//$corSLA = $corSla2;
+									$imgSlaR = 'sla2.png';
+									$c_slaR_yellow++;
+									$chamadosRyellow[]=$row['numero'];
+								} else {
+									//$corSLA = $corSla3;
+									$imgSlaR = 'sla3.png';
+									$c_slaR_red++;
+									$chamadosRred[]=$row['numero'];
+								}
+							} else {
+								$c_slaR_checked++;
+								$imgSlaR = 'checked.png';
+							}
+
+							$t_segundos_m = $dtM->diff["sValido"];
+
+							if ($row['tempo'] !=""){ //está em minutos
+								if ($t_segundos_m <= ($row['tempo']*60))  { //transformando em segundos
+									$imgSlaM = 'sla1.png';
+									$c_slaM_blue++;
+								} else if ($t_segundos_m <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
+									$imgSlaM = 'sla2.png';
+									$c_slaM_yellow++;
+								} else {
+									$imgSlaM = 'sla3.png';
+									$c_slaM_red++;
+								}
+							} else {
+								$imgSlaM = 'checked.png';
+								$c_slaM_checked++;
+							}
+
+							if ($t_horas>=$sla3) {//>=6
+								$cor = $corSla3;
+								$sla_red++;
+							} else
+							if ($t_horas>=$sla2) {
+								$cor = $corSla2;
+								$sla_yellow++;
+							} else {
+								$cor = $corSla1;
+								$sla_green++;
+							}
+							$t_resp = $dtR->diff["sValido"];
+
+							if ($t_resp>=$slaR3) {//>=6
+								$corR = $corSla3;
+								$slaR_red++;
+							} else
+							if ($t_resp>=$slaR2) {
+								$corR = $corSla2;
+								$slaR_yellow++;
+							} else {
+								$corR = $corSla1;
+								$slaR_green++;
+							}
+
+							$total_sol_segundos+= $dtS->diff["sFull"];
+							$total_res_segundos+=$dtR->diff["sFull"];
+
+							$total_res_valido+=$dtR->diff["sValido"];
+							$total_sol_valido+=$dtS->diff["sValido"];
+
+							//Linhas de dados do relatório
+							//print "<tr id='linha".$cont."' onMouseOver=\"destaca('linha".$cont."', '".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$cont."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linha".$cont."', '".$_SESSION['s_colorMarca']."');\">";
+							print "<tr id='linha".$cont."'  onMouseDown=\"marca('linha".$cont."', '".$_SESSION['s_colorMarca']."');\">";
+
+							print "<td ><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a></td>
+								<td ><font color='".$corR."'>".$dtR->tValido."</font></td>
+								<td ><font color='".$corR."'>".$dtS->tValido."</font></td>
+								<td >".$row['resposta_desc']."</font></td>
+								<td >".$row['sla']."</font></td>
+								<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></td>
+								<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></td>
+								<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaM."'></a></td>";
+
+							$dependUser = 0;
+							$dependTerc = 0;
+							$dependNone = 0;
+							while ($row_status = mysql_fetch_array($exec_sql_status)){
+								//print $row_status['dependencia'].": ".$row_status['tempo']." | ";
+								if ($row_status['cod_dependencia'] == 1) {//dependente ao usuário
+									$dependUser+= $row_status['segundos'];
+								} else
+								if ($row_status['cod_dependencia'] == 3 ){ //dependente de terceiros
+									$dependTerc+=$row_status['segundos'];
+								} else
+								if ($row_status['cod_dependencia'] == 4 ){ //dependente de terceiros
+									$dependNone+=$row_status['segundos'];
+								}
+							}
+							//print "</td>";
+							print "<td >";//coluna do tempo vinculado ao usuário
+							if ($dependUser != 0)
+								$dependUser = $dtS->secToHour($dependUser); else
+								$dependUser = "-";
+							print $dependUser;
+							print "</td>";
+							print "<td >";//coluna do tempo vinculado a terceiros
+							if ($dependTerc != 0)
+								$dependTerc = $dtS->secToHour($dependTerc); else
+								$dependTerc = "-";
+							print $dependTerc;
+							print "</td>";
+
+							print "<td >";//coluna do tempo independente (encerrados - em backup..)
+							if ($dependNone != 0)
+								$dependNone = $dtS->secToHour($dependNone); else
+								$dependNone = "-";
+							print $dependNone;
+							print "</td>";
+
+							print "<td >";//Solução recalculada
+							$solucTotal = $dtS->diff["sValido"];
+							//$solucRecalc = $dtS->secToHour($solucTotal);
+							$solucRecalc = $solucTotal;
+							$imgSlaSR=$imgSlaS;//Solução recalculada
+
+							if ((strpos($dependUser,":")) || (strpos($dependNone,":"))){
+								if (strpos($dependUser,":")) {
+									$dependUser = $dtS->hourToSec($dependUser);
+									$solucRecalc-=$dependUser;
+									//$solucRecalc = $dtS->secToHour($solucRecalc);
+								}
+								if (strpos($dependNone,":")) {
+									$dependNone = $dtS->hourToSec($dependNone);
+									$solucRecalc-=$dependNone;
+									//$solucRecalc = $dtS->secToHour($solucRecalc);
+								}
+							}
+							if ($solucRecalc <0) $solucRecalc*=-1;
+
+							$solucRecalc = $dtS->secToHour($solucRecalc);
+
+							print $solucRecalc; //Novo tempo de solução - recalculado tirando as dependências ao usuário ou status independentes
+
+							if ($row['tempo'] !=""){
+								if ($dtS->hourToSec($solucRecalc) <= ($row['tempo']*60))  { //transformando em segundos
+										$imgSlaSR = 'sla1.png';
+										$c_slaSR_blue++;
+										$chamadosSgreen[]= $row['numero'];
+								}
+								else if ($dtS->hourToSec($solucRecalc) <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
+										$imgSlaSR = 'sla2.png';
+										$c_slaSR_yellow++;
+										$chamadosSyellow[]= $row['numero'];
+								} else {
+									$imgSlaS = 'sla3.png';
+									$c_slaSR_red++;
+									$chamadosSred[]= $row['numero'];
+								}
+							} else {
+								$imgSlaSR = 'checked.png';
+								$c_slaSR_checked++;
+							}
+							print "</td>";
+							print "<td ><img height='14' width='14' src='../../includes/imgs/".$imgSlaSR."'></td>";
+
+							print "</tr>";
+							$cont++;
+						}//while chamados
+
+						$media_resposta_geral = $dtR->secToHour(floor($total_res_segundos/$linhas));
+
+						$media_solucao_geral = $dtS->secToHour(floor($total_sol_segundos/$linhas));
+						$media_resposta_valida = $dtR->secToHour(floor($total_res_valido/$linhas));
+						$media_solucao_valida = $dtS->secToHour(floor($total_sol_valido/$linhas));
+
+						print "<tr><td colspan=5><b>".TRANS('COL_AVERAGE')."</td><td ><b>".$media_resposta_valida."</td><td ><B>".$media_solucao_valida."</td></tr>";
+
+						//MEDIAS DE SOLUÇÃO
+						$perc_ate_sla2=round((($sla_green*100)/$linhas),2);
+						$perc_ate_sla3=round((($sla_yellow*100)/$linhas),2);
+						$perc_mais_sla3=round((($sla_red*100)/$linhas),2);
+						//MEDIAS DE RESPOSTA
+						$perc_ate_slaR2=round((($slaR_green*100)/$linhas),2);
+						$perc_ate_slaR3=round((($slaR_yellow*100)/$linhas),2);
+						$perc_mais_slaR3=round((($slaR_red*100)/$linhas),2);
+
+						$slaR2M = $slaR2/60;
+						$slaR3M = $slaR3/60;
+						$slaR2M = $slaR2/3600;
+						$slaR3M = $slaR3/3600;
+
+						//TOTAL DE HORAS VÁLIDAS NO PERÍODO:
+						$area_fixa = 1;//Padrao
+						$dt = new dateOpers;
+						$dt->setData1($d_ini_completa);
+						$dt->setData2($d_fim_completa);
+						$dt->tempo_valido($dt->data1,$dt->data2,$H_horarios[$area_fixa][0],$H_horarios[$area_fixa][1],$H_horarios[$area_fixa][2],$H_horarios[$area_fixa][3],"H");
+						$hValido = $dt->diff["hValido"]+1; //Como o período passado não é arredondado (xx/xx/xx 23:59:59) é necessário arrendondar o total de horas.
+						print "</table>";
+
+
+						##TRANSFORMAÇÕES DOS ARRAYS
+
+						$numerosRed=putComma($chamadosSred);
+						$numerosYellow=putComma($chamadosSyellow);
+						$numerosGreen=putComma($chamadosSgreen);
+
+						$numerosRred=putComma($chamadosRred);
+						$numerosRyellow=putComma($chamadosRyellow);
+						$numerosRgreen=putComma($chamadosRgreen);
 
 			## QUADROS DE ESTATÍSTICAS
 
 			print "<table align='center' cellspacing='0'>";
 			print "  <tr><td colspan =4></td><td ></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>Período: ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>Total de horas válidas no período: ".$hValido."</b></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>Total de chamados fechados no período: ".$linhas.".</b></td></tr>";
+			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>".TRANS('FIELD_PERIOD').": ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
+			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>".TRANS('FIELD_HOURS_VALID_TOTAL').": ".$hValido."</b></td></tr>";
+			print "  <tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_CALL_CLOSED_PERIOD').": ".$linhas.".</b></td></tr>";
                         print "  <tr><td colspan =4></td></tr>";
-			print "<tr><td ><b>Resposta em até ".$slaR2M." minutos:</b></TD><td ><font color=".$corSla1."> ".$slaR_green." chamados = </font></TD><td ><font color=".$corSla1.">".$perc_ate_slaR2."%</font></td><td ></td></tr>";
-			print "<tr><td ><b>Resposta em até ".$slaR3M." minutos:</b></TD><td ><font color=".$corSla2."> ".$slaR_yellow." chamados = </font></TD><td ><font color=".$corSla2.">".$perc_ate_slaR3."%</font></td><td ></td></tr>";
-			print "<tr><td ><b>Resposta em mais de ".$slaR3M." minutos:</b></TD><td ><font color=".$corSla3."> ".$slaR_red." chamados = </font></TD><td ><font color=".$corSla3.">".$perc_mais_slaR3."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_IN_EVEN')." ".$slaR2M." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla1."> ".$slaR_green." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla1.">".$perc_ate_slaR2."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_IN_EVEN')." ".$slaR3M." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla2."> ".$slaR_yellow." ".TRANS('FIELD_CALL')."s = </font></TD><td ><font color=".$corSla2.">".$perc_ate_slaR3."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_MORE_THAN')." ".$slaR3M." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla3."> ".$slaR_red." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla3.">".$perc_mais_slaR3."%</font></td><td ></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
-			print "<tr><td ><b>Solução em até ".$sla2." horas:</b></TD><td ><font color=".$corSla1."> ".$sla_green." chamados = </font></TD><td ><font color=".$corSla1.">".$perc_ate_sla2."%</font></td><td ></td></tr>";
-			print "<tr><td ><b>Solução em até ".$sla3." horas:</b></TD><td ><font color=".$corSla2."> ".$sla_yellow." chamados = </font></TD><td ><font color=".$corSla2.">".$perc_ate_sla3."%</font></td><td ></td></tr>";
-			print "<tr><td ><b>Solução em mais de ".$sla3." horas:</TD><td ></b><font color=".$corSla3."> ".$sla_red." chamados = </font></TD><td ><font color=".$corSla3.">".$perc_mais_sla3."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_IN_EVEN')." ".$sla2." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla1."> ".$sla_green." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla1.">".$perc_ate_sla2."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_IN_EVEN')." ".$sla3." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla2."> ".$sla_yellow." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla2.">".$perc_ate_sla3."%</font></td><td ></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_IN_MORE_THAN')." ".$sla3." ".TRANS('FIELD_HOURS').":</TD><td ></b><font color=".$corSla3."> ".$sla_red." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla3.">".$perc_mais_sla3."%</font></td><td ></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
@@ -594,34 +620,34 @@
 			$perc_checkedSR = (round($c_slaSR_checked*100/$linhas,2));
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>Tempo de Resposta X SLA definidos</b></td></tr>";
-			print "<tr><td ><b>Resposta dentro do SLA:</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRgreen."')\">".$c_slaR_blue."</a></font> chamados</b></td><td >".$perc_blueR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
-			print "<tr><td ><b>Resposta até ".$percLimit."% acima do SLA:</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRyellow."')\">".$c_slaR_yellow."</a></font> chamados</b></td><td >".$perc_yellowR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
-			print "<tr><td ><b>Resposta acima de ".$percLimit."% do SLA:</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRred."')\">".$c_slaR_red."</a></font> chamados</b></td><td >".$perc_redR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
-			print "<tr><td ><b>Tempo de resposta não definido para o setor:</td><td >".$c_slaR_checked." chamados</b></td><td >".$perc_checkedR."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_REPLY_SLA')."</b></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_INSIDE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRgreen."')\">".$c_slaR_blue."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRyellow."')\">".$c_slaR_yellow."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_yellowR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_REPLY_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA')."</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRred."')\">".$c_slaR_red."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_redR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_TIME_REPLY_NOT_DEFINE').":</td><td >".$c_slaR_checked." ".TRANS('FIELD_CALL')."</b></td><td >".$perc_checkedR."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>Tempo de Solução X SLA definidos</b></td></tr>";
-			print "<tr><td ><b>Solução dentro do SLA:</td><td >".$c_slaS_blue." chamados</b></td><td >".$perc_blueS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
-			print "<tr><td ><b>Solução até ".$percLimit."% acima do SLA:</b></td><td >".$c_slaS_yellow." chamados</td><td >".$perc_yellowS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
-			print "<tr><td ><b>Solução acima de ".$percLimit."% do SLA:</b></td><td >".$c_slaS_red." chamados</td><td >".$perc_redS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
-			print "<tr><td ><b>Tempo de solução não definido para o problema:</b></td><td >".$c_slaS_checked." chamados</td><td >".$perc_checkedS."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_SOLUTION_SLA')."</b></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td >".$c_slaS_blue." ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td >".$c_slaS_yellow." ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td >".$c_slaS_red." ".TRANS('FIELD_CALL')."</td><td >".$perc_redS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_TIME_SOLUTION_NOT_DEFINE_PROB').":</b></td><td >".$c_slaS_checked." ".TRANS('FIELD_CALL')."</td><td >".$perc_checkedS."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>Tempo de Solução a partir da 1.ª resposta</b></td></tr>";
-			print "<tr><td ><b>Solução dentro do SLA:</td><td >".$c_slaM_blue." chamados</b></td><td >".$perc_blueM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
-			print "<tr><td ><b>Solução até ".$percLimit."% acima do SLA:</b></td><td >".$c_slaM_yellow." chamados</td><td >".$perc_yellowM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
-			print "<tr><td ><b>Solução acima de ".$percLimit."% do SLA:</b></td><td >".$c_slaM_red." chamados</td><td >".$perc_redM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
-			print "<tr><td ><b>Tempo de solução não definido para o problema:</b></td><td >".$c_slaM_checked." chamados</td><td >".$perc_checkedM."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_TO_LEAVE')."</b></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td >".$c_slaM_blue." ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td >".$c_slaM_yellow." ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td >".$c_slaM_red." ".TRANS('FIELD_CALL')."</td><td >".$perc_redM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_TIME_SOLUTION_NOT_DEFINE_PROB').":</b></td><td >".$c_slaM_checked." ".TRANS('FIELD_CALL')."</td><td >".$perc_checkedM."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>Tempo de Solução recalculado</b></td></tr>";
-			print "<tr><td ><b>Solução dentro do SLA:</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosGreen."')\">".$c_slaSR_blue."</a></font> chamados</b></td><td >".$perc_blueSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
-			print "<tr><td ><b>Solução até ".$percLimit."% acima do SLA:</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosYellow."')\">".$c_slaSR_yellow."</a></font> chamados</td><td >".$perc_yellowSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
-			print "<tr><td ><b>Solução acima de ".$percLimit."% do SLA:</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRed."')\">".$c_slaSR_red."</a></font> chamados</td><td >".$perc_redSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
-			print "<tr><td ><b>Tempo de solução não definido para o problema:</b></td><td >".$c_slaSR_checked." chamados</td><td >".$perc_checkedSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_RECALC')."</b></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosGreen."')\">".$c_slaSR_blue."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosYellow."')\">".$c_slaSR_yellow."</a></font> ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRed."')\">".$c_slaSR_red."</a></font> ".TRANS('FIELD_CALL')."</td><td >".$perc_redSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
+			print "<tr><td ><b>".TRANS('FIELD_TIME_SOLUTION_NOT_DEFINE_PROB').":</b></td><td >".$c_slaSR_checked." ".TRANS('FIELD_CALL')."</td><td >".$perc_checkedSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
@@ -649,8 +675,8 @@
 							"GROUP BY A.sis_id,T.ts_status ".
 							"ORDER BY segundos desc, A.sistema,T.ts_status";
 			$exec_cada_status = mysql_query($sql_cada_status);
-			print "<tr><td colspan='4' align='center'><b>Quadro de chamados por tempo em cada status</b></td></tr>";
-			print "<tr bgcolor='#C7D0D9'><td >STATUS</td><td colspan='2'>TEMPO</td><td >PERCENTUAL</td></tr>";
+			print "<tr><td colspan='4' align='center'><b>".TRANS('FIELD_BOARD_CALLS_TIMES_STATUS')."</b></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td >".strtoupper(TRANS('MNL_STATUS'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
 
 			//print $sql_cada_status."<br>";
 			while ($row_cada_status = mysql_fetch_array($exec_cada_status)) {
@@ -685,8 +711,8 @@
 							"ORDER BY segundos desc, A.sistema,T.ts_status	";
 			$exec_vinc = mysql_query($sql_vinc_status);
 
-			print "<tr><td colspan='4' align='center'><b>Quadro chamados por tempo de dependência de atendimento</b></td></tr>";
-			print "<tr bgcolor='#C7D0D9'><td >DEPENDÊNCIA</td><td colspan='2'>TEMPO</td><td >PERCENTUAL</td></tr>";
+			print "<tr><td colspan='4' align='center'><b>".TRANS('FIELD_BOARD_CALLS_TIMES_DEPEND')."</b></td></tr>";
+			print "<tr bgcolor='#C7D0D9'><td >".strtoupper(TRANS('MNL_DEPEND'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
 			while ($row_vinc = mysql_fetch_array($exec_vinc)) {
 				print "<tr><td >".$row_vinc['dependencia']."</td><td colspan='2'>".$row_vinc['tempo']."</td><td >".$row_vinc['porcento']."</td></tr>";
 			}
@@ -730,7 +756,7 @@
 		} //if($linhas==0)
 	}//if  $d_ini_completa <= $d_fim_completa
 	else 	{
-		$aviso = "A data final não pode ser menor do que a data inicial. Refaça sua pesquisa.";
+		$aviso = "".TRANS('MSG_DATE_FINISH_UNDERAGE_DATE_BEGIN')."";
 		print "<script>mensagem('".$aviso."'); history.back();</script>";
 	}
 	}//if ((empty($d_ini)) and (empty($d_fim)))

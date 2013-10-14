@@ -38,13 +38,13 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
-	$sql = "SELECT o.numero as numero, p.problema as problema, l.local as local, resp.slas_desc as resposta, ".
-		"sol.slas_desc as solucao ".
-		"FROM ".
-			"ocorrencias as o, prioridades as pr, sla_solucao as sol ".
-			"LEFT JOIN problemas as p on p.prob_sla = sol.slas_cod ".
-			"LEFT JOIN localizacao as l on l.loc_prior = pr.prior_cod ".
-			"LEFT JOIN sla_solucao as resp on resp.slas_cod = pr.prior_sla ".
+	$sql = "SELECT o.numero AS numero, p.problema AS problema, l.local AS LOCAL , ".
+			"resp.slas_desc AS resposta, sol.slas_desc AS solucao ".
+		" FROM ".
+		"ocorrencias AS o, prioridades AS pr ".
+		"LEFT JOIN localizacao AS l ON l.loc_prior = pr.prior_cod ".
+		"LEFT JOIN sla_solucao AS resp ON resp.slas_cod = pr.prior_sla, sla_solucao AS sol ".
+		"LEFT JOIN problemas AS p ON p.prob_sla = sol.slas_cod ".
 		"WHERE ".
 			"o.problema = p.prob_id and o.local = l.loc_id and o.numero = ".$_GET['numero']."";
 
@@ -53,7 +53,7 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 
 	print "<br><b>SLAs para a ocorrência <font color='red'>".$_GET['numero']."</font>:</b><br>";
 	print "<table cellspacing='0' border='1' cellpadding='1' align='left' width='100%'>";
-		print "<tr><td width='20%'><b>Setor:</b></td><td width='30%'>".NVL($row['local'])."</td><td width='20%'><b>Problema:</b></td><td width='30%'>".NVL($row['problema'])."</td></tr>";
+		print "<tr><td width='20%'><b>Setor:</b></td><td width='30%'>".NVL($row['LOCAL'])."</td><td width='20%'><b>Problema:</b></td><td width='30%'>".NVL($row['problema'])."</td></tr>";
 		print "<tr><td width='20%'><b>SLA de Resposta:</b></td><td width='30%'>".NVL($row['resposta'])."</td><td width='20%'><b>SLA de Solução:</b></td><td width='30%'>".NVL($row['solucao'])."</td></tr>";
 	print "</table>";
 

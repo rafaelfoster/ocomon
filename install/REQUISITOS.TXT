@@ -1,0 +1,18 @@
+Requisitos para a instalação do Ocomon:
+ 
+
+    * Servidor Web (preferencialmente Apache);
+    * Linguagem: PHP versão:4.3x (mínima), HTML, CSS, Javascript;
+    * Banco de dados: MySQL versão: 4.1x;
+  	
+Notas importantes:
+ 
+	* Para o sistema funcionar adequadamente é necessário que seu navegador permita que sistema rode funções 
+		javascript e aceite cookies do sistema.
+	* Para a visualização dos gráficos é necessário que o PHP esteja compilado com suporte à biblioteca GD;
+
+	* Para o upload de imagens é necessário que essa propriedade esteja habilitada no arquivo de configurações do PHP (php.ini);
+	
+	* Para o envio de e-mails o Ocomon pode utilizar um SMTP especificado por você. Caso você desabilite a opção de SMTP os e-mails 
+    		serão enviados utilizando a função "mail" do PHP e o arquivo php.ini deve estar configurado corretamente para funcionar de 
+    		maneira adequada.

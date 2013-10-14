@@ -31,27 +31,29 @@
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 		print "	<BR><BR>";
-		print "	<B><center>::: ALTERAÇÕES DE HARDWARE DOS EQUIPAMENTOS :::</center></B><BR><BR>";
+		print "	<B><center>::: ".TRANS('TTL_ALTER_HW_EQUIP')." :::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida();\">";
 		print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
 		//print "					<td ><INPUT type='text' name='d_ini' class='data' id='idD_ini'><a href=\"javascript:cal1.popup();\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
-		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
+		
+						print "<tr><td colspan='2'><input type='checkbox' name='checkprint'>".TRANS('OPT_NEW_WINDOW')."</td></tr>";
 		print "		</TABLE><br>";
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td class='line'>";
-		print "					<input type='submit' class='button' value='Pesquisar' name='ok' >";//onclick='ok=sim'
+		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onclick='ok=sim'
 		print "	            </TD>";
 		print "	            <td class='line'>";
-		print "					<INPUT type='reset'  class='button' value='Limpar campos' name='cancelar'>";
+		print "					<INPUT type='reset'  class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";
 		print "				</TD>";
 		print "			</tr>";
 		print "	    </TABLE>";
@@ -60,10 +62,26 @@
 				<script language="JavaScript">
 
 					function valida(){
-						var ok = validaForm('idData_ini','DATA-','Data Inicial',0);
-						if (ok) var ok = validaForm('idData_fim','DATA-','Data Final',0);
+						var ok = validaForm('idD_ini','DATA-','<?print TRANS('OCO_FIELD_DATE_BEGIN');?>',0);
+						if (ok) var ok = validaForm('idD_fim','DATA-','<?print TRANS('OCO_FIELD_DATE_FINISH');?>',0);
+						
+						if (ok) newTarget();
+						
 						return ok;
 					}
+				
+				
+					function newTarget()
+					{
+						if (document.form1.checkprint.checked) {
+							document.form1.target = "_blank";
+							document.form1.submit();
+						} else {
+							document.form1.target = "";
+							document.form1.submit();
+						}
+					}
+				
 				</script>
 		<?
 	//if $ok!=Pesquisar
@@ -79,7 +97,7 @@
 
 		if ((!isset($_POST['d_ini'])) || ((!isset($_POST['d_fim'])))) {
 
-			print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_ALERT_PERIOD')."'); history.back();</script>";
 		} else {
 			$d_ini = str_replace("-","/",$_POST['d_ini']);
 			$d_fim = str_replace("-","/",$_POST['d_fim']);
@@ -93,7 +111,7 @@
 			if($d_ini_completa <= $d_fim_completa) {
 
 				print "<table class='centro' cellspacing='0' border='0' align='center' >";
-					print "<tr><td colspan='2'><b>PERÍODO DE ".$d_ini." a ".$d_fim."</b></td></tr>";
+					print "<tr><td colspan='2'><b>".TRANS('TTL_PERIOD_FROM')." ".$d_ini." a ".$d_fim."</b></td></tr>";
 				print "</table>";
 
 				$query.= " and hwa_data between '".$d_ini_completa."' and '".$d_fim_completa."' ";
@@ -102,20 +120,20 @@
 						ORDER BY h.hwa_data ";
 
 				//print $query; exit;
-				$resultado = mysql_query($query) or die('ERRO NA TENTATIVA DE RECUPERAR OS DADOS!');
+				$resultado = mysql_query($query) or die(TRANS('MSG_ERR_RESCUE_DATA'));
 				$linhas = mysql_num_rows($resultado);
 
 				if ($linhas==0) {
-					$aviso = "Não há dados no período informado. Refaça sua pesquisa. ";
-					echo "<script>mensagem('".$aviso."'); redirect('hw_alteracoes.php');</script>";
+					$aviso = TRANS('MSG_NO_DATA_INFORM_PERIOD');
+					echo "<script>mensagem('".$aviso."'); redirect('".$_SERVER['PHP_SELF']."');</script>";
 				} else { //if($linhas==0)
 					echo "<br><br>";
 					$background = '#CDE5FF';
 
 					print "<table class='centro' cellspacing='0' border='1' align='center'>";
 
-						print "<tr><td bgcolor='".$background."'><B>QUANTIDADE</td>
-								<td bgcolor='".$background."' ><B>EQUIPAMENTO</td>
+						print "<tr><td bgcolor='".$background."'><B>".TRANS('COL_AMOUNT')."</td>
+								<td bgcolor='".$background."' ><B>".TRANS('COL_EQUIP')."</td>
 							</tr>";
 					$total = 0;
 					while ($row = mysql_fetch_array($resultado)) {
@@ -128,14 +146,14 @@
 						$total+=$row['total'];
 					}
 
-					print "<tr><td class='line'><b>TOTAL</b></td><td class='line'><b>".$total."</b></td></tr>";
+					print "<tr><td class='line'><b>".TRANS('TOTAL')."</b></td><td class='line'><b>".$total."</b></td></tr>";
 
 				} //if($linhas==0)
 				//if  $d_ini_completa <= $d_fim_completa
 			} else {
 
-				$aviso = "A data final não pode ser menor do que a data inicial. Refaça sua pesquisa.";
-				print "<script>mensagem('".$aviso."'); redirect('hw_alteracoes.php');</script>";
+				$aviso = TRANS('MSG_DATE_FINISH_>_DATE_BEGIN');
+				print "<script>mensagem('".$aviso."'); redirect('".$_SERVER['PHP_SELF']."');</script>";
 			}
 		}//if ((empty($d_ini)) and (empty($d_fim)))
 		?>

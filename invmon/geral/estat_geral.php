@@ -23,7 +23,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -41,20 +41,30 @@
 	$resultadoInst = mysql_query($queryInst);
 	$linhasInst = mysql_num_rows($resultadoInst);
 
-		print "<div id='Layer2' style='position:absolute; left:80%; top:176px; width:15%; height:40%; z-index:2; '>";//  <!-- Ver: overflow: auto    não funciona para o Mozilla-->
-			print "<b>Unidade:</font></font></b>";
-			print "<FORM name='form1' method='post' action='".$_SERVER['PHP_SELF']."'>";
+	if (isset($_POST['checkprint'])){
+		$div_hide = "display: none;";
+		$hide_buttom = true;
+	} else {
+		$div_hide = "";
+		$hide_buttom = false;
+	}
+
+		print "<div id='Layer2' style='position:absolute; left:80%; top:176px; width:15%; height:40%; z-index:2; ".$div_hide." '>";//  <!-- Ver: overflow: auto    não funciona para o Mozilla-->
+			print "<b>".TRANS('OCO_FIELD_UNIT').":</font></font></b>";
+			print "<FORM name='form1' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit=\"newTarget()\">";
 			$sizeLin = $linhasInst+1;
 			print "<select style='background-color: ".$cor3."; font-family:tahoma; font-size:11px;' name='instituicao[]' size='".$sizeLin."' multiple='yes'>";
 
 
-			print "<option value='-1' selected>TODAS</option>";
+			print "<option value='-1' selected>".TRANS('ALL')."</option>";
 			while ($rowInst = mysql_fetch_array($resultadoInst))
 			{
 				print "<option value='".$rowInst['inst_cod']."'>".$rowInst['inst_nome']."</option>";
 			}
 			print "</select>";
-			print "<br><input style='background-color: ".$cor1."' type='submit' class='button' value='Aplicar' name='OK'>";
+
+			print "<br><input style='background-color: ".$cor1."' type='submit' class='button' value='".TRANS('BT_APPLY')."' name='OK'>";
+			print "<input type='checkbox' name='checkprint'>".TRANS('PRINT')."";
 
 			print "</form>";
 		print "</div>";
@@ -73,7 +83,7 @@
 		if (($saida=="")||($saida=="-1")) {
 			$clausula = "";
 			$clausula2 = "";
-			$msgInst = "TODAS";
+			$msgInst = TRANS('ALL');
 		} else {
 			$sqlA ="select inst_nome as inst from instituicao where inst_cod in (".$saida.")";
 			$resultadoA = mysql_query($sqlA);
@@ -107,13 +117,13 @@
 
 			print "<tr><td class='line'></TD></tr>";
 			print "<tr><td class='line'></TD></tr>";
-			print "<tr><td width=60% align=center><b>Estatística de equipamentos cadastrados. <p>Unidade: $msgInst</p></b></td></tr>";
+			print "<tr><td width=60% align=center><b>".TRANS('TTL_ESTAT_CAD_EQUIP').". <p>".TRANS('OCO_FIELD_UNIT').": $msgInst</p></b></td></tr>";
 
 
 			print "<td class='line'>";
-			print "<fieldset><legend>Quadro geral</legend>";
+			print "<fieldset><legend>".TRANS('TTL_GENERAL_BOARD')."</legend>";
 			print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='60%' bgcolor='".$cor3."'>";
-			print "<TR><TD bgcolor='".$cor3."'><b>Equipamento</TD><TD bgcolor='".$cor3."'><b>Quantidade</TD><TD bgcolor='".$cor3."'><b>Percentual</TD></tr>";
+			print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('MNL_VIS_EQUIP')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_QTD')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_PORCENTEGE')."</TD></tr>";
 			$i=0;
 			$j=2;
 
@@ -121,15 +131,15 @@
 			$color =  BODY_COLOR;
 			$j++;
 			print "<TR>";
-			print "<TD bgcolor='".$color."'><a href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta' title='Listar todos os equipamentos deste tipo que estão cadastrados no sistema.'>".$row['Equipamento']."</a></TD>";
+			print "<TD bgcolor='".$color."'><a href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta' title='".TRANS('HNT_LIST_EQUIP_THIS_TYPE')."'>".$row['Equipamento']."</a></TD>";
 			print "<TD bgcolor='".$color."'>".$row['Quantidade']."</TD>";
-			print "<TD bgcolor='".$color."'>".$row['Percentual']."%</TD>";
+			print "<TD bgcolor='".$color."'>".round($row['Percentual'],2)."%</TD>";
 			print "</TR>";
 			$dados[]=$row['Quantidade'];
 			$legenda[]=$row['Equipamento'];
 			$i++;
 		}
-        	print "<TR><TD bgcolor='".$cor3."'><b>Total</TD><TD bgcolor='".$cor3."'><font color='red'><b>$total</font></TD><TD bgcolor='".$cor3."'><b>100%</TD></tr>";
+        	print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('TOTAL')."</TD><TD bgcolor='".$cor3."'><font color='red'><b>$total</font></TD><TD bgcolor='".$cor3."'><b>".TRANS('TXT_100')."</TD></tr>";
 		print "</TABLE>";
 
 		$valores = "";
@@ -156,12 +166,30 @@
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
 
-		$nome = "titulo=Gráfico geral de equipamentos cadastrados.";
-		$msgInst= "Unidade: ".$msgInst;
-		print "<tr><td width=60% align=center><input type='button' class='button' value='Gráfico' onClick=\"return popup('graph_geral_barras.php?".$valores."&".$nome."&instituicao=".$msgInst."')\"></td></tr>";
-		print "<tr><td width=80% align=center><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+		$nome = "titulo=".TRANS('TTL_GRAPH_EQUIP_CAD').".";
+		$msgInst= "".TRANS('OCO_FIELD_UNIT').": ".$msgInst;
+
+		if (!$hide_buttom) {
+			print "<tr><td width=60% align=center><input type='button' class='button' value='".TRANS('BT_GRAPH')."' onClick=\"return popup('graph_geral_barras.php?".$valores."&".$nome."&instituicao=".$msgInst."')\"></td></tr>";
+			print "<tr><td width=80% align=center><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
+		}
 		print "</TABLE>";
 
 print "</BODY>";
 print "</HTML>";
 ?>
+
+<script type='text/javascript'>
+<!--
+	function newTarget()
+	{
+		if (document.form1.checkprint.checked) {
+			document.form1.target = "_blank";
+			document.form1.submit();
+		} else {
+			document.form1.target = "";
+			document.form1.submit();
+		}
+	}
+	-->
+</script>

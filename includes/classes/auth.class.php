@@ -45,9 +45,9 @@ class auth {
 		{
 		        $this->saida= "<script>window.open('../../index.php','_parent','')</script>";
 		} else {
-			if (is_file( "./.invmon_dir" )) $this->texto = TRANS("menu_title"); else
-			if (is_file( "./.admin_dir" )) $this->texto = TRANS("menu_title_admin");
-			else $this->texto = TRANS("menu_title_ocomon");
+			if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
+			if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_OCCO');
+			else $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
 
 			//#C7C8C6//STYLE='{border-bottom:  solid #999999; }'
 			$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
@@ -81,18 +81,18 @@ class auth {
 		{
 		        $this->saida= "<script>window.open('../../index.php','_parent','')</script>";
 		} else {
-			if (is_file( "./.invmon_dir" )) $this->texto = TRANS("menu_title"); else
-			if (is_file( "./.admin_dir" )) $this->texto = TRANS("menu_title_admin");
-			else $this->texto = TRANS("menu_title_ocomon");
+			if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
+			if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_OCCO');
+			else $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
 
 			//#C7C8C6//STYLE='{border-bottom:  solid #999999; }'
 			$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
 		                        		"<TR>". //bgcolor='".BODY_COLOR."'
-								"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
-								//"<td width='20%' nowrap><p class='parag'><b>".transvars(date ("l d/m/Y H:i"),$TRANS_WEEK)."</b>".$help."</p></TD>";
-								"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".date ("d/m/Y H:i")."</b>".$help."</p></TD>";
+								//"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
+								//"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".date ("d/m/Y H:i")."</b>".$help."</p></TD>";
                         $this->saida.= "</TR>".
 					"</TABLE>";
+			$this->saida = "";
 		}
 		print $this->saida;
 	}

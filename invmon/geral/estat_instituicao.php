@@ -23,7 +23,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -53,13 +53,13 @@
 
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
-		print "<tr><td width='60%' align='center'><b>Estatística geral de equipamentos por Unidade:</b></td></tr>";
+		print "<tr><td width='60%' align='center'><b>".TRANS('TTL_ESTAT_EQUIP_FOR_UNIT').":</b></td></tr>";
 
 
 		print "<td class='line'>";
-        	print "<fieldset><legend>Quadro de instituições</legend>";
+        	print "<fieldset><legend>".TRANS('SUBTTL_INSTIT_BOARD')."</legend>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='60%' bgcolor='".$cor3."'>";
-			print "<TR><TD bgcolor='".$cor3."'><b>Unidade</TD><TD bgcolor='".$cor3."'><b>Quantidade</TD><TD bgcolor='".$cor3."'><b>Percentual</TD></tr>";
+			print "<TR><TD bgcolor='".$cor3."'><b>".TRANS('OCO_FIELD_UNIT')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_QTD')."</TD><TD bgcolor='".$cor3."'><b>".TRANS('COL_PORCENTEGE')."</TD></tr>";
 
 
 		$i=0;
@@ -69,15 +69,15 @@
 			$color =  BODY_COLOR;
 			$j++;
 			print "<TR>";
-			print "<TD bgcolor='".$color."'><a href='mostra_consulta_comp.php?comp_inst[]=".$row['inst_cod']."&ordena=local,etiqueta' title='Exibe a listagem dos equipamentos cadastrados nessa Unidade.'>".$row['instituicao']."</a></TD>";
+			print "<TD bgcolor='".$color."'><a href='mostra_consulta_comp.php?comp_inst[]=".$row['inst_cod']."&ordena=local,etiqueta' title='".TRANS('HNT_LIST_EQUIP_CAD_FOR_UNIT')."'>".$row['instituicao']."</a></TD>";
 			print "<TD bgcolor='".$color."'>".$row['qtd_inst']."</TD>";
-			print "<TD bgcolor='".$color."'>".$row['porcento']."</TD>";
+			print "<TD bgcolor='".$color."'>".round($row['porcento'],2)."</TD>";
 			print "</TR>";
 			$i++;
 		}
 
 
-		print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>Total: ".$total."</TD><TD bgcolor='".$cor3."'><b>100%</b></TD></tr>";
+		print "<TR><TD bgcolor='".$cor3."'><b></TD><TD bgcolor='".$cor3."'><b>".TRANS('TOTAL').": ".$total."</TD><TD bgcolor='".$cor3."'><b>".TRANS('TXT_100')."</b></TD></tr>";
 		print "</TABLE>";
 		print "</fieldset>";
 
@@ -94,7 +94,8 @@
 		print "<tr><td class='line'></TD></tr>";
 		print "<tr><td class='line'></TD></tr>";
 
-		print "<tr><td width='80%' align='center'><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+		print "<tr><td class='line' align='center'><a href='".$_SERVER['PHP_SELF']."' target='_blank')\">".TRANS('NEW_SCREEN')."</a></TD></tr>";
+		print "<tr><td width='80%' align='center'><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
 		print "</TABLE>";
 
 print "</BODY>";

@@ -495,6 +495,13 @@
 		if (isset($_POST['cor_marca'])){
 			$_SESSION['s_colorMarca'] = $_POST['cor_marca'];
 		}
+		if (isset($_POST['cor_lin_par'])){
+			$_SESSION['s_colorLinPar'] = $_POST['cor_lin_par'];
+		}
+		if (isset($_POST['cor_lin_impar'])){
+			$_SESSION['s_colorLinImpar'] = $_POST['cor_lin_impar'];
+		}
+
 
 
 		$qry = "UPDATE styles SET ".

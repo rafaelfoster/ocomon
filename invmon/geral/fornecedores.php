@@ -39,7 +39,7 @@
 
 
 
-	print "<BR><B>".TRANS('ADM_VENDORS')."</B><BR>";
+	print "<BR><B>".TRANS('TTL_ADMIN_SUPP')."</B><BR>";
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
@@ -55,23 +55,20 @@
 			$query.= " WHERE forn_cod = ".$_GET['cod']." ";
 		}
 		$query .=" ORDER BY forn_nome";
-		$resultado = mysql_query($query) or die(TRANS('ERR_QUERY'));
+		$resultado = mysql_query($query) or die('ERRO NA EXECUÇÃO DA QUERY DE CONSULTA!');
 		$registros = mysql_num_rows($resultado);
 
 	if ((!isset($_GET['action'])) && empty($_POST['submit'])) {
 
-		//print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>Cadastrar Fornecedor</a></TD></TR>";
-		print "<TR><TD><input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_RECORD','',0)."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\"></TD></TR>";
+		print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>".TRANS('SUBTTL_CAD_SUPP')."</a></TD></TR>";
 		if (mysql_num_rows($resultado) == 0)
 		{
-			print "<tr><td>";
-			print mensagem(TRANS('MSG_NO_RECORDS'));
-			print "</tr></td>";
+			echo mensagem(TRANS('MSG_NOT_REG_CAD'));
 		}
 		else
 		{
 			print "<tr><td class='line'>";
-			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('RECORDS_IN_SYSTEM').".</td>";
+			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('TXT_SUPP_CAD')."</td>";
 			print "</tr>";
 			print "<TR class='header'><td class='line'>".TRANS('COL_VENDOR')."</TD><td class='line'>".TRANS('COL_PHONE')."</TD>".
 				"<td class='line'>".TRANS('COL_EDIT')."</TD><td class='line'>".TRANS('COL_DEL')."</TD></tr>";
@@ -88,13 +85,12 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				print "<td class='line'>".$row['forn_nome']."</td>";
 				print "<td class='line'>".$row['forn_fone']."</td>";
 				print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&cod=".$row['forn_cod']."&cellStyle=true')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></td>";
-				print "<td class='line'><a onClick=\"confirmaAcao('Tem Certeza que deseja excluir esse registro do sistema?','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['forn_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
+				print "<td class='line'><a onClick=\"confirmaAcao('".TRANS('MSG_DEL_REG')."','".$_SERVER['PHP_SELF']."', 'action=excluir&cod=".$row['forn_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 
 				print "</TR>";
 			}
@@ -103,7 +99,7 @@
 	} else
 	if ((isset($_GET['action'])  && ($_GET['action'] == "incluir") )&& empty($_POST['submit'])) {
 
-		print "<BR><B>".TRANS('CADASTRE_VENDOR')."</B><BR>";
+		print "<BR><B>".TRANS('SUBTTL_CAD_SUPP')."</B><BR>";
 
 		print "<TR>";
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_VENDOR').":</TD>";
@@ -116,9 +112,9 @@
 
 		print "<TR>";
 
-		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('bt_cadastrar')."' name='submit'>";
+		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_CAD')."' name='submit'>";
 		print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
 
 		print "</TR>";
 
@@ -128,7 +124,7 @@
 
 		$row = mysql_fetch_array($resultado);
 
-		print "<BR><B>".TRANS('TTL_EDIT_RECORD')."</B><BR>";
+		print "<BR><B>".TRANS('SUBTTL_EDIT_SUPP')."</B><BR>";
 
 		print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_VENDOR').":</TD>";
@@ -145,7 +141,7 @@
 		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='cod' value='".$_GET['cod']."'>";
 			print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('bt_cancelar')."' name='".TRANS('bt_cancelar')."' onClick=\"javascript:".$fecha."\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
 
 		print "</TR>";
 
@@ -168,7 +164,7 @@
 
 		if ($total!=0)
 		{
-				print "<script>mensagem('".TRANS('MSG_CANT_DEL').": ".$texto." ".TRANS('LINKED_TABLE')."!');
+			print "<script>mensagem('".TRANS('MSG_NOT_DEL_MANUFAC') .$texto. TRANS('MSG_ASSOC_IT')."');
 				redirect('".$_SERVER['PHP_SELF']."');</script>";
 		}
 		else
@@ -191,7 +187,7 @@
 
 	} else
 
-	if ($_POST['submit'] == TRANS('bt_cadastrar')){
+	if ($_POST['submit'] ==  TRANS('BT_CAD')){
 
 		$erro=false;
 
@@ -201,8 +197,8 @@
 
 		if ($linhas > 0)
 		{
-			$aviso = TRANS('MSG_RECORD_EXISTS');
-			$erro = true;
+				$aviso = TRANS('MSG_EXIST_REG_CAD_SYSTEM');
+				$erro = true;;
 		}
 
 		if (!$erro)
@@ -232,7 +228,7 @@
 
 		if ($resultado2 == 0)
 		{
-			$aviso =  TRANS('ERR_EDIT');
+			$aviso = TRANS('ERR_EDIT');
 		}
 		else
 		{

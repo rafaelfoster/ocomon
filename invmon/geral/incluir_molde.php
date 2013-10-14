@@ -27,31 +27,31 @@
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
 	$cab = new headers;
-	$cab->set_title($TRANS['html_title']);
+	$cab->set_title(TRANS('html_title'));
 
 	$hoje = date("Y-m-d H:i:s");
 	$hojeLog = date("d-m-Y H:i:s");
 	$nulo = null;
 
 	print "<BR>";
-	print "<B>".$TRANS["head_inc_mold_equip"].":";
+	print "<B>".TRANS("head_inc_mold_equip").":";
 	print "<BR><a href='model_config.php'>Lista os modelos de configuração já cadastrados</a>";
 
 	print "<FORM name='form1' method='POST' action='".$_SERVER['PHP_SELF']."'  ENCTYPE='multipart/form-data'  onSubmit='return valida()'>";
 
 	print "<TABLE border='0' colspace='3' width='100%'>";
 
-		print "<tr><td colspan='4'></td><b>".$TRANS['dados_gerais'].":</b></td></tr>";
+		print "<tr><td colspan='4'></td><b>".TRANS('TXT_GENERAL_DATA').":</b></td></tr>";
 		print "<tr>";
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".
-				"<a title='Campo obrigatório - Defina o tipo de equipamento que está cadastrando'>".$TRANS['cx_tipo'].":</a></b>".
+				"<a title='Campo obrigatório - Defina o tipo de equipamento que está cadastrando'>".TRANS('FIELD_TYPE_EQUIP').":</a></b>".
 			"</TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_tipo_equip' id='idTipo' size='1' ".
 					"onChange=\"fillSelectFromArray(this.form.comp_marca, ((this.selectedIndex == -1) ? null : ".
 					"team[this.selectedIndex-1]));\">";
 
-					print "<option value=-1 selected>".$TRANS['cmb_selec_equip']."</option>";
+					print "<option value=-1 selected>".TRANS('SEL_TYPE_EQUIP')."</option>";
 
 			$query = "SELECT * from tipo_equip order by tipo_nome";
 			$resultado = mysql_query($query);
@@ -66,12 +66,12 @@
 		print "</TD>";
 
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".
-				"<a title='Campo obrigatório - Selecione o nome do fabricante do equipamento'>".$TRANS['cx_fab'].":*</a></b>".
+				"<a title='Campo obrigatório - Selecione o nome do fabricante do equipamento'>".TRANS('COL_MANUFACTURE').":*</a></b>".
 			"</TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_fab' size='1' id='idFab'>";
 
-				print "<option value=-1>".$TRANS['cmb_selec_fab'].": </option>";
+				print "<option value=-1>".TRANS('SEL_MANUFACTURE').": </option>";
 				$query = "SELECT * from fabricantes  order by fab_nome";
 				$resultado = mysql_query($query);
 				while ($rowFab = mysql_fetch_array($resultado))
@@ -88,11 +88,11 @@
 
 		print "<TR>";
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".
-				"<a title='Campo obrigatório - Selecione o modelo do equipamento que está cadastrando'>".$TRANS['cx_modelo']."*:</a></b></TD>";
+				"<a title='Campo obrigatório - Selecione o modelo do equipamento que está cadastrando'>".TRANS('COL_MODEL')."*:</a></b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_marca' size='1' id='idModelo' >";
 
-					print "<option value=-1 selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=-1 selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "SELECT * from marcas_comp order by marc_nome";
 				$resultado = mysql_query($query);
@@ -114,21 +114,21 @@
                 print "</tr>";
 
 		print "<TR><td colspan='4'></td></TR>";
-		print "<tr><td colspan='3'><b>".$TRANS['dados_config'].":</b></td><td class='line'>".
-				"<input type='button' class='button' value='".$TRANS['bt_componente']."' ".
+		print "<tr><td colspan='3'><b>".TRANS('SUBTTL_INFO_CONFIG_EQUIP').":</b></td><td class='line'>".
+				"<input type='button' class='button' value='".TRANS('bt_componente')."' ".
 				"Onclick=\"return popup_alerta('itens.php?popup=true')\"></td>".
 			"</tr>";
 		print "<TR><td colspan='4'></td></TR>";
 
 		print "<tr>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_nome'].":</b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_NAME_COMPUTER').":</b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='disable' disabled name='comp_nome' maxlength='15'></TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_mb'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_MB').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select'  name='comp_mb' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 10 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -142,17 +142,17 @@
 						"</option>";
 				} // while
 
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<tr>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_proc'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_proc').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_proc' size='1'>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 11 order by mdit_fabricante, mdit_desc, mdit_desc_capacidade";
 				$commit = mysql_query($query);
@@ -162,16 +162,16 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-					print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+					print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_memo'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_memo').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<SELECT class='select' name='comp_memo' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 7 order by mdit_fabricante, mdit_desc, mdit_desc_capacidade";
 				$commit = mysql_query($query);
@@ -181,17 +181,17 @@
 // 						print " selected";
 					print ">".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_video'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_video').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<SELECT class='select' name='comp_video' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 2 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -201,15 +201,15 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_som'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_SOM').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_som' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 4 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -219,17 +219,17 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_rede'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_rede').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_rede' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 3 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -239,15 +239,15 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_modem'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_modem').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_modem' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 6 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -257,17 +257,17 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_hd'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('cx_hd').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_modelohd' size='1'>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 1 order by mdit_fabricante, mdit_desc_capacidade";
 				$commit = mysql_query($query);
@@ -277,15 +277,15 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 				print "</SELECT>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_grav'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_RECORD_CD').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_grav' size='1'>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 9 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -295,18 +295,18 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 
 			print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_cdrom'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_CDROM').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_cdrom' size='1'>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 5 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -316,15 +316,15 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 			print "</SELECT>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_dvd'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_DVD').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_dvd' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_modelo']."</option>";
+					print "<option value=null selected>".TRANS('SEL_MODEL')."</option>";
 
 				$query = "select * from modelos_itens where mdit_tipo = 8 order by mdit_fabricante, mdit_desc";
 				$commit = mysql_query($query);
@@ -334,21 +334,21 @@
 // 						print " selected";
 					print ">".$rowA['mdit_fabricante']." ".$rowA['mdit_desc']." ".$rowA['mdit_desc_capacidade']."".$rowA['mdit_sufixo']."</option>";
 				} // while
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 			print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<TR><td colspan='4'></td></TR>";
-		print "<tr><td colspan='4'><b>".$TRANS['dados_extra'].":</b></td></tr>";
+		print "<tr><td colspan='4'><b>".TRANS('SUBTTL_INFO_ITEM_ESPEC').":</b></td></tr>";
 		print "<TR><td colspan='4'></td></TR>";
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_impressora'].": </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_TYPE_PRINTER').": </b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_tipo_imp' size=1>";
 
-				print "<option value=null selected>".$TRANS['cmb_selec_imp'].": </option>";
+				print "<option value=null selected>".TRANS('SEL_TYPE_PRINTER').": </option>";
 
 			$query = "SELECT * from tipo_imp  order by tipo_imp_nome";
 			$resultado = mysql_query($query);
@@ -359,15 +359,15 @@
 // 					print " selected";
 				print ">".$rowImp['tipo_imp_nome']."</option>";
 			}
-				print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+				print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 			print "</SELECT>";
 		print "</TD>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_monitor'].":</b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_MONITOR').":</b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_polegada' size=1>";
 
-					print "<option value =null selected>".$TRANS['cmb_selec_monitor'].": </option>";
+					print "<option value =null selected>".TRANS('SEL_SIZE_MONITOR').": </option>";
 
 			$query = "SELECT * from polegada  order by pole_nome";
 			$resultado = mysql_query($query);
@@ -378,18 +378,18 @@
 // 					print " selected";
 				print ">".$rowPol['pole_nome']."</option>";
 			}
-			print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+			print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 			print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
 
 		print "<tr>";
 
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_scanner'].":</b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_SCANNER').":</b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_resolucao' size=1>";
 
-					print "<option value=null selected>".$TRANS['cmb_selec_scanner'].": </option>";
+					print "<option value=null selected>".TRANS('SEL_RESOLUT_SCANNER').": </option>";
 
 			$query = "SELECT * from resolucao  order by resol_nome";
 			$resultado = mysql_query($query);
@@ -400,7 +400,7 @@
 // 					print " selected";
 				print ">".$rowResol['resol_nome']."</option>";
 			}
-			print "<option value=null>".$TRANS['cmb_selec_nenhum']."</option>";
+			print "<option value=null>".TRANS('cmb_selec_nenhum')."</option>";
 			print "</SELECT>";
 		print "</TD>";
 		print "</tr>";
@@ -408,15 +408,15 @@
 
 
 		print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$TRANS['cx_data_cadastro'].":</b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SUBSCRIBE_DATE').":</b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".datab($hoje)."</TD>";
 		print "</TR>";
 
 		print "<TR>";
-		print "<TD colspan='2'  align='right' bgcolor='".BODY_COLOR."'><input type='submit' value='".$TRANS['bt_cadastrar']."' name='submit' ".
+		print "<TD colspan='2'  align='right' bgcolor='".BODY_COLOR."'><input type='submit' value='".TRANS('bt_cadastrar')."' name='submit' ".
 				"class='button' title='Cadastrar as informações fornecidas.'>";
 		print "</TD>";
-		print "<TD colspan='2' align='right' bgcolor='".BODY_COLOR."'><INPUT type='reset' value='".$TRANS['bt_cancelar']."' ".
+		print "<TD colspan='2' align='right' bgcolor='".BODY_COLOR."'><INPUT type='reset' value='".TRANS('bt_cancelar')."' ".
 				"class='button' onClick='javascript:history.back()'></TD>";
 		print "</TR>";
 

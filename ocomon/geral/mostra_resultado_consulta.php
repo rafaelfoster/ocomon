@@ -56,7 +56,7 @@ print "<BODY>";
 	} else
 		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Consulta de Ocorrências</B><BR>";
+	print "<BR><B>".TRANS('TTL_CONS_OCCO')."</B><BR>";
 
         if (isset($_POST['submit']))
         {
@@ -178,20 +178,24 @@ print "<BODY>";
 			$query_ini.=" WHERE o.numero = o.numero ".$query;
 		}
 
-		$resultado = mysql_query($query_ini) or die('ERRO NA TENTATIVA DE RODAR A CONSULTA! '.$query_ini);
+
+
+
+
+		$resultado = mysql_query($query_ini) or die(TRANS('MSG_ERR_TWIRL_CONSUL').$query_ini);
 		$linhas = mysql_numrows($resultado);
+
+		print "<table>";
 		if ($linhas==0)
 		{
-			$aviso = "Nenhuma ocorrência localizada.";
-			print "<script>alert('Nenhuma ocorrência localizada!'); history.back();</script>";
-		}
-
-                print "<table>";
+			$aviso = TRANS('MSG_NONE_OCCO_LOCATED');
+			print "<script>alert('".TRANS('MSG_NONE_OCCO_LOCATED')."'); history.back();</script>";
+		} else
                 if ($linhas>1) {
-                        print "<TR><td class='line'><B>Foram encontradas ".$linhas." ocorrências.</B></TD></TR>";
+                        print "<TR><td class='line'><B>".TRANS('TXT_REGISTER_FOUND')." ".$linhas." ".TRANS('OCO_OCORRENCIAS').".</B></TD></TR>";
 		}
                 else
-                	print "<TR><td class='line'><B>Foi encontrada somente 1 ocorrência.</B></TD></TR>";
+                	print "<TR><td class='line'><B>".TRANS('TXT_ONLY_ONE_OCCO').".</B></TD></TR>";
 
 		print "</table>";
 
@@ -201,14 +205,14 @@ print "<BODY>";
 
 			$valign = " valign='top' ";
 			print "<TR class='header'>";
-			print "<TD ".$valign.">Número</TD>";
-			print "<TD ".$valign.">Problema</TD>";
-			print "<TD ".$valign.">Contato<BR>Operador</TD>";
-			print "<TD ".$valign.">Local</TD>";
-			print "<TD ".$valign.">Data de ".$_POST['tipo_data']."</TD>";
-			print "<TD ".$valign.">Status</TD>";
-			print "<TD ".$valign.">RESP.</TD>";
-			print "<TD ".$valign.">SOLUC.</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_FIELD_NUMBER')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_FIELD_PROB')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_FIELD_OPERATOR')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_FIELD_LOCAL')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_DATE_THIS')." ".$_POST['tipo_data']."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_FIELD_STATUS')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_RESPONSE')."</TD>";
+			print "<TD ".$valign.">".TRANS('OCO_SOLUC')."</TD>";
 			print "</TR>";
 
 			$i=0;
@@ -304,29 +308,29 @@ print "<BODY>";
 					$imgSlaR = 'checked.png';
 					$imgSlaS = 'checked.png';
 				}
-				print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				$sqlSubCall = "select * from ocodeps where dep_pai = ".$row['numero']." or dep_filho=".$row['numero']."";
-				$execSubCall = mysql_query($sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$sqlSubCall);
+				$execSubCall = mysql_query($sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$sqlSubCall);
 				$regSub = mysql_num_rows($execSubCall);
 				if ($regSub > 0) {
 					#É CHAMADO PAI?
 					$sqlSubCall = "select * from ocodeps where dep_pai = ".$row['numero']."";
-					$execSubCall = mysql_query($sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$sqlSubCall);
+					$execSubCall = mysql_query($sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$sqlSubCall);
 					$regSub = mysql_num_rows($execSubCall);
 					$comDeps = false;
 					while ($rowSubPai = mysql_fetch_array($execSubCall)){
 						$sqlStatus = "select o.*, s.* from ocorrencias o, `status` s  where o.numero=".$rowSubPai['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3) ";
-						$execStatus = mysql_query($sqlStatus) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS<br>'.$sqlStatus);
+						$execStatus = mysql_query($sqlStatus) or die (TRANS('MSG_ERR_RESCUE_INFO_STATUS_CALL_SON').'<br>'.$sqlStatus);
 						$regStatus = mysql_num_rows($execStatus);
 						if ($regStatus > 0) {
 							$comDeps = true;
 						}
 					}
 					if ($comDeps) {
-						$imgSub = "<img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'>";
+						$imgSub = "<img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_HANG')."'>";
 					} else
-						$imgSub =  "<img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'>";
+						$imgSub =  "<img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_NOT_HANG')."'>";
 				} else
 					$imgSub = "";
 
@@ -349,19 +353,19 @@ print "<BODY>";
 		else
 		if (isset($_POST['saida']) && $_POST['saida'] == 2) { //Show detailed output
 			while ($row = mysql_fetch_array($resultado)) {
-				print "<tr><td><b>Número:</b></td><td>".$row['numero']."</td><td><b>Área:</b></td><td>".$row['area']."</td><td><b>Problema:</b></td><td>".$row['problema']."</td></tr>";
-				print "<tr><td><b>Descrição:</b></td><td colspan='5'>".nl2br($row['descricao'])."</td></tr>";
-				print "<tr><td><b>Unidade:</b></td><td>".$row['unidade']."</td><td><b>Etiqueta:</b></td><td colspan='3'>".$row['etiqueta']."</td></tr>";
-				print "<tr><td><b>Local:</b></td><td>".$row['setor']."</td><td><b>Contato:</b></td><td>".$row['contato']."</td><td><b>Ramal:</b></td><td>".$row['telefone']."</td></tr>";
-				print "<tr><td><b>Data de abertura:</b></td><td>".$row['data_abertura']."</td><td><b>Data de fechamento:</b></td><td colspan='3'>".$row['data_fechamento']."</td></tr>";
-				print "<tr><td colspan='6'><b><u>Assentamentos</u>:</b></td></tr>";
+				print "<tr><td><b>TRANS('OCO_FIELD_NUMBER');:</b></td><td>".$row['numero']."</td><td><b>".TRANS('OCO_AREA').":</b></td><td>".$row['area']."</td><td><b>".TRANS('OCO_FIELD_PROB').":</b></td><td>".$row['problema']."</td></tr>";
+				print "<tr><td><b>".TRANS('OCO_DESC').":</b></td><td colspan='5'>".nl2br($row['descricao'])."</td></tr>";
+				print "<tr><td><b>".TRANS('OCO_FIELD_UNIT').":</b></td><td>".$row['unidade']."</td><td><b>".TRANS('OCO_FIELD_TAG').":</b></td><td colspan='3'>".$row['etiqueta']."</td></tr>";
+				print "<tr><td><b>".TRANS('OCO_FIELD_LOCAL').":</b></td><td>".$row['setor']."</td><td><b>".TRANS('OCO_FIELD_CONTACT').":</b></td><td>".$row['contato']."</td><td><b>".TRANS('OCO_FIELD_PHONE').":</b></td><td>".$row['telefone']."</td></tr>";
+				print "<tr><td><b>".TRANS('OCO_FIELD_DATE_OPEN').":</b></td><td>".$row['data_abertura']."</td><td><b>".TRANS('FIELD_DATE_CLOSING').":</b></td><td colspan='3'>".$row['data_fechamento']."</td></tr>";
+				print "<tr><td colspan='6'><b><u>".TRANS('FIELD_NESTING')."s</u>:</b></td></tr>";
 
 				$sql = "SELECT *  FROM assentamentos a, usuarios u where a.ocorrencia = ".$row['numero']." AND u.user_id = a.responsavel";
 				$exec = mysql_query($sql);
 				while ($rowA = mysql_fetch_array($exec)){
 					print "<tr><td><b>Por ".$rowA['nome']."</b> em ".datam($rowA['data']).":</td><td colspan='5'>".$rowA['assentamento']."</td></tr>";
 				}
-				print "<tr><td><b>Status Atual:</b></td><td colspan='6'><b>".$row['chamado_status']."</td></tr>";
+				print "<tr><td><b>".TRANS('FIELD_STATUS_NOW').":</b></td><td colspan='6'><b>".$row['chamado_status']."</td></tr>";
 				print "<tr><td colspan='6'><hr /></td></tr>";
 			}
 		}

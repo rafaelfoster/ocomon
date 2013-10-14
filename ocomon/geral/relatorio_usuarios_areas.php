@@ -33,13 +33,13 @@ if (!isset($_POST['ok']))
 	print "<html>";
 	print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 	print "	<BR><BR>";
-	print "	<B><center>::: USUÁRIOS X ÁREAS DE ATENDIMENTO :::</center></B><BR><BR>";
+	print "	<B><center>::: ".TRANS('TTL_USERS_AREA_ATTEND')." :::</center></B><BR><BR>";
 	print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1'>";
 	print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Área Responsável:</td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 	print "					<td class='line'><Select name='area' class='select'>";
-	print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+	print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
 									$query="select * from sistemas where sis_status not in (0) order by sistema";
 									$resultado=mysql_query($query);
 									$linhas = mysql_num_rows($resultado);
@@ -53,18 +53,18 @@ if (!isset($_POST['ok']))
 	print "					 </td>";
 	print "				</tr>";
 
-	print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
+	print "					<td class='line'><INPUT name='d_ini' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
 	print "				</tr>";
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
 	print "				</tr>";
 
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Tipo de relatório:</td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 	print "					<td class='line'><select name='saida' class='data'>";
-	print "							<option value=-1 selected>Normal</option>";
+	print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
 	print "						</select>";
 	print "					</td>";
 	print "				</tr>";
@@ -72,10 +72,10 @@ if (!isset($_POST['ok']))
 	print "		<TABLE align='center'>";
 	print "			<tr>";
 	print "	            <td class='line'>";
-	print "					<input type='submit' value='Pesquisar' class='button' name='ok' >";
+	print "					<input type='submit' value='".TRANS('BT_SEARCH')."' class='button' name='ok' >";
 	print "	            </TD>";
 	print "	            <td class='line'>";
-	print "					<INPUT type='reset' value='Limpar campos' class='button' name='cancelar'>";
+	print "					<INPUT type='reset' value='".TRANS('BT_CLEAR')."' class='button' name='cancelar'>";
 	print "				</TD>";
 	print "			</tr>";
 	print "	    </TABLE>";
@@ -100,7 +100,7 @@ else //if $ok==Pesquisar
 
 	if ((!isset($_POST['d_ini'])) || (!isset($_POST['d_fim'])))
 	{
-		print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+		print "<script>window.alert('".TRANS('MSG_ALERT_PERIODS')."!'); history.back();</script>";
 	}
 	else
 	{
@@ -117,7 +117,7 @@ else //if $ok==Pesquisar
 		{
 
 			print "<table class='centro' cellspacing='0' border='0' align='center' >";
-				print "<tr><td colspan='2'><b>PERÍODO DE ".$d_ini." a ".$d_fim."</b></td></tr>";
+				print "<tr><td colspan='2'><b>".TRANS('TTL_PERIOD_FROM')." ".$d_ini." a ".$d_fim."</b></td></tr>";
 			print "</table>";
 
 
@@ -130,7 +130,7 @@ else //if $ok==Pesquisar
 
 			if ($linhas==0)
 			{
-				print "<script>window.alert('Não há dados no período informado!'); history.back();</script>";
+				print "<script>window.alert('".TRANS('MSG_ALERT_NO_PERIOD')."'); history.back();</script>";
 			}
 			else //if($linhas==0)
 			{
@@ -141,13 +141,13 @@ else //if $ok==Pesquisar
 
 					echo "<br><br>";
 					$background = '#CDE5FF';
-					print "<p class='titulo'>USUÁRIOS X ÁREAS DE ATENDIMENTO</p>";
+					print "<p class='titulo'>".TRANS('TTL_USERS_AREA_ATTEND')."O</p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center' >";
 
-					print "<tr><td bgcolor='".$background."'><B>QUANTIDADE</td>".
-						"<td bgcolor='".$background."'><B>USUÁRIO</td>".
-						"<td bgcolor='".$background."'><B>SETOR</td>".
-						"<td bgcolor='".$background."'><B>ÁREA DE ATENDIMENTO</td>".
+					print "<tr><td bgcolor='".$background."'><B>".TRANS('COL_QTD')."</td>".
+						"<td bgcolor='".$background."'><B>".TRANS('FIELD_USER')."</td>".
+						"<td bgcolor='".$background."'><B>".TRANS('COL_SECTOR')."</td>".
+						"<td bgcolor='".$background."'><B>".TRANS('COL_ATTEN_AREA')."</td>".
 						"</tr>";
 					$total = 0;
 					while ($row = mysql_fetch_array($resultado)) {
@@ -156,7 +156,7 @@ else //if $ok==Pesquisar
 						print "</tr>";
 						$total+=$row['quantidade'];
 					}
-					print "<tr><td colspan='2'><b>TOTAL</b></td><td class='line'><b>".$total."</b></td></tr>";
+					print "<tr><td colspan='2'><b>".TRANS('TOTAL')."</b></td><td class='line'><b>".$total."</b></td></tr>";
 
 					break;
 
@@ -193,7 +193,7 @@ else //if $ok==Pesquisar
 		}//if  $d_ini_completa <= $d_fim_completa
 		else
 		{
-			print "<script>window.alert('A data final não pode ser menor do que a data inicial!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_COMPARE_DATE')."'); history.back();</script>";
 		}
 	}//if ((empty($d_ini)) and (empty($d_fim)))
 }

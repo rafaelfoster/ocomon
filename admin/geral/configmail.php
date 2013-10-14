@@ -65,6 +65,7 @@
 			print "<tr><td>".TRANS('OPT_NEED_AUTH','Precisa de autenticação')."</td><td>".transbool($row['mail_isauth'])."</td></tr>";
 			print "<tr><td>".TRANS('OPT_USER','Usuário')."</td><td>".$row['mail_user']."</td></tr>";
 			print "<tr><td>".TRANS('OPT_ADDRESS_FROM','Endereço de envio (FROM)')."</td><td>".$row['mail_from']."</td></tr>";
+			print "<tr><td>".TRANS('OPT_ADDRESS_FROM_NAME','Nome do From (alias)')."</td><td>".$row['mail_from_name']."</td></tr>";
 			print "<tr><td>".TRANS('OPT_CONTENT_HTML','Conteúdo HTML')."</td><td>".transbool($row['mail_ishtml'])."</td></tr>";
 
 			print "<tr><td></td><td></td></tr>";
@@ -119,6 +120,11 @@
 		print "<input type='text' class='text' name='from' value='".$row['mail_from']."'>";
 		print "</td></tr>";
 
+		print "<tr><td>".TRANS('OPT_ADDRESS_FROM_NAME')."</td><td>";
+		print "<input type='text' class='text' name='from_name' value='".$row['mail_from_name']."'>";
+		print "</td></tr>";
+
+
 		print "<tr><td>".TRANS('OPT_CONTENT_HTML')."</td><td>";
 		print "<select name='ishtml' class='select'>";
 		print "<option value='0'";
@@ -145,7 +151,7 @@
 				"mail_issmtp= ".$_POST['issmtp'].", mail_host = '".noHtml($_POST['host'])."', ".
 				"mail_isauth = ".$_POST['isauth'].", mail_user = '".noHtml($_POST['user'])."', ".
 				"mail_pass = '".noHtml($_POST['pass'])."', mail_from = '".noHtml($_POST['from'])."', ".
-				"mail_ishtml = ".$_POST['ishtml']."";
+				"mail_from_name = '".noHtml($_POST['from_name'])."', mail_ishtml = ".$_POST['ishtml']."";
 
 		$exec= mysql_query($qry) or die(TRANS('ERR_EDIT'));
 

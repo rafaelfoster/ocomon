@@ -69,6 +69,15 @@
 		window.location.href=url+obj.value;
 	}
 
+	function submitForm (obj) {
+		obj.form.submit();
+	}
+
+	function reloadUrl(url, param){
+		var obj = document.getElementById(id);
+		window.location.href=url+param;
+	}
+
 	//criar acesso ao submit de excluir
 	function confirma(msg,url){
 		if (confirm(msg)){
@@ -135,25 +144,45 @@
 
 	function corNatural(id) {//F8F8F1
 		var obj = document.getElementById(id);
+
+		var args = corNatural.arguments.length;
+		//var id = destaca.arguments[0];
+		if (args==1){
+			//var color = "#CCCCFF";
+			var color = "";
+		} else
+		if (args == 2)
+			var color = corNatural.arguments[1];
+		else
+		if (args == 3){
+			var color = corNatural.arguments[1];
+			var color2 = corNatural.arguments[2];
+		}
+
+
 		//obj.style.background = obj.getAttributeNode('cN').value; /* Para ser usado lendo propriedade cN='cor' do objeto */
 		if (navigator.userAgent.indexOf('MSIE') !=-1){ //M$ IE
 			var classe = obj.getAttributeNode('class').value;
-			//obj.style.background = classe;
+			obj.style.background = color;
 			//var classe = obj.className;
-		} else
-			var classe ='';
+		} else {
+			//var classe ='';
+			var classe = obj.getAttributeNode('class').value;
+		}
 
 		if ( classe != '') {
 			//if ( classe == 'lin_par'  ) {  obj.style.background = 'url("../../includes/css/header_bar.gif")';  } else //'#EAE6D0'//
-			if ( classe == 'lin_par'  ) {  obj.style.background = '#E3E1E1';  } else
-			if ( classe == 'lin_impar' ) { obj.style.background = '#F6F6F6' ;} //'#F8F8F1' #F6F6F6
 
-			//if ( classe == 'lin_par'  ) {  obj.className = "linha_2";  } else
-			//if ( classe == 'lin_impar' ) { obj.className = "linha_1";} //'#F8F8F1' #F6F6F6
+			//if ( classe == 'lin_par'  ) {  obj.style.background = '#E3E1E1';  } else
+			//if ( classe == 'lin_impar' ) { obj.style.background = '#F6F6F6' ;}
+
+			if ( classe == 'lin_par'  ) {  obj.style.background = color;  } else
+			if ( classe == 'lin_impar' ) { obj.style.background = color2 ;}
 
 
 		}
-		else { obj.style.background = '' }
+		//else { obj.style.background = '' }
+		else { obj.style.background = color; }
 	}
 
 		function listItems()
@@ -196,10 +225,27 @@
 		}
 
 		function libera(id){
+
+			var args = libera.arguments.length;
+			//var id = destaca.arguments[0];
+			if (args==1){
+				var color = "";
+			} else
+			if (args == 2)
+			{
+				var color = libera.arguments[1];
+			} else
+			if (args == 3) {
+				var color = libera.arguments[1];
+				var color2 = libera.arguments[2];
+			} else
+				var color2 = '';
+
+
 			if ( verificaArray('', id) == false ) {
 				var obj = document.getElementById(id);
 				//obj.style.background = '';
-				corNatural(id); /* retorna à cor natural */
+				corNatural(id,color,color2); /* retorna à cor natural */
 			}
 		}
 
@@ -278,8 +324,11 @@ function validaForm(id,tipo,campo,obrigatorio){
 	var regDATA_ = /^((0?[1-9]|[12]\d)\-(0?[1-9]|1[0-2])|30\-(0?[13-9]|1[0-2])|31\-(0?[13578]|1[02]))\-(19|20)?\d{2}$/;
 	var regDATAHORA = /^(((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2})[ ]([0-1]\d|2[0-3])+:[0-5]\d:[0-5]\d$/;
 	var regEMAIL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;
+
+	var regMULTIEMAIL = /^([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))(\,\s?([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))+)*$/;
+
 	var regMOEDA = /^\d{1,3}(\.\d{3})*\,\d{2}$/;
-	var regMOEDASIMP = /^\d*(\,|\.)\d{2}$/;
+	var regMOEDASIMP = /^\d*\,\d{2}$/;
 	var regETIQUETA = /^[1-9]\d*(\,\d+)*$/; //expressão para validar consultas separadas por vírgula;
 	var regALFA = /^[A-Z]|[a-z]([A-Z]|[a-z])*$/;
 	var regALFANUM = /^([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*\.?([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*$/; //Valores alfanumérias aceitando separação com no máximo um ponto.
@@ -298,7 +347,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 
 
 	if ((obj.value == "")&&(obrigatorio==1)){
-		alert("O campo " + campo + " deve ser preenchido!");
+		alert("O campo [" + campo + "] deve ser preenchido!");
 		obj.focus();
 		return false;
 	}
@@ -352,7 +401,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "DATAHORA")&&(obj.value != "")) {
 		//validar data
 		if (!regDATAHORA.test(obj.value)){
-			alert("Formato de data invalido! dd/mm/aaaa H:m:s");
+			alert("Formato de data invalido! dd/mm/aaaa HH:mm:ss");
 			obj.focus();
 			return false;
 			}
@@ -367,6 +416,16 @@ function validaForm(id,tipo,campo,obrigatorio){
 			return false;
 		}
 	} else
+
+	if ((tipo == "MULTIEMAIL")&&(obj.value != "")){
+		//validar email(verificao de endereco eletrônico)
+		if (!regMULTIEMAIL.test(obj.value)){
+			alert("Formato de e-mail inválido! \"E-MAIL, E-MAIL\"");
+			obj.focus();
+			return false;
+		}
+	} else
+
 
 	if ((tipo == "MOEDA")&&(obj.value != "")){
 		//validar valor monetário
@@ -440,7 +499,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	}
 
 
-         return true;
+        return true;
 }
 
 	function exibeEscondeImg(obj) {
@@ -586,6 +645,79 @@ function validaForm(id,tipo,campo,obrigatorio){
 		}
 		return str;
 	}
+
+	function trim(str) {
+		return str.replace(/^\s+|\s+$/g,"");
+	}
+
+	function foco(id){
+		obj = document.getElementById(id);
+		obj.focus();
+		return true;
+	}
+
+	function ajaxFunction(div,script,divLoad){
+		var ajaxRequest;  // The variable that makes Ajax possible!
+
+		try{
+			// Opera 8.0+, Firefox, Safari
+			ajaxRequest = new XMLHttpRequest();
+		} catch (e){
+			// Internet Explorer Browsers
+			try{
+				ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				try{
+					ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				} catch (e){
+					// Something went wrong
+					alert("Your browser broke!");
+					return false;
+				}
+			}
+		}
+		// Create a function that will receive data sent from the server
+		ajaxRequest.onreadystatechange = function(){
+			if(ajaxRequest.readyState == 4){
+				document.getElementById(divLoad).style.display = 'none';
+				var ajaxDisplay = document.getElementById(div);
+				ajaxDisplay.innerHTML = ajaxRequest.responseText;
+			} else {
+				document.getElementById(divLoad).style.display = '';
+			}
+		}
+
+		var args = ajaxFunction.arguments.length;
+		var i;
+		var j;
+		var array = new Array();
+
+		for (i=3; i<args; i++){//Jogando os argumentos (apartir do quarto pois os tres primeiros sao fixos) para um array
+			j = i-3;
+			array[j] = ajaxFunction.arguments[i];
+		}
+
+		var queryString = MontaQueryString(array);
+
+		ajaxRequest.open("GET", script + queryString, true);
+		ajaxRequest.send(null);
+	}
+
+	function MontaQueryString (array) {
+		var i;
+		var size = array.length;
+		var queryString = '?';
+
+		for (i=0; i<size; i++){
+			var param = array[i].split('=');
+			param[1] = document.getElementById(param[1]).value;
+
+			queryString += param[0] + "=" + param[1] + "&";
+		}
+		return queryString;
+	}
+
+
 
 //-->
 </script>

@@ -29,13 +29,13 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Relatórios:</B><BR>";
+	print "<BR><B>".TRANS('TLT_REPORTS').":</B><BR>";
 
-	print "<TR><td class='line'><B>Escolha um dos relatórios prontos, ou clique <a href='consultar.php'>AQUI</a> para um relatório geral.</B></TD></TR>";
+	print "<TR><td class='line'><B>".TRANS('TLT_REPORTS_SOON')." <a href='consultar.php'>".TRANS('TLT_HERE')."</a> ".TRANS('TLT_REPORTS_SOON_2').".</B></TD></TR>";
 	print "</TD>";
 	print "<td class='line'>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
-	print "<TR class='header'><td class='line'>Relatórios por Periodo</TD><td class='line'>Relatórios por...</TD>";
+	print "<TR class='header'><td class='line'>".TRANS('COL_REPORT_FOR_PERIOD')."</TD><td class='line'>".TRANS('COL_REPORT_FOR')."...</TD>";
 
 	$color =  BODY_COLOR;
 
@@ -44,46 +44,46 @@
 	print "</TR>";
 
 	print "<TR class='lin_par'>";
-	print "<td class='line' colspan='2'><a href='relatorio_setores_areas.php'>Locais mais atendidos</TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_setores_areas.php'>".TRANS('TLT_REPORT_LOCAL_MORE_ATTEN')."</TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_geral.php'>Geral</TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_geral.php'>".TRANS('TLT_REPORT_GENERAL')."</TD>";
 	print "</TR>";
 
 
 
 	print "<tr class='lin_par'>";
-		print "<td class='line' colspan='2'><a href='relatorio_slas_2.php'>SLA'S</a></TD>";
+		print "<td class='line' colspan='2'><a href='relatorio_slas_2.php'>".TRANS('TLT_REPORT_SLAS')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='chamados_x_etiqueta.php'>Chamados por equipamento</TD>";
+	print "<td class='line' colspan='2'><a href='chamados_x_etiqueta.php'>".TRANS('TLT_REPORT_CALL_FOR_EQUIP')."</TD>";
 	print "</TR>";
 
 
 	print "<TR class='lin_par'>";
-	print "<td class='line' colspan='2'><a onClick =\"checa_permissao('relatorio_gerencial.php')\">Gerência do Helpdesk</a></TD>";
+	print "<td class='line' colspan='2'><a onClick =\"checa_permissao('relatorio_gerencial.php')\">".TRANS('TLT_REP_MANEGER_HELPDESK')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_operadores_areas.php'>Atendimentos por operador</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_operadores_areas.php'>".TRANS('TTL_REP_ATTEND_FOR_OPERATOR')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_par'>";
-	print "<td class='line' colspan='2'><a href='relatorio_usuarios_areas.php'>Atendimentos por usuário</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_usuarios_areas.php'>".TRANS('TTL_REP_ATTEND_FOR_USER')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_chamados_area.php'>Quantidade de chamados: Área x período</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_chamados_area.php'>".TRANS('TTL_REP_QTD_CALL_AREA_PERIOD')."</a></TD>";
 	print "</tr>";
 
 	print "<TR class='lin_par'>";
-	print "<td class='line' colspan='2'><a href='relatorio_usuario_final.php'>Chamados abertos pelo usuário-final</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_usuario_final.php'>".TRANS('TTL_REP_CALL_OPEN_USER_FINISH')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_chamados_categorias'>Quantidade de chamados x categoria de problema</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_chamados_categorias.php'>".TRANS('TTL_REP_QTD_CALL_CAT_PROB')."</a></TD>";
 	print "</tr>";
 
 

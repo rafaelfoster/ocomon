@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 
-	$_SESSION['s_page_admin'] = $_SERVER['PHP_SELF'];
+	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
 
 	print "<HTML>";
 	print "<BODY bgcolor='".BODY_COLOR."'>";
@@ -86,7 +86,7 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				print "<td class='line'>".$row['fab_nome']."</td>";
 				print "<td class='line'>".$row['tipo_it_desc']."</td>";

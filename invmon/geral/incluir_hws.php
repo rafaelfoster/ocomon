@@ -20,7 +20,7 @@
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 
@@ -38,7 +38,7 @@
 
 		if ($_POST['software'] == -1)
 		{
-			$aviso = "Dados incompletos";
+			$aviso = TRANS('MSG_EMPTY_DATA');
 			$erro = true;
 		} else {
 			$qry_1 = "select * from softwares where soft_cod = ".$_POST['software']."";
@@ -53,7 +53,7 @@
 			$cont = mysql_num_rows($exec_qry_2);
 			if ($cont != 0) {
 				$erro = true;
-				$aviso = "Já existe uma versão desse software instalada nesse computador, remova-a primeiro!";
+				$aviso = TRANS('MSG_SOFTWARE_INSTALL_EQUIP');
 			}
 		}
 
@@ -65,11 +65,11 @@
 			if ($resultado == 0)
 			{
 				print $query."<br>";
-				$aviso = "ERRO ao incluir software ".$query."";
+				$aviso = TRANS('MSG_ERR_INCLUDE_SW')." ".$query;
 			}
 			else
 			{
-				$aviso = "OK. Software incluído com sucesso!";
+				$aviso = TRANS('MSG_OK_INCLUDE_SW');
 			}
 		}
 
@@ -82,8 +82,8 @@
 		print "<br>";
 		print "<table class='corpo'>";
 		print "<tr>";
-		print "<TD width='400' align='left'><B>Inclusão de softwares no cadastro da etiqueta: ".$_GET['comp_inv']." e Unidade: ".$_GET['comp_inst']."</B></TD>";
-		print "<td class='line'><input type='button' value='Listar' class='minibutton' onClick= \"javascript: popup_alerta('comp_soft.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></td>";
+		print "<TD width='400' align='left'><B>".TRANS('TXT_INCLUDE_SW_CAD_TAG')." ".$_GET['comp_inv']." ".TRANS('TXT_AND_UNIT').": ".$_GET['comp_inst']."</B></TD>";
+		print "<td class='line'><input type='button' value='".TRANS('LINK_LIST')."' class='minibutton' onClick= \"javascript: popup_alerta('comp_soft.php?popup=true&comp_inv=".$_GET['comp_inv']."&comp_inst=".$_GET['comp_inst']."')\"></td>";
 		print "<TD width='224' align='left'></td>";
 		print "</tr>";
 		print "</table><br>";
@@ -96,10 +96,10 @@
 		print "<input type='hidden' name='popup' value='".$_GET['popup']."'>";
 
 			print "<tr>";
-				print "<td width='20%' align='right' bgcolor=".TD_COLOR.">Software:</TD>";
+				print "<td width='20%' align='right' bgcolor=".TD_COLOR.">".TRANS('COL_SOFT').":</TD>";
 				print "<td width='80%' align='left' bgcolor=".BODY_COLOR.">";
 				print "<select class='select' name='software'>";
-				print "<option value=-1 selected>Selecione o software</option>";
+				print "<option value=-1 selected>".TRANS('SEL_SOFT')."</option>";
 
 				//retorna os softwares cadastrados para o equipamento
 				$sql = "select s.*, l.*, c.*, f.*, h.* from softwares as s, licencas as l, categorias as c, ".
@@ -131,8 +131,8 @@
 
 
 			print "<tr>";
-				print "<td align='center' width='20%' bgcolor=".BODY_COLOR."><input type='submit' value='Adicionar' name='submit' class='button'></td>";
-				print "<td align='center' width='80%' bgcolor=".BODY_COLOR."><input type='reset' value='Cancelar' onClick=\"javascript:self.close()\" name='cancelar' class='button'></td>";
+				print "<td align='center' width='20%' bgcolor=".BODY_COLOR."><input type='submit' value='".TRANS('BT_ADD')."' name='submit' class='button'></td>";
+				print "<td align='center' width='80%' bgcolor=".BODY_COLOR."><input type='reset' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:self.close()\" name='cancelar' class='button'></td>";
 			print "</tr>";
 	}
 

@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 
 	print "<html>";
@@ -52,10 +52,11 @@
         	$query.= $QRY["full_detail_fim"];
 		$resultado = mysql_query($query);
 		$linhas = mysql_num_rows($resultado);
-
+		//dump ($query);
+		//exit;
 		if ($linhas == 0)
 		{
-			print "<script>mensagem('".$TRANS["alerta_nao_encontrado"]."')</script>";
+			print "<script>mensagem('".TRANS('MSG_THIS_CONS_NOT_RESULT')."')</script>";
 			print "<script>history.back()</script>";
 			exit;
 		}
@@ -86,47 +87,46 @@
 					print "<tr>";
 					if ($_SESSION['s_ocomon']==1){
 						print "<td  width='10%' align='center'>
-							<br><B><a onClick= \"javascript: popup_alerta('ocorrencias.php?popup=true&comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='Ocorrências para esse equipamento'>Ocorrências</a></B><br>
+							<br><B><a onClick= \"javascript: popup_alerta('ocorrencias.php?popup=true&comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_OCCO_EQUIP')."'>".TRANS('MNS_OCORRENCIAS')."</a></B><br>
 							</td>";
 					}
 
 					print " <td width='10%' align='center'>";
 					if ($row['tipo'] == 1 || $row['tipo']== 2){//Se o equipamento não for do tipo computador não terá softwares
-						print "<br><B><a class='botao' onClick= \"javascript: popup_alerta('comp_soft.php?popup=true&comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='Softwares instalados'>Softwares</a></B><br>";
+						print "<br><B><a class='botao' onClick= \"javascript: popup_alerta('comp_soft.php?popup=true&comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_SW_INSTALL')."'>".TRANS('MNL_SW')."</a></B><br>";
 					}
 					print "</td>";
 
 					print "<td width='10%' align='center'><br><B><a class='botao' ".
 							"onClick= \"javascript: popup_alerta('hw_historico.php?inv=".$row['etiqueta']."&inst=".$row['cod_inst']."')\" ".
-							"title='Histórico de alteração de componentes'>Histórico de Trocas</a></B><br>";
+							"title='".TRANS('HNT_HISTORY_ALTER_COMP')."'>".TRANS('LINK_HISTORY_EXCHANGE')."</a></B><br>";
 					print "</td>";
 
 
 					print "<td width='10%' align='center'><br><B><a class='botao' ".
 							"onClick= \"javascript: popup_alerta('mostra_historico.php?popup=true&comp_inv=".$row['etiqueta']."".
-							"&comp_inst=".$row['cod_inst']."')\" title='Histórico de localização física do equipamento'>Locais</a></B><br>";
+							"&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_HISTORY_LOCAL_EQUIP')."'>".TRANS('MNL_LOCAIS')."</a></B><br>";
 					print "</td>";
 					print "<td width='10%'  align='center'><br><B><a class='botao' ".
 							"onClick= \"javascript: popup_alerta('consulta_garantia.php?popup=true&comp_inv=".$row['etiqueta']."".
-							"&comp_inst=".$row['cod_inst']."')\" title='Informações sobre a garantia do equipamento'>Garantia</a></B><br>";
+							"&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_INFO_GARANT_EQUIP')."'>".TRANS('LINK_GUARANT')."</a></B><br>";
 					print "</td>";
 
 					print "<td width='10%'  align='center'><br><B><a class='botao' ".
 							"onClick=\"javascript: popup_alerta('docs_assoc_model.php?popup=true&model=".$row['modelo_cod']." ')\" ".
-							"title='Documentos associados a esse modelo de equipamento'>Docs</a></B><br>";
+							"title='".TRANS('HNT_DOCS_ASSOC_EQUIP')."'>".TRANS('LINK_DOCUMENTS')."</a></B><br>";
 					print "</td>";
 
 					if ($_SESSION['s_invmon']==1){
 						print "<td width='10%'  align='center'>
-							<br><B><a class='botao' href='altera_dados_computador.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>Alterar dados</a></B><br>
+							<br><B><a class='botao' href='altera_dados_computador.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".TRANS('LINK_ALTER_DATA')."</a></B><br>
 							</td>";
 					}
 					print "</tr>";
 					print "</table>";
 
 					print "<table width='100%'>";
-					print "<tr><TD colspan='4' align='left'><br><B>Dados Gerais:</B></td></tr>";
-					print "</table>";
+					print "<tr><TD colspan='4' align='left'><br><B>".TRANS('TXT_GENERAL_DATA').":</B></td></tr></table>";
 				}
 
 
@@ -138,46 +138,41 @@
 
 				print "<tr><td colspan='4'></td></tr>";
 				print "<tr>";
-                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Tipo de equipamento:</b></TD>";
+                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_TYPE_EQUIP').":</b></TD>";
                 		print "<TD class='borda' width='30%' align='left' >".
                 				"<a href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."'".
-                				" title='Listar todos os equipamentos do ".
-                				"tipo ".$row['equipamento']."  que estão cadastrados no sistema.'>".$row['equipamento']."</a>".
+                				" title='".TRANS('HNT_LIST_EQUIP_TYPE')." ".$row['equipamento']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['equipamento']."</a>".
                 			"</TD>";
-                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Fabricante:</b></TD>";
+                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_MANUFACTURE').":</b></TD>";
                 		print "<TD class='borda' width='30%' align='left' >".
                 				"<a href='mostra_consulta_comp.php?comp_fab=".$row['fab_cod']."'".
-                				" title='Listar todos os equipamentos do fabricante ".$row['fab_nome']."  cadastrados ".
-                				"no sistema.'>".$row['fab_nome']."</a>".
+                				" title='".TRANS('HNT_LIST_EQUIP_MANUF')." ".$row['fab_nome']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['fab_nome']."</a>".
                 			"</TD>";
     				print "</tr>";
 				print "<tr>";
-                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Etiqueta:</b></TD>".
+                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('OCO_FIELD_TAG').":</b></TD>".
                 			"<TD class='borda' width='30%' align='left' >".$row['etiqueta']."</TD>".
-                			"<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Número de Série:</b></TD>".
+                			"<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SN').":</b></TD>".
 					"<TD class='borda' width='30%' align='left' >".strtoupper($row['serial'])."</TD>";
     				print "</tr>";
 
 				print "<tr>";
-                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Modelo:</b></TD>".
+                		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_MODEL').":</b></TD>".
                 			"<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-                				"comp_marca=".$row['modelo_cod']."' title='Listar todos os equipamentos do ".
-                				"modelo ".$row['modelo']."  cadastrados no sistema.'>".$row['modelo']."</a>".
+                				"comp_marca=".$row['modelo_cod']."' title='".TRANS('HNT_LIST_EQUIP_MODEL')." ".$row['modelo']."  ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['modelo']."</a>".
                 			"</TD>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Local:</b></TD>".
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('OCO_LOCAL').":</b></TD>".
                 			"<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
                 				"comp_local=".$row['tipo_local']."' ".
-                				"title='Listar todos os equipamentos do(a) ".$row['local']." que estão cadastrados no ".
-                				"sistema.'>".$row['local']."</a>".
+                				"title='".TRANS('HNT_LIST_EQUIP_LOCAL')." ".$row['local']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['local']."</a>".
                 			"</TD>";
 				print "</tr>";
 
 				print "<tr>";
-				print "<TD  width='20%' align='left' bgcolor='".TD_COLOR."'><b>Situação:</b></TD>";
+				print "<TD  width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SITUAC').":</b></TD>";
 				print "<TD  class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 						"comp_situac=".$row['situac_cod']."' ".
-						"title='Listar todos os equipamentos que estão em situação ".$row['situac_nome']." cadastrados ".
-						"no sistema.'>".$row['situac_nome']."</a>".
+						"title='".TRANS('HNT_LIST_EQUIP_SITUAC')." ".$row['situac_nome']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['situac_nome']."</a>".
 					"</TD><td colspan='2'></td>";
 				print "</tr>";
 
@@ -187,100 +182,87 @@
 
 					print "<tr><td colspan='4'></td></tr>";
 					print "<tr><td colspan='4'><IMG ID='imgconfig' SRC='../../includes/icons/close.png' width='9' height='9' ".
-							"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('config')\">&nbsp;<b>Dados complementares - Configuração: </b></td></tr>";
+							"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('config')\">&nbsp;<b>".TRANS('SUBTTL_DATA_COMPLE_CONFIG').": </b></td></tr>";
 					print "<tr><td colspan='4'></td></tr>";
 					print "<tr><td colspan='4'><div id='config'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 					print "<TABLE border='0' cellpadding='1' cellspacing='2' align='center' width='100%'>";
 
 					print "<TR>";
-					print "<TD width='20%' align='lef't bgcolor='".TD_COLOR."'><b>Nome do computador:</b></TD>";
+					print "<TD width='20%' align='lef't bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_NAME_COMPUTER').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' >".$row['nome']."</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>MB:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_MB').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?comp_mb=".$row['cod_mb']."' ".
-							"title='Listar todos os equipamentos com a MB ".$row['fabricante_mb']." ".$row['mb']." cadastrados no sistema.'>".
+							"title='".TRANS('HNT_LIST_EQUIP_MOTHERBOARD')." ".$row['fabricante_mb']." ".$row['mb']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 							"".$row['fabricante_mb']." ".$row['mb']."</a>".
 						"</TD>";
 					print "</TR>";
 
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Processador:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_PROC').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 							"comp_proc=".$row['cod_processador']."' ".
-							"title='Listar todos os equipamentos com o processador ".$row['processador']." ".$row['clock']." ".
-							"".$row['proc_sufixo']." cadastrados no sistema.'>".$row['processador']." ".$row['clock']." ".
+							"title='".TRANS('HNT_LIST_EQUIP_PROCESSOR')." ".$row['processador']." ".$row['clock']." ".
+							"".$row['proc_sufixo']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['processador']." ".$row['clock']." ".
 							"".$row['proc_sufixo']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Memória:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_MEMO').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 							"comp_memo=".$row['cod_memoria']."' title".
-							"='Listar todos os equipamentos com ".$row['memoria']." ".$row['memo_sufixo']." de memória ".
-							"cadastrados no sistema.'>".$row['memoria']." ".$row['memo_sufixo']."</a>".
+							"='".TRANS('HNT_LIST_EQUIP_WITH')." ".$row['memoria']." ".$row['memo_sufixo']." ".TRANS('HNT_LIST_EQUIP_OF_MEMORY')." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['memoria']." ".$row['memo_sufixo']."</a>".
 						"</TD>";
 					print "</TR>";
 
 
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Placa de vídeo:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_VIDEO').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?comp_video".
-							"=".$row['cod_video']."' title='Listar todos os equipamentos".
-							" com a placa de vídeo ".$row['fabricante_video']." ".$row['video']." cadastrados no sistema.'>".
+							"=".$row['cod_video']."' title='".TRANS('HNT_LIST_EQUIP_VIDEO')." ".$row['fabricante_video']." ".$row['video']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 							"".$row['fabricante_video']." ".$row['video']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='lef't bgcolor='".TD_COLOR."'><b>Placa de som:</b></TD>";
+					print "<TD width='20%' align='lef't bgcolor='".TD_COLOR."'><b>".TRANS('MNL_SOM').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_som=".$row['cod_som']."' title='Listar todos os ".
-							"equipamentos com a placa de som ".$row['fabricante_som']." ".$row['som']." cadastrados no sistema.'>".
+							"comp_som=".$row['cod_som']."' title='".TRANS('HNT_LIST_EQUIP_AUDIO')." ".$row['fabricante_som']." ".$row['som']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 							"".$row['fabricante_som']." ".$row['som']."</a>".
 						"</TD>";
 					print "</TR>";
 
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Placa de Rede:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_REDE').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_rede=".$row['cod_rede']."' title='Listar todos os ".
-							"equipamentos com a placa de rede ".$row['rede_fabricante']." ".$row['rede']." cadastrados no ".
-							"sistema.'>".$row['rede_fabricante']." ".$row['rede']."</a>".
+							"comp_rede=".$row['cod_rede']."' title='".TRANS('HNT_LIST_EQUIP_NETWORK')." ".$row['rede_fabricante']." ".$row['rede']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['rede_fabricante']." ".$row['rede']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Placa de Fax/Modem:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_MODEM').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_modem=".$row['cod_modem']."' title='Listar todos ".
-							"os equipamentos com o modem ".$row['fabricante_modem']." ".$row['modem']." cadastrados no".
-							" sistema.'>".$row['fabricante_modem']." ".$row['modem']."</a>".
+							"comp_modem=".$row['cod_modem']."' title='HNT_LIST_EQUIP_MODEM ".$row['fabricante_modem']." ".$row['modem']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['fabricante_modem']." ".$row['modem']."</a>".
 						"</TD>";
 					print "</TR>";
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>HD:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_HD').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_modelohd=".$row['cod_hd']."' title='Listar todos os ".
-							"equipamentos com HD ".$row['fabricante_hd']." de ".$row['hd_capacidade']." ".$row['hd_sufixo']." ".
-							"cadastrados no sistema.'>".$row['fabricante_hd']." ".$row['hd']." ".$row['hd_capacidade']." ".$row['hd_sufixo']."</a>".
+							"comp_modelohd=".$row['cod_hd']."' title='HNT_LIST_EQUIP_HARDDISK ".$row['fabricante_hd']." ".TRANS('TXT_OF')." ".$row['hd_capacidade']." ".$row['hd_sufixo']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['fabricante_hd']." ".$row['hd']." ".$row['hd_capacidade']." ".$row['hd_sufixo']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Unidade CD-ROM:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_CDROM').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_cdrom=".$row['cod_cdrom']."' title='Listar todos ".
-							"os equipamentos com CD-ROM ".$row['fabricante_cdrom']." ".$row['cdrom']." cadastrados no ".
-							"sistema.'>".$row['fabricante_cdrom']." ".$row['cdrom']."</a>".
+							"comp_cdrom=".$row['cod_cdrom']."' title='".TRANS('HNT_LIST_EQUIP_CDROM')." ".$row['fabricante_cdrom']." ".$row['cdrom']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['fabricante_cdrom']." ".$row['cdrom']."</a>".
 						"</TD>";
 					print "</TR>";
 
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Unidade Gravadora de CD:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_RECORD_CD').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_grav=".$row['cod_gravador']."' title='Listar todos os ".
-							"equipamentos com gravador ".$row['fabricante_gravador']." ".$row['gravador']." cadastrados no sistema.'>".
+							"comp_grav=".$row['cod_gravador']."' title='".TRANS('HNT_LIST_EQUIP_RECORD')." ".$row['fabricante_gravador']." ".$row['gravador']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 							"".$row['fabricante_gravador']." ".$row['gravador']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Unidade de DVD:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('MNL_DVD').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_dvd=".$row['cod_dvd']."' title='Listar todos os ".
-							"equipamentos com DVD ".$row['fabricante_dvd']." ".$row['dvd']." cadastrados no sistema.'>".
+							"comp_dvd=".$row['cod_dvd']."' title='".TRANS('HNT_LIST_EQUIP_DVD')." ".$row['fabricante_dvd']." ".$row['dvd']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 							"".$row['fabricante_dvd']." ".$row['dvd']."</a>".
 						"</TD>";
 					print "</TR>";
@@ -290,84 +272,116 @@
 
 				if (($row['tipo']!=1) AND ($row['tipo']!=2)) { // O equipamento não é computador!!
 					print "<TR><TD colspan='4'></TD></TR>";
-					print "<tr><TD colspan='4'><b>Dados complementares - Configuração:</b></TD></tr>";
+					print "<tr><TD colspan='4'><b>".TRANS('SUBTTL_DATA_COMPLE_CONFIG').":</b></TD></tr>";
 					print "<TR><TD colspan=4></TD></TR>";
 
 					print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Tipo de Impressora:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_TYPE_PRINTER').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_tipo_imp=".$row['tipo_imp']."' title='Listar todas as ".
-							"impressoras do tipo ".$row['impressora']." cadastradas no sistema.'>".$row['impressora']."</a>".
+							"comp_tipo_imp=".$row['tipo_imp']." title='".TRANS('HNT_LIST_TYPE_PRINTER')." ".$row['impressora']."".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['impressora']."</a>".
 						"</TD>";
 
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Monitor:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_MONITOR').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_polegada=".$row['tipo_pole']."' title='Listar todos os ".
-							"monitores com ".$row['polegada_nome']." cadastrados no sistema.'>".$row['polegada_nome']."</a>".
+							"comp_polegada=".$row['tipo_pole']."' title='".TRANS('HNT_LIST_MONITOR')." ".$row['polegada_nome']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['polegada_nome']."</a>".
 						"</TD>";
 					print "</tr>";
 					print "<tr>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Scanner:</b></TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_SCANNER').":</b></TD>";
 					print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-							"comp_resolucao=".$row['tipo_resol']."' title='Listar todos os ".
-							"scanners com resolução de ".$row['resol_nome']." cadastrados no sistema.'>".$row['resol_nome']."</a>".
+							"comp_resolucao=".$row['tipo_resol']."' title='".TRANS('HNT_LIST_RESOLUTION_SCANNER')." ".$row['resol_nome']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['resol_nome']."</a>".
 						"</TD>";
 					print "</TR>";
 				}
 
+				NL(4);
+
+				$qryPieces = "";
+				$qryPieces = $QRY["componenteXequip_ini"];// ../includes/queries/
+				$qryPieces.=" and eqp.eqp_equip_inv in (".$_REQUEST['comp_inv'].") and eqp.eqp_equip_inst=".$_REQUEST['comp_inst']."";
+				$qryPieces.= $QRY["componenteXequip_fim"];
+
+				$execQryPieces = mysql_query($qryPieces) or die (TRANS('ERR_QUERY')."<br>".$qryPieces);
+
+				print "<TR><TD colspan='4'></TD></TR>";
+				print "<tr><TD colspan='4'><b>".TRANS('SUBTTL_DATA_COMPLE_PIECES').":</b></TD></tr>";
+				print "<TR><TD colspan=4></TD></TR>";
+
+
+				while ($rowPiece = mysql_fetch_array($execQryPieces)){
+
+
+					print "<TR>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".$rowPiece['item_nome'].":</b></TD>";
+					print "<TD class='borda' width='30%' align='left' >".
+						//"<a href='mostra_consulta_comp.php?piece=".$rowPiece['estoq_desc']."'>".
+						$rowPiece['fabricante']." ".$rowPiece['modelo']." ".$rowPiece['capacidade']." ".$rowPiece['sufixo']."".
+						//"</a>".
+						"</TD>";
+
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SN').":</b></TD>";
+					print "<TD class='borda' width='30%' align='left' ><a onClick=\"popup('estoque.php?action=details&cod=".$rowPiece['estoq_cod']."&cellStyle=true')\">".$rowPiece['estoq_sn']."</a></TD>";
+
+					print "</tr>";
+
+						//"<a href='mostra_consulta_comp.php?comp_dvd=".$row['cod_dvd']."' title='".TRANS('HNT_LIST_EQUIP_DVD')." ".$row['fabricante_dvd']." ".$row['dvd']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>";
+
+				}
+
+
+
+
+
 				print "<tr><td colspan='4'></td></tr>";
 				print "<tr><td colspan='4'><IMG ID='imgcontabeis' SRC='../../includes/icons/open.png' width='9' height='9' ".
-						"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('contabeis')\">&nbsp;<b>Dados complementares - Contábeis: </b></td></tr>";
+						"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('contabeis')\">&nbsp;<b>".TRANS('TXT_OBS_DATA_COMPLEM_2').": </b></td></tr>";
 
 				print "<tr><td colspan='4'></td></tr>";
 				print "<tr><td colspan='4'><div id='contabeis' style='{display:none}'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 				print "<TABLE border='0' cellpadding='1' cellspacing='2' align='center' width='100%'>";
 
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Unidade:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('OCO_FIELD_UNIT').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-						"comp_inst[]=".$row['cod_inst']."' title='Listar todos os ".
-						"equipamentos cadastrados para ".$row['instituicao'].".'>".$row['instituicao']."</a>".
+						"comp_inst[]=".$row['cod_inst']."' title='".TRANS('HNT_LIST_EQUIP_CAD_TO')." ".$row['instituicao'].".'>".$row['instituicao']."</a>".
 					"</TD>";
 
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Centro de Custo:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_CENTER_COST').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-						"comp_ccusto=".$row['ccusto']."' title='Listar todos".
-						" os equipamentos cadastrados para o centro de custo ".$centroCusto.".'>".$centroCusto."</a>".
+						"comp_ccusto=".$row['ccusto']."' title='".TRANS('HNT_LIST_EQUIP_CAD_TO_CENTER_COST')." ".$centroCusto.".'>".$centroCusto."</a>".
 					"</TD>";
 				print "</tr>";
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Fornecedor:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_VENDOR').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 						"comp_fornecedor=".$row['fornecedor_cod']."' ".
-						"title='Listar todos os equipamentos com o fornecedor ".$row['fornecedor_nome']." castrados no sistema.'>".
+						"title='".TRANS('HNT_LIST_EQUIP_SUPPLIER')." ".$row['fornecedor_nome']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".
 						"".$row['fornecedor_nome']."</a>".
 					"</TD>";
 
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Nota Fiscal:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_FISCAL_NOTES').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
-						"comp_nf=".$row['nota']."' title='Listar todos os ".
-						"equipamentos da nota fiscal ".$row['nota']." cadastrados no sistema.'>".$row['nota']."</a>".
+						"comp_nf=".$row['nota']."' title='".TRANS('HNT_LIST_EQUIP_FISCAL_NOTES')." ".$row['nota']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>".$row['nota']."</a>".
 					"</TD>";
 				print "</tr>";
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Valor (R$):</b></TD>";
-				print "<TD class='borda' width='30%' align='left' >R$ ".$row['valor']."</TD>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Data da Compra:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_VALUE').":</b></TD>";
+				print "<TD class='borda' width='30%' align='left' >R$ ".valueSeparator($row['valor'],',')."</TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_DATE_PURCHASE').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' >".$row['data_compra']."</TD>";
 				print "</tr>";
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Reitoria:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_MAJOR').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 						"comp_reitoria=".$row['reitoria_cod']."'".
 						">".$row['reitoria']."</a>".
 					"</TD>";
 
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Data do cadastro:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SUBSCRIBE_DATE').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' >".$row['data_cadastro']."</TD>";
 				print "</TR>";
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Assistência Técnica:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_TECH_ASSIST').":</b></TD>";
 				print "<TD class='borda' width='30%' align='left' ><a href='mostra_consulta_comp.php?".
 						"comp_assist=".$row['assistencia_cod']."'".
 						">".$row['assistencia']."</a>".
@@ -376,12 +390,12 @@
 				print "</table>";
 				print "</div></td></tr>";
 				print "<TR>";
-				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' ><b>Comentário:</b></TD>";
+				print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' ><b>".TRANS('COL_COMMENT').":</b></TD>";
 				print "<TD class='borda' colspan='3' width='30%' align='left' >".$row['comentario']."</TD>";
 				print "</TR>";
 				print "<tr><td colspan='4'></td></tr>";
 				print "<tr><td colspan='4'><IMG ID='imganexos' SRC='../../includes/icons/open.png' width='9' height='9' ".
-					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('anexos')\">&nbsp;<b>Imagens associadas: </b></td></tr>";
+					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('anexos')\">&nbsp;<b>".TRANS('FIELD_IMAGE_ASSOC').": </b></td></tr>";
 
 				$noImg = false;
 
@@ -390,7 +404,7 @@
 				print "<TABLE border='0' cellpadding='1' cellspacing='2' align='center' width='100%'>";
 
 				$qryTela3 = "select  i.* from imagens i  WHERE i.img_model ='".$row['modelo_cod']."'  order by i.img_inv ";
-				$execTela3 = mysql_query($qryTela3) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+				$execTela3 = mysql_query($qryTela3) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 				//$rowTela = mysql_fetch_array($execTela);
 				$isTela3 = mysql_num_rows($execTela3);
 				$cont = 0;
@@ -398,19 +412,19 @@
 				while ($rowTela3 = mysql_fetch_array($execTela3)) {
 					$cont++;
 					print "<tr>";
-					print "<TD  width='20%' bgcolor='".TD_COLOR."' >Imagem ".$cont." do modelo:</td>";
+					print "<TD  width='20%' bgcolor='".TD_COLOR."' >".TRANS('TXT_IMAGE')." ".$cont." ".TRANS('TXT_OF_MODEL').":</td>";
 					print "<td colspan='3' ><a onClick=\"javascript:popupWH('../../includes/functions/showImg.php?file=".$rowTela3['img_cod']."&cod=".$rowTela3['img_cod']."',".$rowTela3['img_largura'].",".$rowTela3['img_altura'].")\"><img src='../../includes/icons/attach2.png'>".$rowTela3['img_nome']."</a></TD>";
 					print "</tr>";
 					$noImg = true;
 				}
 				$qryTela2 = "select  i.* from imagens i  WHERE i.img_inst ='".$row['cod_inst']."' and i.img_inv ='".$row['etiqueta']."'  order by i.img_inv ";
-				$execTela2 = mysql_query($qryTela2) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+				$execTela2 = mysql_query($qryTela2) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 				$isTela2 = mysql_num_rows($execTela2);
 				$cont = 0;
 				while ($rowTela2 = mysql_fetch_array($execTela2)) {
 					$cont++;
 					print "<tr>";
-					print "<TD  width='20%' bgcolor='".TD_COLOR."' >Anexo de inventário ".$cont.":</td>";
+					print "<TD  width='20%' bgcolor='".TD_COLOR."' >".TRANS('TXT_INV_ATTACH')." ".$cont.":</td>";
 					print "<td colspan='3' ><a onClick=\"javascript:popupWH('../../includes/functions/showImg.php?file=".$rowTela2['img_cod']."&cod=".$rowTela2['img_cod']."',".$rowTela2['img_largura'].",".$rowTela2['img_altura'].")\"><img src='../../includes/icons/attach2.png'>".$rowTela2['img_nome']."</a></TD>";
 					print "</tr>";
 					$noImg = true;
@@ -418,20 +432,20 @@
 
 				$qryTela = "select o.*, i.* from ocorrencias o , imagens i
 							WHERE (i.img_oco = o.numero) and (o.equipamento ='".$row['etiqueta']."' and o.instituicao ='".$row['cod_inst']."')  order by o.numero ";
-				$execTela = mysql_query($qryTela) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+				$execTela = mysql_query($qryTela) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 				$isTela = mysql_num_rows($execTela);
 				$cont = 0;
 				while ($rowTela = mysql_fetch_array($execTela)) {
 					$cont++;
 					print "<tr>";
-					print "<TD  width='20%' bgcolor='".TD_COLOR."' >Anexo da ocorrência <a onClick= \"javascript:popup_alerta('../../ocomon/geral/mostra_consulta.php?popup=true&numero=".$rowTela['img_oco']."')\"><font color='blue'>".$rowTela['img_oco']."</font></a>:</td>";
+					print "<TD  width='20%' bgcolor='".TD_COLOR."' >".TRANS('TXT_OCCO_ATTACH')." <a onClick= \"javascript:popup_alerta('../../ocomon/geral/mostra_consulta.php?popup=true&numero=".$rowTela['img_oco']."')\"><font color='blue'>".$rowTela['img_oco']."</font></a>:</td>";
 					print "<td colspan='3' ><a onClick=\"javascript:popupWH('../../includes/functions/showImg.php?file=".$rowTela['img_oco']."&cod=".$rowTela['img_cod']."',".$rowTela['img_largura'].",".$rowTela['img_altura'].")\"><img src='../../includes/icons/attach2.png'>".$rowTela['img_nome']."</a></TD>";
 					print "</tr>";
 					$noImg = true;
 				}
 
 				if (!$noImg) {
-					print "<tr><td width='40%' bgcolor='yellow'>&nbsp;NÃO EXISTEM IMAGENS ASSOCIADAS A ESSE EQUIPAMENTO!</td><td colspan='3' ></td></tr>";
+					print "<tr><td width='40%' bgcolor='yellow'>&nbsp;".TRANS('MSG_NO_IMAGE_ASSOC_EQUIP')."</td><td colspan='3' ></td></tr>";
 				}
 
 				print "</table>";
@@ -449,7 +463,7 @@
 	}
 	else
 	{ //Se não for passado o código de inventário e a Unidade como parâmetro!!
-		$aviso = "Dados incompletos, preencha todos os campos de consulta!";
+		$aviso = TRANS('MSG_EMPTY_DATA');
 
 		print "<script>mensagem('".$aviso."'); redirect('consulta_inv.php'); </script>";
 	}

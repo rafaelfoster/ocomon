@@ -79,8 +79,7 @@
 				}
 				$j++;
 				if ($row['sis_status'] == 0) $lstatus =TRANS('INACTIVE','INATIVO'); else $lstatus = TRANS('ACTIVE','ATIVO');
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 				print "<td class='line'>".$row['sistema']."</td>";
 				print "<td class='line'>".transbool($row['sis_atende'])."</td>";
 				print "<td class='line'>".$row['sis_email']."</td>";
@@ -120,9 +119,9 @@
 
 		print "<TR>";
 
-		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button'  value='".TRANS('bt_cadastrar')."' name='submit'>";
+		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button'  value='".TRANS('BT_CAD')."' name='submit'>";
 		print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
 
 		print "</TR>";
 
@@ -165,7 +164,7 @@
 		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='cod' value='".$_GET['cod']."'>";
 			print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
 
 		print "</TR>";
 
@@ -215,7 +214,7 @@
 
 	} else
 
-	if ($_POST['submit'] == TRANS('bt_cadastrar')){
+	if ($_POST['submit'] == TRANS('BT_CAD')){
 
 		$erro=false;
 

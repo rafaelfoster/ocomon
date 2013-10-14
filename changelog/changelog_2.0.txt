@@ -4,8 +4,6 @@
 
 = Ocomon 2.0 - Changelog da versão =
 
-ATENÇÃO: essa ainda é uma versão Alpha, portanto algumas das características a seguir ainda não estão plenamente funcionais ou implementadas.
-
 == Principais mudanças ==
 
 + Padronização e Segurança +
@@ -99,3 +97,24 @@ ATENÇÃO: essa ainda é uma versão Alpha, portanto algumas das características a s
 - Tratamento do erro gerado ao tentar encerrar uma ocorrência já encerrada previamente;
 
 - Diversas outras correções de bugs menores.
+
+
++ FALTA ARRUMAR +
+
+NOVOS CADASTRADOS:
+
+	tipos de itens de estoque
+
+	tamanho de monitores
+
+	resolução de scanners
+
+	tipos de impressoras
+
+	tempo de garantia
+
+	dependências de chamados
+
+	LDAP + AD
+
+	Outros....

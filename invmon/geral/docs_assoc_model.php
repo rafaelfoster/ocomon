@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -40,7 +40,7 @@
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
 
 	print "<tr><td class='line'>&nbsp;</TD></tr>";
-	print "<tr><td width='100%' align='left'><b>Documentos associados a esse modelo de equipamento.</b></td></tr>";
+	print "<tr><td width='100%' align='left'><b>".TRANS('TXT_DOCS_ASSOC_MODEL_EQUIP')."</b></td></tr>";
 
 	print "<td class='line'>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
@@ -51,8 +51,8 @@
 	if ($linhas == 0) {
 		print //"<fieldset>".
 			"<table align='center'>".
-			"<tr><td align='center'>".mensagem('Não existem documentos associados para esse modelo de equipamento!')."</td></tr>".
-			"<tr><td align='center'><input type='button' value='Fechar' class='minibutton' onClick='self.close();'></td></tr>".
+			"<tr><td align='center'>".mensagem(TRANS('MSG_NOT_EXIST_DOCS_ASSOC_EQUIP'))."</td></tr>".
+			"<tr><td align='center'><input type='button' value='".TRANS('LINK_CLOSE')."' class='minibutton' onClick='self.close();'></td></tr>".
 			"</table>";
 			//"</fieldset>";
 	} else {
@@ -60,9 +60,9 @@
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
 
 		print "<TR>";
-			print "<TD bgcolor='".$cor1."'><b>Documento</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Localização</b></TD>";
-			print "<TD bgcolor='".$cor1."'><b>Observaçao</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('MNL_CAD_DOC')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('COL_LOCALIZATION')."</b></TD>";
+			print "<TD bgcolor='".$cor1."'><b>".TRANS('COL_OBS_DOC')."</b></TD>";
 		print "</tr>";
 
 		$j = 2;

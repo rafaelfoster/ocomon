@@ -30,6 +30,18 @@
 		print "<tr><td colspan='".$colspan."'>&nbsp;</td></tr>";
 	}
 
+	function valueSeparator ($VALUE, $SEP){
+		$NOTSEP = "";
+		if ($SEP == ".") $NOTSEP = ",";
+		if ($SEP == ",") $NOTSEP = ".";
+
+		if(strpos($VALUE,$NOTSEP)) {
+			$VALUE = str_replace($NOTSEP,$SEP, $VALUE);
+		}
+		if(!strpos($VALUE,$SEP)) $VALUE.=$SEP."00";
+		return $VALUE;
+	}
+
 
 	function TRANS($INDEX, $SUGGEST='', $ASPAS=1){
 		$aviso ="";
@@ -435,16 +447,20 @@ function mensagem($msg){
 
 function putComma ($vetor){
 	$chamados="";
-	if (count($vetor) > 1) {
+	if (is_array($vetor)){
 
-		for ($i=0; $i<count($vetor); $i++){
-			$chamados.= "$vetor[$i],";
-		}
-		if (strlen($chamados)>0) {
-			$chamados = substr($chamados,0,-1);
-		}
-	} else
+		if (count($vetor) >= 1) {
+
+			for ($i=0; $i<count($vetor); $i++){
+				$chamados.= "$vetor[$i],";
+			}
+			if (strlen($chamados)>0) {
+				$chamados = substr($chamados,0,-1);
+			}
+		} else
 		//$chamados = $vetor[0];
+		$chamados = $vetor;
+	} else
 		$chamados = $vetor;
 	return $chamados;
 }
@@ -494,41 +510,16 @@ function converte_datacomhora($dataform)//pega a data do formato aaaa-mm-dd +hor
         return $datacompleta;
 }
 
-
-function diff_em_segundos($data1, $data2)
-{
-        $s = strtotime($data2)-strtotime($data1);
-        $d = intval($s/86400);
-        $s -= $d*86400;
-        $h = intval($s/3600);
-        $s -= $h*3600;
-        $m = intval($s/60);
-        $s -= $m*60;
-
-        $v = $d."-".$h."-".$m."-".$s;
-
-		$dados = explode("-",$v);
-
-		$dias = $dados[0];
-		//Verificar dias válidos
-		$horas = $dados[1];
-		//Verificar horas válidas
-		$minutos = $dados[2];
-		$segundos = $dados[3];
-
-		$dias *=86400; //Dia de 24 horas
-		//$dias *=50400; //Dia de 14 horas
-		$horas *=3600;
-		$minutos *=60;
-		$segundos +=$dias+$horas+$minutos;
-
-		return $segundos;
-}
-
 ################################################################################
 
 function date_diff($data1, $data2)
 {
+
+	if ($data1>$data2) {
+		$temp = $data1;
+		$data1 = $data2;
+		$data2 = $temp;
+	}
         $s = strtotime($data2)-strtotime($data1);
         $d = intval($s/86400);
         $s -= $d*86400;
@@ -605,26 +596,118 @@ function segundos_em_horas($segundos){
 	return $horas;
 }
 
-#######################################################
 
+##UTILIZAR SEMPRE PARA GRAVAR NO BANCO
+function FDate ($data){ //Retorna saída no formado AAAA-MM-DD HH:mm:SS
+
+	if (!empty($data)) {
+		$ano = 0;
+		$mes = 0;
+		$dia = 0;
+		$hora = 0;
+		$minuto = 0;
+		$segundo = 0;
+		$Time = "00:00:00";
+
+		$DateParts= explode(" ",$data);
+		$Date = $DateParts[0];
+		if (isset($DateParts[1]))
+			$Time = $DateParts[1];
+
+		//formato brasileiro com hora!!!
+		if (ereg ("([0-9]{1,2})[/|-]([0-9]{1,2})[/|-]([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})", $Date." ".$Time, $sep)) {
+
+			$dia = $sep[1];
+			$mes = $sep[2];
+			$ano = $sep[3];
+			$hora = $sep[4];
+			$minuto = $sep[5];
+			$segundo = $sep[6];
+		} else
+			//formato americano com hora
+		if (ereg ("([0-9]{4})[/|-]([0-9]{1,2})[/|-]([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})", $Date." ".$Time, $sep)) {
+			$dia = $sep[3];
+			$mes = $sep[2];
+			$ano = $sep[1];
+			$hora = $sep[4];
+			$minuto = $sep[5];
+			$segundo = $sep[6];
+		} else
+			print "Invalid date format!!";
+		//$data = strtotime($ano."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo);
+		$data = $ano."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
+		return $data;
+	} else
+		return "0000-00-00 00:00:00";
+//...
+}
+
+
+#######################################################
+## Exibe a data formatada conforme definido no menu de administração
 function formatDate($DATE, $TIMEFORMAT = "" )
 {
-	if (strtotime($DATE) != -1) {
-		//DATE = "2007/05/25"; //Always American format
-		$Date = $_SESSION['s_date_format'];
+	if($DATE != "0000-00-00 00:00:00" && !empty($DATE)) {
+	//if($DATE != "0000-00-00 00:00:00") {
+		if (strtotime($DATE) != -1) {
+			//DATE = "2007/05/25"; //Always American format
+			$Date = $_SESSION['s_date_format'];
 
-		if ($TIMEFORMAT!=""){
-			if (strpos($_SESSION['s_date_format']," ")){
-				$DateParts= explode(" ",$_SESSION['s_date_format']);
-				$Date = $DateParts[0];
-				$Time = $DateParts[1];
+			if ($TIMEFORMAT!=""){
+				if (strpos($_SESSION['s_date_format']," ")){
+					$DateParts= explode(" ",$_SESSION['s_date_format']);
+					$Date = $DateParts[0];
+					$Time = $DateParts[1];
+				}
 			}
-		}
-		$output = trim(strftime($Date.$TIMEFORMAT, strtotime($DATE)));
+			//$output = strftime($Date.$TIMEFORMAT, strtotime($DATE));
+			$output = strftime($Date, strtotime($DATE));
 
-		return $output;
-	} else
-		return "INVALID DATE FORMAT!";
+			return $output;
+		} else
+			return "INVALID DATE FORMAT!";
+	} else {
+		return "";
+	}
+}
+
+function diff_em_segundos ($data1, $data2) {
+
+		$data1 = FDate($data1);
+		$data2 = FDate($data2);
+
+		$s = strtotime($data2)-strtotime($data1);
+		$secs = $s;
+
+		$d = intval($s/86400);
+		$s -= $d*86400;
+		$h = intval($s/3600);
+		$s -= $h*3600;
+		$m = intval($s/60);
+		$s -= $m*60;
+
+		if(strlen($h) == 1){$h = "0".$h;}; //Coloca um zero antes
+		if(strlen($m) == 1){$m = "0".$m;}; //Coloca um zero antes
+		if(strlen($s) == 1){$s = "0".$s;}; //Coloca um zero antes
+
+		$v = $d." dias ".$h.":".$m.":".$s;
+		$min = $m;
+
+		$dias = $d;
+
+		$horas = $h;
+		$minutos = $m;
+		$segundos = $s;
+
+		$dias *=86400; //Dia de 24 horas
+		$horas *=3600;
+		$minutos *=60;
+		$segundos +=$dias+$horas+$minutos;
+
+		$h = intval($segundos/3600);
+		$m = intval($segundos/60);
+
+		return $secs;
 }
 
 
@@ -893,8 +976,8 @@ function send_mail($event, $e_destino,$mailConf, $msgConf, $envVars){
 
 	$mail->AltBody = nl2br(transvars($msgConf['msg_altbody'],$envVars));
 
-/*		## TO USE ONLY FOR DEVELOPERS WHEN DEBUGING
-		dump ($mailConf['mail_issmtp'],'IsSMTP');
+		## TO USE ONLY FOR DEVELOPERS WHEN DEBUGING
+/*		dump ($mailConf['mail_issmtp'],'IsSMTP');
 		dump ($mail->Host,'Host');
 		dump ($mail->SMTPAuth,'SMTPAuth');
 		dump ($mail->Username,'Username');
@@ -907,8 +990,8 @@ function send_mail($event, $e_destino,$mailConf, $msgConf, $envVars){
 		dump ($mail->Subject,'Subject');
 		dump ($mail->Body,'Body');
 		dump ($mail->AltBody,'AltBody');
-		exit;
-	*/
+		exit;*/
+
 	if(!$mail->Send())
 	{
 		echo "A mensagem não pôde ser enviada. <p>";
@@ -918,6 +1001,87 @@ function send_mail($event, $e_destino,$mailConf, $msgConf, $envVars){
 
 	return true;
 }
+
+
+function mail_send($mailConf,$to,$cc,$subject,$body,$replyto){
+
+//$mailConf: array com as informações de conexão smtp
+
+	if (is_file( "./.root_dir" )) {
+ 		require_once("./includes/phpmailer/class.phpmailer.php");
+ 	} else {
+ 		require_once("../../includes/phpmailer/class.phpmailer.php");
+ 	}
+
+	$mail = new PHPMailer();
+	$mail->SetLanguage("en", "../../includes/phpmailer/language/");
+
+	if ($mailConf['mail_issmtp']) {
+		$mail->IsSMTP();
+	}                                      // set mailer to use SMTP
+	$mail->Host = $mailConf['mail_host'];  // specify main and backup server
+	$mail->SMTPAuth = $mailConf['mail_isauth'];     // turn on SMTP authentication
+	$mail->Username = $mailConf['mail_user'];  // SMTP username
+	$mail->Password = $mailConf['mail_pass']; // SMTP password
+
+	$mail->From = $mailConf['mail_from'];
+	$mail->FromName =$mailConf['mail_from_name'];
+	$mail->IsHTML($mailConf['mail_ishtml']);
+
+
+	$mail->AddReplyTo($replyto, $mail->FromName =$mailConf['mail_from_name']);
+
+	// 	$mail->AddAddress($to);
+	// 	if (isset($cc) && $cc!=""){
+	// 		$mail->AddCC($cc);
+	// 	}
+
+	$sepTo = explode(",",$to);
+	if (is_array($sepTo)){
+		$recipients = count($sepTo);
+	} else
+		$recipients = 1;
+
+	for ($i = 0; $i < $recipients; $i++) {
+		$mail->AddAddress(trim($sepTo[$i]));
+	}
+
+	if (isset($cc) && $cc!=""){
+
+		$sepCC = explode(",",$cc);
+
+		if (is_array($sepCC)){
+			$copies = count($sepCC);
+		} else
+			$copies = 1;
+
+		for ($i = 0; $i < $copies; $i++) {
+			$mail->AddCC(trim($sepCC[$i]));
+		}
+	}
+
+
+	$mail->Subject = $subject;
+
+	if ($mailConf['mail_ishtml']){
+		$mail->Body = nl2br($body);
+	} else {
+		$mail->Body = nl2br($body);
+	}
+
+	$mail->AltBody = nl2br($body);
+
+	if(!$mail->Send())
+	{
+		echo "A mensagem não pôde ser enviada. <p>";
+		echo "Mailer Error: " . $mail->ErrorInfo;
+		//exit;
+	}
+
+	return true;
+}
+
+
 
 function showArray($array){
 	print "<pre>";

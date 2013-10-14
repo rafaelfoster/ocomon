@@ -63,6 +63,7 @@
 .|".TRANS('MNL_CON')."
 ..|".TRANS('MNL_CON_RAP')."|".$invDirPath."consulta_inv.php||".$iconsPath."search.png|centro
 ..|".TRANS('MNL_CON_ESP')."|".$invDirPath."consulta_comp.php||".$iconsPath."consulta.png|centro
+..|".TRANS('MNL_VIS_ESTOQUE')."|".$invDirPath."estoque.php?action=search&cellStyle=true||".$iconsPath."mouse.png|centro
 ..|".TRANS('MNL_CON_HIST')."|
 ...|".TRANS('MNL_CON_HIST_TAG')."|".$invDirPath."consulta_hist_inv.php?from_menu=1||".$iconsPath."tag.png|centro
 ...|".TRANS('MNL_CON_HIST_LOCAL')."|".$invDirPath."consulta_hist_local.php|||centro
@@ -102,10 +103,27 @@
 ..|".TRANS('MNL_STATUS')."|".$admDirPath."status.php|||centro
 ..|".TRANS('MNL_PRIORIDADES')."|".$admDirPath."prioridades.php|||centro
 ..|".TRANS('MNL_FERIADOS')."|".$admDirPath."feriados.php||".$iconsPath."feriado.png|centro
+..|".TRANS('MNL_SOLUCOES')."|".$admDirPath."tipo_solucoes.php|||centro
 ..|".TRANS('MNL_OCORRENCIAS')."|".$ocoDirPath."ocorrencias.php|||centro
+..|".TRANS('MNL_MAIL_TEMPLATES')."|".$admDirPath."mail_templates.php|||centro
+..|".TRANS('MNL_DIST_LISTS')."|".$admDirPath."mail_distribution_lists.php|||centro
 .|".TRANS('MNL_INVENTARIO')."
 ..|".TRANS('MNL_EQUIPAMENTOS')."|".$admDirPath."tipo_equipamentos.php|||centro
-..|".TRANS('MNL_COMPONENTES')."
+..|".TRANS('MNL_COMPONENTES')."|".$admDirPath."tipo_componentes.php|||centro
+..|".TRANS('MNL_FABRICANTES')."|".$invDirPath."fabricantes.php|||centro
+..|".TRANS('MNL_FORNECEDORES')."|".$invDirPath."fornecedores.php|||centro
+..|".TRANS('MNL_SITUACOES')."|".$admDirPath."situacoes.php|||centro
+..|".TRANS('MNL_GARANTIA')."|".$invDirPath."tempo_garantia.php|||centro
+..|".TRANS('MNL_SW')."|".$invDirPath."softwares.php||".$iconsPath."softwares2.png|centro
+.|".TRANS('MNL_USUARIOS')."|".$admDirPath."usuarios.php||".$iconsPath."kdmconfig.png|centro
+.|".TRANS('MNL_LOCAIS')."|".$admDirPath."locais.php|||centro
+.|".TRANS('MNL_UNIDADES')."|".$admDirPath."unidades.php|||centro
+.|".TRANS('MNL_CC')."|".$admDirPath."ccustos.php|||centro
+.|".TRANS('MNL_PERMISSOES')."|".$admDirPath."permissoes.php||".$iconsPath."permissao.png|centro";
+//.|".TRANS('MNL_SENHA']."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
+
+/*
+..|".TRANS('MNL_COMPONENTES_MODEL','Modelos de componentes')."
 ...|".TRANS('MNL_CDROM')."|".$invDirPath."itens.php?tipo=5||".$iconsPath."cdrom.png|centro
 ...|".TRANS('MNL_DVD')."|".$invDirPath."itens.php?tipo=8||".$iconsPath."cdrom.png|centro
 ...|".TRANS('MNL_GRAV')."|".$invDirPath."itens.php?tipo=9||".$iconsPath."cdrom.png|centro
@@ -117,17 +135,8 @@
 ...|".TRANS('MNL_REDE')."|".$invDirPath."itens.php?tipo=3||".$iconsPath."placa.png|centro
 ...|".TRANS('MNL_SOM')."|".$invDirPath."itens.php?tipo=4||".$iconsPath."placa.png|centro
 ...|".TRANS('MNL_VIDEO')."|".$invDirPath."itens.php?tipo=2||".$iconsPath."placa.png|centro
-..|".TRANS('MNL_FABRICANTES')."|".$invDirPath."fabricantes.php|||centro
-..|".TRANS('MNL_FORNECEDORES')."|".$invDirPath."fornecedores.php|||centro
-..|".TRANS('MNL_SITUACOES')."|".$admDirPath."situacoes.php|||centro
-..|".TRANS('MNL_SW')."|".$invDirPath."softwares.php||".$iconsPath."softwares2.png|centro
-..|".TRANS('MNL_ESTOQUE')."|".$invDirPath."estoque.php|||centro
-.|".TRANS('MNL_USUARIOS')."|".$admDirPath."usuarios.php||".$iconsPath."kdmconfig.png|centro
-.|".TRANS('MNL_LOCAIS')."|".$admDirPath."locais.php|||centro
-.|".TRANS('MNL_UNIDADES')."|".$admDirPath."unidades.php|||centro
-.|".TRANS('MNL_CC')."|".$admDirPath."ccustos.php|||centro
-.|".TRANS('MNL_PERMISSOES')."|".$admDirPath."permissoes.php||".$iconsPath."permissao.png|centro";
-//.|".TRANS('MNL_SENHA']."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
+
+*/
 
 	//$mid->setMenuStructureFile('admin-menu.txt');
 	$mid->setMenuStructureString($menuAdmin);

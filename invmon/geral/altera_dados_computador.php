@@ -21,7 +21,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
@@ -51,23 +51,23 @@
 		$linhas = mysql_num_rows($resultado);
 	}
 
-	print "<BR><b>Alteração de dados do equipamento:</b><BR><br>";
+	print "<BR><b>".TRANS('SUBTTL_ALTER_DATA_EQUIP')."</b><BR><br>";
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."'  ENCTYPE='multipart/form-data' onSubmit='return valida()'>";
 	print "<TABLE border='0'  align='left' width='100%'>";
 
-		print "<tr> <td colspan='4'>Dados complementares - GERAIS:</td></tr>";
+		print "<tr> <td colspan='4'>".TRANS('SUBTTL_DATA_COMP_GENERAL')."</td></tr>";
 
 		print "<tr>";
 			//TIPO DE EQUIPAMENTO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Tipo de equipamento:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TYPE_EQUIP').":</TD>";
 
 			$qry = "SELECT * FROM tipo_equip order by tipo_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='equipamentos' size='1' id='idEquipamento'>";
-			print "<option value=-1>Selecione o tipo de equipamento</option>";
+			print "<option value=-1>".TRANS('SEL_TYPE_EQUIP')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['tipo_cod']."'";
 				if ($rowqry['tipo_cod'] == $row['tipo']){
@@ -80,14 +80,14 @@
 
 
 			//FABRICANTE
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Fabricante:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_MANUFACTURE').":</TD>";
 
 			$qry = "SELECT * FROM fabricantes ORDER BY fab_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='fabricante' size=1 id='idFabricante'>";
-			print "<option value=-1>Selecione o fabricante</option>";
+			print "<option value=-1>".TRANS('SEL_MANUFACTURE')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['fab_cod']."'";
 				if ($rowqry['fab_cod'] == $row['fab_cod']){
@@ -101,23 +101,23 @@
 		print "</tr>";
 
 		print "<tr>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Inventário:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNS_INVENTARIO_HNT').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".$row['etiqueta']."</TD>";
 			$inventario = $row['etiqueta'];
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número de Série:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SN').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='serial' value='".$row['serial']."' ></TD>";
 		print "</tr>";
 
 		print "<tr>";
 			//MODELO DO EQUIPAMENTO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Modelo do equipamento:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_MODEL_EQUIP').":</TD>";
 
 			$qry = "SELECT * from marcas_comp order by marc_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='modelo' size='1' id='idModelo'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['marc_cod']."'";
 				if ($rowqry['marc_cod'] == $row['modelo_cod']){
@@ -129,14 +129,14 @@
 			print "</TD>";
 
 			//LOCALIZAÇÃO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Localização:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_LOCALIZATION').":</TD>";
 
 			$qry = "SELECT * FROM localizacao ORDER BY local";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='local' size=1 id='idLocal'>";
-			print "<option value=-1>Selecione o local</option>";
+			print "<option value=-1>".TRANS('OCO_SEL_LOCAL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['loc_id']."'";
 				if ($rowqry['loc_id'] == $row['tipo_local']){
@@ -150,13 +150,13 @@
 		print "</tr>";
 		print "<tr>";
 			//SITUAÇÃO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Situação:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SITUAC').":</TD>";
 			$qry = "SELECT * from situacao order by situac_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='situacao' size=1 id='idSituacao'>";
-			print "<option value=-1>Selecione a situação</option>";
+			print "<option value=-1>".TRANS('SEL_SITUAC')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['situac_cod']."'";
 				if ($rowqry['situac_cod'] == $row['situac_cod']){
@@ -167,27 +167,27 @@
 			print "</SELECT>";
 			print "</TD>";
 
-			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">Anexar imagem:</TD>";
+			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('FIELD_ATTACH_IMAGE').":</TD>";
 			print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><INPUT type='file' class='text' name='img' id='idImg'></TD>";
 		print "</tr>";
 
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr> <td colspan='4'> Dados complementares - (Esses campos só estarão preenchidos para equipamentos do tipo COMPUTADOR)</td></tr>";
+		print "<tr> <td colspan='4'> ".TRANS('TXT_OBS_DATA_COMPLEM')."</td></tr>";
 		print "<tr><td colspan='4'></td></tr>";
 
 
 		print "<tr>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Nome do computador:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_NAME_COMPUTER').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='nome'  value='".$row['nome']."''></TD>";
 			//MB
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>MB:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_MB').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 10 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='mb' size=1 id='idMb'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_mb']){
@@ -201,14 +201,14 @@
 
 		print "<tr>";
 			//PROCESSADOR
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Processador:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_PROC').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 11 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='processador' size=1 id='idProcessador'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_processador']){
@@ -220,14 +220,14 @@
 			print "</TD>";
 
 			//MEMÓRIA
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Memória:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_MEMO').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 7 order by mdit_desc_capacidade";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='memoria' id='idMb'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_memoria']){
@@ -241,14 +241,14 @@
 
 		print "<tr>";
 			//PLACA DE VÍDEO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Placa de vídeo:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_VIDEO').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 2 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='video' size=1 id='idVideo'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_video']){
@@ -260,14 +260,14 @@
 			print "</TD>";
 
 			//PLACA DE SOM
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Placa de som:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_SOM').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 4 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='som' size=1 id='idSom'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_som']){
@@ -281,14 +281,14 @@
 
 			print "<tr>";
 			//HD
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>HD:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_HD').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 1 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='hd' size=1 id='idHd'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_hd']){
@@ -300,14 +300,14 @@
 			print "</TD>";
 
 			//PLACA DE REDE
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Placa de rede:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_REDE').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 3 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='rede' size=1 id='idRede'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_rede']){
@@ -321,14 +321,14 @@
 
 			print "<tr>";
 			//PLACA DE FAX/MODEM
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Placa de fax/modem:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_MODEM').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 6 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='modem' size=1 id='idModem'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_modem']){
@@ -340,14 +340,14 @@
 			print "</TD>";
 
 			//CD-ROM
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade de CD-ROM:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_CDROM').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 5 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='cdrom' size='1' id='idCdrom'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_cdrom']){
@@ -361,14 +361,14 @@
 
 		print "<tr>";
 			//GRAVADOR DE CD
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade Gravadora de CD:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_RECORD_CD').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 9 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='gravador' size=1 id='idGravador'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_gravador']){
@@ -379,14 +379,14 @@
 			print "</SELECT>";
 			print "</TD>";
 			//DVD
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade de DVD:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNL_DVD').":</TD>";
 
 			$qry = "select * from modelos_itens where mdit_tipo = 8 order by mdit_fabricante, mdit_desc";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='dvd' size=1 id='idDvd'>";
-			print "<option value=-1>Selecione o modelo</option>";
+			print "<option value=-1>".TRANS('SEL_MODEL')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['mdit_cod']."'";
 				if ($rowqry['mdit_cod'] == $row['cod_dvd']){
@@ -399,11 +399,11 @@
 		print "</tr>";
 
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr><td colspan='4'> Dados complementares - (Algum desses campos só estará preenchido se o equipamento for IMPRESSORA ou MONITOR ou SCANNER) </td></tr>";
+		print "<tr><td colspan='4'> ".TRANS('TXT_OBS_DATA_COMPLEM_1')." </td></tr>";
 		print "<tr><td colspan='4'></td></tr>";
 		print "<tr>";
 			//IMPRESSORA
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Tipo de Impressora:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TYPE_PRINTER').":</TD>";
 
 			$qry = "SELECT * from tipo_imp order by tipo_imp_nome";
 			$execqry = mysql_query($qry);
@@ -422,7 +422,7 @@
 			print "</TD>";
 
 			//MONITOR
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Monitor:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_MONITOR').":</TD>";
 
 			$qry = "SELECT * from polegada order by pole_nome";
 			$execqry = mysql_query($qry);
@@ -443,14 +443,14 @@
 
 		print "<tr>";
 			//SCANNER
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Scanner:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_SCANNER').":</TD>";
 
 			$qry = "SELECT * from resolucao order by resol_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='scanner' size=1 id='idScanner'>";
-			print "<option value=-1>Selecione a resolucao</option>";
+			print "<option value=-1>".TRANS('SEL_RESOLUT_SCANNER')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['resol_cod']."'";
 				if ($rowqry['resol_cod'] == $row['resolucao_cod']){
@@ -463,23 +463,23 @@
 			print "</tr>";
 
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr><td colspan='4'> Dados complementares - CONTÁBEIS</td></tr>";
+		print "<tr><td colspan='4'> ".TRANS('TXT_OBS_DATA_COMPLEM_2')."</td></tr>";
 		print "<tr><td colspan='4'></td></tr>";
 		print "<tr>";
 			//UNIDADE
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
 
 			$qry = "SELECT * from instituicao order by inst_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT  name='instituicao' size='1' id='idUnidade'"; //class='select'
-/*			if ($_SESSION['s_nivel'] !=1) {
+			if ($_SESSION['s_nivel']!=1) {
 				print "class='disable' disabled";
-			} else*/
+			} else
 				print " class='select' ";
 			print ">";
-			print "<option value=-1>Selecione a Unidade</option>";
+			print "<option value=-1>".TRANS('OCO_SEL_UNIT')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['inst_cod']."'";
 				if ($rowqry['inst_cod'] == $row['cod_inst']){
@@ -491,14 +491,14 @@
 			print "</TD>";
 
 			//CENTRO DE CUSTO
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Centro de Custo:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_CENTER_COST').":</TD>";
 
 			$qry = "SELECT * from `".DB_CCUSTO."`.".TB_CCUSTO." order by ".CCUSTO_DESC."";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='ccusto' size=1 id='idCcusto'>";
-			print "<option value=-1>Selecione o centro de custo</option>";
+			print "<option value=-1>".TRANS('SEL_CENTER_COST')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry[CCUSTO_ID]."'";
 				if ($rowqry[CCUSTO_ID] == $row['ccusto']){
@@ -513,14 +513,14 @@
 
 		print "<tr>";
 			//FORNECEDOR
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Fornecedor:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_VENDOR').":</TD>";
 
 			$qry = "SELECT * from fornecedores order by forn_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='fornecedor' size=1 id='idFornecedor'>";
-			print "<option value=-1>Selecione o fornecedor</option>";
+			print "<option value=-1>".TRANS('SEL_VENDOR')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['forn_cod']."'";
 				if ($rowqry['forn_cod'] == $row['fornecedor_cod']){
@@ -532,37 +532,32 @@
 			print "</TD>";
 
 
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Nota Fiscal:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_FISCAL_NOTES').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='nota' value='".$row['nota']."'></TD>";
 		print "</tr>";
 
 
 		print "<tr>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Valor:</TD>";
-			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='preco' id='idValor' value='".$row['valor']."";
-				if(!strpos($row['valor'],'.')) print ",00'";
-			print "'>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OPT_VALOR').":</TD>";
+			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='preco' id='idValor' value='".valueSeparator($row['valor'],',')."'";
+				//if(!strpos($row['valor'],'.')) print ",00'";
 			print "</TD>";
 
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data da compra:</TD>";
-
-			$dataCompra = $row['data_compra']; //datab2($row['data_compra'])
-			if ($dataCompra == "0000-00-00 00:00:00") $dataCompra = ""; else $dataCompra = formatDate($row['data_compra']," ");
-
-			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='data' id='idDataCompra' value='".$dataCompra."'></TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_DATE_PURCHASE').":</TD>";
+			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text'  name='data' id='idDataCompra' value='".datab2($row['data_compra'])."'></TD>";
 		print "</tr>";
 
 
 		print "<tr>";
 			//TIPO GARANTIA
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Tipo de garantia:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TYPE_GUARAT').":</TD>";
 
 			$qry = "SELECT * from tipo_garantia order by tipo_garant_nome";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='tipo_garantia' size=1 id='idGarantia'>";
-			print "<option value=-1>Selecione o tipo de garantia</option>";
+			print "<option value=-1>".TRANS('SEL_TYPE_GUARAT')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['tipo_garant_cod']."'";
 				if ($rowqry['tipo_garant_cod'] == $row['garantia_cod']){
@@ -574,14 +569,14 @@
 			print "</TD>";
 
 			//TEMPO GARANTIA
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Tempo de garantia:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TIME_GUARANT').":</TD>";
 
 			$qry = $query = "SELECT * from tempo_garantia order by tempo_meses";
 			$execqry = mysql_query($qry);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='tempo_meses' size='1' id='idTempo'>";
-			print "<option value=-1>Selecione o tempo de garantia</option>";
+			print "<option value=-1>".TRANS('SEL_TIME_GUARANT')."</option>";
 			while ($rowqry = mysql_fetch_array($execqry)){
 				print "<option value='".$rowqry['tempo_cod']."'";
 				if ($rowqry['tempo_cod'] == $row['tempo_cod']){
@@ -594,10 +589,10 @@
 			print "</tr>";
 
 		print "<tr>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Assistência:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_ASSISTENCE').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='comp_assist' size='1'>";
-				print "<option value= '-1'>Selecione o tipo de assistência</option>";
+				print "<option value= '-1'>".TRANS('SEL_TYPE_ASSIST')."</option>";
 	                	$query = "SELECT * from assistencia order by assist_desc";
 				$exec_assist = mysql_query($query);
 				while ($row_assist = mysql_fetch_array($exec_assist))
@@ -613,12 +608,12 @@
 		print "</tr>";
 
 		print "<tr>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Comentário:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_COMMENT').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'><TEXTAREA class='textarea' name='comentario'>".$row['comentario']."</textarea></TD>";
 		print "</Tr>";
 
 			$qryTela = "select * from imagens where img_inv = ".$row['etiqueta']." and img_inst=".$row['cod_inst']."";
-			$execTela = mysql_query($qryTela) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+			$execTela = mysql_query($qryTela) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 			//$rowTela = mysql_fetch_array($execTela);
 			$isTela = mysql_num_rows($execTela);
 			$cont = 0;
@@ -627,7 +622,7 @@
 				$cont++;
 				print "<tr>";
 
-				print "<TD  bgcolor='".TD_COLOR."' >Anexo  ".$cont." de inventário:</td>";
+				print "<TD  bgcolor='".TD_COLOR."' >".TRANS('FIELD_ATTACH')."  ".$cont." ".TRANS('TXT_THE_INVEN').":</td>";
 				print "<td colspan='5' bgcolor='".BODY_COLOR."'><a onClick=\"javascript:popupWH('../../includes/functions/showImg.php?file=".$rowTela['img_cod']."&cod=".$rowTela['img_cod']."',".$rowTela['img_largura'].",".$rowTela['img_altura'].")\"><img src='../../includes/icons/attach2.png'>".$rowTela['img_nome']."</a>";
 				print "<input type='checkbox' name='delImg[".$cont."]' value='".$rowTela['img_cod']."'><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></TD>";
 				print "</tr>";
@@ -635,12 +630,12 @@
 
 		print "<tr><td colspan='4'>&nbsp;</td></tr>";
 		print "<tr>";
-			print "<TD align='center' colspan='2' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='Alterar' name='submit'>";
+			print "<TD align='center' colspan='2' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 				print "<input type='hidden' name='cont' value='".$cont."'>";
 				print "<input type='hidden' name='comp_inv' value='".$_REQUEST['comp_inv']."'>";
 				print "<input type='hidden' name='comp_inst' value='".$_REQUEST['comp_inst']."'>";
 			print "</TD>";
-			print "<TD align='center' colspan='2' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='Cancelar' onClick=\"javascript:history.back();\" name='cancelar'></TD>";
+			print "<TD align='center' colspan='2' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:history.back();\" name='cancelar'></TD>";
 		print "</tr>";
 
 
@@ -678,8 +673,9 @@
 
 		//Se a Localização do equipamento for alterada é gravado na tabela de histórico!!!
 		if (isset($_POST['local']) && $_POST['local'] != $row['tipo_local']) {
-			$sql = "INSERT INTO historico (hist_inv, hist_inst,  hist_local, hist_data)
-					VALUES ('".$_POST['comp_inv']."', '".$_POST['instituicao']."', '".$_POST['local']."', '".date("Y-m-d H:i:s")."')";
+			$sql = "INSERT INTO historico (hist_inv, hist_inst,  hist_local, hist_data) ".
+					//"VALUES ('".$_POST['comp_inv']."', '".$_POST['instituicao']."', '".$_POST['local']."', '".date("Y-m-d H:i:s")."')";
+					"VALUES ('".$_POST['comp_inv']."', '".$row['cod_inst']."', '".$_POST['local']."', '".date("Y-m-d H:i:s")."')";
 			$resultadoSQL = mysql_query($sql);
 		}
 
@@ -697,12 +693,12 @@
 						comp_rede=".$_POST['rede'].", comp_modelohd=".$_POST['hd'].", comp_modem=".$_POST['modem'].", comp_cdrom=".$_POST['cdrom'].",
 						comp_dvd=".$_POST['dvd'].", comp_grav=".$_POST['gravador'].", comp_nome='".noHtml($_POST['nome'])."', comp_local=".$_POST['local'].",
 						comp_fornecedor=".$_POST['fornecedor'].", comp_nf='".noHtml($_POST['nota'])."', comp_coment='".noHtml($_POST['comentario'])."',
-						comp_valor='".$preco."', comp_data_compra='".$data."', comp_inst=".$_POST['instituicao'].",
+						comp_valor='".$preco."', comp_data_compra='".$data."', comp_inst=".$row['cod_inst'].",
 						comp_ccusto='".$_POST['ccusto']."', comp_tipo_equip=".$_POST['equipamentos'].", comp_tipo_imp=".$_POST['impressora'].",
 						comp_resolucao=".$_POST['scanner'].", comp_polegada=".$_POST['monitor'].", comp_fab=".$_POST['fabricante'].",
 						comp_situac=".$_POST['situacao'].", comp_tipo_garant=".$_POST['tipo_garantia'].",
 						comp_garant_meses=".$_POST['tempo_meses'].", comp_assist=".$_POST['comp_assist']."
-					WHERE comp_inv=".$_POST['comp_inv']." and comp_inst=".$_POST['instituicao']."";
+					WHERE comp_inv=".$_POST['comp_inv']." and comp_inst=".$row['cod_inst']."";
 			$resultado4 = mysql_query($query) or die('ERRO NA TENTATIVA DE GRAVAR AS ALTERAÇÕES DO REGISTRO!<BR>'.$query);
 			if ($resultado4 == 0)
 			{
@@ -789,7 +785,8 @@
 						// statement to do the load into the database.
 						$image = addslashes(fread(fopen($fileinput,"r"), 1000000));
 						$SQL = "Insert Into imagens (img_nome, img_inst, img_inv, img_tipo, img_bin, img_largura, img_altura) values ".
-								"('".$_FILES['img']['name']."', '".$_POST['instituicao']."', '".$_POST['comp_inv']."','".$_FILES['img']['type']."', '".$image."', ".$tamanho[0].", ".$tamanho[1].")";
+								//"('".$_FILES['img']['name']."', '".$_POST['instituicao']."', '".$_POST['comp_inv']."','".$_FILES['img']['type']."', '".$image."', ".$tamanho[0].", ".$tamanho[1].")";
+								"('".$_FILES['img']['name']."', '".$row['cod_inst']."', '".$_POST['comp_inv']."','".$_FILES['img']['type']."', '".$image."', ".$tamanho[0].", ".$tamanho[1].")";
 						// now we can delete the temp file
 						unlink($fileinput);
 					} /*else {
@@ -825,7 +822,7 @@
 				$nota1 = $row['nota']; $nota2 = str_replace("'","",$_POST['nota']);
 				$valor1 = $row['valor']; $valor2 = str_replace("'","",$preco);
 				$data1 = $row['data_compra']; $data2 = str_replace("'","",$data);
-				$inst1 = $row['cod_inst']; $inst2 = str_replace("'","",$_POST['instituicao']);
+				$inst1 = $row['cod_inst']; $inst2 = str_replace("'","",$row['cod_inst']);
 				$imp1 = $row['tipo_imp']; $imp2 = str_replace("'","",$_POST['impressora']);
 
 				$resol1 = $row['resolucao_cod']; $resol2 = str_replace("'","",$_POST['scanner']);

@@ -62,17 +62,19 @@
 
 	$qryTotal = "select a.sistema area, a.sis_id area_cod from ocorrencias o left join sistemas a on o.sistema = a.sis_id".
 			" left join `status` s on s.stat_id = o.status where o.sistema in (".$uareas.") and s.stat_painel in (1,2) ";
-	$execTotal = mysql_query($qryTotal) or die ('ERRO NA TOTALIZAÇÃO DAS OCORRÊNCIAS!'.$qryTotal);
+	$execTotal = mysql_query($qryTotal) or die (TRANS('MSG_ERR_TOTAL_OCCO'). $qryTotal);
 	$regTotal = mysql_num_rows($execTotal);
 
 	//Todas as áreas que o usuário percente
 	$qryAreas = "select count(*) total, a.sistema area, a.sis_id area_cod from ocorrencias o left join sistemas a on o.sistema = a.sis_id".
 			" left join `status` s on s.stat_id = o.status where o.sistema in (".$uareas.") and s.stat_painel in (1,2) ".
 			"group by a.sistema";
-	$execAreas = mysql_query($qryAreas) or die('ERRO NA TENTATIVA DE RECUPERAR TODAS AS OCORRÊNCIAS! '.$qryAreas);
+	$execAreas = mysql_query($qryAreas) or die(TRANS('MSG_ERR_RESCUE_ALL_OCCO'). $qryAreas);
 	$regAreas = mysql_num_rows($execAreas);
 
-
+	
+	
+	
 	print "<br>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
 	print "<tr><td colspan='7'><IMG ID='imggeral' SRC='./includes/icons/close.png' width='9' height='9' ".
@@ -94,7 +96,7 @@
 			//TOTAL DE NÍVEIS DE STATUS
 		$qryStatus = "select count(*) total, o.*, s.* from ocorrencias o left join `status` s on o.status = s.stat_id where ".
 				"o.sistema = ".$rowAreas['area_cod']." and s.stat_painel in (1,2) group by s.status";
-		$execStatus = mysql_query($qryStatus) or die ('ERRO NA QUERY DE STATUS! '.$qryStatus);
+		$execStatus = mysql_query($qryStatus) or die (TRANS('MSG_ERR_QRY_STATUS'). $qryStatus);
 		//$a = 0;
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
 		While ($rowStatus = mysql_fetch_array($execStatus)) {
@@ -107,9 +109,9 @@
 
 			$qryDetail = $QRY["ocorrencias_full_ini"]." WHERE o.sistema = ".$rowAreas['area_cod']." and s.stat_painel in (1,2) and ".
 					" o.status = ".$rowStatus['stat_id']."";
-			$execDetail = mysql_query($qryDetail) or die ('ERRO NA TENTATIVA DE RECUPERAR OS DADOS DAS OCORRÊNCIAS! '.$qryDetail);
+			$execDetail = mysql_query($qryDetail) or die (TRANS('MSG_ERR_RESCUE_DATA_OCCO') .$qryDetail);
 
-			print "<tr class='header'><td class='line'>Número</td><td class='line'>Problema</td><td class='line'>Contato<br>ramal</td><td class='line'>Local<br>Descricão</td><td class='line'>Último Operador</td></tr>";
+			print "<tr class='header'><td class='line'>".TRANS('COL_NUMBER')."</td><td class='line'>".TRANS('COL_PROB')."</td><td class='line'>".TRANS('OCO_CONTACT')."<br>".TRANS('OCO_PHONE')."</td><td class='line'>".TRANS('OCO_LOCAL')."<br>".TRANS('OCO_DESC')."</td><td class='line'>".TRANS('FIELD_LAST_OPERATOR')."</td></tr>";
 
 			$j=2;
 			while ($rowDetail = mysql_fetch_array($execDetail)){
@@ -126,7 +128,7 @@
 				print "<tr class=".$trClass." id='linha".$j."".$a."' onMouseOver=\"destaca('linha".$j."".$a."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$j."".$a."');\"  onMouseDown=\"marca('linha".$j."".$a."','".$_SESSION['s_colorMarca']."');\">";
 
 				$qryImg = "select * from imagens where img_oco = ".$rowDetail['numero']."";
-				$execImg = mysql_query($qryImg) or die ("ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE IMAGENS!");
+				$execImg = mysql_query($qryImg) or die (TRANS('MSG_ERR_RESCUE_INFO_IMAGE'));
 				$rowTela = mysql_fetch_array($execImg);
 				$regImg = mysql_num_rows($execImg);
 				if ($regImg!=0) {
@@ -135,26 +137,26 @@
 				} else $linkImg = "";
 
 				$sqlSubCall = "select * from ocodeps where dep_pai = ".$rowDetail['numero']." or dep_filho=".$rowDetail['numero']."";
-				$execSubCall = mysql_query($sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$sqlSubCall);
+				$execSubCall = mysql_query($sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$sqlSubCall);
 				$regSub = mysql_num_rows($execSubCall);
 				if ($regSub > 0) {
 					#É CHAMADO PAI?
 					$_sqlSubCall = "select * from ocodeps where dep_pai = ".$rowDetail['numero']."";
-					$_execSubCall = mysql_query($_sqlSubCall) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DOS SUBCHAMADOS!<br>'.$_sqlSubCall);
+					$_execSubCall = mysql_query($_sqlSubCall) or die (TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$_sqlSubCall);
 					$_regSub = mysql_num_rows($_execSubCall);
 					$comDeps = false;
 					while ($rowSubPai = mysql_fetch_array($_execSubCall) ){
 						$_sqlStatus = "select o.*, s.* from ocorrencias o, `status` s  where o.numero=".$rowSubPai['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3) ";
-						$_execStatus = mysql_query($_sqlStatus) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS<br>'.$_sqlStatus);
+						$_execStatus = mysql_query($_sqlStatus) or die (TRANS('MSG_ERR_RESCUE_INFO_STATUS_CALL_SON').'<br>'.$_sqlStatus);
 						$_regStatus = mysql_num_rows($_execStatus);
 						if ($_regStatus > 0) {
 							$comDeps = true;
 						}
 					}
 					if ($comDeps) {
-						$imgSub = "<img src='includes/icons/view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'>";
+						$imgSub = "<img src='includes/icons/view_tree_red.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_HANG')."'>";
 					} else
-						$imgSub =  "<img src='includes/icons/view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'>";
+						$imgSub =  "<img src='includes/icons/view_tree_green.png' width='16' height='16' title='".TRANS('FIELD_CALL_BOND_NOT_HANG')."'>";
 				} else
 					$imgSub = "";
 
@@ -201,7 +203,6 @@
 			}
 		}
 
-		window.setInterval("redirect('home.php')",240000);
 	//-->
 	</script>
 	<?

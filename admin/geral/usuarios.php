@@ -21,6 +21,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	include ("../../includes/classes/paging.class.php");
 
 	$_SESSION['s_page_admin'] = $_SERVER['PHP_SELF'];
 
@@ -33,6 +34,13 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],1);
 
+	$PAGE = new paging("PRINCIPAL");
+	$PAGE->setRegPerPage($_SESSION['s_page_size']);
+
+	if (isset($_POST['search'])){
+		$search = $_POST['search'];
+	} else
+		$search = "";
 
 	$query = "SELECT u.*, n.*,s.* from usuarios u left join sistemas as s on u.AREA = s.sis_id ".
 					"left join nivel as n on n.nivel_cod =u.nivel ";
@@ -41,10 +49,19 @@
 		} else
 		if (isset($_GET['nivel'])) {
 			$query.= "WHERE n.nivel_cod = ".$_GET['nivel']."";
+		} else
+		if (isset($_POST['search'])) {
+			$query.= " WHERE (lower(u.login) like lower(('%".noHtml($_POST['search'])."%'))) OR ".
+						"(lower(u.nome) like lower(('%".noHtml($_POST['search'])."%')))  ";
 		}
 		$query.=" ORDER BY u.nome";
 		$resultado = mysql_query($query);
 		$registros = mysql_num_rows($resultado);
+
+		if (isset($_GET['LIMIT']))
+			$PAGE->setLimit($_GET['LIMIT']);
+		$PAGE->setSQL($query,(isset($_GET['FULL'])?$_GET['FULL']:0));
+
 
 		if (isset($_GET['n_desc'])) {
 			$n_descricao = $_GET['n_desc'];
@@ -62,19 +79,27 @@
 
 	if ((!isset($_GET['action'])) && empty($_POST['submit'])) {
 
+		$PAGE->execSQL();
+
 		print "<BR>";
 		print "<B>".TRANS('TTL_USERS').":&nbsp;<font color='red'>".$n_descricao."</font></b>";
 		print "<BR>";
 		print "<tr>";
 		print "<TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>".TRANS('NEW')."</a>".
 				"&nbsp;|&nbsp;<a href='usuarios.php?action=stat'>".TRANS('BRIEF')."</a></TD>";
-				//"<td class='line'>&nbsp;|&nbsp;</td><td class='line'><a href='usuarios.php?action=stat'>".TRANS('BRIEF','Resumo')."</a></td>";
 		if (isset($_GET['n_desc'])) {
 			print "<td class='line'>&nbsp;|&nbsp;</td><td class='line'><a href='".$_SERVER['PHP_SELF']."'>".TRANS('SHOW_ALL')."</a></td>";
 		}
 		print "</tr>";
-		print "<BR>";
 
+		print "<tr>".//<td>".TRANS('FIELD_SEARCH')."</td>".
+				"<td colspan='4'><input type='text' class='text' name='search' id='idSearch' value='".$search."'>&nbsp;".
+				"<input type='submit' name='BT_SEARCH' class='button' value='".TRANS('BT_FILTER')."'>".
+			"</td></tr>";
+		//print "<BR>";
+		if (isset($_POST['search'])) {
+			print "<script>foco('idSearch');</script>";
+		}
 
 		if ($registros == 0)
         	{
@@ -85,9 +110,9 @@
 		else
         	{
 			$cor1=TD_COLOR;
-			//print "<td class='line'>";
-			print "".TRANS('THERE_IS_ARE')."&nbsp;<b>".$registros."</b>&nbsp;".TRANS('USER_S_IN_SYSTEM').".<br>";
-			//print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%' >";
+			print "<tr><td colspan='8' class='line'>";
+			print "<B>".TRANS('FOUND')." <font color=red>".$PAGE->NUMBER_REGS."</font> ".TRANS('RECORDS_IN_SYSTEM').". ".TRANS('SHOWING_PAGE')." ".$PAGE->PAGE." (".$PAGE->NUMBER_REGS_PAGE." ".TRANS('RECORDS').")</B></TD></tr>";
+			//print "".TRANS('THERE_IS_ARE')."&nbsp;<b>".$registros."</b>&nbsp;".TRANS('USER_S_IN_SYSTEM').".<br>";
 			print "<TR class='header'><td class='line'>".TRANS('OPT_NAME','Nome')."</TD>".
 					"<td class='line'>".TRANS('OPT_LOGIN_NAME','Login')."</TD><td class='line'>".TRANS('OCO_FIELD_AREA','Área')."</TD>".
 					"<td class='line'>".TRANS('OCO_FIELD_AREA_ADMIN','Área admin')."</TD>".
@@ -97,13 +122,12 @@
 					"<td class='line'>".TRANS('OCO_FIELD_EXCLUDE','Excluir')."</TD></TR>";
 			$i=0;
 			$j=2;
-			while ($row=mysql_fetch_array($resultado))
+			while ($row=mysql_fetch_array($PAGE->RESULT_SQL))
 			{
 				($j % 2)?$trClass = "lin_par":$trClass = "lin_impar";
 				$j++;
 
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 				print "<td class='line'>".$row['nome']."</TD>";
 				print "<td class='line'>".$row['login']."</TD>";
@@ -120,7 +144,9 @@
 				print "</TR>";
 
 			}
-			//print "</TABLE>";
+			print "<tr><td colspan='8'>";
+			$PAGE->showOutputPages();
+			print "</td></tr>";
 		}
 	} else
 	if ((isset($_GET['action']) && ($_GET['action'] == "incluir") )&& empty($_POST['submit'])) {
@@ -198,10 +224,10 @@
 			}
 		print "<TR>";
 		print "<BR>";
-			print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('bt_cadastrar')."' name='submit'>";
+			print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_CAD')."' name='submit'>";
 			print "<input type='hidden' name='rodou' value='sim'>";
 			print "</TD>";
-			print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('bt_cancelar')."' onClick=\"javascript:history.back()\" name='cancelar'></TD>";
+			print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:history.back()\" name='cancelar'></TD>";
 		print "</TR>";
 	} else
 	if ((isset($_GET['action']) && $_GET['action']=="alter") && empty($_POST['submit'])) {
@@ -282,7 +308,7 @@
 			print "<input type='hidden' name='login' value='".$_GET['login']."'>";
 			print "<input type='hidden' name='password2' value='".$password2."'>";
 			print "</TD>";
-            print "<TD colspan='3' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('bt_cancelar')."' onClick=\"javascript:history.back();\" name='cancelar'></TD>";
+            print "<TD colspan='3' align='center' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:history.back();\" name='cancelar'></TD>";
         print "</TR>";
 
 
@@ -405,7 +431,7 @@
 
 	} else
 
-	if ($_POST['submit'] == TRANS('bt_cadastrar')){
+	if ($_POST['submit'] == TRANS('BT_CAD')){
 
 		$erro=false;
 		$pass = md5($_POST['password']);

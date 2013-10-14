@@ -32,7 +32,7 @@
 </script>
 <?
 
-print "<HTML><head><title>Tempo de Documentação</title></head>";
+print "<HTML><head><title>".TRANS('TTL_TIMES_DOCUMENT')."</title></head>";
 print "<BODY bgcolor='".BODY_COLOR."'>";
 
 	$auth = new auth;
@@ -44,16 +44,16 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 	$exec_sql = mysql_query($sql);
 	$total = 0;
 	$totalGeral = 0;
-	print "<br><b>Tempo de documentação para a ocorrência <font color='red'>".$_GET['cod']."</font>:</b><br>";
+	print "<br><b>".TRANS('TTL_TIMES_DOCUMENT_OCCO')." <font color='red'>".$_GET['cod']."</font>:</b><br>";
 	print "<table cellspacing='0' border='1' cellpadding='1' align='left' width='100%'>";
-		print "<tr><td width='20%'><b>Operador</b></td><td width='20%'><b>Abertura</b></td><td width='20%'><b>Edição</b></td><td width='20%'><b>Encerramento</b></td><td width='20%'><b>Total</b></td></tr>";
+		print "<tr><td width='20%'><b>".TRANS('OCO_FIELD_OPERATOR')."</b></td><td width='20%'><b>".TRANS('OCO_SEL_OPEN')."</b></td><td width='20%'><b>".TRANS('COL_EDITION')."</b></td><td width='20%'><b>".TRANS('COL_CLOSING')."</b></td><td width='20%'><b>".TRANS('TOTAL')."</b></td></tr>";
 		while ($row=mysql_fetch_array($exec_sql)) {
 			$total= $row['doc_open']+$row['doc_edit']+$row['doc_close'];
 			print "<tr><td width='20%'>".$row['nome']."</td><td width='20%'>".segundos_em_horas($row['doc_open'])."</td><td width='20%'>".segundos_em_horas($row['doc_edit'])."</td><td width='20%'>".segundos_em_horas($row['doc_close'])."</td><td width='20%'>".segundos_em_horas($total)."</td></tr>";
 
 			$totalGeral+=$total;
 		}
-		print "<tr><td colspan='4'><b>Tempo total em documentação</b></td><td class='line'><b>".segundos_em_horas($totalGeral)."</b></td></tr>";
+		print "<tr><td colspan='4'><b>".TRANS('COL_TIME_TOTAL_DOC')."</b></td><td class='line'><b>".segundos_em_horas($totalGeral)."</b></td></tr>";
 	print "</table>";
 print "</body>";
 print "</html>";

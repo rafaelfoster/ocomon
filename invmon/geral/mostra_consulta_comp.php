@@ -21,7 +21,7 @@
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_OCOMON'));
 
 	$hoje = date("d-m-Y H:i:s");
 	$hojeDia = date("y-m-d");
@@ -39,12 +39,12 @@
 		$administrador = false;
 
 	if (!isset($_REQUEST['header'])) {
-		$header= $TRANS["relat_personalisado"];
+		$header= TRANS('TXT_REPORT_PERSON');
 	} else
 		$header = $_REQUEST['header'];
 
 	$qry = "SELECT conf_page_size AS page FROM config";
-	$qry_exec = mysql_query($qry) or die ('É NECESSÁRIO ATUALIZAR A TABELA CONF - VERSAO 1.50');
+	$qry_exec = mysql_query($qry) or die (TRANS('MSG_NECESS_UPDATE_TABLE_CONF'));
 	$rowConf = mysql_fetch_array($qry_exec);
 	$PAGE_SIZE = $rowConf['page'];
 
@@ -71,7 +71,7 @@
 	 	if ($_REQUEST['coluna'] == $_REQUEST['ordenado']) {
 			$az = " desc";
 			$ordenado = "";
-			$mostra = " ".$TRANS["za"];
+			$mostra = " ".TRANS('TXT_ORDER_BY_DESC');
 
 			$ICON_ORDER['etiqueta'] = "";
 			$ICON_ORDER['instituicao'] = "";
@@ -84,7 +84,7 @@
 	 	} else {
 			$ordenado = $_REQUEST['coluna'];
 			$az = " asc";
-			$mostra = " ".$TRANS["az"];
+			$mostra = " ".TRANS('TXT_ORDER_BY_INCRESC');
 
 			$ICON_ORDER['etiqueta'] = "";
 			$ICON_ORDER['instituicao'] = "";
@@ -97,29 +97,25 @@
 	 	}
 	}
 
-
-
-
-
 	//Para não precisar escrever na tela todos os critérios de ordenação eu defino aqui o que deve aparecer!!
-	$traduz = array("etiqueta".$az.""=>$TRANS["col_etiqueta"].$mostra,
-		"fab_nome".$az.",modelo".$az."" => $TRANS["col_modelo"].$mostra,
-		"fab_nome".$az.",modelo".$az.",etiqueta".$az.""=> $TRANS["col_modelo"].$mostra,
-		"modelo".$az.",etiqueta".$az.""=> $TRANS["col_modelo"].$mostra,
-		"instituicao".$az.",etiqueta".$az."" =>$TRANS["col_instituicao"].$mostra,
+	$traduz = array("etiqueta".$az.""=>TRANS('OCO_FIELD_TAG').$mostra,
+		"fab_nome".$az.",modelo".$az."" => TRANS('COL_MODEL').$mostra,
+		"fab_nome".$az.",modelo".$az.",etiqueta".$az.""=> TRANS('COL_MODEL').$mostra,
+		"modelo".$az.",etiqueta".$az.""=> TRANS('COL_MODEL').$mostra,
+		"instituicao".$az.",etiqueta".$az."" =>TRANS('OCO_FIELD_UNIT').$mostra,
 		"equipamento".$az.",modelo".$az."" =>$TRANS["col_tipo"].$mostra,
-		"local".$az."" =>$TRANS["col_local"].$mostra,
-		"equipamento".$az.",fab_nome".$az.",modelo".$az.",etiqueta".$az."" => $TRANS["col_tipo"].$mostra,
-		"equipamento".$az.",fab_nome".$az.",modelo".$az.",local".$az.",etiqueta".$az.""=> $TRANS["col_tipo"].$mostra,
-		"equipamento".$az.",modelo".$az.",local".$az.",etiqueta".$az."" => $TRANS["col_tipo"].$mostra,
-		"fab_nome".$az.",modelo".$az.",local".$az.",etiqueta".$az.""=> $TRANS["col_fabricante"].$mostra,
-		"local".$az.",etiqueta".$az.""=> $TRANS["col_local"].$mostra,
-		"local".$az.",equipamento".$az.",fab_nome".$az.",modelo".$az.",etiqueta".$az.""=>$TRANS["col_local"].$mostra,
-		"serial".$az.""=> $TRANS["col_sn"].$mostra,
-		"nota".$az.""=> $TRANS["col_nf"].$mostra,
-		"situac_nome".$az.",etiqueta".$az.""=> $TRANS["col_situacao"].$mostra,
-		"situac_nome".$az.""=> $TRANS["col_situacao"].$mostra,
-		"tipo,localização".$az."" => $TRANS["col_tipo"].$mostra);
+		"local".$az."" =>TRANS('col_local').$mostra,
+		"equipamento".$az.",fab_nome".$az.",modelo".$az.",etiqueta".$az."" => TRANS('COL_TYPE').$mostra,
+		"equipamento".$az.",fab_nome".$az.",modelo".$az.",local".$az.",etiqueta".$az.""=> TRANS('COL_TYPE').$mostra,
+		"equipamento".$az.",modelo".$az.",local".$az.",etiqueta".$az."" => TRANS('COL_TYPE').$mostra,
+		"fab_nome".$az.",modelo".$az.",local".$az.",etiqueta".$az.""=> TRANS('COL_MANUFACTURE').$mostra,
+		"local".$az.",etiqueta".$az.""=> TRANS('COL_LOCALIZATION').$mostra,
+		"local".$az.",equipamento".$az.",fab_nome".$az.",modelo".$az.",etiqueta".$az.""=>TRANS('COL_LOCALIZATION').$mostra,
+		"serial".$az.""=> TRANS('COL_SN').$mostra,
+		"nota".$az.""=> TRANS('COL_NF').$mostra,
+		"situac_nome".$az.",etiqueta".$az.""=> TRANS('COL_SITUAC').$mostra,
+		"situac_nome".$az.""=> TRANS('COL_SITUAC').$mostra,
+		"tipo,localização".$az."" => TRANS('COL_TYPE').$mostra);
 
 	if (isset($_REQUEST['visualiza'])) {
 		if ($_REQUEST['visualiza']!='impressora' && $_REQUEST['visualiza']!='texto' && $_REQUEST['visualiza']!='relatorio' &&
@@ -520,10 +516,10 @@
 		if (($_REQUEST['garantia'] == 1) && ($_REQUEST['garantia']==2)) {
 			$garantia_flag = true;
 			if ($_REQUEST['garantia'] == 1){
-				$consulta= $TRANS["crit_exib_em_garantia"];
+				$consulta= TRANS('TXT_IN_GUARANT');
 				$query.="and (date_add(c.comp_data_compra, interval tmp.tempo_meses month) >=now())";
 			} else {
-				$consulta= $TRANS["crit_exib_fora_garantia"];
+				$consulta= TRANS('TXT_GUARANT_OUTSIDE');
 				$query.="and (date_add(c.comp_data_compra, interval tmp.tempo_meses month) <now() or comp_garant_meses is null)";
 			}
 		}
@@ -566,7 +562,7 @@
 		//dump($query);
 ##################################################################################
 	$qtdTotal = $query;
-	$resultadoTotal = mysql_query($qtdTotal) or die ('ERRO NA SEGUINTE QUERY:<br>'.$qtdTotal);
+	$resultadoTotal = mysql_query($qtdTotal) or die (TRANS('MSG_ERR_IN_THE_QUERY').':<br>'.$qtdTotal);
 	$linhasTotal = mysql_num_rows($resultadoTotal); //Aqui armazedo a quantidade total de registros
 ##################################################################################
 
@@ -683,19 +679,12 @@
 		}
 
 
-	$resultado = mysql_query($query) or die ('ERRO NA SEGUINTE QUERY: <BR>'.$query);
+	$resultado = mysql_query($query) or die (TRANS('MSG_ERR_IN_THE_QUERY').': <BR>'.$query);
 	$resultadoAux = mysql_query($query);
         $linhas = mysql_num_rows($resultado);
 
         $row = mysql_fetch_array($resultadoAux);
 
-/*	if (($linhasTotal==$linhas) and ($avanca!=$TRANS["bt_todos"])){//Desabilita os botões de navegação!!
-		$desabilita = "disabled";
-		$botaoCor = "#666666";
-	} else {
-		$desabilita = "";
-		$botaoCor = "#0000CC";
-	}*/
 	######################################################
 
 		//Titulo da consulta que retorna o critério de pesquisa.
@@ -707,47 +696,47 @@
 
 		if ($comp_tipo_equip_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_tipo"]."</b> = ".$row['equipamento']."]"; //Escreve o critério de pesquisa
+			$texto.="[<b>".TRANS('FIELD_TYPE_EQUIP')."</b> = ".$row['equipamento']."]"; //Escreve o critério de pesquisa
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_tipo_equip=".$_REQUEST['comp_tipo_equip'].""; 	//Monta a lista de parâmetros para a consulta
 		};
 		if ($comp_tipo_imp_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_impressora"]."</b> = ".$row['impressora']."]";
+			$texto.="[<b>".TRANS('FIELD_TYPE_PRINTER')."</b> = ".$row['impressora']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_tipo_imp=".$_REQUEST['comp_tipo_imp']."";
 		};
 		if ($comp_polegada_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_monitor"]."</b> = ".$row['polegada_nome']."]";
+			$texto.="[<b>".TRANS('FIELD_MONITOR')."</b> = ".$row['polegada_nome']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_polegada=".$_REQUEST['comp_polegada']."";
 		};
 
 		if ($comp_resolucao_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_scanner"]."</b> = ".$row['resol_nome']."]";
+			$texto.="[<b>".TRANS('FIELD_SCANNER')."</b> = ".$row['resol_nome']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_resolucao=".$_REQUEST['comp_resolucao']."";
 		};
 
 		if ($comp_inv_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_etiqueta"]."</b> = ".$comp_inv."]";
+			$texto.="[<b>".TRANS('OCO_FIELD_TAG')."</b> = ".$comp_inv."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_inv=".$comp_inv."";
 		};
 
 		if ($comp_sn_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_sn"]."</b> = ".$row['serial']."]";
+			$texto.="[<b>".TRANS('COL_SN')."</b> = ".$row['serial']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_sn=".$_REQUEST['comp_sn']."";
 		};
 
 		if ($comp_fab_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_fab"]."</b> = ".$row['fab_nome']."]";
+			$texto.="[<b>".TRANS('COL_MANUFACTURE')."</b> = ".$row['fab_nome']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_fab=".$_REQUEST['comp_fab']."";
 		};
@@ -755,77 +744,77 @@
 
 		if ($comp_marca_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_modelo"]."</b> = ".$row['modelo']."]"; //$sinal
+			$texto.="[<b>".TRANS('COL_MODEL')."</b> = ".$row['modelo']."]"; //$sinal
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_marca=".$_REQUEST['comp_marca']."";
 		};
 
 		if ($comp_mb_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_mb"]."</b> = ".$row['fabricante_mb']." ".$row['mb']."]";
+			$texto.="[<b>".TRANS('FIELD_MB')."</b> = ".$row['fabricante_mb']." ".$row['mb']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_mb=".$_REQUEST['comp_mb']."";
 		};
 		if ($comp_proc_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_proc"]."</b> = ".$row['processador']." ".$row['clock']." ".$row['proc_sufixo']."]";
+			$texto.="[<b>".TRANS('MNL_PROC')."</b> = ".$row['processador']." ".$row['clock']." ".$row['proc_sufixo']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_proc=".$_REQUEST['comp_proc']."";
 		};
 	  	if ($comp_memo_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_memo"]."</b> = ".$row['memoria']."".$row['memo_sufixo']."]";
+			$texto.="[<b>".TRANS('MNL_MEMO')."</b> = ".$row['memoria']."".$row['memo_sufixo']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_memo=".$_REQUEST['comp_memo']."";
 		};
 	  	if ($comp_memo_notnull) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_memo"]."</b> = ".$TRANS["crit_exib_nao_nula"]."]";
+			$texto.="[<b>".TRANS('MNL_MEMO')."</b> = ".TRANS('FIELD_NOT_NULL')."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_memo=".$_REQUEST['comp_memo']."";
 		};
 	  	if ($comp_memo_null) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_memo"]."</b> = ".$TRANS["crit_exib_nula"]."]";
+			$texto.="[<b>".TRANS('MNL_MEMO')."</b> = ".TRANS('FEILD_NULL')."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_memo=".$_REQUEST['comp_memo']."";
 		};
 
 		if ($comp_video_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_video"]."</b> = ".$row['fabricante_video']." ".$row['video']."]";
+			$texto.="[<b>".TRANS('MNL_VIDEO')."</b> = ".$row['fabricante_video']." ".$row['video']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_video=".$_REQUEST['comp_video']."";
 		};
 		if ($comp_som_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_som"]."</b> = ".$row['fabricante_som']." ".$row['som']."]";
+			$texto.="[<b>".TRANS('MNL_SOM')."</b> = ".$row['fabricante_som']." ".$row['som']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_som=".$_REQUEST['comp_som']."";
 		};
 		if ($comp_cdrom_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			if ($_REQUEST['comp_cdrom']==-2) {$texto.="[<b>".$TRANS["cx_cdrom"]."</b> = ".$TRANS["crit_exib_nenhum"]."]";} else
-			if ($_REQUEST['comp_cdrom']==-3) {$texto.="[<b>".$TRANS["cx_cdrom"]."</b> = ".$TRANS["crit_exib_qualquer"]."]";} else
-			$texto.="[<b>".$TRANS["cx_cdrom"]."</b> = ".$row['fabricante_cdrom']." ".$row['cdrom']."]";
+			if ($_REQUEST['comp_cdrom']==-2) {$texto.="[<b>".TRANS('MNL_CDROM')."</b> = ".TRANS('MSG_NOT_POSS_NONE')."]";} else
+			if ($_REQUEST['comp_cdrom']==-3) {$texto.="[<b>".TRANS('MNL_CDROM')."</b> = ".TRANS('MSG_POSS_ANY_MODEL')."]";} else
+			$texto.="[<b>".TRANS('MNL_CDROM')."</b> = ".$row['fabricante_cdrom']." ".$row['cdrom']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_cdrom=".$_REQUEST['comp_cdrom']."";
 		};
 
 		if ($comp_grav_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			if ($_REQUEST['comp_grav']==-2) {$texto.="[<b>".$TRANS["cx_grav"]."</b> = ".$TRANS["crit_exib_nenhum"]."]";} else
-			if ($_REQUEST['comp_grav']==-3) {$texto.="[<b>".$TRANS["cx_grav"]."</b> = ".$TRANS["crit_exib_qualquer"]."]";} else
-			$texto.="[<b>".$TRANS["cx_grav"]."</b> = ".$row['fabricante_gravador']." ".$row['gravador']."]";
+			if ($_REQUEST['comp_grav']==-2) {$texto.="[<b>".TRANS('FIELD_RECORD_CD')."</b> = ".TRANS('MSG_NOT_POSS_NONE')."]";} else
+			if ($_REQUEST['comp_grav']==-3) {$texto.="[<b>".TRANS('FIELD_RECORD_CD')."</b> = ".TRANS('MSG_POSS_ANY_MODEL')."]";} else
+			$texto.="[<b>".TRANS('FIELD_RECORD_CD')."</b> = ".$row['fabricante_gravador']." ".$row['gravador']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_grav=".$_REQUEST['comp_grav']."";
 		};
 
 		if ($comp_dvd_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			if ($_REQUEST['comp_dvd']==-2) {$texto.="[<b>".$TRANS["cx_dvd"]."</b> = ".$TRANS["crit_exib_nenhum"]."]";} else
-			if ($_REQUEST['comp_dvd']==-3) {$texto.="[<b>".$TRANS["cx_dvd"]."</b> = ".$TRANS["crit_exib_qualquer"]."]";} else
-			$texto.="[<b>".$TRANS["cx_dvd"]."</b> = ".$row['fabricante_dvd']." ".$row['dvd']."]";
+			if ($_REQUEST['comp_dvd']==-2) {$texto.="[<b>".TRANS('MNL_DVD')."</b> = ".TRANS('MSG_NOT_POSS_NONE')."]";} else
+			if ($_REQUEST['comp_dvd']==-3) {$texto.="[<b>".TRANS('MNL_DVD')."</b> = ".TRANS('MSG_POSS_ANY_MODEL')."]";} else
+			$texto.="[<b>".TRANS('MNL_DVD')."</b> = ".$row['fabricante_dvd']." ".$row['dvd']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_dvd=".$_REQUEST['comp_dvd']."";
 		};
@@ -833,47 +822,47 @@
 
 		if ($comp_modem_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			if ($_REQUEST['comp_modem']==-2) {$texto.="[<b>".$TRANS["cx_modem"]."</b> = ".$TRANS["crit_exib_nenhum"]."]";} else
-			if ($_REQUEST['comp_modem']==-3) {$texto.="[<b>".$TRANS["cx_modem"]."</b> = ".$TRANS["crit_exib_qualquer"]."]";} else
-			$texto.="[<b>".$TRANS["cx_modem"]."</b> = ".$row['fabricante_modem']." ".$row['modem']."]";
+			if ($_REQUEST['comp_modem']==-2) {$texto.="[<b>".TRANS('FIELD_MODEM')."</b> = ".TRANS('MSG_NOT_POSS_NONE')."]";} else
+			if ($_REQUEST['comp_modem']==-3) {$texto.="[<b>".TRANS('FIELD_MODEM')."</b> = ".TRANS('MSG_POSS_ANY_MODEL')."]";} else
+			$texto.="[<b>".TRANS('FIELD_MODEM')."</b> = ".$row['fabricante_modem']." ".$row['modem']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_modem=".$_REQUEST['comp_modem']."";
 		};
 
 		if ($comp_modelohd_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_hd"]."</b> = ".$row['fabricante_hd']." ".$row['hd_capacidade']."".$row['hd_sufixo']."]";
+			$texto.="[<b>".TRANS('MNL_HD')."</b> = ".$row['fabricante_hd']." ".$row['hd_capacidade']."".$row['hd_sufixo']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_modelohd=".$_REQUEST['comp_modelohd']."";
 		};
 		if ($comp_rede_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_rede"]."</b> = ".$row['rede_fabricante']." ".$row['rede']."]";
+			$texto.="[<b>".TRANS('MNL_REDE')."</b> = ".$row['rede_fabricante']." ".$row['rede']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_rede=".$_REQUEST['comp_rede']."";
 		};
 		if ($comp_local_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_local"]."</b> = ".$row['local']."]";
+			$texto.="[<b>".TRANS('COL_LOCALIZATION')."</b> = ".$row['local']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_local=".$_REQUEST['comp_local']."";
 		};
 		if ($comp_reitoria_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_reitoria"]."</b> = ".$row['reitoria']."]";
+			$texto.="[<b>".TRANS('COL_MAJOR')."</b> = ".$row['reitoria']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_reitoria=".$_REQUEST['comp_reitoria']."";
 		};
 
 		if ($comp_fornecedor_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_fornecedor"]."</b> = ".$row['fornecedor_nome']."]";
+			$texto.="[<b>".TRANS('COL_VENDOR')."</b> = ".$row['fornecedor_nome']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_fornecedor=".$_REQUEST['comp_fornecedor']."";
 		};
 		if ($comp_nf_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_nf"]."</b> = ".$row['nota']."]";
+			$texto.="[<b>".TRANS('FIELD_FISCAL_NOTES')."</b> = ".$row['nota']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_nf=".$_REQUEST['comp_nf']."";
 		}
@@ -889,7 +878,7 @@
 			$rowCC= mysql_fetch_array($resultado2);
 			$centroCusto = $rowCC[CCUSTO_DESC];
 			$custoNum = $rowCC[CCUSTO_COD];
-			$texto.="[<b>".$TRANS["cx_cc"]."</b> = ".$centroCusto."]";
+			$texto.="[<b>".TRANS('FIELD_CENTER_COST')."</b> = ".$centroCusto."]";
 
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_ccusto = ".$_REQUEST['comp_ccusto']."";
@@ -908,7 +897,7 @@
 				$msgInst = substr($msgInst,0,-2);
 			//}
 
-			$texto.="[<b>".$TRANS["cx_inst"]."</b> = ".$msgInst."]";
+			$texto.="[<b>".TRANS('FIELD_INSTITUTION')."</b> = ".$msgInst."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 
 			$p_temp = explode(",",$comp_inst);
@@ -932,36 +921,36 @@
 				$param.= "comp_situac=".$_REQUEST['comp_situac']."";
 			}*/
 
-			$texto.="[<b>".$TRANS["cx_situacao"]."</b> = ".$row['situac_nome']."]";
+			$texto.="[<b>".TRANS('COL_SITUAC')."</b> = ".$row['situac_nome']."]";
 			$param.= "comp_situac=".$_REQUEST['comp_situac']."";
 		};
 		if ($comp_data_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
 			if (isset($_REQUEST['fromDateRegister'])){
-				$texto.="[<b>".TRANS("cx_data_cadastro")."&nbsp;".TRANS('INV_FROM_DATE_REGISTER')."</b> = ".$comp_data."]";
+				$texto.="[<b>".TRANS("COL_SUBSCRIBE_DATE")."&nbsp;".TRANS('INV_FROM_DATE_REGISTER')."</b> = ".$comp_data."]";
 			} else {
-				$texto.="[<b>".TRANS("cx_data_cadastro")."</b> = ".$comp_data."]";
+				$texto.="[<b>".TRANS("COL_SUBSCRIBE_DATE")."</b> = ".$comp_data."]";
 			}
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_data=".$_REQUEST['comp_data']."";
 		};
 		if ($comp_data_compra_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_data_compra"]."</b> = ".$comp_data_compra."]";
+			$texto.="[<b>".TRANS('FIELD_DATE_PURCHASE')."</b> = ".$comp_data_compra."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_data_compra=".$_REQUEST['comp_data_compra']."";
 		};
 
 		if ($garantia_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["crit_exib_em_garantia"]."</b> = ".$consulta."]";
+			$texto.="[<b>".TRANS('TXT_IN_GUARANT')."</b> = ".$consulta."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "garantia=".$_REQUEST['garantia']."";
 		};
 
 		if ($soft_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
-			$texto.="[<b>".$TRANS["cx_software"]."</b> = ".$row['software']." ".$row['versao']."]";
+			$texto.="[<b>".TRANS('COL_SOFT')."</b> = ".$row['software']." ".$row['versao']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "software=".$_REQUEST['software']."";
 		};
@@ -969,14 +958,14 @@
 		if ($comp_assist_flag) {
 			if (strlen($texto) > $tam) $texto.= ", ";
 
-			if ($comp_assist==-2) {$texto.="[<b>".$TRANS["cx_assistencia"]."</b> = ".$TRANS["crit_exib_nao_definida"]."]";} else
-				$texto.="[<b>".$TRANS["cx_assistencia"]."</b> = ".$row['assistencia']."]";
+			if ($comp_assist==-2) {$texto.="[<b>".TRANS('FIELD_ASSISTENCE')."</b> = ".TRANS('MSG_NOT_DEFINE')."]";} else
+				$texto.="[<b>".TRANS('FIELD_ASSISTENCE')."</b> = ".$row['assistencia']."]";
 			if (strlen($param) > $tamParam) $param.= "&";
 			$param.= "comp_assist=".$_REQUEST['comp_assist']."";
 		};
 
 
-		if (strlen($texto)==$tam) {$texto.="[<b>".$TRANS["tipo_geral"]."</b> = Todos]";}; //Se nenhum campo foi selecionado para a consulta então todos os equipamentos são listados!!
+		if (strlen($texto)==$tam) {$texto.="[<b>".TRANS('COL_TYPE')."</b> = ".TRANS('FIELD_ALL')."]";}; //Se nenhum campo foi selecionado para a consulta então todos os equipamentos são listados!!
 
  		$lim = (strlen($texto)-7);
 		$texto2 = (substr($texto,6,$lim));
@@ -989,7 +978,7 @@
 	{
 		//print $query."<br><br><a class='likebutton' onClick=\"javascript:history.back();\">Voltar</a>"; exit;
 
-		print "<script>mensagem('".$TRANS["alerta_nao_encontrado"]."')</script>";
+		print "<script>mensagem('".TRANS('MSG_THIS_CONS_NOT_RESULT')."')</script>";
 		//dump($query);
 		print "<script>history.back()</script>";
 		exit;
@@ -997,110 +986,107 @@
 	if ($linhas>1){
 		if (isset($_REQUEST['visualiza']) && $_REQUEST['visualiza'] =='impressora') {
 			print cabecalho($logo,'<a href=abertura.php>Ocomon</a>',$hoje,$header);
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado"]." <font color='red'>".$linhas."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>: </B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".$TRANS["novo_relat"]." ]</a>.</B></TD></TR>";
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color='red'>".$linhas."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>: </B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 		} else
 
 		if (isset($_REQUEST['visualiza']) && $_REQUEST['visualiza'] =='termo') {
 			//print "<BODY bgcolor= 'white'>";
 			print "<p align='center'><img src='".LOGO_PATH."/unilasalle-peb.gif'></p>";
 			print "<br>";
-			print "<p class='centro'><B>CENTRO DE INFORMÁTICA - CINFO / SUPORTE AO USUÁRIO - HELPDESK</B></p>";
-			print "<p class='centro'><B>TERMO DE COMPROMISSO PARA HARDWARE</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_CINFO')."</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_TERM_COMP_HW')."</B></p>";
 
-			print "<p class='parag'>Por esse termo acuso o recebimento do(s) equipamento(s) abaixo especificado(s), compromentendo-me
-				a mantê-lo(s) sob a minha guarda e responsabilidade, dele(s) fazendo uso adequado, de acordo com a resolução 003/2002 que
-				define políticas, normas e procedimentos que disciplinam a utilização de equipamentos, recursos e serviços de
-				informática do Unilasalle.</p>";
+			print "<p class='parag'>".TRANS('TXT_TERM_COMP_HW')."</p>";
 			print "<br>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' >";//bgcolor= 'black'
 			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>Etiqueta</TD>".
-				"<TD bgcolor='".$color."'><b>Unidade</TD>".
-				"<TD bgcolor='".$color."'><b>Tipo</TD>".
-				"<TD bgcolor='".$color."'><b>Fabricante</TD>".
-				"<TD bgcolor='".$color."'><b>Modelo</TD>".
-				"<TD bgcolor='".$color."'><b>N.º Série</TD>".
-				"<TD bgcolor='".$color."'><b>Nota Fiscal</TD>".
+			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_NF')."</TD>".
 				"</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='transito') {
 			print "<p align='center'><img src='".LOGO_PATH."/unilasalle-peb.gif'></p>";
 			print "<br>";
-			print "<p class='centro'><B>CENTRO DE INFORMÁTICA - CINFO / SUPORTE AO USUÁRIO - HELPDESK</B></p>";
-			print "<p class='centro'><B>FORMULÁRIO DE TRÂNSITO DE EQUIPAMENTOS DE INFORMÁTICA</B></p>";
-			print "<p class='parag'>Informo que o(s) equipamento(s) abaixo descriminado(s) está(ão)
-					autorizado(s) pelo setor responsável a serem transportados para fora da Unidade
-					pelo portador citado.</p>";
+			print "<p class='centro'><B>".TRANS('TTL_CINFO')."</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_FORM_TRANSIT_EQUIP_INFO')."</B></p>";
+			print "<p class='parag'>".TRANS('TXT_FORM_TRANSIT_EQUIP_INFO')."</p>";
 			print "<br>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' >";//bgcolor= 'black'
 			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>Etiqueta</TD>".
-				"<TD bgcolor='".$color."'><b>Unidade</TD>".
-				"<TD bgcolor='".$color."'><b>Tipo</TD>".
-				"<TD bgcolor='".$color."'><b>Fabricante</TD>".
-				"<TD bgcolor='".$color."'><b>Modelo</TD>".
-				"<TD bgcolor='".$color."'><b>N.º Série</TD>".
+			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_NF')."</TD>".
 				"</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='config') {
 			print cabecalho($logo,'<a href=abertura.php>OcoMon</a>',$hoje,$header);
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado"]." <font color='red'>".$linhas."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>: </B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href=consulta_comp.php>[ ".$TRANS["novo_relat"]." ]</a>.</B></TD></TR>";
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color='red'>".$linhas."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>: </B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href=consulta_comp.php>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href=consulta_comp.php>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='relatorio') {
 			print cabecalho($logo,'<a href=abertura.php>OcoMon</a>',$hoje,$header);
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado"]." <font color='red'>".$linhas."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>: </B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".$TRANS["novo_relat"]." ]</a>.</B></TD></TR>";
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color='red'>".$linhas."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>: </B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='100%'  bgcolor='white'>";//
 			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_etiqueta"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=instituicao,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_instituicao"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_tipo"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_modelo"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=serial&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_sn"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=nota&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_nf"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=situac_nome,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_situacao"]."</a></TD>
-				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=local,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".$TRANS["col_local"]."</a></TD>
+			print "<TR><TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('OCO_FIELD_TAG')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=instituicao,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('FIELD_INSTITUTION')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_TYPE')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_MODEL')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=serial&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_SN')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=nota&visualiza=relatorio".$param."&header=".$header."'>".TRANS('FIELD_FISCAL_NOTES')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=situac_nome,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_SITUAC')."</a></TD>
+				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=local,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_LOCALIZATION')."</a></TD>
 				</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='mantenedora1') {
-			print cabecalho($logo,'<a href=abertura.php>OcoMon</a>',$hoje,"RELATÓRIO DE INVENTÁRIO FÍSICO DE EQUIPAMENTOS DE INFORMÁTICA<br>".$texto."");
+			print cabecalho($logo,'<a href=abertura.php>OcoMon</a>',$hoje,TRANS('TTL_REPORT_INV_EQUIP_INFO')."<br>".$texto."");
 			print "<br><br><TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='100%' bgcolor= white>";
 			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>Etiqueta</TD>".
-				"<TD bgcolor='".$color."'><b>Tipo</TD>".
-				"<TD bgcolor='".$color."'><b>Fabricante</TD>".
-				"<TD bgcolor='".$color."'><b>Modelo</TD>".
-				"<TD bgcolor='".$color."'><b>Nº de Série</TD>".
-				"<TD bgcolor='".$color."'><b>NF</TD>".
-				"<TD bgcolor='".$color."'><b>Situação</TD>".
-				"<TD bgcolor='".$color."'><b>Localização</TD>".
-				"<TD bgcolor='".$color."'><b>Centro de Custo</TD>".
+			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
+				"<TD bgcolor='".$color."'><b".TRANS('COL_NF')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SITUAC')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_LOCALIZATION')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('FIELD_CENTER_COST')."</TD>".
 				"</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] == 'texto') {
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='abertura.php'>OcoMon</a> - ".$TRANS["head_relat_txt"].".\t</B></TD></TR><br>";
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado"]." <font color=red>".$linhas."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>: </B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".$TRANS["novo_relat"]." ]</a>.</B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='abertura.php'>OcoMon</a> - ".TRANS('FIELD_FORMAT_EXPORT').".\t</B></TD></TR><br>";
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color=red>".$linhas."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>: </B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 		} else {  //Visualização normal na tela do sistema!!
 			print "<table border='0' cellspacing='1' width='100%'>";
-			print "<tr><TD with='70%' align='left'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td>
+			print "<tr><TD with='70%' align='left'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td>
 					<td width='30%' align='left'>
 					<form name='checagem' method='post' action=''>
-						<input  type='checkbox' class='radio' name='encadeia' id='idEncadeia' value='ok' ".$checked." onChange=\"checar();\"><a title='".$TRANS["hint_pipe"]."!'>".$TRANS["ck_pipe"]."</a>";
-				print "<input  type='checkbox' class='radio' name='ckpopup' value='ok'><a title='Consulta os detalhes do equipamento em uma janela popup!'>popup</a>";
-				print "<input  type='checkbox' class='radio' name='negada' value='ok'><a title='".$TRANS["hint_not"]."!'>".$TRANS["ck_not"]."</a>";
+						<input  type='checkbox' class='radio' name='encadeia' id='idEncadeia' value='ok' ".$checked." onChange=\"checar();\"><a title='".TRANS('HNT_PIPE')."!'>".TRANS('FIELD_CHAIN_NAV')."</a>";
+				print "<input  type='checkbox' class='radio' name='ckpopup' value='ok'><a title='".TRANS('MSG_CONS_DETAIL_EQUIP_POPUP')."'>popup</a>";
+				print "<input  type='checkbox' class='radio' name='negada' value='ok'><a title='".TRANS('HNT_NAV_EXCLIVE')."!'>".TRANS('NOT')."</a>";
 			print "	</form></td></tr><br>";
 
 			print "</table>";
@@ -1115,32 +1101,21 @@
 			$stilo = "style='{height:17px; width:30px; background-color:#DDDCC5; color:#5E515B; font-size:11px;}'"; //Estilo dos botões de navegação
 			$stilo2 = "style='{height:17px; width:50px; background-color:#DDDCC5; color:#5E515B;font-size:11px;}'";
 			//if ($avanca==$TRANS["bt_todos"]) {$top=$linhasTotal;} else$top=$min+($max-1);
-			print "<TD width='750' align='left' ><B>".$TRANS["encontrado"]." <font color='red'>".$linhasTotal."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>. ".$TRANS["mostrado"]." <font color='red'>".$min."</font> ".$TRANS['ate']." <font color='red'>".$top."</font>.</B></TD>";
+			print "<TD width='750' align='left' ><B>".TRANS('FOUND')." <font color='red'>".$linhasTotal."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>. ".TRANS('TXT_SHOW_OF')." <font color='red'>".$min."</font> ".TRANS('TXT_THE')." <font color='red'>".$top."</font>.</B></TD>";
 			//print "<TD width='50' align='left' ></td>";
 
 
 				print "<TD width='30%' align='right'><input  type='submit' class='button' name='voltaInicio' value='<<' ".
-					"title='Visualiza os ".$max." primeiros registros.'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
-					"title='Visualiza os ".$max." registros anteriores.'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
-					"title='Visualiza os próximos ".$max." registros.'> <input  type='submit' class='button'  name='avancaFim' value='>>' ".
-					"title='Visualiza os últimos ".$max." registros.'> <input  type='submit' class='button'  name='avancaTodos' value='Todas' ".
-					"title='Visualiza todos os ".$linhasTotal." registros.'></td>";
-
-
-
-// 			print "<TD width='224' align='left'>
-// 					<input type='submit' style=\"{background-color:#EAE6D0; width:30px; height:20px; background-image: url('".ICONS_PATH."2leftarrow.png'); background-repeat:no-repeat; background-position:center center;}\" name='voltaInicio'  value='' title='".$TRANS["hint_bt_volta"]." $max ".$TRANS["hint_bt_reg_prim"].".' $desabilita>
-// 					<input type='submit' style=\"{background-color:#EAE6D0; width:30px; height:20px; background-image: url('".ICONS_PATH."1leftarrow.png'); background-repeat:no-repeat; background-position:center center;}\" name='voltaUm' value='' title='".$TRANS["hint_bt_volta"]." $max ".$TRANS["hint_bt_reg_ant"].".' $desabilita>
-// 					<input type='submit' style=\"{background-color:#EAE6D0; width:30px; height:20px; background-image: url('".ICONS_PATH."1rightarrow.png'); background-repeat:no-repeat; background-position:center center;}\" name='avancaUm' value='' title='".$TRANS["hint_bt_avanca"]." $max ".$TRANS["hint_bt_regs"].".' $desabilita>
-// 					<input type='submit' style=\"{background-color:#EAE6D0; width:30px; height:20px; background-image: url('".ICONS_PATH."2rightarrow.png'); background-repeat:no-repeat; background-position:center center;}\" name='avancaFim' value='' title='".$TRANS["hint_bt_ultimos"]." $max ".$TRANS["hint_bt_regs"].".' $desabilita>";
-// 			print "<input type='submit' $stilo2 name='avancaTodos' value='".$TRANS["bt_todos"]."' title='".$TRANS["hint_bt_todos"].". $linhasTotal ".$TRANS["hint_bt_regs"].".' $desabilita></td>";
+					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('FIRST_RECORDS')."'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
+					"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('PREVIOUSLY_RECORDS')."'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
+					"title='".TRANS('VIEW_THE_NEXT')." ".$max." ".TRANS('RECORDS')."'> <input  type='submit' class='button'  name='avancaFim' value='>>' ".
+					"title='".TRANS('VIEW_THE_LAST')." ".$max." ".TRANS('RECORDS')."'> <input  type='submit' class='button'  name='avancaTodos' value='Todas' ".
+					"title='".TRANS('VIEW_ALL')." ".$linhasTotal." ".TRANS('RECORDS')."'></td>";
 
 			print "</tr>";
 			$min--;
 
-// 			print "<input type='hidden' value='".$min."' name='min'>";
-// 			print "<input type='hidden' value='".$max."' name='max'>";
-// 			print "<input type='hidden' value='".$maxAux."' name='maxAux'>";
+
 
 			print "<input type='hidden' value='".$min."' name='min'>";
 			print "<input type='hidden' value='".$max."' name='max'>";
@@ -1224,69 +1199,63 @@
 	 else //APENAS 1 REGISTRO
 	{
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='impressora') {
-			print cabecalho('<a href=abertura.php>OcoMon</a>','',$TRANS["head_relat_personalizado"]);
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado_um"]."<font color='red'>1</font>".$TRANS["reg_no_sistema"].":</B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".$TRANS["relat_novo"]." ]</a>.</B></TD></TR>";
+			print cabecalho('<a href=abertura.php>OcoMon</a>','',TRANS('TXT_REPORT_PERSON'));
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND_ONE')."<font color='red'>1</font>".TRANS('TXT_CAD_REG_SYSTEM').":</B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 		} else
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='termo') {
-			//print "<BODY bgcolor= 'white'>";
-			//print cabecalho($logo,'TERMO DE COMPROMISSO PARA HARDWARE',$hoje,'CENTRO DE INFORMÁTICA - CINFO');
 			print "<p align='center'><img src='".LOGO_PATH."/unilasalle-peb.gif'></p>";
 			print "<br>";
-			print "<p class='centro'><B>CENTRO DE INFORMÁTICA - CINFO / SUPORTE AO USUÁRIO - HELPDESK</B></p>";
-			print "<p class='centro'><B>TERMO DE COMPROMISSO PARA HARDWARE</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_CINFO')."</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_TERM_COMP_HW')."</B></p>";
 
-			print "<p class='parag'>Por esse termo acuso o recebimento do(s) equipamento(s) abaixo especificado(s), compromentendo-me
-				a mantê-lo(s) sob a minha guarda e responsabilidade, dele(s) fazendo uso adequado, de acordo com a resolução 003/2002  que
-				define políticas, normas e procedimentos que disciplinam a utilização de equipamentos, recursos e serviços de
-				informática do Unilasalle.</p>";
+			print "<p class='parag'>".TRANS('TXT_TERM_COMP_HW')."</p>";
 			print "<br>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' bgcolor= 'black'>";
 			$color = "A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>Etiqueta</TD>".
-				"<TD bgcolor='".$color."'><b>Unidade</TD>".
-				"<TD bgcolor='".$color."'><b>Tipo</TD>".
-				"<TD bgcolor='".$color."'><b>Fabricante</TD>".
-				"<TD bgcolor='".$color."'><b>Modelo</TD>".
-				"<TD bgcolor='".$color."'><b>N.º Série</TD>".
-				"<TD bgcolor='".$color."'><b>Nota Fiscal</TD>".
+			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('FIELD_FISCAL_NOTES')."</TD>".
 				"</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='transito') {
 			print "<p align='center'><img src='".LOGO_PATH."/unilasalle-peb.gif'></p>";
 			print "<br>";
-			print "<p class='centro'><B>CENTRO DE INFORMÁTICA - CINFO / SUPORTE AO USUÁRIO - HELPDESK</B></p>";
-			print "<p class='centro'><B>FORMULÁRIO DE TRÂNSITO DE EQUIPAMENTOS DE INFORMÁTICA</B></p>";
-			print "<p class='parag'>Informo que o(s) equipamento(s) abaixo descriminado(s) está(ão)
-					autorizado(s) pelo setor responsável a serem transportados para fora da Unidade
-					pelo portador citado.</p>";
+			print "<p class='centro'><B>".TRANS('TTL_CINFO')."</B></p>";
+			print "<p class='centro'><B>".TRANS('TTL_FORM_TRANSIT_EQUIP_INFO')."</B></p>";
+			print "<p class='parag'>".TRANS('TXT_FORM_TRANSIT_EQUIP_INFO')."</p>";
 
 			print "<br>";
 
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' bgcolor= 'black'>";
 			$color = "A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>Etiqueta</TD>".
-				"<TD bgcolor='".$color."'><b>Unidade</TD>".
-				"<TD bgcolor='".$color."'><b>Tipo</TD>".
-				"<TD bgcolor='".$color."'><b>Fabricante</TD>".
-				"<TD bgcolor='".$color."'><b>Modelo</TD>".
-				"<TD bgcolor='".$color."'><b>N.º Série</TD>".
+			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
+				"<TD bgcolor='".$color."'><b>".TRANS('FIELD_FISCAL_NOTES')."</TD>".
 				"</tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='texto') {
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='abertura.php'>OcoMon</a> - <u>".$TRANS["head_relat_txt"].".</u>\t</B></TD></TR><br>";
-			print "<tr><TD bgcolor='".TD_COLOR."'><i>".$TRANS["crit_exib"].": ".$texto.".</i></td></tr><br><br>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B>".$TRANS["encontrado_um"]." <font color='red'>1</font> ".$TRANS["reg_no_sistema"].": </B></TD></TR>";
-			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".$TRANS["relat_novo"]." ]</a>.</B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='abertura.php'>OcoMon</a> - <u>".TRANS('FIELD_FORMAT_EXPORT').".</u>\t</B></TD></TR><br>";
+			print "<tr><TD bgcolor='".TD_COLOR."'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto.".</i></td></tr><br><br>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND_ONE')." <font color='red'>1</font> ".TRANS('TXT_CAD_REG_SYSTEM').": </B></TD></TR>";
+			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 		} else { //Visualização normal na tela do sistema!!
 			print "<table border='0' cellspacing='1' width='100%'>";
-			print "<tr><TD with='70%' align='left'><i>".$TRANS["crit_exib"].": $texto.</i></td><td width='30%' align='left'><form name='checagem' method='post' action=''><input type='checkbox' name='encadeia' value='ok' disabled><a title='".$TRANS["hint_pipe"]."'>".$TRANS["ck_pipe"]."</a>";
-			print "<input  type='checkbox' class='radio' name='ckpopup' value='ok' disabled><a title='Consulta os detalhes do equipamento em uma janela popup!'>popup</a>";
+			print "<tr><TD with='70%' align='left'><i>".TRANS('FIELD_CRITE_EXIBIT').": ".$texto."</i></td><td width='30%' align='left'><form name='checagem' method='post' action=''><input type='checkbox' name='encadeia' value='ok' disabled><a title='".TRANS('HNT_PIPE')."'>".TRANS('FIELD_CHAIN_NAV')."</a>";
+			print "<input  type='checkbox' class='radio' name='ckpopup' value='ok' disabled><a title='".TRANS('MSG_CONS_DETAIL_EQUIP_POPUP')."'>popup</a>";
 			print "</form></td></tr><br>";
-			print "<TR><td class='line'><B>".$TRANS["encontrado_um"]." <font color='red'>1</font> ".$TRANS["reg_no_sistema"].":</B></TD><td class='line'></td></TR>";
+			print "<TR><td class='line'><B>".TRANS('FOUND_ONE')." <font color='red'>1</font> ".TRANS('TXT_CAD_REG_SYSTEM').":</B></TD><td class='line'></td></TR>";
 			print "</table>";
 		}
 	}
@@ -1317,13 +1286,13 @@
 				print "	<COL WIDTH='20%'>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT'>".strtoupper($TRANS["col_tipo"]).":</P>";
+				print "				<P ALIGN='LEFT'>".strtoupper(TRANS('COL_TYPE')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
 				print "				<P ALIGN='LEFT'>".$row['equipamento']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT'>".strtoupper($TRANS["col_fabricante"]).":</P>";
+				print "				<P ALIGN='LEFT'>".strtoupper(TRANS('COL_MANUFACTURE')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
 				print "				<P ALIGN='LEFT'>".$row['fab_nome']."</P>";
@@ -1331,13 +1300,13 @@
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_etiqueta"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_TAG')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_sn"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['serial']."</P>";
@@ -1345,13 +1314,13 @@
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_modelo"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_MODEL')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['modelo']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_nf"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_NF')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['nota']."</P>";
@@ -1359,13 +1328,13 @@
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_situacao"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['situac_nome']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_local"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['local']."</P>";
@@ -1373,7 +1342,7 @@
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_instituicao"]).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
 				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['instituicao']."</P>";
@@ -1393,14 +1362,14 @@
                 $i++;
 		}
 
-		print "<b><a href='abertura.php'>OcoMon</a> - ".$TRANS["menu_title"].". ".$TRANS["data"].": ".$hoje.".</b>";
+		print "<b><a href='abertura.php'>OcoMon</a> - ".TRANS('MENU_TTL_MOD_INV').". ".TRANS('OCO_DATE').": ".$hoje.".</b>";
         	print "</TABLE>";
 
 
 	} else if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='termo') {
 
 
-		print "<title>OcoMon - Termo de compromisso HW</title>";
+		print "<title>".TRANS('TXT_OCOMON_TERM_COMP_HW')."</title>";
 		print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
 
 		while ($row = mysql_fetch_array($resultado)) {
@@ -1423,38 +1392,32 @@
 	print "</TABLE><br><br>";
 		//print "</fieldset>";
 		print "<div id='container'>";
-		print "<p class='parag_header'><b>INFORMAÇÕES COMPLEMENTARES:</b></P>";
+		print "<p class='parag_header'><b>".TRANS('TXT_INFO_COMPLEM').":</b></P>";
 		print "<p class='parag'>";
 		print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' bgcolor='black'";
-		print "<tr><td bgcolor='white'>Centro de Custo:</td><td bgcolor='white'>".$custoNum." - ".$centroCusto."</td></tr>";
-		print "<tr><td bgcolor='white'>Setor:</td><td bgcolor='white'>".strtoupper($setor)."</td></tr>";
-		print "<tr><td bgcolor='white'>Usuário responsável:</td><td bgcolor='white'><input type='text' class='text3' name='responsavel'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_CENTER_COST').":</td><td bgcolor='white'>".$custoNum." - ".$centroCusto."</td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_SECTOR').":</td><td bgcolor='white'>".strtoupper($setor)."</td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_USER_RESP').":</td><td bgcolor='white'><input type='text' class='text3' name='responsavel'></td></tr>";
 		print "</table>";
 		print "</P>";
 
-		print "<p class='parag_header'><b>IMPORTANTE:</b></P>";
-		print "<p class='parag'>O suporte para qualquer problema que porventura vier a ocorrer na instalação
-		 ou operação do(s) equipamento(s), deverá ser solicitado ao Helpdesk,
-		 através do ramal 8618, pois somente através desde procedimento os chamados poderão ser registrados
-		  e atendidos.</p>";
-		print "<p class='parag'>Em conformidade com o preceituado no art. 1º da Resolução nº 003/2002, é expressamente
-                vedada a instalação de <i>softwares</i> sem a necessária licença de uso ou em desrespeito aos direitos autorais.</p>";
-		print "<p class='parag'>O UNILASALLE, através do seu Centro de Informática (CINFO), em virtude das suas disposições
-                    regimentais e regulamentadoras, adota sistema de controle de instalação de <i>softwares</i> em todos os seus
-                    equipamentos, impedindo a instalação destes sem prévia autorização do Setor Competente.</p>";
+		print "<p class='parag_header'><b>".TRANS('TXT_IMPORTANT').":</b></P>";
+		print "<p class='parag'>".TRANS('TXT_TERM_COMP_1')."</p>";
+		print "<p class='parag'>".TRANS('TXT_TERM_COMP_2')."</p>";
+		print "<p class='parag'>".TRANS('TXT_TERM_COMP_3')."</p>";
 
 		print "<br>";
-		print "<p class='parag'>Assinatura:__________________________________</P>";
-		print "<p class='parag'>Canoas, ".$hoje_termo.".</p>";
+		print "<p class='parag'>".TRANS('TXT_SIGNATURE').":__________________________________</P>";
+		print "<p class='parag'>".TRANS('TXT_CITY').", ".$hoje_termo.".</p>";
 		print "<br><br><br><br><br>";
-		print "<div id='footer'><B><a href='abertura.php'>OcoMon</a> - Sistema de Operacionalização e Gerência de Suporte técnico.</B></div>";
+		print "<div id='footer'><B><a href='abertura.php'>OcoMon</a> -".TRANS('TXT_DIFINE_OCOMON')."</B></div>";
 		print "</div>";
 
 	} else
 
 	if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='transito') {
 
-		print "<title>OcoMon - Termo de compromisso HW</title>";
+		print "<title>".TRANS('TXT_OCOMON_TERM_COMP_HW')."</title>";
 		print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
 
 		$i=0;
@@ -1476,29 +1439,27 @@
         print "</TABLE>";
 		//print "</fieldset>";
 		print "<div id='container'>";
-		print "<p class='parag_header'><b>INFORMAÇÕES COMPLEMENTARES:</b></P>";
+		print "<p class='parag_header'><b>".TRANS('TXT_INFO_COMPLEM').":</b></P>";
 		print "<p class='parag'>";
 		print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' bgcolor='black'";
-		print "<tr><td bgcolor='white'>Portador:</td><td bgcolor='white'><input type='text' class='text3' name='portador'></td></tr>";
-		print "<tr><td bgcolor='white'>Destino:</td><td bgcolor='white'><input type='text' class='text3' name='destino'></td></tr>";
-		print "<tr><td bgcolor='white'>Data da saída:</td><td bgcolor='white'>".$hoje_termo."</td></tr>";
-		print "<tr><td bgcolor='white'>Motivo:</td><td bgcolor='white'><input type='text' class='text3' name='motivo'></td></tr>";
-		print "<tr><td bgcolor='white'>Autorizador por:</td><td bgcolor='white'><input type='text' class='text3' name='responsavel'></td></tr>";
-		print "<tr><td bgcolor='white'>Setor responsável:</td><td bgcolor='white'><input type='text' class='text3' name='setor_reponsavel'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_CARRIER').":</td><td bgcolor='white'><input type='text' class='text3' name='portador'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_DESTINY').":</td><td bgcolor='white'><input type='text' class='text3' name='destino'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('OCO_FIELD_DATE_EXIT').":</td><td bgcolor='white'>".$hoje_termo."</td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_REASON').":</td><td bgcolor='white'><input type='text' class='text3' name='motivo'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_AUTH_FOR').":</td><td bgcolor='white'><input type='text' class='text3' name='responsavel'></td></tr>";
+		print "<tr><td bgcolor='white'>".TRANS('FIELD_SECTOR_RESP').":</td><td bgcolor='white'><input type='text' class='text3' name='setor_reponsavel'></td></tr>";
 
 		print "</table>";
 		print "</P>";
 
-		print "<p class='parag_header'><b>IMPORTANTE:</b></P>";
-		print "<p class='parag'>A constatação de inconformidade dos dados aqui descritos no ato de verificação
-				na portaria implica na <b>não</b> autorização de saída dos equipamentos, nesse caso o setor
-				responsável deve ser contactado.</p>";
+		print "<p class='parag_header'><b>".TRANS('TXT_IMPORTANT').":</b></P>";
+		print "<p class='parag'>".TRANS('TXT_FORM_TRANSIT_1')."</p>";
 
 		print "<br>";
-		print "<p class='parag'>Assinatura:__________________________________</P>";
-		print "<p class='parag'>Canoas, ".$hoje_termo.".</p>";
+		print "<p class='parag'>".TRANS('TXT_SIGNATURE').":__________________________________</P>";
+		print "<p class='parag'>".TRANS('TXT_CITY').", ".$hoje_termo.".</p>";
 		print "<br><br><br><br><br>";
-		print "<div id='footer'><B><a href=abertura.php>OcoMon</a> - Sistema para Operacionalização e Gerência de suporte técnico.</B></div>";
+		print "<div id='footer'><B><a href=abertura.php>OcoMon</a> - ".TRANS('TXT_DIFINE_OCOMON')."</B></div>";
 		print "</div>";
 	} else
 
@@ -1519,19 +1480,15 @@
 
 			print "<TABLE WIDTH='80%' BORDER='0' CELLPADDING='4' CELLSPACING='0' align='center'>";
 			print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
-			//print "	<COL WIDTH='10%'>";
-			//print "<COL WIDTH='20%'>";
-			//print "	<COL WIDTH='10%'>";
-			//print "	<COL WIDTH='20%'>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT'>".strtoupper($TRANS["col_tipo"]).":</P>";
+			print "				<P ALIGN='LEFT'>".strtoupper(TRANS('COL_TYPE')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT'>".$row['equipamento']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT'>".strtoupper($TRANS["col_fabricante"]).":</P>";
+			print "				<P ALIGN='LEFT'>".strtoupper(TRANS('COL_MANUFACTURE')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT'>".$row['fab_nome']."</P>";
@@ -1539,13 +1496,13 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_etiqueta"])."</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(".TRANS('OCO_FIELD_TAG').")."</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_sn"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($row['serial'])."</P>";
@@ -1553,13 +1510,13 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_modelo"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_MODEL')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['modelo']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_nf"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_NF')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['nota']."</P>";
@@ -1567,13 +1524,13 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_situacao"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['situac_nome']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_local"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['local']."</P>";
@@ -1581,7 +1538,7 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["col_instituicao"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['instituicao']."</P>";
@@ -1598,13 +1555,13 @@
 
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_proc"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_PROC')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_proc']." ".$row['processador']." ".$row['clock']." ".$row['proc_sufixo']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_mb"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_MB')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_mb']." ".$row['mb']."</P>";
@@ -1612,13 +1569,13 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_video"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_VIDEO')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_video']." ".$row['video']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_memo"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_MEMO')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['memoria']."".$row['memo_sufixo']."</P>";
@@ -1626,13 +1583,13 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_rede"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_REDE')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['rede_fabricante']." ".$row['rede']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_som"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_SOM')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_som']." ".$row['som']."</P>";
@@ -1641,13 +1598,13 @@
 
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_hd"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_HD')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_hd']." ".$row['hd_capacidade']."".$row['hd_sufixo']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_cdrom"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('MNL_CDROM')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_cdrom']." ".$row['cdrom']."</P>";
@@ -1655,18 +1612,49 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_modem"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('FIELD_MODEM')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['fabricante_modem']." ".$row['modem']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($TRANS["cx_grav"]).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('FIELD_RECORD_CD')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
 			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><FONT FACE='Arial, sans-serif'>".$row['fabricante_gravador']." ".$row['gravador']."</P>";
 			print "			</TH>";
 			print "		</TR>";
+
+			$qryPieces = "";
+			$qryPieces = $QRY["componenteXequip_ini"];// ../includes/queries/
+			$qryPieces.=" and eqp.eqp_equip_inv=".$row['etiqueta']." and eqp.eqp_equip_inst=".$row['cod_inst']."";
+			$qryPieces.= $QRY["componenteXequip_fim"];
+
+			$execQryPieces = mysql_query($qryPieces) or die (TRANS('ERR_QUERY')."<br>".$qryPieces);
+
+			print "<TR><TD colspan='4'></TD></TR>";
+			print "<tr><TD colspan='4'><b>".TRANS('SUBTTL_DATA_COMPLE_PIECES').":</b></TD></tr>";
+			print "<TR><TD colspan=4></TD></TR>";
+
+
+			while ($rowPiece = mysql_fetch_array($execQryPieces)){
+
+
+				print "<TR>";
+				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($rowPiece['item_nome']).":</P></td>";
+				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$rowPiece['fabricante']." ".$rowPiece['modelo']." ".$rowPiece['capacidade']." ".$rowPiece['sufixo'].":</P></td>";
+
+				//print "<TD align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SN').":</b></TD>";
+				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P></td>";
+				print "<TD align='left' ><a onClick=\"popup('estoque.php?action=details&cod=".$rowPiece['estoq_cod']."&cellStyle=true')\">".$rowPiece['estoq_sn']."</a></TD>";
+
+				print "</tr>";
+
+					//"<a href='mostra_consulta_comp.php?comp_dvd=".$row['cod_dvd']."' title='".TRANS('HNT_LIST_EQUIP_DVD')." ".$row['fabricante_dvd']." ".$row['dvd']." ".TRANS('HNT_CAD_IN_SYSTEM')."'>";
+
+			}
+
+
 
 			print "</TABLE>";
 			print "<hr width='80%' align='center'>";
@@ -1674,7 +1662,7 @@
 			$i++;
 		}
 
-		print "<b><a href='abertura.php'>".$TRANS["menu_title"]."</a>. ".$TRANS["data"].": ".$hoje.".</b>";
+		print "<b><a href='abertura.php'>".TRANS('MENU_TTL_MOD_INV')."</a>. ".TRANS('OCO_DATE').": ".$hoje.".</b>";
 		print "</TABLE>";
 
 	} else
@@ -1713,16 +1701,16 @@
 			$j++;
 
 			print "<TR>";
-			print "<TD bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."' title='".$TRANS['hint_col_etiqueta']."'>".$row['etiqueta']."</a></TD>";
+			print "<TD bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."' title='".TRANS('HNT_DATEIL_CAD_EQUIP')."'>".$row['etiqueta']."</a></TD>";
 
 			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_inst=".$row['instituicao']."&ordena=instituicao,fab_nome,modelo,local,etiqueta&visualiza=relatorio'>".$row['instituicao']."</a></td>";
 
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=relatorio' title='".$TRANS["hint_col_tipo"]." ".$row['equipamento']."'>".$row['equipamento']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&visualiza=relatorio' title='".$TRANS['hint_col_modelo']." ".$row['fab_nome']." ".$row['modelo'].".'>".$row['fab_nome']." ".$row['modelo']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_sn=".$row['serial']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio' title='".$TRANS['hint_col_sn']." ".$row['serial'].".'>".strtoupper($row['serial'])."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_nf=".$row['nota']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=relatorio' title='".$TRANS['hint_col_nf']." ".$row['nota'].".'>".$row['nota']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_situac=".$row['situac_cod']."&ordena=local,etiqueta&visualiza=relatorio' title='".$TRANS['hint_col_situacao']." ".$row['situac_nome'].".'>".$row['situac_nome']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio' title='".$TRANS['hint_col_local']." ".$row['local'].".'>".$row['local']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_TYPE')." ".$row['equipamento']."'>".$row['equipamento']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_MODEL')." ".$row['fab_nome']." ".$row['modelo'].".'>".$row['fab_nome']." ".$row['modelo']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_sn=".$row['serial']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_SN')." ".$row['serial'].".'>".strtoupper($row['serial'])."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_nf=".$row['nota']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_NF')." ".$row['nota'].".'>".$row['nota']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_situac=".$row['situac_cod']."&ordena=local,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_SITUAC')." ".$row['situac_nome'].".'>".$row['situac_nome']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio' title='".TRANS('HNT_LIST_EQUIP_LOCAL')." ".$row['local'].".'>".$row['local']."</a></td>";
 			print "</tr>";
 			$i++;
 		}
@@ -1731,14 +1719,14 @@
 		//Linha que mostra o total de registros mostrados
 		$cor2='#A8A8A8';
 		print "<TR><TD colspan='6' bgcolor='".$cor2."'><b></TD>".
-				"<TD bgcolor='".$cor2."'><b>TOTAL</TD>".
+				"<TD bgcolor='".$cor2."'><b>".TRANS('TOTAL')."</TD>".
 				"<TD bgcolor='".$cor2."'><b><font color='red'>".$linhas."</font></TD>".
 			"</tr>";
 
 		print "</TABLE><br>";
 
 		print "<table width='90%'>".
-				"<tr><td class='line'><b><a href='abertura.php'>".$TRANS["menu_title"]."</a>. ".$TRANS["data"].": $hoje.</b></td>".
+				"<tr><td class='line'><b><a href='abertura.php'>".TRANS('MENU_TTL_MOD_INV')."</a>. ".TRANS('OCO_DATE').": ".$hoje."</b></td>".
 				"</tr>".
 			"</table>";
 
@@ -1776,16 +1764,16 @@
 				$centroCusto = '';
 
 			print "<TR>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."' title='".$TRANS['hint_col_etiqueta']."'>".$row['etiqueta']."</a></TD>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".$TRANS["hint_col_tipo"]." ".$row['equipamento']."'>".$row['equipamento']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_fab=".$row['fab_cod']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_fabricante']." ".$row['fab_nome'].".'>".$row['fab_nome']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_modelo']." ".$row['fab_nome']." ".$row['modelo'].".'>".$row['fab_nome']." ".$row['modelo']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_sn=".$row['serial']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_sn']." ".$row['serial'].".'>".strtoupper($row['serial'])."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_nf=".$row['nota']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_nf']." ".$row['nota'].".'>".$row['nota']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_situac=".$row['situac_cod']."&ordena=local,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_situacao']." ".$row['situac_nome'].".'>".$row['situac_nome']."</a></td>";
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_local']." ".$row['local'].".'>".$row['local']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."' title='".TRANS('HNT_DATEIL_CAD_EQUIP')."'>".$row['etiqueta']."</a></TD>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_TYPE')." ".$row['equipamento']."'>".$row['equipamento']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_fab=".$row['fab_cod']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_MANUF')." ".$row['fab_nome'].".'>".$row['fab_nome']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_MODEL')." ".$row['fab_nome']." ".$row['modelo'].".'>".$row['fab_nome']." ".$row['modelo']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_sn=".$row['serial']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='HNT_LIST_EQUIP_SN ".$row['serial'].".'>".strtoupper($row['serial'])."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_nf=".$row['nota']."&ordena=fab_nome,modelo,local,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_NF')."".$row['nota'].".'>".$row['nota']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_situac=".$row['situac_cod']."&ordena=local,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_SITUAC')." ".$row['situac_nome'].".'>".$row['situac_nome']."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_LOCAL')." ".$row['local'].".'>".$row['local']."</a></td>";
 
-			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_ccusto=".$row['ccusto']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='".$TRANS['hint_col_ccusto']." ".$custoDesc.".'>".$centroCusto."</a></td>";
+			print "<td bgcolor='".$color."'><a ".$alerta." href='mostra_consulta_comp.php?comp_ccusto=".$row['ccusto']."&ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=mantenedora1' title='".TRANS('HNT_LIST_EQUIP_CENTRA_COST')." ".$custoDesc.".'>".$centroCusto."</a></td>";
 			print "</tr>";
 			$i++;
 		}
@@ -1803,16 +1791,16 @@
 
 		print "</TABLE><br>";
 
-		print "<table width='90%'><tr><td class='line'><b><a href='abertura.php'>OcoMon</a> - Sistema para Operacionalização e Gerência de suporte técnico. Data: ".$hoje.".</b></td></tr></table>";
+		print "<table width='90%'><tr><td class='line'><b><a href='abertura.php'>OcoMon</a> - ".TRANS('TXT_DIFINE_OCOMON')." ".TRANS('OCO_DATE').": ".$hoje.".</b></td></tr></table>";
 
 	}  else
 
 	if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='texto') {  //Texto separado por tabulação//
 		print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
-		print "<br><i>(Selecione o texto abaixo e salve em um editor de textos com a extensão CSV para exportar para alguma base de dados).</i><br><br><br>";
+		print "<br><i>(".TRANS('TXT_SEL_TEXT_CVS').").</i><br><br><br>";
 		echo" <hr width='100%' align='center'>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='white'>";
-		print "<b>'".$TRANS["col_etiqueta"]."','".$TRANS["col_instituicao"]."','".$TRANS["col_tipo"]."','".$TRANS["col_fabricante"]."','".$TRANS["col_modelo"]."','".$TRANS["col_sn"]."','".$TRANS["col_fornecedor"]."','".$TRANS["col_nf"]."','".$TRANS["cx_cc"]."','".$TRANS["col_local"]."','".$TRANS["cx_proc"]."','".$TRANS["cx_memo"]."','".$TRANS["cx_hd"]."','".$TRANS["cx_impressora"]."','".$TRANS["cx_monitor"]."','".$TRANS["cx_scanner"]."'</b><br>";
+		print "<b>'".TRANS('OCO_FIELD_TAG')."','".TRANS('OCO_FIELD_UNIT')."','".TRANS('COL_TYPE')."', '".TRANS('COL_SITUAC')."' , '".TRANS('COL_MANUFACTURE')."','".TRANS('COL_MODEL')."','".TRANS('COL_SN')."','".TRANS('COL_VENDOR')."','".TRANS('COL_NF')."','".TRANS('FIELD_CENTER_COST')."','".TRANS('COL_LOCALIZATION')."','MNL_PROC','".TRANS('MNL_MEMO')."','".TRANS('MNL_HD')."','".TRANS('FIELD_TYPE_PRINTER')."','".TRANS('FIELD_MONITOR')."','".TRANS('FIELD_SCANNER')."'</b><br>";
 
 		$i=0;
 		$j=2;
@@ -1835,7 +1823,7 @@
 				$resultado3 = $row3[CCUSTO_DESC];
 				$centroCusto = $row3[CCUSTO_COD];
 			}
-			print "".$row['etiqueta'].",".$row['instituicao'].",".$row['equipamento'].",".$row['fab_nome'].",".$row['modelo'].",".$row['serial'].",".$row['fornecedor_nome'].",".$row['nota'].",".$centroCusto.",".$row['local'].",".$row['processador']." ".$row['clock']." ".$row['proc_sufixo'].",".$row['memoria']."".$row['memo_sufixo'].",".$row['fabricante_hd']." ".$row['hd_capacidade']."".$row['hd_sufixo'].",".$row['impressora'].",".$row['polegada_nome'].",".$row['resol_nome']."<br>";
+			print "".$row['etiqueta'].",".$row['instituicao'].",".$row['equipamento'].", ".$row['situac_nome']." , ".$row['fab_nome'].",".$row['modelo'].",".$row['serial'].",".$row['fornecedor_nome'].",".$row['nota'].",".$centroCusto.",".$row['local'].",".$row['processador']." ".$row['clock']." ".$row['proc_sufixo'].",".$row['memoria']."".$row['memo_sufixo'].",".$row['fabricante_hd']." ".$row['hd_capacidade']."".$row['hd_sufixo'].",".$row['impressora'].",".$row['polegada_nome'].",".$row['resol_nome']."<br>";
 			$centroCusto ="";
 			print "</TR>";
 			$i++;
@@ -1845,19 +1833,19 @@
 	}
 	else ####### Mostra Consulta normal na tela principal do sistema!!
 	{
-		print "<fieldset><legend>".$TRANS["head_equipamentos"]."</legend>";
+		print "<fieldset><legend>".TRANS('MNL_VIS_EQUIP')."</legend>";
 		print "<TABLE border='0' cellpadding='3' cellspacing='0' align='center' width='100%'>";
 		print "<TR class='header'>".
-				"<TD class='line' valign='middle'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=etiqueta&coluna=etiqueta&ordenado=".$ordenado."&".$param."')\" title='Ordenar por etiqueta.'>".$TRANS["col_etiqueta"]."</a>".$ICON_ORDER['etiqueta']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=instituicao,etiqueta&coluna=instituicao&ordenado=".$ordenado."&".$param."')\" title='Ordenar pela Unidade'.>".$TRANS["col_instituicao"]."</a>".$ICON_ORDER['instituicao']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=equipamento,modelo&coluna=tipo&ordenado=".$ordenado."&".$param."')\" title='Ordenar pelo tipo de equipamento.'>".$TRANS["col_tipo"]."</a>".$ICON_ORDER['tipo']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=fab_nome,modelo&coluna=modelo&ordenado=".$ordenado."&".$param."')\" title='Ordenar por modelo de equipamento.'>".$TRANS["col_modelo"]."</a>".$ICON_ORDER['modelo']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=local&coluna=local&ordenado=".$ordenado."&".$param."')\" title='Ordenar por localização.'>".$TRANS["col_local"]."</a>".$ICON_ORDER['local']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('mostra_consulta_comp.php?ordena=situac_nome&coluna=situacao&ordenado=".$ordenado."&".$param."')\" title='Ordenar por situação.'>".$TRANS["col_situacao"]."</a>".$ICON_ORDER['situacao']."</TD>";
+				"<TD class='line' valign='middle'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=etiqueta&coluna=etiqueta&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_TAG').".'>".TRANS('OCO_FIELD_TAG')."</a>".$ICON_ORDER['etiqueta']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=instituicao,etiqueta&coluna=instituicao&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_UNIT')."'.>".TRANS('OCO_FIELD_UNIT')."</a>".$ICON_ORDER['instituicao']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=equipamento,modelo&coluna=tipo&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_TYPE_EQUIP')."'>".TRANS('COL_TYPE')."</a>".$ICON_ORDER['tipo']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=fab_nome,modelo&coluna=modelo&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_MODEL_EQUIP')."'>".TRANS('COL_MODEL')."</a>".$ICON_ORDER['modelo']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('m".$_SERVER['PHP_SELF']."?ordena=local&coluna=local&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_LOCAL')."'>".TRANS('COL_LOCALIZATION')."</a>".$ICON_ORDER['local']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=situac_nome&coluna=situacao&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_SITUAC')."'>".TRANS('COL_SITUAC')."</a>".$ICON_ORDER['situacao']."</TD>";
 		if ($_SESSION['s_invmon']==1)
-			print "<td class='line'><b>".$TRANS["col_alterar"]."</TD>";
+			print "<td class='line'><b>".TRANS('COL_EDIT')."</TD>";
 		if ($administrador){
-			print "<td class='line'><b>".$TRANS["col_excluir"]."</TD>";
+			print "<td class='line'><b>".TRANS('COL_DEL')."</TD>";
 		}
 		$i=0;
 		$j=2;
@@ -1869,11 +1857,13 @@
 				if (($row['situac_destaque']=='1')) {//Situação com destaque
 					$color="#FF0000";
 					$alerta = "style='{color:white;}'";
-					$trClass = "lin_alerta";
+					$trClass = "lin_alerta_par";
+					$corDestaque = '#FF0000';
 				} else {
 					$color =  BODY_COLOR;
 					$alerta = "";
 					$trClass = "lin_par";
+					$corDestaque = $_SESSION['s_colorLinPar'];
 				}
 			}
 			else
@@ -1881,27 +1871,30 @@
 				if (($row['situac_destaque']=='1')) {
 					$color='#FF0000';
 					$alerta = "style='{color:white;}'";
-					$trClass = "lin_alerta";
+					$trClass = "lin_alerta_impar";
+					$corDestaque = '#FF0000';
 				} else {
 					$color = 'white';
 					$alerta = "";
 					$trClass = "lin_impar";
+					$corDestaque = $_SESSION['s_colorLinImpar'];
 				}
 			}
                 	$j++;
-			//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			//print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
-			print "<td class='line'><a ".$alerta." onClick=\"montaPopup('mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='Exibe os detalhes de cadastro desse equipamento.'>".$row['etiqueta']."</a></TD>";
-			print "<td class='line'><a ".$alerta." title='Filtra a saída para equipamentos da Unidade ".$row['instituicao'].".' href=\"javascript:monta_link('?comp_inst%5B%5D=".$row['cod_inst']."&ordena=fab_nome,modelo,local,etiqueta&coluna=instituicao&ordenado=".$ordenado."','".$param."','comp_inst')\">".$row['instituicao']."</a></td>";
-			print "<td class='line'><a ".$alerta." title='Filtra a saída para equipamentos do tipo ".$row['equipamento'].".' href=\"javascript:monta_link('?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&coluna=tipo&ordenado=".$ordenado."','".$param."','comp_tipo_equip')\">".$row['equipamento']."</a></td>";
-			print "<td class='line'><a ".$alerta." title='Filtra a saída para equipamentos do modelo ".$row['fab_nome']." ".$row['modelo'].".' href=\"javascript:monta_link('?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&coluna=modelo&ordenado=".$ordenado."','".$param."','comp_marca')\">".$row['fab_nome']." ".$row['modelo']."</a></td>";
-			print "<td class='line'><a ".$alerta." title='Filtra a saída para equipamentos localizados no setor ".$row['local'].".' href=\"javascript:monta_link('?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&coluna=local&ordenado=".$ordenado."','".$param."','comp_local')\">".$row['local']."</a></td>";
-			print "<td class='line'><a ".$alerta." title='Filtra a saída para equipamentos em situação ".$row['situac_nome'].".' href=\"javascript:monta_link('?comp_situac=".$row['situac_cod']."&ordena=fab_nome,modelo,local,etiqueta&coluna=modelo&ordenado=etiqueta','".$param."','NEG_SITUACAO')\">".$row['situac_nome']."</a></td>";
+
+			print "<td class='line'><a ".$alerta." onClick=\"montaPopup('mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_SHOW_DATEIL_EQUIP_CAD')."'>".$row['etiqueta']."</a></TD>";
+			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_UNIT')." ".$row['instituicao'].".' href=\"javascript:monta_link('?comp_inst%5B%5D=".$row['cod_inst']."&ordena=fab_nome,modelo,local,etiqueta&coluna=instituicao&ordenado=".$ordenado."','".$param."','comp_inst')\">".$row['instituicao']."</a></td>";
+			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_TYPE')." ".$row['equipamento'].".' href=\"javascript:monta_link('?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&coluna=tipo&ordenado=".$ordenado."','".$param."','comp_tipo_equip')\">".$row['equipamento']."</a></td>";
+			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_MODEL')." ".$row['fab_nome']." ".$row['modelo'].".' href=\"javascript:monta_link('?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&coluna=modelo&ordenado=".$ordenado."','".$param."','comp_marca')\">".$row['fab_nome']." ".$row['modelo']."</a></td>";
+			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_LOCAL_SECTOR')." ".$row['local'].".' href=\"javascript:monta_link('?comp_local=".$row['tipo_local']."&ordena=equipamento,fab_nome,modelo,etiqueta&coluna=local&ordenado=".$ordenado."','".$param."','comp_local')\">".$row['local']."</a></td>";
+			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_SITUAC')." ".$row['situac_nome'].".' href=\"javascript:monta_link('?comp_situac=".$row['situac_cod']."&ordena=fab_nome,modelo,local,etiqueta&coluna=modelo&ordenado=etiqueta','".$param."','NEG_SITUACAO')\">".$row['situac_nome']."</a></td>";
 			if ($_SESSION['s_invmon']==1)
-				print "<td class='line'><a ".$alerta." onClick =\"return redirect('altera_dados_computador.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row["cod_inst"]."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='Editar o registro'></a></TD>";
+				print "<td class='line'><a ".$alerta." onClick =\"return redirect('altera_dados_computador.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row["cod_inst"]."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></TD>";
 			if ($administrador){
-				print "<td class='line'><a ".$alerta." onClick =\"return confirma('".$TRANS["confirm_exclui"]."?','exclui_equipamento.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='Excluir o registro'></a></TD>";
+				print "<td class='line'><a ".$alerta." onClick =\"return confirma('".TRANS('MSG_DEL_REG')."','exclui_equipamento.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 			}
 			print "</TR>";
 			$i++;
@@ -1917,15 +1910,15 @@
 			print "<TR>";
 			$min++;
 			if (isset($avancaTodos)) {$top=$linhasTotal;} else $top=$min+($max-1);
-			print "<TD width='750' align='left' ><B>".$TRANS["encontrado"]." <font color='red'>".$linhasTotal."</font> ".$TRANS["reg_ord"]." <u>".$traduzOrdena."</u>. ".$TRANS["mostrado"]." <font color='red'>".$min."</font> ".$TRANS["ate"]." <font color='red'>".$top."</font>.</B></TD>";
+			print "<TD width='750' align='left' ><B>".TRANS('FOUND')." <font color='red'>".$linhasTotal."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>. ".TRANS('TXT_SHOW_OF')." <font color='red'>".$min."</font> ".TRANS('TXT_THE')." <font color='red'>".$top."</font>.</B></TD>";
 			print "<TD width='50' align='left' ></td>";
 
 			print "<TD width='30%' align='right'><input  type='submit' class='button' name='voltaInicio' value='<<' ".
-				"title='Visualiza os ".$max." primeiros registros.'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
-				"title='Visualiza os ".$max." registros anteriores.'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
-				"title='Visualiza os próximos ".$max." registros.'> <input  type='submit' class='button'  name='avancaFim' value='>>' ".
-				"title='Visualiza os últimos ".$max." registros.'> <input  type='submit' class='button'  name='avancaTodos' value='Todas' ".
-				"title='Visualiza todos os ".$linhasTotal." registros.'></td>";
+				"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('FIRST_RECORDS')."'> <input  type='submit' class='button'  name='voltaUm' value='<' ".
+				"title='".TRANS('VIEW_THE')." ".$max." ".TRANS('PREVIOUSLY_RECORDS')."'> <input  type='submit' class='button'  name='avancaUm' value='>' ".
+				"title='".TRANS('VIEW_THE_NEXT')." ".$max." ".TRANS('RECORDS')."'> <input  type='submit' class='button'  name='avancaFim' value='>>' ".
+				"title='".TRANS('VIEW_THE_LAST')." ".$max." ".TRANS('RECORDS')."'> <input  type='submit' class='button'  name='avancaTodos' value='Todas' ".
+				"title='".TRANS('VIEW_ALL')." ".$linhasTotal." ".TRANS('RECORDS')."'></td>";
 
 
 			print "</tr>";

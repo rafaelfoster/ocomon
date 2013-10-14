@@ -19,8 +19,8 @@
   */
 
 is_file( "./includes/config.inc.php" )
-	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='README.TXT'>README.TXT</a> para obter as principais informações sobre a instalação do OCOMON!".
-		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.TXT'>README.TXT</a>to get the main informations about the Ocomon Installation!" );
+	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='README.txt'>README.txt</a> para obter as principais informações sobre a instalação do OCOMON!".
+		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.txt'>README.txt</a> to get the main informations about the Ocomon Installation!" );
 
 	session_start();
 	//session_destroy();

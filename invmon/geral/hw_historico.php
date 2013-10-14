@@ -22,7 +22,7 @@
 	include ("../../includes/include_geral_II.inc.php");
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 	$auth = new auth;
 
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -38,24 +38,24 @@
 				order by h.hwa_data, i.item_nome";
 
 		//echo($query);
-	$resultado = mysql_query($query) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE TROCAS DE HARDWARE!<BR>'.$query);
+	$resultado = mysql_query($query) or die(TRANS('MSG_ERR_RESCUE_INFO_HW').'<BR>'.$query);
         $linhas = mysql_num_rows($resultado);
 
         if ($linhas == 0)
         {
-                print "<script>mensagem('Não existem registros de alteração de hardware!'); window.close();</script>";
+                print "<script>mensagem('".TRANS('TXT_NOT_REG_ALTER_HW')."'); window.close();</script>";
                 exit;
         } else {
 		print "<table border='0' cellspacing='1' summary=''";
 		print "<TR>";
-		print "<TD width='600' align='left' ><B>Foram econtrados $linhas registros de alterações de hardware para esse equipamento.</B></TD>";
+		print "<TD width='600' align='left' ><B>".TRANS('FOUND')." $linhas ".TRANS('TXT_ALTER_REG_OF_HW_FOR_EQUIP')."</B></TD>";
 		print "<TD width='200' align='left' ><B></b></td>";
 		print "<TD width='224' align='left' ><B></b></td>";
 		print "</tr>";
 		print "</table>";
 
 		$qryInst = "SELECT * FROM instituicao WHERE inst_cod = '".$_GET['inst']."'";
-		$execInst = mysql_query($qryInst) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DA INSTITUIÇÃO!<BR>'.$qryInst);
+		$execInst = mysql_query($qryInst) or die(TRANS('MSG_ERR_RESCUE_INFO_INSTIT').'<BR>'.$qryInst);
 		$rowInst = mysql_fetch_array($execInst);
 
 		print "<br><table border='0' cellspacing='1' summary=''";
@@ -64,7 +64,7 @@
 		print "</table><br>";
 
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
-		print "<TR class='header'><td class='line'>Componente</TD><td class='line'>Descrição</TD><td class='line'>Alterado em</td><td class='line'>Alterado por</td></tr>";
+		print "<TR class='header'><td class='line'>".TRANS('COL_COMPONENT')."</TD><td class='line'>".TRANS('COL_DESC')."</TD><td class='line'>".TRANS('COL_MODIF_IN')."</td><td class='line'>".TRANS('COL_MODIF_FOR')."</td></tr>";
 		$j=0;
 		while ($row = mysql_fetch_array($resultado)) {
 
@@ -74,7 +74,7 @@
 				$trClass = "lin_impar";
 			}
 			$j++;
-			print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 			print "<td class='line'>".$row['item_nome']."</TD>";
 			print "<td class='line'>".$row['mdit_fabricante']."&nbsp;".$row['mdit_desc']."&nbsp;".$row['mdit_desc_capacidade']."&nbsp;".$row['mdit_sufixo']."</td>";
@@ -85,7 +85,7 @@
 			print "</tr>";
 		}
 			print "<tr><td colspan='4'>&nbsp;</td></tr>";
-			print "<tr><td colspan='4' align='center'><input type='button' class='minibutton' value='Fechar' onClick=\"javascript:self.close()\"</td></tr>";
+			print "<tr><td colspan='4' align='center'><input type='button' class='minibutton' value='".TRANS('LINK_CLOSE')."' onClick=\"javascript:self.close()\"</td></tr>";
 
 		print "</TABLE>";
 	}

@@ -31,15 +31,15 @@
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 		print "	<BR><BR>";
-		print "	<B><center>:::PROBLEMAS X ÁREAS DE ATENDIMENTO:::</center></B><BR><BR>";
+		print "	<B><center>:::".TRANS('TLT_PROBLEMS_AREAS').":::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida()\" >"; //onSubmit=\"return valida()\"
 		print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Área Responsável:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 
 
 		print "					<td class='line'><Select name='area' class='select' size='1'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$query="select * from sistemas where sis_status not in (0) order by sistema";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -55,21 +55,21 @@
 
 
 
-		print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
 		//print "					<td class='line'><INPUT name='d_ini' class='data'><a href=\"javascript:cal1.popup();\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
 		print "					<td class='line'><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
 		//print "					<td class='line'><INPUT name='d_fim' class='data'><a href=\"javascript:cal2.popup();\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
 		print "					<td class='line'><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Tipo de relatório:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 		print "					<td class='line'><select name='saida' class='data'>";
-		print "							<option value=-1 selected>Normal</option>";
-		//	print "							<option value=1>Relatório 1 linha</option>";
+		print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
+		//	print "							<option value=1>".TRANS('FIELD_REPORT_ONE_LINE')."</option>";
 		print "						</select>";
 		print "					</td>";
 		print "				</tr>";
@@ -77,10 +77,10 @@
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td class='line'>";
-		print "					<input type='submit' class='button' value='Pesquisar' name='ok' >";//onclick='ok=sim'
+		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onclick='ok=sim'
 		print "	            </TD>";
 		print "	            <td class='line'>";
-		print "					<INPUT type='reset' class='button' value='Limpar campos' name='cancelar'>";
+		print "					<INPUT type='reset' class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";
 		print "				</TD>";
 		print "			</tr>";
 		print "	    </TABLE>";
@@ -104,7 +104,7 @@
 
 		if ((empty($_POST['d_ini'])) || (empty($_POST['d_fim'])))
 		{
-			print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_ALERT_PERIOD')."); history.back();</script>";
 		} else {
 			$d_ini_nova = converte_dma_para_amd($_POST['d_ini']);
 			$d_fim_nova = converte_dma_para_amd($_POST['d_fim']);
@@ -127,7 +127,7 @@
 
 			if ($linhas==0) {
 
-				print "<script>window.alert('Não há dados no período informado!'); history.back();</script>";
+				print "<script>window.alert('".TRANS('MSG_ALERT_NO_PERIOD')."'); history.back();</script>";
 			} else { //if($linhas==0)
 				$campos=array();
 				switch($_POST['saida'])
@@ -136,12 +136,12 @@
 
 					echo "<br><br>";
 					$background = '#CDE5FF';
-					print "<p class='titulo'>CHAMADOS FECHADOS - PROBLEMAS X ÁREAS DE ATENDIMENTO</p>";
+					print "<p class='titulo'>".TRANS('TLT_CALL_FINISH_PROB_AREA')."</p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center' >";
 
-					print "<tr><td bgcolor=$background><B>QUANTIDADE</td>
-						<td bgcolor=$background ><B>SETOR</td>
-					<td bgcolor=$background ><B>ÁREA DE ATENDIMENTO</td>
+					print "<tr><td bgcolor=$background><B>".TRANS('COL_AMOUNT')."</td>
+						<td bgcolor=$background ><B>".TRANS('COL_SECTOR')."</td>
+					<td bgcolor=$background ><B>".TRANS('COL_ATTEN_AREA')."</td>
 						</tr>";
 					$total = 0;
 					while ($row = mysql_fetch_array($resultado)) {

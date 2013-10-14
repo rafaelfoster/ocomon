@@ -25,10 +25,13 @@
 	//print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 
         if (isset($_POST['numero'])) {
-        	$numero = $_POST['numero'];
+        	$numero = inteiro($_POST['numero']);
         } else
         if (isset($_GET['numero'])) {
-        	$numero = $_GET['numero'];
+        	$numero = inteiro($_GET['numero']);
+        } else {
+		echo "This script cannot run out of OcoMon interface!!";
+		exit;
         }
 
 
@@ -36,16 +39,9 @@
 	$resultado = mysql_query($query);
 	$row = mysql_fetch_array($resultado);
 
-        if (mysql_numrows($resultado)>0)
-        {
-                $linhas1 = mysql_numrows($resultado)-1;
-        }
-        else
-        {
-                $linhas1 = mysql_numrows($resultado);
-        }
+	//print $query;
 
-	$data_atend = mysql_result($resultado,$linhas1,12); //Data de atendimento!!!
+	$data_atend = $row['data_atendimento']; //Data de atendimento!!!
 
 	$query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia='".$numero."'";
         $resultado2 = mysql_query($query2);
@@ -61,58 +57,58 @@
 
 	if (!isset($_POST['submit'])) {
 
-		print "<BR><B>Atendimento de ocorrências</B><BR>";
+		print "<BR><B>".TRANS('TTL_ATTEND_OCCO').":</B><BR>";
 
 		print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		print "<TABLE border='0'  align='center' cellpadding='3' cellspacing='2' width='100%' bgcolor='".BODY_COLOR."'>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='WHITE'>".$row['numero']."<td class='line'>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_PROB').":</TD>";
 			print "<TD width='40%' align='left' bgcolor='WHITE'>".$row['problema']."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Área:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_AREA').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='WHITE'>".$row['area']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Descrição:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('OCO_DESC').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='WHITE'>".$row['descricao']."</TD>";
 		print "</TR>";
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
 			print "<TD width='40%' align='left' bgcolor='WHITE'>".$row['unidade']."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Etiqueta do equipamento:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TAG_EQUIP').":</TD>";
 			print "<TD colspan='3' width='40%' align='left' bgcolor='WHITE'>".$row['etiqueta']."</TD>";
 		print "</TR>";
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Contato:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_CONTACT').":</TD>";
 			print "<TD width='40%' align='left' bgcolor='WHITE'>".$row['contato']."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Telefone:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_PHONE').":</TD>";
 			print "<TD colspan='3' width='40%' align='left' bgcolor='WHITE'>".$row['telefone']."</TD>";
 		print "</TR>";
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LOCAL').":</TD>";
 			print "<TD width='40%' align='left' bgcolor='WHITE'>".$row['setor']."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Operador:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_OPERATOR').":</TD>";
 			print "<TD colspan='3' width='40%' align='left' bgcolor='WHITE'>".$row['nome']."</TD>";
 		print "</TR>";
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de abertura:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
 			print "<TD width='40%' align='left' bgcolor='WHITE'>".formatDate($row['data_abertura'])."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_STATUS').":</TD>";
 			print "<TD colspan='3' width='40%' align='left' bgcolor='WHITE'>".$row['chamado_status']."</TD>";
 		print "</TR>";
 
 
 		if ($linhas !=0) { //ASSENTAMENTOS DO CHAMADO
 			print "<tr><td colspan='6'><IMG ID='imgAssentamento' SRC='../../includes/icons/open.png' width='9' height='9' ".
-					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>Existe(m) <font color='red'>".$linhas."</font>".
-					" assentamento(s) para essa ocorrência.</b></td></tr>";
+					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas."</font>".
+					" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 			//style='{padding-left:5px;}'
 			print "<tr><td colspan='6' ><div id='Assentamento' style='{display:none}'>"; //style='{display:none}'
@@ -122,7 +118,7 @@
 				$printCont = $i+1;
 				print "<TR>";
 				print "<TD width='20%' ' bgcolor='".TD_COLOR."' valign='top'>".
-						"Assentamento ".$printCont." de ".$linhas." por ".$rowAssentamento['nome']." em ".
+						"".TRANS('FIELD_NESTING')." ".$printCont." de ".$linhas." por ".$rowAssentamento['nome']." em ".
 						"".formatDate($rowAssentamento['data'])."".
 					"</TD>";
 				print "<TD colspan='5' align='left' bgcolor='white' valign='top'>".nl2br($rowAssentamento['assentamento'])."</TD>";
@@ -135,11 +131,11 @@
 
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Assentamento:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('FIELD_NESTING').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='WHITE'>";
 
 				if (!$_SESSION['s_formatBarOco']) {
-					print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>Em atendimento por ".$_SESSION['s_usuario']."</textarea>";
+					print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."</textarea>";
 				} else
 					print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 				?>
@@ -148,7 +144,7 @@
 					if (bar ==1) {
 						var oFCKeditor = new FCKeditor( 'assentamento' ) ;
 						oFCKeditor.BasePath = '../../includes/fckeditor/';
-						oFCKeditor.Value = '<?print "Em atendimento por ".$_SESSION['s_usuario']."";?>';
+						oFCKeditor.Value = '<?print "".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."";?>';
 						oFCKeditor.ToolbarSet = 'ocomon';
 						oFCKeditor.Width = '570px';
 						oFCKeditor.Height = '100px';
@@ -160,13 +156,14 @@
 
 		print "<TR>";
 			print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
-				print "<input type='hidden' name='data_gravada' value='".date("Y-m-d H:i:s")."'>";
-				print "<input type='hidden' name='numero' value='".$_GET['numero']."'>";
+				print "<input type='hidden' name='data_gravada' value='".formatDate(date("Y-m-d H:i:s"))."'>";
+				//print "<input type='hidden' name='numero' value='".$_GET['numero']."'>";
+				print "<input type='hidden' name='numero' value='".$numero."'>";
 			print "<TD colspan='3' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-					"<input type='submit' class='button' value='  Ok  ' name='submit'>";
+					"<input type='submit' class='button' value='  ".TRANS('BT_OK')."  ' name='submit'>";
 			print "</TD>";
 			print "<TD colspan='3' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-				"<INPUT type='button' class='button' value='Cancelar' name='desloca' ONCLICK='javascript:history.back()'>".
+				"<INPUT type='button' class='button' value='".TRANS('BT_CANCEL')."' name='desloca' ONCLICK='javascript:history.back()'>".
 				"</TD>";
 			print "</table>";
 			print "</TR>";
@@ -191,10 +188,21 @@
 		$resultado = mysql_query($queryA);
 
 		$status = 2; //Em atendimento
-		if ($data_atend!=null) {
-			$query2 = "UPDATE ocorrencias SET status=".$status.", operador=".$_SESSION['s_uid']." WHERE numero='".$_POST['numero']."'";
-		} else
-			$query2 = "UPDATE ocorrencias SET status=".$status.", operador=".$_SESSION['s_uid'].", data_atendimento='".date("Y-m-d H:i:s")."' WHERE numero='".$_POST['numero']."'";
+
+		//CASO O CHAMADO ESTEJA AGENDADO
+		if ($row['data_abertura'] >= date("Y-m-d H:i:s")){
+			$data_abertura = date("Y-m-d H:i:s");
+		} else {
+			$data_abertura = $row['data_abertura'];
+		}
+
+
+		if ($data_atend!="") {
+			$query2 = "UPDATE ocorrencias SET status=".$status.", operador=".$_SESSION['s_uid'].", data_abertura = '".$data_abertura."', oco_scheduled=0 WHERE numero='".$_POST['numero']."'";
+
+		} else {
+			$query2 = "UPDATE ocorrencias SET status=".$status.", operador=".$_SESSION['s_uid'].", data_atendimento='".date("Y-m-d H:i:s")."', data_abertura = '".$data_abertura."', oco_scheduled=0 WHERE numero='".$_POST['numero']."'";
+		}
 
 		$resultado2 = mysql_query($query2);
 
@@ -202,9 +210,9 @@
 		if (($resultado == 0) or ($resultado2 == 0))
 		{
 			if ($resultado == 0)
-				$aviso = "Um erro ocorreu ao tentar incluir dados no sistema - INSERT.".$query;
+				$aviso = TRANS('MSG_ERR_INSERT_DATA_SYSTEM').$query;
 			if ($resultado2 == 0)
-				$aviso = "Um erro ocorreu ao tentar incluir dados no sistema - UPDATE.";
+				$aviso = TRANS('MSG_ERR_UPDATE_DATA_SYSTEM');
 		}
 		else
 		{
@@ -214,14 +222,18 @@
 			$regDoc1 = mysql_num_rows($execDoc1);
 			$rowDoc1 = mysql_fetch_array($execDoc1);
 			if ($regDoc1 >0) {
+
 				$sqlDoc  = "update doc_time set doc_edit=doc_edit+".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." where doc_id = ".$rowDoc1['doc_id']."";
-				$execDoc =mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!<br>').$sqlDoc;
+				$execDoc =mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 			} else {
 				$sqlDoc = "insert into doc_time (doc_oco, doc_open, doc_edit, doc_close, doc_user) values (".$_POST['numero'].", 0, ".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." , 0, ".$_SESSION['s_uid'].")";
-				$execDoc = mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!!<br>').$sqlDoc;
+				$execDoc = mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 			}
 
 			##ROTINAS PARA GRAVAR O TEMPO DO CHAMADO EM CADA STATUS
+
+
+			//$status = novo status (2)  $row['status_cod'] = Status anterior
 			if ($status != $row['status_cod']) { //O status foi alterado
 				##TRATANDO O STATUS ANTERIOR
 				//Verifica se o status 'atual' já foi gravado na tabela 'tempo_status' , em caso positivo, atualizo o tempo, senão devo gravar ele pela primeira vez.
@@ -245,7 +257,8 @@
 					$dt->tempo_valido($dt->data1,$dt->data2,$H_horarios[$areaT][0],$H_horarios[$areaT][1],$H_horarios[$areaT][2],$H_horarios[$areaT][3],"H");
 					$segundos = $dt->diff["sValido"]; //segundos válidos
 
-					$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+$segundos) , ts_data ='".date("Y-m-d H:i:s")."' where ts_ocorrencia = ".$row['numero']." and
+
+					$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+".$segundos.") , ts_data ='".date("Y-m-d H:i:s")."' where ts_ocorrencia = ".$row['numero']." and
 							ts_status = ".$row['status_cod']." ";
 					$exec_upd = mysql_query($sql_upd);
 					if ($exec_upd ==0) $error.= " erro 2";
@@ -273,7 +286,7 @@
 				}
 			}
 
-			$aviso = "OK. Assentamento de atendimento incluido com sucesso.<br><a href='encerramento.php?numero=".$_POST['numero']."'>Encerrar</a>";
+			$aviso = TRANS('MSG_INCLUDE_NESTING_OK')."<br><a href='encerramento.php?numero=".$_POST['numero']."'>".TRANS('TXT_FINISH')."</a>";
 		}
 
 		$_SESSION['aviso'] = $aviso;

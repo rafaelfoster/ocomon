@@ -24,7 +24,7 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
@@ -40,9 +40,9 @@
 	$result = mysql_query($query);
 
 	//----------------TABELA  -----------------//
-	print "<br><br><p align='center'>PRÓXIMOS VENCIMENTOS DE GARANTIA (até 3 anos):</p>";
+	print "<br><br><p align='center'>".TRANS('TTL_PREVIEWS_EXP_GUARANTEE').":</p>";
 	print "<table cellspacing='0' border='1' align='center' style=\"{border-collapse:collapse;}\">";
-	print "<tr><td ><b>DATA</b></td><td ><b>QUANTIDADE</b></td><td ><b>TIPO</b></td><td ><b>MODELO</b></td></tr>";
+	print "<tr><td ><b>".TRANS('COL_DATE_2')."</b></td><td ><b>".TRANS('COL_AMOUNT')."</b></td><td ><b>".TRANS('COL_TYPE_2')."</b></td><td ><b>".TRANS('COL_MODEL_2')."</b></td></tr>";
 	//-----------------FINAL DA TABELA  -----------------------//
 
 	$tt_garant = 0;
@@ -52,7 +52,7 @@
 		$tt_garant+= $row['quantidade'];
 		print "<tr><td >".$vencimento."</td><td align='center'>".$row['quantidade']."</td><td >".$row['tipo']."</td><td >".$row['fabricante']." ".$row['modelo']."</td></tr>";
 	} // while
-	print "<tr><td ><b>TOTAL</b></td><td colspan='3'><b>".$tt_garant."</b></td></tr>";
+	print "<tr><td ><b>".TRANS('COL_OVERALL')."</b></td><td colspan='3'><b>".$tt_garant."</b></td></tr>";
 	print "</table><br><br>";
 
 
@@ -63,7 +63,7 @@
 	print "<tr><td ></TD></tr>";
 
 
-	print "<tr><td width='80%' align='center'><b>Sistema em desenvolvimento pelo setor de Helpdesk  do <a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle</a>.</b></td></tr>";
+	print "<tr><td width='80%' align='center'><b>".TRANS('SLOGAN_OCOMON')." <a href='http://www.unilasalle.edu.br' target='_blank'>".TRANS('COMPANY')."</a>.</b></td></tr>";
 	print "</TABLE>";
 
 print "</BODY>";

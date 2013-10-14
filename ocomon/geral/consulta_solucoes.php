@@ -32,35 +32,35 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Consulta a Soluções e Problemas:</B><BR>";
+	print "<BR><B>".TRANS('TLT_CONS_SOLUT_PROB').":</B><BR>";
 
 	print "<FORM method='POST' name='form1' action='mostra_resultado_solucoes.php' onSubmit='return valida()'>";
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data Inicial:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".
                 		"<INPUT type='text' class='data' name='data_inicial' id='idDataInicial'><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></TD>";
+                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
 
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data Final:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_FINISH').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".
                 		"<INPUT type='text' class='data' name='data_final' id='idDataFinal'><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></TD>";
+                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
         print "</TR>";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
                 print "<TD colspan='3' width='80%' align='left' bgcolor='".BODY_COLOR."'>".
                 		"<TEXTAREA class='textarea' name='problema' id='idDescricao'></textarea>".
                 	"</TD>";
 	print "</TR>";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Operador:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('MNS_OPERADOR').":</TD>";
                 print "<TD width='30%' colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
                 	print "<SELECT class='select' name='operador' size=1>";
-                		print "<option value=-1 selected>-  Selecione um operador -</option>";
+                		print "<option value=-1 selected>".TRANS('OCO_SEL_OPERATOR')."</option>";
 				$query = "SELECT * from usuarios order by nome";
 				$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
@@ -73,13 +73,13 @@
         print "</TR>";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Retorna:</TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_RETURN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".
-                		"<input type='checkbox' name='anyword'>Pelo menos uma das palavras".
+                		"<input type='checkbox' name='anyword'>".TRANS('OPT_ONE_WORD')."".
                 	"</TD>";
 
                 print "<TD width='20%' colspan='2' align='left' bgcolor='".BODY_COLOR."'>".
-                		"<input type='checkbox' name='onlyImgs'>Apenas chamados com anexos".
+                		"<input type='checkbox' name='onlyImgs'>".TRANS('OPT_ONLY_CALL_ATTACH')."".
                 	"</TD>";
 
 
@@ -89,10 +89,10 @@
         print "<TR>";
                 print "<BR>";
                 print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-                		"<input type='submit'  class='button' value='    Ok    ' name='submit'>";
+                		"<input type='submit'  class='button' value='".TRANS('BT_OK')."' name='submit'>";
 		print "</TD>";
                 print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-                		"<INPUT type='button'  class='button' value='Cancelar' name='desloca' onClick=\"redirect('abertura.php');\">".
+                		"<INPUT type='button'  class='button' value='".TRANS('BT_CANCEL')."' name='desloca' onClick=\"redirect('abertura.php');\">".
                 	"</TD>";
         print "</TR>";
 

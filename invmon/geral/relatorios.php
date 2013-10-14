@@ -27,76 +27,77 @@
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
 	$cab = new headers;
-	$cab->set_title(TRANS("html_title"));
+	$cab->set_title(TRANS('TTL_INVMON'));
 
-	print "<BR><B>Relatórios:</B><BR>";
+	print "<BR><B>".TRANS('MNL_RELATORIOS').":</B><BR>";
 
-        print "<br><table><TR><td class='line'><B>Escolha um dos relatórios prontos, ou clique <a href='consulta_comp.php'>AQUI</a> para um relatório personalizado.</B></TD></TR></table>";
+        print "<br><table><TR><td class='line'><B>".TRANS('TXT_REPORTS_OPTIONS_1')." <a href='consulta_comp.php'>".TRANS('TLT_HERE')."</a> ".TRANS('TXT_REPORTS_OPTIONS_2')."</B></TD></TR></table>";
         //print "<br><a href=relatorio_geral.php>Relatório geral.</a></br>";
 
         print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
-        print "<TR><td class='line'><b>Estatísticas</b></TD></TR>";
+        print "<TR><td class='line'><b>".TRANS('TXT_ESTATISTIC')."</b></TD></TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line'><a href='estat_geral.php'>Estatística geral de equipamentos cadastrados</a></TD>".
-		"<td class='line'><a href='hw_alteracoes.php'>Alterações de HW por período</a></TD>".
+		"<td class='line'><a href='estat_geral.php'>".TRANS('TTL_REP_EST_GENERAL_EQUIP')."</a></TD>".
+		"<td class='line'><a href='hw_alteracoes.php'>".TRANS('SUBTTL_ALTER_HW_PERIOD')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_topten_modelo.php'>10 modelos mais cadastrados</a></TD>".
+		"<td class='line'><a href='estat_topten_modelo.php'>".TRANS('TTL_TOP_TEN')."</a></TD>".
+		"<td class='line'><a href='pieces_x_technician.php'>".TRANS('PIECES_BY_TECHNICIAN')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_equippordia.php'>Quantidade de equipamentos cadastrados por dia</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_equippordia.php'>".TRANS('TTL_QTD_EQUIP_CAD_FOR_DAY')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_equipporlocal.php'>Quantidade de equipamento por Setor</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_equipporlocal.php'>".TRANS('TTL_QTD_EQUIP_CAD_FOR_LOCAL')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_compporlocal.php'>Computadores x Setor</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_compporlocal.php'>".TRANS('TTL_COMP_X_SECTOR')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_comppormemoria.php'>Computadores x memória</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_comppormemoria.php'>".TRANS('TTL_COMP_X_MEMORY')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_modelo_memoria.php'>Modelos x memória</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_modelo_memoria.php'>".TRANS('TTL_MODEL_X_MEMORY')."</a></TD>".
 	"</TR>";
 
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_compporprocessador.php'>Computadores x processador</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_compporprocessador.php'>".TRANS('TTL_COMP_X_PROCESSOR')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_compporhd.php'>Computadores x HD</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_compporhd.php'>".TRANS('TTL_COMP_X_HD')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_situacao_geral.php'>Situação geral dos equipamentos</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_situacao_geral.php'>".TRANS('TTL_SIT_GENERAL_EQUIP')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_equipporsituacao.php'>Equipamentos x situação</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_equipporsituacao.php'>".TRANS('TTL_EQUIP_X_SITUAC')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_instituicao.php'>Distribuição geral de equipamentos por Unidade</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_instituicao.php'>".TRANS('TTL_DIST_GENERAL_EQUIP_FOR_UNIT')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_equipporreitoria_agrup.php'>Equipamentos x reitoria</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_equipporreitoria_agrup.php'>".TRANS('TTL_EQUIP_X_MAJOR')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line' colspan='2'><a href='estat_equippordominio.php'>Equipamentos x Domínio</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_equippordominio.php'>".TRANS('TTL_EQUIP_X_DOMAIN')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line' colspan='2'><a href='estat_vencimentos.php'>Vencimentos das garantias</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_vencimentos.php'>".TRANS('TTL_EXPIRAT_GUARANTEE')."</a></TD>".
 	"</TR>";
 
 print "</table>";

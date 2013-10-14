@@ -26,7 +26,7 @@
 	//print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 
 	print "<html>";
-	print "<body>";
+	print "<body onLoad=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); \">";
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
@@ -34,7 +34,7 @@
         $hoje2 = date("d/m/Y");
 
 	$qry_config = "SELECT * FROM config ";
-	$exec_config = mysql_query($qry_config) or die ("ERRO AO TENTAR ACESSAR A TABELA CONFIG! CERTIFIQUE-SE DE QUE A TABELA EXISTE!");;
+	$exec_config = mysql_query($qry_config) or die (TRANS('ERR_TABLE_CONFIG'));
 	$row_config = mysql_fetch_array($exec_config);
 
 	$LOCK = new lock();
@@ -43,6 +43,17 @@
 		if (isset($_GET['FORCE_EDIT']) && $_GET['FORCE_EDIT'] == 1)
 			$FORCE_EDIT = 1; else $FORCE_EDIT = 0;
 		$LOCK->setLock($_GET['numero'], $_SESSION['s_uid'], $FORCE_EDIT);
+	}
+
+	if ($_SESSION['s_nivel'] ==1) {
+		$admin = true;
+		if ($_SESSION['s_allow_date_edit'] == 0){
+			$allowDateEdit = "readonly";
+		} else {
+			$allowDateEdit = "";
+		}
+	} else {
+		$admin = false;
 	}
 
 	if (!isset($_POST['submit'])) {
@@ -58,27 +69,30 @@
 		$resultado2 = mysql_query($query2);
 		$linhas2 = mysql_num_rows($resultado2);
 
-		if ($_SESSION['s_nivel'] == 1) $linkEdita = "<br><b><a href='altera_dados_ocorrencia.php?numero=".$_GET['numero']."'>Editar ocorrência como admin:</a></b><br>"; else
+		if ($_SESSION['s_nivel'] == 1) $linkEdita = "<br><b><a href='altera_dados_ocorrencia.php?numero=".$_GET['numero']."'>".TRANS('FIELD_EDIT_FOR_ADMIN').":</a></b><br>"; else
 			$linkEdita = "<br><b>Editar ocorrência:</b><br>";
 
 		print $linkEdita;
 
 
-		print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' ENCTYPE='multipart/form-data' onSubmit='return valida()'>";
+		//dump($row,'$row');
+
+
+		print "<FORM name='formulario' method='POST' action='".$_SERVER['PHP_SELF']."' ENCTYPE='multipart/form-data' onSubmit=\"return valida()\">";//
 		print "<input type='hidden' name='MAX_FILE_SIZE' value='".$row_config['conf_upld_size']."' />";
 
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
         	print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
                 	print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."' ><input class='disable' value='".$row['numero']."' disabled></TD>";
 
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_STATUS').":</TD>";
 			print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
 
 				if ($row['status'] == 4){$stat_flag="";} else $stat_flag =" where stat_id<>4 ";
 
 				print "<SELECT class='select' name='status' id='idStatus' size='1'>";
-	        		        print "<option value= '-1'>Selecione o status</option>";
+	        		        print "<option value= '-1'>".TRANS('SEL_STATUS')."</option>";
 	                		$query_stat = "SELECT * from status ".$stat_flag." order by status";
 			                $exec_stat = mysql_query($query_stat);
 					while ($row_stat = mysql_fetch_array($exec_stat))
@@ -94,28 +108,11 @@
 		print "</TR>";
 
         	print "<TR>";
-            		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+
+                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
 	                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-
-				print "<SELECT class='select' name='problema' id='idProblema' size='1'>";
-	        		        print "<option value= '-1'>Selecione o problema</option>";
-	                		$query = "SELECT * from problemas order by problema";
-			                $exec_prob = mysql_query($query);
-					while ($row_prob = mysql_fetch_array($exec_prob))
-					{
-						print "<option value=".$row_prob['prob_id']."";
-							if ($row_prob['prob_id'] == $row['problema']) {
-								print " selected";
-							}
-						print " >".$row_prob['problema']." </option>";
-					}
-				print "</select>";
-			print "</TD>";
-
-                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Área responsável:</TD>";
-	                print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
-				print "<SELECT class='select' name='sistema' id='idArea'>";
-	        		        print "<option value= '-1'>Selecione a área</option>";
+				print "<SELECT class='select' name='sistema' id='idArea' onChange=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');\">";
+	        		        print "<option value= '-1'>".TRANS('OCO_SEL_AREA')."</option>";
 	                		$query = "SELECT * from sistemas order by sistema";
 			                $exec_sis = mysql_query($query);
 			                while ($row_sis = mysql_fetch_array($exec_sis))
@@ -129,15 +126,42 @@
 				print "</select>";
 				print "</TD>";
 
+
+
+
+
+            		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_PROB').":</TD>";
+	                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
+
+
+				print "<div id='divSelProblema'>";
+					print "<input type='hidden' name='problema' id='idProblema' value='".$row['problema']."'>";
+				print "</div>";
+			print "</TD>";
+
+
+			#########################################################
+
+			print "<tr><td colspan='6' ><div id='divProblema'>"; //style='{display:none}'
+			//print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
+
+			print "</div></td></tr>";
+
+			print "<div id='idLoad' class='loading'><img src='../../includes/imgs/loading.gif'></div>";
+#################################################3
+
+
+
+
         	print "</TR>";
 	        print "<TR>";
-			print "<TD width='20%' align='left' valign='top' bgcolor='".TD_COLOR."'>Descrição:</TD>";
+			print "<TD width='20%' align='left' valign='top' bgcolor='".TD_COLOR."'>".TRANS('OCO_DESC').":</TD>";
                 	print "<TD colspan='2' width='80%' align='left' bgcolor='".BODY_COLOR."' class='wide' valign='top'><b>".nl2br($row['descricao'])."</b></TD>";
 
         		print "<td colspan='3'>&nbsp;</td>";
         	print "</TR>";
 	        print "<TR>";
-			print "<TD width='20%' align='left' valign='top' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+			print "<TD width='20%' align='left' valign='top' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
 			print "<TD  width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
 			$instituicao = $row['instituicao'];
@@ -181,23 +205,23 @@
 	                print "</TD>";
 
 
-	                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Etiqueta do equipamento:</TD>";
+	                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_TAG_EQUIP').":</TD>";
         	        print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".
         	        		"<INPUT type='text'  class='text' name='etiq' id='idEtiqueta' value ='".$row['equipamento']."'' size='15'>".
         	        	"</TD>";
         	print "</TR>";
         	print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Contato:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_CONTACT').":</TD>";
 	                print "<TD  width='30%' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".$row['contato']."' disabled></TD>";
-    	            	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Ramal:</TD>";
+    	            	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_PHONE').":</TD>";
         	        print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".$row['telefone']."' disabled></TD>";
 	        print "</TR>";
     	    	print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LOCAL').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
 				print "<SELECT  class='select' name='local' id='idLocal' size=1>";
-	        		        print "<option value= '-1'>Selecione o setor</option>";
+	        		        print "<option value= '-1'>".TRANS('SEL_SECTOR')."</option>";
 	                		$query = "SELECT * from localizacao order by local";
 			                $exec_loc = mysql_query($query);
 					while ($row_loc = mysql_fetch_array($exec_loc))
@@ -210,7 +234,7 @@
 					}
 					print "</select>";
 			print "</TD>";
-            	    	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Operador:</TD>";
+            	    	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_OPERATOR').":</TD>";
                 	print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 
 				print "<SELECT class='select' name='operador'>";
@@ -232,26 +256,46 @@
 		{
 			$antes = 4;
 			print "<TR>";
-                	print "<TD align='left' bgcolor='".TD_COLOR."'>Data de abertura:</TD>";
-                    	print "<TD align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
-			print "<TD align='left' bgcolor='".TD_COLOR."'>Data de encerramento:</TD>";
+                	print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
+                    	print "<TD align='left' bgcolor='".BODY_COLOR."'><input type='text' name='data_abertura' class='disable' value='".formatDate($row['data_abertura'])."' readonly></TD>";//disabled
+			print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_DATE_CLOSING').":</TD>";
                     	print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".formatDate($row['data_fechamento'])."' disabled></TD>";
           		print "</TR>";
 		}
         		else //chamado não encerrado
 		{
+
+			if ($row['oco_scheduled']==1){
+				$os_DataAbertura = formatDate($row['oco_real_open_date']);
+				$os_DataAgendamento = formatDate($row['data_abertura']);
+			} else {
+				$os_DataAbertura = formatDate($row['data_abertura']);
+				$os_DataAgendamento = formatDate($row['data_abertura']);
+			}
+
+
 			print "<TR>";
-			print "<TD align='left' bgcolor='".TD_COLOR."'>Data de abertura:</TD>";
-			print "<TD colspan='5' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".formatDate($row['data_abertura'])."' disabled></TD>";
-			print "</TR>";
+			print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
+			print "<TD align='left' bgcolor='".BODY_COLOR."'><input type='text' name='data_abertura' class='disable' value='".$os_DataAbertura."' readonly></TD>";
+
+
+			if ($row['oco_scheduled']==1){
+				print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SCHEDULED_TO').":&nbsp;<input type='checkbox' value='ok' name='chk_squedule' onChange=\"checarSchedule('idDataAgendamento');\">".TRANS('RE-SCHEDULE')."</TD>";
+				print "<TD align='left' bgcolor='".BODY_COLOR."'><input type='text' name='data_agendamento' id='idDataAgendamento' class='text' value='".$os_DataAgendamento."' disabled></TD>"; //disabled
+				print "</tr>";
+			} else {
+					print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_SCHEDULE').": <input type='checkbox' value='ok' name='chk_squedule' onChange=\"checarSchedule('');\"></TD>";
+					print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><input type='text' name='data_agendamento' id='idDataAgendamento' class='text' value='".date("d/m/Y H:i:s")."' disabled></TD>"; //disabled
+				print "</TR>";
+			}
 		}
 
 		print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Assentamento:</TD>";
+                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('FIELD_NESTING').":</TD>";
                 	print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 			if (!$_SESSION['s_formatBarOco']) {
 				print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".
-						"Ocorrência encaminhada/alterada por ".$_SESSION['s_usuario']."</textarea>";
+						"".TRANS('TXTAREA_OCCO_DIRECT_MODIFY')." ".$_SESSION['s_usuario']."</textarea>";
 			} else
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 			?>
@@ -260,7 +304,7 @@
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'assentamento' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = '<?print "Ocorrência encaminhada/alterada por ".$_SESSION['s_usuario']."";?>';
+					oFCKeditor.Value = '<?print "".TRANS('TXTAREA_OCCO_DIRECT_MODIFY')." ".$_SESSION['s_usuario']."";?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					oFCKeditor.Width = '570px';
 					oFCKeditor.Height = '100px';
@@ -272,7 +316,7 @@
         	print "</TR>";
 
 			$qryTela = "select * from imagens where img_oco = ".$row['numero']."";
-			$execTela = mysql_query($qryTela) or die ("NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!");
+			$execTela = mysql_query($qryTela) or die (TRANS('MSG_ERR_NOT_INFO_IMAGE'));
 			//$rowTela = mysql_fetch_array($execTela);
 			$isTela = mysql_num_rows($execTela);
 			$cont = 0;
@@ -281,7 +325,7 @@
 				$cont++;
 				print "<tr>";
 				$size = round($rowTela['img_size']/1024,1);
-				print "<TD  bgcolor='".TD_COLOR."' >Anexo ".$cont."&nbsp;[".$rowTela['img_tipo']."]<br>(".$size."k):</td>";
+				print "<TD  bgcolor='".TD_COLOR."' >".TRANS('FIELD_ATTACH')." ".$cont."&nbsp;[".$rowTela['img_tipo']."]<br>(".$size."k):</td>";
 
 				//if(eregi("^image\/(pjpeg|jpeg|png|gif|bmp)$", $rowTela["img_tipo"])) {
 				if(isImage($rowTela["img_tipo"])) {
@@ -300,7 +344,7 @@
 
 
 			print "<tr>";
-				print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">Anexar imagem:</TD>";
+				print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('FIELD_ATTACH_IMAGE').":</TD>";
 				print "<TD colspan='5' align='left' bgcolor=".BODY_COLOR."><INPUT type='file' class='text' name='img' id='idImg'></TD>"; //class='text'
 			print "</tr>";
 
@@ -313,24 +357,24 @@
 				$habilita = "";
 			} else $habilita = "disabled";
 
-			print "<tr><td bgcolor='".TD_COLOR."'>Enviar e-mail para:</td>".
-					"<td colspan='2'><input type='checkbox' value='ok' name='mailAR' title='Envia email para a área selecionada para esse chamado'>Área Responsável&nbsp;&nbsp;".
-									"<input type='checkbox' value='ok' name='mailOP' title='Envia e-mail para o operador selecionado no chamado'>Operador&nbsp;&nbsp;".
-									"<input type='checkbox' value='ok' name='mailUS' title='teste' ".$habilita."><a title='Essa opção só fica habilitada para chamados abertos pelo próprio usuário'>Usuário</a></td>".
+			print "<tr><td bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SEND_MAIL_TO').":</td>".
+					"<td colspan='2'><input type='checkbox' value='ok' name='mailAR' title='".TRANS('HNT_SENDMAIL_AREA_SEL_CALL')."'>".TRANS('OCO_FIELD_AREA')."&nbsp;&nbsp;".
+									"<input type='checkbox' value='ok' name='mailOP' title='".TRANS('HNT_SENDMAIL_OPERATOR_SEL_CALL')."'>".TRANS('OCO_FIELD_OPERATOR')."&nbsp;&nbsp;".
+									"<input type='checkbox' value='ok' name='mailUS' title='teste' ".$habilita."><a title='".TRANS('MSG_OPT_CALL_OPEN_USER')."'>".TRANS('OCO_FIELD_USER')."</a></td>".
 					"</tr>";
 
 			//print "<tr><td colspan='3'>&nbsp;</td></tr>";
 			print "<tr><td colspan='3' align='center'>";
 			if ($data_atend =="") {
-				print "<input type='checkbox' value='ok' name='resposta' checked title='Desmarque essa opção se esse assentamento não corresponder a uma primeira resposta do chamado'>1.ª Resposta";
+				print "<input type='checkbox' value='ok' name='resposta' checked title='".TRANS('HNT_NOT_MARK_OPT_FIRST_REPLY_CALL')."'>".TRANS('FIELD_FIRST_REPLY')."";
 			}
 			//print "</td><td colspan='3'></td></tr>";
 
 
 		if ($linhas2 > 0) { //ASSENTAMENTOS DO CHAMADO
 			print "<tr><td colspan='6'><IMG ID='imgAssentamento' SRC='../../includes/icons/open.png' width='9' height='9' ".
-					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>Existe(m) <font color='red'>".$linhas2."</font>".
-					" assentamento(s) para essa ocorrência.</b></td></tr>";
+					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas2."</font>".
+					" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 			//style='{padding-left:5px;}'
 			print "<tr><td colspan='6' ><div id='Assentamento' style='{display:none}'>"; //style='{display:none}'
@@ -340,7 +384,7 @@
 				$printCont = $i+1;
 				print "<TR>";
 				print "<TD width='20%' ' bgcolor='".TD_COLOR."' valign='top'>".
-						"Assentamento ".$printCont." de ".$linhas2." por ".$rowAssentamento['nome']." em ".
+						"".TRANS('FIELD_NESTING')." ".$printCont." de ".$linhas2." por ".$rowAssentamento['nome']." em ".
 						"".formatDate($rowAssentamento['data'])."".
 					"</TD>";
 				print "<TD colspan='5' align='left' bgcolor='".BODY_COLOR."' valign='top'>".nl2br($rowAssentamento['assentamento'])."</TD>";
@@ -355,20 +399,69 @@
 		print "<tr>";
 		print "<TD colspan='3' align='center' width='50%' bgcolor='".BODY_COLOR."'>";
 			print "<input type='hidden' name='data_gravada' value='".date("Y-m-d H:i:s")."'>";
-			print "<input type='submit' class='button' value='  Ok  ' name='submit'>";
+			print "<input type='submit' class='button' value='".TRANS('BT_OK')."' name='submit'>";
 			print "<input type='hidden' name='numero' value='".$_GET['numero']."'>";
 			print "<input type='hidden' name='antes' value='".$antes."'>";
 			print "<input type='hidden' name='data_atend' value='".$data_atend."'>";
 			print "<input type='hidden' name='abertopor' value='".$rowmail['user_id']."'>";
+
+			print "<input type='hidden' name='data_abertura_hidden' value='".$row['data_abertura']."'>";
+
                 print "</TD>";
                 print "<TD colspan='3' align='center' width='25%' bgcolor='".BODY_COLOR."'>";
-			print "<INPUT type='reset' class='button' value='Cancelar' onClick='javascript:history.back()' name='cancelar'>";
+			print "<INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' onClick='javascript:history.back()' name='cancelar'>";
 		print "</TD>";
 
 		print "</TR>";
+
+		print "</TABLE>";
+		print "</FORM>";
 	} else
-	if (isset($_POST['submit'])) {
-		$depois = $_POST['status'];
+	if (isset($_POST['submit']) && $_POST['submit']== TRANS('BT_OK') ) {
+
+		//dump($_POST,'DUMP POST'); exit;
+
+		$agendado = 0;
+
+		$qryChkDate = "SELECT * FROM ocorrencias WHERE numero = ".$_POST['numero']."";
+		$execChkDate = mysql_query($qryChkDate);
+		$rowChkDate = mysql_fetch_array($execChkDate);
+
+		//dump($rowChkDate,'$rowChkDate'); exit;
+
+		//CONTROLE PARA PEGAR AS DATAS CORRETAS: DE AGENDAMENTO E ABERTURA
+		if (isset($_POST['chk_squedule']) && $_POST['chk_squedule']!=""){
+
+			#AVALIANDO QUAL SERÁ O STATUS PARA O CHAMADO AGENDADO
+			if ($rowChkDate['data_abertura'] < date("Y-m-d H:i:s")){
+				$depois = $row_config['conf_schedule_status_2'];//STATUS ALTERADO NA EDIÇÃO
+			} else {
+				$depois = $row_config['conf_schedule_status'];//STATUS ALTERADO NA ABERTURA
+			}
+
+
+			if ($rowChkDate['oco_real_open_date'] != "") {
+				$realOpenDate = $rowChkDate['oco_real_open_date'];
+			} else {
+				$realOpenDate = FDate($_POST['data_abertura']);
+			}
+
+			$data_agendamento = FDate($_POST['data_agendamento']);
+			$agendado = 1;
+
+		} else {
+			$depois = $_POST['status'];//NOVO STATUS
+
+			if ($rowChkDate['oco_real_open_date'] != "") {
+				$realOpenDate = $rowChkDate['oco_real_open_date'];
+			} else {
+				$realOpenDate = $_POST['data_abertura'];
+			}
+
+			$data_agendamento = FDate($_POST['data_abertura']);
+			$agendado = $rowChkDate['oco_scheduled'];
+		}
+
 		$erro= false;
 		if (!$erro)  {
 			$sqlPost = "select o.*, u.* from ocorrencias as o, usuarios as u where o.operador = u.user_id and numero=".$_POST['numero']."";
@@ -376,11 +469,25 @@
 			$row = mysql_fetch_array($resultadoPost);
 
 
+		//CONTROLE PARA GARANTIR QUE NÃO EXISTA DATA DE ABERTURA ZERADA
+		if ( (FDate($data_agendamento) == '0000-00-00 00:00:00') ){
+			if ($row['data_abertura'] != '0000-00-00 00:00:00' && !empty($row['data_abertura']) ) {
+				$data_agendamento = $row['data_abertura'];
+			} else
+			if ($row['oco_real_open_date'] != '0000-00-00 00:00:00' && !empty($row['oco_real_open_date']) ) {
+				$data_agendamento = $row['oco_real_open_date'];
+			} else
+			if ($row['data_atendimento'] != '0000-00-00 00:00:00' && !empty($row['data_atendimento']) ) {
+				$data_agendamento = $row['data_atendimento'];
+			}
+		}
+
+
 
 			$gravaImg = false;
 			if (isset($_FILES['img']) and $_FILES['img']['name']!="") {
 				$qryConf = "SELECT * FROM config";
-				$execConf = mysql_query($qryConf) or die ("NÃO FOI POSSÍVEL ACESSAR AS INFORMAÇÕES DE CONFIGURAÇÃO, A TABELA CONF FOI CRIADA?");
+				$execConf = mysql_query($qryConf) or die (TRANS('MSG_ERR_NOT_ACCESS_INFO_CONFIG'));
 				$rowConf = mysql_fetch_array($execConf);
 				$arrayConf = array();
 				$arrayConf = montaArray($execConf,$rowConf);
@@ -389,7 +496,7 @@
 				if ($upld =="OK") {
 					$gravaImg = true;
 				} else {
-					$upld.="<br><a align='center' <a onClick=\"javascript:history.back();\"><img src='".ICONS_PATH."/back.png' width='16px' height='16px'>&nbsp;Voltar</a>"; //onClick=\"exibeEscondeImg('idAlerta');\"
+					$upld.="<br><a align='center' <a onClick=\"javascript:history.back();\"><img src='".ICONS_PATH."/back.png' width='16px' height='16px'>&nbsp;".TRANS('TXT_RETURN')."</a>"; //onClick=\"exibeEscondeImg('idAlerta');\"
 					print "</table>";
 					print "<div class='alerta' id='idAlerta'><table bgcolor='#999999'><tr><td colspan='2' bgcolor='yellow'>".$upld."</td></tr></table></div>";
 					//print "<script>javascript:history.back();</script>";
@@ -436,11 +543,11 @@
 					exit;
 				}*/
 				$exec = mysql_query($SQL);// or die ("NÃO FOI POSSÍVEL GRAVAR O ARQUIVO NO BANCO DE DADOS! ".$SQL);
-				if ($exec == 0) $aviso.= "NÃO FOI POSSÍVEL ANEXAR O ARQUIVO!<br>";
+				if ($exec == 0) $aviso.= "".TRANS('MSG_ERR_NOT_ATTACH_FILE')."<br>";
 			}
 
 			$sqlMailLogado = "select * from usuarios where login = '".$_SESSION['s_usuario']."'";
-			$execMailLogado = mysql_query($sqlMailLogado) or die('ERRO AO TESTAR RECUPERAR AS INFORMAÇÕES DO USUÁRIO!');
+			$execMailLogado = mysql_query($sqlMailLogado) or die(TRANS('MSG_ERR_RESCUE_INFO_USER'));
 			$rowMailLogado = mysql_fetch_array($execMailLogado);
 
 			$qryLocal = "select * from localizacao where loc_id=".$_POST['local']."";
@@ -448,7 +555,7 @@
 			$rowLocal = mysql_fetch_array($execLocal);
 
 			$qryfull = $QRY["ocorrencias_full_ini"]." WHERE o.numero = ".$_POST['numero']."";
-			$execfull = mysql_query($qryfull) or die('ERRO, NÃO FOI POSSÍVEL RECUPERAR AS VARIÁVEIS DE AMBIENTE!'.$qryfull);
+			$execfull = mysql_query($qryfull) or die(TRANS('MSG_ERR_RESCUE_VARIA_SURROU').$qryfull);
 			$rowfull = mysql_fetch_array($execfull);
 
 			$VARS = array();
@@ -463,17 +570,18 @@
 			$VARS['%area%'] = $rowfull['area'];
 			$VARS['%operador%'] = $rowfull['nome'];
 			$VARS['%editor%'] = $rowMailLogado['nome'];
+			$VARS['%aberto_por%'] = $rowfull['aberto_por'];
 			$VARS['%problema%'] = $rowfull['problema'];
 			$VARS['%versao%'] = VERSAO;
 
 			$qryconf = "SELECT * FROM mailconfig";
-			$execconf = mysql_query($qryconf) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE ENVIO DE E-MAIL!');
+			$execconf = mysql_query($qryconf) or die (TRANS('MSG_ERR_RESCUE_SEND_EMAIL'));
 			$rowconf = mysql_fetch_array($execconf);
 
 			if (isset($_POST['mailOP']) ){
 				$event = 'edita-para-operador';
 				$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-				$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+				$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 				$rowmsg = mysql_fetch_array($execmsg);
 
 				$sqlMailOper = "select * from usuarios where user_id =".$_POST['operador']."";
@@ -486,7 +594,7 @@
 			if (isset($_POST['mailAR'])){
 				$event = 'edita-para-area';
 				$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-				$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+				$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 				$rowmsg = mysql_fetch_array($execmsg);
 
 				$sqlMailArea = "select * from sistemas where sis_id = ".$_POST['sistema']."";
@@ -498,50 +606,62 @@
 			if (isset($_POST['mailUS'])){
 				$event = 'edita-para-usuario';
 				$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-				$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+				$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 				$rowmsg = mysql_fetch_array($execmsg);
 
 
 				$sqlMailUs = "select * from usuarios where user_id = ".$_POST['abertopor']."";
-				$execMailUs = mysql_query($sqlMailUs) or die('NÃO FOI POSSÍVEL ACESSAR A BASE DE USUÁRIOS PARA O ENVIO DE EMAIL!');
+				$execMailUs = mysql_query($sqlMailUs) or die(TRANS('MSG_ERR_RESCUE_SEND_EMAIL'));
 				$rowMailUs = mysql_fetch_array($execMailUs);
 
 				$qryresposta = "select u.*, a.* from usuarios u, sistemas a where u.AREA = a.sis_id and u.user_id = ".$_SESSION['s_uid']."";
-				$execresposta = mysql_query($qryresposta) or die ('NÃO FOI POSSÍVEL IDENTIFICAR O EMAIL PARA RESPOSTA!');
+				$execresposta = mysql_query($qryresposta) or die (TRANS('MSG_ERR_NOT_IDENTIFY_EMAIL'));
 				$rowresposta = mysql_fetch_array($execresposta);
 
 				send_mail($event, $rowMailUs['email'], $rowconf, $rowmsg, $VARS);
 			}
 
 
-			$resultado3 = mysql_query($queryA) or die('NÃO FOI POSSÍVEL GRAVAR AS INFORMAÇÕES DE EDIÇÃO DO CHAMADO!<br>'.$queryA);
+			$resultado3 = mysql_query($queryA) or die(TRANS('MSG_NOT_SAVE_INFO_EDIT_CALL').'<br>'.$queryA);
 
-			if ($_POST['antes'] != $depois) //Status alterado!!
+
+			if (!isset($_POST['radio_prob'])){
+				//$catProb = $problema;
+				$catProb = $_POST['problema'];
+			} else {
+				$catProb = $_POST['radio_prob'];
+			}
+
+			if ($_POST['antes'] != $depois) //Status alterado!!   $_POST['antes']: status anterior
 			{   //$status!=1 and
-				if (($_POST['data_atend']==null) and ($_POST['status']!=4) and (isset($_POST['resposta'])) ) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
+				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta'])) ) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
-					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$_POST['problema'].", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$_POST['status'].", data_atendimento='".date('Y-m-d H:i:s')."' WHERE numero=".$_POST['numero']."";
+					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado." WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}  else
 				{
-					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$_POST['problema']." , instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$_POST['status']." WHERE numero=".$_POST['numero']."";
+					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb." , instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", ".
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado." WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			} else
 			{
-				if (($_POST['data_atend']==null) and ($_POST['status']!=4) and (isset($_POST['resposta']) )) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
+				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta']) )) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
-					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$_POST['problema'].", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$_POST['status'].", data_atendimento='".date('Y-m-d H:i:s')."' WHERE numero=".$_POST['numero']."";
+					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado." WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				} else {
-					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$_POST['problema'].", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", status=".$_POST['status']." WHERE numero=".$_POST['numero']."";
+					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", status=".$depois.", ".
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado." WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			}
 
 			if (($resultado3==0) OR ($resultado4 == 0))
 			{
-				$aviso = "ERRO DE ACESSO. Um erro ocorreu ao tentar alterar ocorrência no sistema. - $query";
+				$aviso = TRANS('MSG_ERR_ACCESS').$query;
 			}
 			else
 			{
@@ -551,17 +671,18 @@
 				$rowDoc1 = mysql_fetch_array($execDoc1);
 				if ($regDoc1 >0) {
 					$sqlDoc  = "update doc_time set doc_edit=doc_edit+".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." where doc_id = ".$rowDoc1['doc_id']."";
-					$execDoc =mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!<br>').$sqlDoc;
+					$execDoc =mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 				} else {
 					$sqlDoc = "insert into doc_time (doc_oco, doc_open, doc_edit, doc_close, doc_user) values (".$_POST['numero'].", 0, ".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." , 0, ".$_SESSION['s_uid'].")";
-					$execDoc = mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!!<br>').$sqlDoc;
+					$execDoc = mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 				}
 
 				##ROTINAS PARA GRAVAR O TEMPO DO CHAMADO EM CADA STATUS
-				if ($_POST['status'] != $row['status']) { //O status foi alterado
+				//if ($_POST['status'] != $row['status']) { //O status foi alterado
+				if ($_POST['antes'] != $depois) { //Status alterado!!
 				##TRATANDO O STATUS ANTERIOR
 				//Verifica se o status 'atual' já foi gravado na tabela 'tempo_status' , em caso positivo, atualizo o tempo, senão devo gravar ele pela primeira vez.
-					$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$row['numero']." and ts_status = ".$row['status']." ";
+					$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$row['numero']." and ts_status = ".$_POST['antes']." ";
 					$exec_sql = mysql_query($sql_ts_anterior);
 
 					if ($exec_sql == 0) $error= " erro 1";
@@ -584,35 +705,35 @@
 						$segundos = $dt->diff["sValido"]; //segundos válidos
 
 						$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+".$segundos.") , ts_data ='".date("Y-m-d H:i:s")."' where ts_ocorrencia = ".$row['numero']." and
-								ts_status = ".$_POST['status']." ";
+								ts_status = ".$_POST['antes']." ";
 						$exec_upd = mysql_query($sql_upd);
 						if ($exec_upd ==0) $error.= " erro 2";
 
 					} else {
-						$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$row['numero'].", ".$_POST['status'].", 0, '".date("Y-m-d H:i:s")."' )";
+						$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$row['numero'].", ".$_POST['antes'].", 0, '".date("Y-m-d H:i:s")."' )";
 						$exec_ins = mysql_query ($sql_ins);
 						if ($exec_ins == 0) $error.= " erro 3 ";
 					}
 					##TRATANDO O NOVO STATUS
 					//verifica se o status 'novo' já está gravado na tabela 'tempo_status', se estiver eu devo atualizar a data de início. Senão estiver gravado então devo gravar pela primeira vez
-					$sql_ts_novo = "select * from tempo_status where ts_ocorrencia = ".$row['numero']." and ts_status = ".$_POST['status']." ";
+					$sql_ts_novo = "select * from tempo_status where ts_ocorrencia = ".$row['numero']." and ts_status = ".$depois." ";
 					$exec_sql = mysql_query($sql_ts_novo);
 					if ($exec_sql == 0) $error.= " erro 4";
 
 					$achou_novo = mysql_num_rows($exec_sql);
 					if ($achou_novo > 0) { //status já existe na tabela tempo_status
-						$sql_upd = "update tempo_status set ts_data = '".date('Y-m-d H:i:s')."' where ts_ocorrencia = ".$row['numero']." and ts_status = ".$_POST['status']." ";
+						$sql_upd = "update tempo_status set ts_data = '".date('Y-m-d H:i:s')."' where ts_ocorrencia = ".$row['numero']." and ts_status = ".$depois." ";
 						$exec_upd = mysql_query($sql_upd);
 						if ($exec_upd == 0) $error.= " erro 5";
 					} else {//status novo na tabela tempo_status
-						$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$row['numero'].", ".$_POST['status'].", 0, '".date("Y-m-d H:i:s")."' )";
+						$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$row['numero'].", ".$depois.", 0, '".date("Y-m-d H:i:s")."' )";
 						$exec_ins = mysql_query($sql_ins);
 						if ($exec_ins == 0) $error.= " erro 6 ";
 					}
 				}
 
 				$aviso = "";
-				$aviso = "Ocorrência alterada com sucesso! ";
+				$aviso = TRANS('MSG_OCCO_MODIFY_SUCESS');
 
 			}
 		} //fecha if erro=nao
@@ -635,6 +756,7 @@
 
 		if (ok) var ok = validaForm('idEtiqueta','INTEIROFULL','Etiqueta',0);
 		if (ok) var ok = validaForm('idLocal','COMBO','Local',1);
+		if (ok) var ok = validaForm('idDataAgendamento','DATAHORA','Agendar',0);
 		if (ok) var ok = validaForm('idAssentamento','','Assentamento',1);
 
 		return ok;
@@ -655,11 +777,39 @@
 	}
 
 
+	function checarSchedule(id) {
+		var checado = false;
+		var obj = document.getElementById(id);
+
+		if (document.formulario.chk_squedule.checked){
+			checado = true;
+			disable_schedule(false);
+			document.formulario.status.disabled = true;
+
+		} else {
+			checado = false;
+			disable_schedule(true);
+			if (id!='') {
+				//document.formulario.data_agendamento.value=obj.value;
+				document.formulario.data_agendamento.value='<?print $os_DataAgendamento?>';
+			} else {
+				document.formulario.data_agendamento.value='<?print date("d/m/Y H:i:s")?>';
+			}
+			document.formulario.status.disabled = false;
+		}
+		return checado;
+	}
+
+	function disable_schedule(v) {
+		document.formulario.data_agendamento.disabled = v;
+		document.formulario.data_agendamento.focus();
+	}
+
+
 -->
 </script>
 <?
-print "</TABLE>";
-print "</FORM>";
+
 print "</body>";
 print "</html>";
 ?>

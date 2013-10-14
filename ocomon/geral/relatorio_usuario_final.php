@@ -31,12 +31,12 @@
 
 		print "<script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script>";
 		print "	<BR><BR>";
-		print "	<B><center>::: CHAMADOS ABERTOS PELO USUÁRIO-FINAL :::</center></B><BR><BR>";
+		print "	<B><center>::: ".TRANS('TTL_CALL_OPEN_USER_FINISH_2')." :::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida();\">";
 		print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
-		print "					<td bgcolor=".TD_COLOR.">Área Responsável:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 		print "					<td class='line'><Select name='area' class='select'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$qryArea="select * from sistemas where sis_status not in (0) order by sistema";
 										$execArea=mysql_query($qryArea);
 										$regAreas = mysql_num_rows($execArea);
@@ -51,16 +51,16 @@
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-		print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
+		print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-		print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+		print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Mês corrente</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_CURRENT_MONTH')."</td>";
 		print "					<td class='line'><INPUT type='checkbox' name='mesAtual' id='idMesAtual'></td>";
 		print "				</tr>";
 
@@ -69,10 +69,10 @@
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td class='line'>";
-		print "					<input type='submit' class='button' value='Pesquisar' name='ok' >";//onclick='ok=sim'
+		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onclick='ok=sim'
 		print "	            </TD>";
 		print "	            <td class='line'>";
-		print "					<INPUT type='reset'  class='button' value='Limpar campos' name='cancelar'>";
+		print "					<INPUT type='reset'  class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";
 		print "				</TD>";
 		print "			</tr>";
 		print "	    </TABLE>";
@@ -108,7 +108,7 @@
 
 		} else
 		if ($_SESSION['s_nivel']!=1){
-			print "<script>window.alert('Você só pode consultar os dados da sua área!');</script>";
+			print "<script>window.alert('".TRANS('MSG_CONSULT_FOR_YOU_AREA')."');</script>";
 			print "<script>history.back();</script>";
 			exit;
 		} else {
@@ -117,7 +117,7 @@
 
 
 		if (((!isset($_POST['d_ini'])) and (!isset($_POST['d_fim']))) and !isset($_POST['mesAtual'])) {
-			print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_PERIOD_INFO')."!'); history.back();</script>";
 		} else {
 
 			$d_ini = $_POST['d_ini'];
@@ -139,35 +139,35 @@
 
 			if($d_ini_completa <= $d_fim_completa) {
 
-				print "<table class='centro' cellspacing='0' border='0' align='center' >";
-					print "<tr><td colspan='2'><b>PERÍODO DE ".$d_ini." a ".$d_fim."</b></td></tr>";
+				print "<table class='centro' cellspacing='0' border='0' align='center'>";
+					print "<tr><td colspan='2'><b>".TRANS('TTL_PERIOD_FROM')." ".$d_ini." a ".$d_fim."</b></td></tr>";
 				print "</table>";
 
 
 				$query .= " AND o.data_abertura >= '".$d_ini_completa."' and o.data_abertura <= '".$d_fim_completa."' ".
 							"GROUP BY u.nome ORDER BY qtd desc,nome";
 
-				$resultado = mysql_query($query) or die('ERRO NA TENTATIVA DE RECUPERAR OS DADOS!');
+				$resultado = mysql_query($query) or die(TRANS('ERR_QUERY'));
 				$linhas = mysql_num_rows($resultado);
 
 				if ($linhas==0) {
-					$aviso = "Não há dados no período informado. Refaça sua pesquisa. ";
+					$aviso = "".TRANS('MSG_NOT_DATA_PERIOD')." ";
 					echo "<script>mensagem('".$aviso."'); redirect('relatorio_usuario_final.php');</script>";
 				} else { //if($linhas==0)
 					echo "<br><br>";
 					$background = '#CDE5FF';
-					print "<p align='center'>Verifique os <a onClick=\"javascript:popup_alerta('relatorio_slas_usuario_final.php?ini=".$d_ini_completa."&end=".$d_fim_completa."&area=".$_POST['area']."')\"><font color='blue'>SLAs</font></a> atingidos.</p>";
-					print "<p align='center'><b>CHAMADOS ABERTOS PELO USUÁRIO-FINAL PARA A ÁREA: ".$nomeArea." </b></p>";
+					print "<p align='center'>".TRANS('TXT_IT_VERIFIES')." <a onClick=\"javascript:popup_alerta('relatorio_slas_usuario_final.php?ini=".$d_ini_completa."&end=".$d_fim_completa."&area=".$_POST['area']."')\"><font color='blue'>".TRANS('TLT_REPORT_SLAS')."</font></a> ".TRANS('TXT_OLD').".</p>";
+					print "<p align='center'><b>".TRANS('TTL_CALL_OPEN_USER_AREA').": ".$nomeArea." </b></p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center'>";
 
-					print "<tr><td bgcolor='".$background."'><B>QUANTIDADE</td>".
-							"<td bgcolor='".$background."' ><B>USUÁRIO</td>".
-							"<td bgcolor='".$background."' ><B>ÁREA DE ATENDIMENTO</td>".
+					print "<tr><td bgcolor='".$background."'><B>".TRANS('COL_AMOUNT')."</td>".
+							"<td bgcolor='".$background."' ><B>".TRANS('FIELD_USER')."</td>".
+							"<td bgcolor='".$background."' ><B>".TRANS('COL_ATTEN_AREA')."</td>".
 						"</tr>";
 					$total = 0;
 					while ($row = mysql_fetch_array($resultado)) {
 						$qryRow = "SELECT numero FROM ocorrencias where aberto_por = ".$row['user_id']." order by numero";
-						$execqryRow = mysql_query($qryRow) or die('ERRO NA BUSCA DAS OCORRÊNCIAS DO USUÁRIO!');
+						$execqryRow = mysql_query($qryRow) or die(TRANS('ERR_QUERY'));
 						while ($chamados = mysql_fetch_array($execqryRow)) {
 							$chamadosUser[]= $chamados['numero'];
 						}
@@ -181,12 +181,12 @@
 						$total+=$row['qtd'];
 					}
 
-					print "<tr><td colspan='2'><b>TOTAL</b></td><td class='line'><b>".$total."</b></td></tr>";
+					print "<tr><td colspan='2'><b>".TRANS('TOTAL')."</b></td><td class='line'><b>".$total."</b></td></tr>";
 
 				} //if($linhas==0)
 			} else {
 
-				$aviso = "A data final não pode ser menor do que a data inicial. Refaça sua pesquisa.";
+				$aviso = "".TRANS('MSG_DATE_FINISH_UNDERAGE_DATE_BEGIN')."";
 				print "<script>mensagem('".$aviso."'); redirect('relatorio_usuario_final.php');</script>";
 			}
 		}//if ((empty($d_ini)) and (empty($d_fim)))

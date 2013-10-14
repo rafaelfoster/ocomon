@@ -28,22 +28,22 @@
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
 	$qry_config = "SELECT * FROM config ";
-	$exec_config = mysql_query($qry_config) or die ("ERRO AO TENTAR ACESSAR A TABELA CONFIG! CERTIFIQUE-SE DE QUE A TABELA EXISTE!");;
+	$exec_config = mysql_query($qry_config) or die (TRANS('ERR_QUERY'));
 	$row_config = mysql_fetch_array($exec_config);
 	$criterio = "";
 
-	if (!isset($_POST['ok'])) { //&& $_POST['ok'] != 'Pesquisar')
+	if (!isset($_POST['ok']) && !isset($_GET['action'])  ) { //&& $_POST['ok'] != 'Pesquisar')
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 		print "	<BR><BR>";
-		print "	<B><center>:::".TRANS('REP_CALL_X_PROBCAT','CHAMADOS X CATEGORIAS DE PROBLEMAS').":::</center></B><BR><BR>";
+		print "	<B><center>:::".TRANS('TTL_REP_CALL_X_PROBCAT').":::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida()\" >"; //onSubmit=\"return valida()\"
 		print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR." >";
 
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 		print "					<td class='line'><Select name='area' class='select'>";
-		print "							<OPTION value=-1 selected>-->".TRANS('ALL')."<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$query="select * from sistemas where sis_status not in (0) order by sistema";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -60,7 +60,7 @@
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".$row_config['conf_prob_tipo_1'].":</td>";
 		print "					<td class='line'><Select name='cat1' class='select'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$query="select * from prob_tipo_1 order by probt1_desc";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -76,7 +76,7 @@
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".$row_config['conf_prob_tipo_2'].":</td>";
 		print "					<td class='line'><Select name='cat2' class='select'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$query="select * from prob_tipo_2 order by probt2_desc";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -92,7 +92,7 @@
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".$row_config['conf_prob_tipo_3'].":</td>";
 		print "					<td class='line'><Select name='cat3' class='select'>";
-		print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL')."</OPTION>";
 										$query="select * from prob_tipo_3 order by probt3_desc";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
@@ -107,18 +107,18 @@
 
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-		print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
+		print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-		print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+		print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 
 		print "				<tr>";
-		print "					<td bgcolor=".TD_COLOR.">Tipo de relatório:</td>";
+		print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 		print "					<td class='line'><select name='saida' class='data'>";
-		print "							<option value=-1 selected>Normal</option>";
+		print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
 		//	print "							<option value=1>Relatório 1 linha</option>";
 		print "						</select>";
 		print "					</td>";
@@ -127,23 +127,23 @@
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td class='line'>";
-		print "					<input type='submit' class='button' value='Pesquisar' name='ok' >";//onclick='ok=sim'
+		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onclick='ok=sim'
 		print "	            </TD>";
 		print "	            <td class='line'>";
-		print "					<INPUT type='reset' class='button' value='Limpar campos' name='cancelar'>";
+		print "					<INPUT type='reset' class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";
 		print "				</TD>";
 		print "			</tr>";
 		print "	    </TABLE>";
 		print " </form>";
-		print "</BODY>";
-    		print "</html>";
-	}  else {//if $ok!=Pesquisar
+	}  else
+
+	if (isset($_POST['ok'])) {//if $ok!=Pesquisar
 
 		$hora_inicio = ' 00:00:00';
 		$hora_fim = ' 23:59:59';
 
 
-		$query = "SELECT count(*)  AS quantidade, s.sistema AS area,  p.problema as problema, pt1.*, pt2.*, pt3.* ".
+		$query = "SELECT count(*)  AS quantidade, s.sistema AS area, s.sis_id,  p.problema as problema, pt1.*, pt2.*, pt3.* ".
 					"FROM ocorrencias AS o, sistemas AS s, problemas as p ".
 					"LEFT JOIN prob_tipo_1 as pt1 on pt1.probt1_cod = p.prob_tipo_1 ".
 					"LEFT JOIN prob_tipo_2 as pt2 on pt2.probt2_cod = p.prob_tipo_2 ".
@@ -198,7 +198,7 @@
 
 		if ((empty($_POST['d_ini'])) || (empty($_POST['d_fim'])))
 		{
-			print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+			print "<script>window.alert('".TRANS('MSG_PERIOD_INFO')."'); history.back();</script>";
 		} else {
 			$d_ini_nova = converte_dma_para_amd($_POST['d_ini']);
 			$d_fim_nova = converte_dma_para_amd($_POST['d_fim']);
@@ -209,7 +209,7 @@
 
 			if($d_ini_completa <= $d_fim_completa) {
 				print "<table class='centro' cellspacing='0' border='0' align='center'>";
-				print "<tr><td colspan='2'><b>PERÍODO DE ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
+				print "<tr><td colspan='2'><b>".TRANS('TTL_PERIOD_FROM')." ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
 				print "</table>";
 
 			$query .= " and o.data_fechamento >= '".$d_ini_completa."' and o.data_fechamento <= '".$d_fim_completa."' and ".
@@ -223,7 +223,7 @@
 
 			if ($linhas==0) {
 
-				print "<script>window.alert('Não há dados no período informado!'); history.back();</script>";
+				print "<script>window.alert('".TRANS('MSG_NO_REGISTER_PERIOD')."'); history.back();</script>";
 			} else { //if($linhas==0)
 				$campos=array();
 				switch($_POST['saida'])
@@ -232,27 +232,30 @@
 
 					echo "<br><br>";
 					$background = '#CDE5FF';
-					print "<p class='titulo'>CHAMADOS FECHADOS x CATEGORIAS DE PROBLEMAS</p>";
+					print "<p class='titulo'>".TRANS('TTL_REP_CALL_CLOSED_X_PROBCAT')."</p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center' >";
 
-					print "<tr><td colspan='5' align='center'>Critério de exibição: ".$criterio."</td></tr>";
+					print "<tr><td colspan='5' align='center'>".TRANS('FIELD_CRITE_EXIBIT').": ".$criterio."</td></tr>";
 					print "<tr><td colspan='5'>&nbsp;</td></tr>";
-					print "<tr><td bgcolor='".$background."'><B>QUANTIDADE</td>".
-							"<td bgcolor='".$background."'><B>ÁREA DE ATENDIMENTO</td>".
+					print "<tr><td bgcolor='".$background."'><B>".TRANS('COL_QTD')."</td>".
+							"<td bgcolor='".$background."'><B>".TRANS('COL_ATTEN_AREA')."</td>".
 							"<td bgcolor='".$background."'><B>".$row_config['conf_prob_tipo_1']."</td>".
 							"<td bgcolor='".$background."'><B>".$row_config['conf_prob_tipo_2']."</td>".
 							"<td bgcolor='".$background."'><B>".$row_config['conf_prob_tipo_3']."</td>".
 						"</tr>";
 					$total = 0;
 					while ($row = mysql_fetch_array($resultado)) {
+
 						print "<tr>";
-						print "<td class='line'>".$row['quantidade']."</td><td class='line'>".$row['area']."</td><td class='line'>".NVL($row['probt1_desc'])."</td>".
+						print "<td class='line'><a onClick=\"javascript: popup_alerta('".$_SERVER['PHP_SELF']."?action=list&area=".$row['sis_id']."&p1=".$row['probt1_cod']."&p2=".$row['probt2_cod']."&p3=".$row['probt3_cod']."&date1=".$d_ini_completa."&date2=".$d_fim_completa."')\">".$row['quantidade']."</a></td>".
+								"<td class='line'>".$row['area']."</td><td class='line'>".NVL($row['probt1_desc'])."</td>".
 								"<td class='line'>".NVL($row['probt2_desc'])."</td><td class='line'>".NVL($row['probt3_desc'])."</td> ";
 						print "</tr>";
 						$total+=$row['quantidade'];
+
 					}
 
-					print "<tr><td colspan='2'><b>TOTAL</b></td><td colspan='3'><b>".$total."</b></td></tr>";
+					print "<tr><td colspan='2'><b>".TRANS('TOTAL')."</b></td><td colspan='3'><b>".$total."</b></td></tr>";
 
 					break;
 
@@ -285,11 +288,84 @@
 					gera_relatorio(1,$query,$campos,$cabs,$logo,$msg1, $msg2, $msg3);
 					break;
 				} // switch
-			} //if($linhas==0)
-		}   else { //if  $d_ini_completa <= $d_fim_completa
-			print "<script>window.alert('A data final não pode ser menor do que a data inicial!'); history.back();</script>";
+				} //if($linhas==0)
+			}   else { //if  $d_ini_completa <= $d_fim_completa
+			print "<script>window.alert('".TRANS('MSG_COMPARE_DATE')."'); history.back();</script>";
+			}
+		}//if ((empty($d_ini)) and (empty($d_fim)))
+	} else
+
+	if (isset($_GET['action']) && $_GET['action'] == "list"){
+
+		$catArea = $_GET['area'];
+
+		if ($_GET['p1'] != "") $catP1 = " = ".$_GET['p1']; else $catP1 = " IS NULL";
+		if ($_GET['p2'] != "") $catP2 = " = ".$_GET['p2']; else $catP2 = " IS NULL";
+		if ($_GET['p3'] != "") $catP3 = " = ".$_GET['p3']; else $catP3 = " IS NULL";
+
+		$qryCat = "SELECT o.numero, o.data_fechamento, s.sistema AS area, p.problema as problema, pt1.*, pt2.*, pt3.*, ".
+					"l.local as localizacao, u.nome ".
+				"FROM ocorrencias AS o, sistemas AS s, usuarios as u, localizacao as l, problemas as p ".
+					"LEFT JOIN prob_tipo_1 as pt1 on pt1.probt1_cod = p.prob_tipo_1 ".
+					"LEFT JOIN prob_tipo_2 as pt2 on pt2.probt2_cod = p.prob_tipo_2 ".
+					"LEFT JOIN prob_tipo_3 as pt3 on pt3.probt3_cod = p.prob_tipo_3 ".
+				"WHERE o.sistema = s.sis_id AND o.problema = p.prob_id ".
+					"and o.data_fechamento >= '".$_GET['date1']."' ".
+					"and o.data_fechamento <= '".$_GET['date2']."' ".
+					"and o.data_atendimento is not null ".
+					"and s.sis_id = ".$_GET['area']." ".
+					"and pt1.probt1_cod ".$catP1." ".
+					"and pt2.probt2_cod ".$catP2." ".
+					"and pt3.probt3_cod ".$catP3." ".
+					"and o.operador = u.user_id and o.local = l.loc_id ".
+					"order by area ".
+					"";
+		$execCat = mysql_query($qryCat) or die(mysql_error());
+		$linhas = mysql_num_rows($execCat);
+
+		print "<table border='0' cellspacing='1' summary=''";
+		print "<TR>";
+		print "<TD colspan='3' align='left' ><B>".TRANS('FOUND')." ".$linhas." ".TRANS('TXT_REG_OF_CLOSED_CALLS').":</B></TD>";
+		print "</tr>";
+		print "<tr><td>&nbsp;</td></tr>";
+		print "</table>";
+
+		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='left' width='100%'>";
+
+		print "<TR class='header'>".
+				"<TD class='line'>".TRANS('COL_AREA')."</TD>".
+				"<TD class='line'>".TRANS('COL_NUMBER')."</TD>".
+				"<TD class='line'>".TRANS('OCO_PROB')."</TD>".
+				"<TD class='line'>".TRANS('COL_LOCAL')."</TD>".
+				"<TD class='line'>".TRANS('TECHNICIAN')."</TD>".
+				"<TD class='line'>".TRANS('FIELD_DATE_CLOSING')."</TD>";
+		$i=0;
+		$j=2;
+		while ($rowlist = mysql_fetch_array($execCat))
+		{
+			if ($j % 2)
+			{
+				$trClass = "lin_par";
+			}
+			else
+			{
+				$trClass = "lin_impar";
+			}
+			$j++;
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<td class='line'>".$rowlist['area']."</td>";
+			print "<td class='line'><a onClick=\"javascript: popup_alerta('mostra_consulta.php?numero=".$rowlist['numero']."')\">".NVL($rowlist['numero'])."</a></td>";
+			print "<td class='line'>".NVL($rowlist['problema'])."</td>";
+			print "<td class='line'>".NVL($rowlist['localizacao'])."</td>";
+			print "<td class='line'>".NVL($rowlist['nome'])."</td>";
+			print "<td class='line'>".NVL(formatDate($rowlist['data_fechamento']))."</td>";
+
+
+			print "</TR>";
 		}
-	}//if ((empty($d_ini)) and (empty($d_fim)))
+		print "</table>";
+	}
+
 	?>
         <script type='text/javascript'>
 
@@ -307,9 +383,8 @@
                 return false
              }
         </script>
-    <?
+<?
+		print "</BODY>";
+    		print "</html>";
 
-
-
-}//if $ok==Pesquisar
 ?>

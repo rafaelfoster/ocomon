@@ -21,6 +21,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	//print "<script src='../../includes/javascript/ajax_request.js'></script>";
 
 	//print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 
@@ -28,12 +29,13 @@
 	$hoje = date("Y-m-d H:i:s");
     	$hoje2 = date("d/m/Y");
 
-	print "<HTML><BODY bgcolor='".BODY_COLOR."'>";
+
+	print "<HTML><BODY bgcolor='".BODY_COLOR."' onLoad=\"ajaxFunction('Problema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');\">";
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
 	$qry_config = "SELECT * FROM config ";
-	$exec_config = mysql_query($qry_config) or die ("ERRO AO TENTAR ACESSAR A TABELA CONFIG! CERTIFIQUE-SE DE QUE A TABELA EXISTE!");;
+	$exec_config = mysql_query($qry_config) or die (TRANS('ERR_TABLE_CONFIG'));;
 	$row_config = mysql_fetch_array($exec_config);
 
 
@@ -42,7 +44,7 @@
 	$regSoluc = mysql_num_rows($execSoluc);
 	if ($regSoluc >0) {
 		print "<script>".
-			"mensagem('ALERTA: Essa ocorrência já foi encerrada uma vez no sistema! Contate o Administrador do Sistema se desejar encerrá-la novamente!');".
+			"mensagem('".TRANS('MSG_ALERT_OCCO_IS_LOCKED_UP')."');".
 			"history.back();";
 		print "</script>";
 		exit;
@@ -50,12 +52,12 @@
 
 
 	$sqlSub = "select * from ocodeps where dep_pai = ".$_REQUEST['numero']." ";
-	$execSub = mysql_query ($sqlSub) or die ('NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DE DEPENDÊNCIAS DO CHAMADO!'.$sqlSub);
+	$execSub = mysql_query ($sqlSub) or die (TRANS('MSG_ERR_NOT_RESCUE_INFO_DEPEND_OCCO').$sqlSub);
 	$deps = array();
 	while ($rowSub = mysql_fetch_array($execSub)) {
 
 		$sqlStatus = "select o.*, s.*  from ocorrencias as o, `status` as s where o.numero = ".$rowSub['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3)  ";
-		$execStatus = mysql_query($sqlStatus) or die ('NÃO FOI POSSÍVEL ACESSAR A LISTAGEM DE CHAMADOS FILHOS!'.$sqlStatus);
+		$execStatus = mysql_query($sqlStatus) or die (TRANS('MSG_ERR_NOT_ACCESS_CALL_SON').$sqlStatus);
 		$achou = mysql_num_rows ($execStatus);
 		if ($achou > 0) {
 			$deps[] = $rowSub['dep_filho'];
@@ -64,11 +66,11 @@
 	}
 
 	if(sizeof($deps)) {
-		$saida = "<b>ALERTA: Essa ocorrência não pode ser encerrada pois possui as seguintes dependências:</b><br><br>";
+		$saida = "<b>".TRANS('MSG_ALERT_OCCO_NOT_LOCKED_UP').":</b><br><br>";
 		foreach($deps as $err) {
 			$saida.="Chamado <a onClick=\"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$err."')\"><font color='blue'>".$err."</font></a><br>";
 		}
-		$saida.="<br><a align='center' onClick=\"redirect('mostra_consulta.php?numero=".$_REQUEST['numero']."');\"><img src='".ICONS_PATH."/back.png' width='16px' height='16px'>&nbsp;Voltar</a>";
+		$saida.="<br><a align='center' onClick=\"redirect('mostra_consulta.php?numero=".$_REQUEST['numero']."');\"><img src='".ICONS_PATH."/back.png' width='16px' height='16px'>&nbsp;".TRANS('TXT_RETURN')."</a>";
 		print "</table>";
 		print "<div class='alerta' id='idAlerta'><table bgcolor='#999999'><tr><td colspan='2' bgcolor='yellow'>".$saida."</td></tr></table></div>";
 		exit;
@@ -82,6 +84,9 @@
 	$resultado = mysql_query($query);
 	$rowABS = mysql_fetch_array($resultado);
 
+
+	//print $query;
+
 	$atendimento = "";
 	$atendimento = $rowABS['data_atendimento'];
 
@@ -91,50 +96,131 @@
 
 	if (!isset($_POST['submit'])) {
 
-		print "<BR><B>Encerramento de Ocorrências</B><BR>";
+
+
+		if (isset($_POST['carrega'])){
+			$prob = $_POST['prob'];
+
+			if (isset($_POST['radio_prob'])) {
+				$radio_prob = $_POST['radio_prob'];
+			} else $radio_prob = $_POST['prob'];
+
+			$inst = $_POST['inst'];
+			$etiqueta = $_POST['etiqueta'];
+			$contato = $_POST['contato'];
+			$loc = $_POST['loc'];
+			$problema = $_POST['problema'];
+			$solucao = $_POST['solucao'];
+			$numero = $_POST['numero'];
+
+			$script_sol = $_POST['script_sol'];
+		} else {
+			$prob = $rowABS['prob_cod'];
+
+			$radio_prob = $rowABS['prob_cod'];
+
+			$inst = $rowABS['unidade_cod'];
+			$etiqueta = $rowABS['etiqueta'];
+			$contato = $rowABS['contato'];
+			$loc = $rowABS['setor_cod'];
+
+			$script_sol = $rowABS['oco_script_sol'];
+			//$problema = $_POST['problema'];
+			//$solucao = $_POST['solucao'];
+			//$numero = $_POST['numero'];
+		}
+
+
+		print "<BR><B>".TRANS('SUBTTL_CLOSING_OCCO')."</B><BR>";
 
 		print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' name='form1' onSubmit='return valida()'>";
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Número:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['numero']."<td class='line'>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
-				$query_problema = "SELECT * FROM problemas order by problema";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').": ";
+
+				//print "<input type='submit' class='btPadrao' id='idBtLoadCat' title='".TRANS('LOAD_EQUIP_LOCAL')."'onClick=\"LOAD=1;\"".
+					//"style=\"{align:center; valign:middle; width:19px; height:19px; background-image: url('../../includes/icons/key_enter.png'); background-repeat:no-repeat;}\" value='' name='carrega'>";
+
+			print "</TD>";
+
+				//$query_problema = "SELECT * FROM problemas order by problema";
+
+				$query_problema = "SELECT * FROM problemas as p ".
+					"LEFT JOIN sistemas as s on p.prob_area = s.sis_id ".
+					"LEFT JOIN sla_solucao as sl on sl.slas_cod = p.prob_sla ".
+					"LEFT JOIN prob_tipo_1 as pt1 on pt1.probt1_cod = p.prob_tipo_1 ".
+					"LEFT JOIN prob_tipo_2 as pt2 on pt2.probt2_cod = p.prob_tipo_2 ".
+					"LEFT JOIN prob_tipo_3 as pt3 on pt3.probt3_cod = p.prob_tipo_3 ";
+
+				if ($rowABS['area_cod'] != -1){
+					$query_problema.= " WHERE (p.prob_area = ".$rowABS['area_cod']." OR (p.prob_area is null OR p.prob_area = -1)) ";
+				} /*else
+					$clausula = "";*/
+
+				$query_problema.= "GROUP BY  p.problema".
+					" ORDER BY p.problema";
 				$exec_problema = mysql_query($query_problema);
+
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-				print "<select class='select' name='prob' id='idProb'>";
+/*				print "<select class='select' name='prob' id='idProb' onChange=\"ajaxFunction('Problema', 'showProbs.php', 'prob=idProb', 'area_cod=idFieldArea')\">";
 					print "<option value=-1>Selecione o problema</option>";
 					while($row=mysql_fetch_array($exec_problema)){
 						print "<option value=".$row['prob_id']."";
-							if ($row['prob_id']== $rowABS['prob_cod']) {
+							if ($row['prob_id']== $prob) {
 								print " selected";
 							}
 						print ">".$row['problema']."</option>";
 					} // while
-				print "</select>";
+				print "</select>";*/
+				print "<div id='Problema'>";
+					print "<input type='hidden' name='prob' id='idProblema' value='".$prob."'>";
+				print "</div>";
+
+				print "<div id='idLoad' class='loading'><img src='../../includes/imgs/loading.gif'></div>";
+
 			print "</TD>";
 
 
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Área responsável:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['area']."</TD>";
+			print "<input type='hidden' name='fieldArea' id='idArea' value='".$rowABS['area_cod']."'></TD>";
 		print "</TR>";
+
+
+################################################################
+
+		print "<tr><td colspan='6' ><div id='divProblema'>"; //style='{display:none}'  //<td colspan='6' >
+			//print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
+			//print "<input type='hidden' name='problema' id='idProb' value='".$rowABS['problema']."'>";
+
+
+			//print "</table>";
+			print "</div></td></tr>";  //</td>
+
+
+
+################################################################
+
+
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Descrição:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_DESC').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'><b>".$rowABS['descricao']."</b></TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Unidade:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_UNIT').":</TD>";
 				$qryinst = "select * from instituicao order by inst_nome";
 				$exec_inst = mysql_query($qryinst);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 				print "<select class='select' name='inst'>";
-					print "<option value=-1>Selecione a unidade</option>";
+					print "<option value=-1>".TRANS('OCO_SEL_UNIT')."</option>";
 						while($row=mysql_fetch_array($exec_inst)){
 							print "<option value=".$row['inst_cod']."";
-								if ($row['inst_cod']== $rowABS['unidade_cod']) {
+								if ($row['inst_cod']== $inst) {
 									print " selected";
 								}
 							print ">".$row['inst_nome']."</option>";
@@ -144,50 +230,50 @@
 			print "</TD>";
 
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><a onClick=\"checa_etiqueta()\" ".
-					"title='Consulta a configuração do equipamento!'><font color='#5E515B'><b>Etiqueta</b></font></a>".
-					" do equipamento:</TD>";
+					"title='".TRANS('CONS_CONFIG_EQUIP')."'><font color='#5E515B'><b>".TRANS('OCO_FIELD_TAG')."</b></font></a>".
+					" ".TRANS('OCO_FIELD_OF_EQUIP').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-				print "<input type='text' class='data' name='etiqueta' id='idEtiqueta' value='".$rowABS['etiqueta']."'>";
+				print "<input type='text' class='data' name='etiqueta' id='idEtiqueta' value='".$etiqueta."'>";
 			print "</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Contato:</TD>";
-			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><input type='text' class='text' name='contato' id='idContato' value='".$rowABS['contato']."'></TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Telefone:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_CONTACT').":</TD>";
+			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><input type='text' class='text' name='contato' id='idContato' value='".$contato."'></TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_PHONE').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['telefone']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Local:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_LOCAL').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 				print "<select class='select' name='loc' id='idLocal'>";
 
 					$qrylocal = "select * from localizacao where loc_status not in (0) order by local";
 					$exec_local = mysql_query($qrylocal);
-					print "<option value=-1>Selecione o local</option>";
+					print "<option value=-1>".TRANS('OCO_SEL_LOCAL')."</option>";
 					while($row=mysql_fetch_array($exec_local)){
 						print "<option value=".$row['loc_id']."";
-							if ($row['loc_id']== $rowABS['setor_cod']) {
+							if ($row['loc_id']== $loc) {
 								print " selected";
 							}
 						print ">".$row['local']."</option>";
 					} // while
 
 				print "</select><a onClick=\"checa_por_local()\">".
-						"<img title='Consulta os equipamentos cadastrados para esse local!' width='15' height='15' ".
+						"<img title='".TRANS('CONS_EQUIP_LOCAL')."' width='15' height='15' ".
 						"src='".$imgsPath."consulta.gif' border='0'></a>";
 			print "</TD>";
 
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Operador:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_OPERATOR').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['nome']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de Abertura:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_OPEN').":</TD>";
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".formatDate($rowABS['data_abertura'])."</TD>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Status:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_STATUS').":</TD>";
 			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['chamado_status']."</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Data de Fechamento:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_DATE_CLOSING').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				print "<INPUT type='text' class='text' name='data_fechamento' id='idData_fechamento' value='".formatDate(date("Y-m-d H:i:s"))."'>";
 			print "</TD>";
@@ -195,8 +281,8 @@
 
 		if ($linhas2 > 0) { //ASSENTAMENTOS DO CHAMADO
 			print "<tr><td colspan='6'><IMG ID='imgAssentamento' SRC='../../includes/icons/open.png' width='9' height='9' ".
-					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>Existe(m) <font color='red'>".$linhas2."</font>".
-					" assentamento(s) para essa ocorrência.</b></td></tr>";
+					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas2."</font>".
+					" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 			//style='{padding-left:5px;}'
 			print "<tr><td colspan='6'><div id='Assentamento' style='{display:none}'>"; //style='{display:none}'
@@ -206,7 +292,7 @@
 				$printCont = $i+1;
 				print "<TR>";
 				print "<TD width='20%' bgcolor='".TD_COLOR."' valign='top'>".
-						"Assentamento ".$printCont." de ".$linhas2." por ".$rowAssentamento['nome']." em ".
+						"".TRANS('FIELD_NESTING')." ".$printCont." de ".$linhas2." por ".$rowAssentamento['nome']." em ".
 						"".formatDate($rowAssentamento['data'])."".
 					"</TD>";
 				print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."' valign='top'>".nl2br($rowAssentamento['assentamento'])."</TD>";
@@ -218,14 +304,36 @@
 		}
 
 
+		print "<TR>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SCRIPT_SOLUTION').":</TD>";
+			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
+
+			$qry_script = "SELECT * FROM script_solution ORDER BY script_desc";
+			$exec_qry_script = mysql_query($qry_script) or die (mysql_error());
+
+			print "<select class='select_sol' name='script_sol'>";
+			print "<option value=null selected>".TRANS('SEL_SCRIPT')."</option>";
+			while ($rowScript = mysql_fetch_array($exec_qry_script)){
+				//print "<option value='".$rowScript['script_cod']."'>".$rowScript['script_desc']."</option>";
+				print "<option value=".$rowScript['script_cod']."";
+					if ($rowScript['script_cod']== $script_sol) {
+						print " selected";
+					}
+				print ">".$rowScript['script_desc']."</option>";
+
+			}
+			print "</select>";
+		print "</td>";
+		print "</tr>";
+
 
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Problema:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				//print "<TEXTAREA class='textarea' id='idProblema' name='problema'>Descrição técnica do problema</textarea>";
 
 			if (!$_SESSION['s_formatBarOco']) {
-				print "<TEXTAREA class='textarea' name='problema' id='idProblema'>Descrição técnica do problema</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
+				print "<TEXTAREA class='textarea' name='problema' id='idDesc'>".TRANS('TXT_DESC_TEC_PROB')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
 			} else
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 			?>
@@ -247,12 +355,12 @@
 			print "</TD>";
 		print "</TR>";
 		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>Solução:</TD>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_TIT_SOLUTION').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Solução para este problema</textarea>";
 
 			if (!$_SESSION['s_formatBarOco']) {
-				print "<TEXTAREA class='textarea' name='solucao' id='idSolucao'>Solução para este problema</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
+				print "<TEXTAREA class='textarea' name='solucao' id='idSolucao'>".TRANS('TXT_SOLUTION_PROB')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
 			}
 			?>
 			<script type="text/javascript">
@@ -273,16 +381,17 @@
 		print "</TR>";
 
 			$qrymail = "SELECT u.*, a.*,o.* from usuarios u, sistemas a, ocorrencias o where ".
-						"u.AREA = a.sis_id and o.aberto_por = u.user_id and o.numero = ".$_GET['numero']."";
+						//"u.AREA = a.sis_id and o.aberto_por = u.user_id and o.numero = ".$_GET['numero']."";
+						"u.AREA = a.sis_id and o.aberto_por = u.user_id and o.numero = ".$_REQUEST['numero']."";
 			$execmail = mysql_query($qrymail);
 			$rowmail = mysql_fetch_array($execmail);
 			if ($rowmail['sis_atende']==0){
 				$habilita = "checked";
 			} else $habilita = "disabled";
 
-			print "<tr><td bgcolor='".TD_COLOR."'>Enviar e-mail para:</td>".
-					"<td colspan='5'><input type='checkbox' value='ok' name='mailAR' checked title='Envia e-mail para a área de atendimento do chamado'>Área responsável&nbsp;&nbsp;".
-						"<input type='checkbox' value='ok' name='mailUS' ".$habilita."><a title='Essa opção só fica habilitada para chamados abertos pelo próprio usuário'>Usuário</a></td>".
+			print "<tr><td bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SEND_MAIL_TO').":</td>".
+					"<td colspan='5'><input type='checkbox' value='ok' name='mailAR' checked title='".TRANS('MSG_SEND_EMAIL_AREA_ATTEND_CALL')."'>".TRANS('OCO_FIELD_AREA')."&nbsp;&nbsp;".
+						"<input type='checkbox' value='ok' name='mailUS' ".$habilita."><a title='".TRANS('MSG_OPT_CALL_OPEN_USER')."'>".TRANS('OCO_FIELD_USER')."</a></td>".
 				"</tr>";
 
 		print "<TR>";
@@ -290,13 +399,13 @@
 			print "<input type='hidden' name='data_gravada' value='".date("Y-m-d H:i:s")."'>";
 
 			print "<TD colspan='3' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-					"<input type='submit'  class='button' value='  Ok  ' name='submit'>".
+					"<input type='submit'  class='button' value='".TRANS('BT_OK')."' name='submit'>".
 					"<input type='hidden' name='rodou' value='sim'>".
-					"<input type='hidden' name='numero' value='".$_GET['numero']."'>".
+					"<input type='hidden' name='numero' value='".$_REQUEST['numero']."'>".
 					"<input type='hidden' name='abertopor' value='".$rowmail['user_id']."'>";
 			print "</TD>";
 			print "<TD colspan='3' align='center' width='50%' bgcolor='".BODY_COLOR."'>".
-					"<INPUT type='button'  class='button' value='Cancelar' name='desloca' ONCLICK='javascript:history.back()'>";
+					"<INPUT type='button'  class='button' value='".TRANS('BT_CANCEL')."' name='desloca' ONCLICK='javascript:history.back()'>";
 			print "</TD>";
 		print "</TR>";
 	} else
@@ -304,6 +413,11 @@
 	if (isset($_POST['submit'])) {
 
 	#########################################################################################
+
+		if (isset($_POST['radio_prob'])) {
+			$radio_prob = $_POST['radio_prob'];
+		} else $radio_prob = $_POST['prob'];
+
 
 		$queryB = "SELECT sis_id,sistema, sis_email FROM sistemas WHERE sis_id = ".$rowABS['area_cod']."";
 		$sis_idB = mysql_query($queryB);
@@ -329,7 +443,7 @@
 			$query.= " '".noHtml($_POST['problema'])."',";
 		}
 		$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")"; //VER 25/05/2007
-		$resultado = mysql_query($query) or die ('ERRO AO TENTAR INCLUIR ASSENTAMENTO! '.$query);
+		$resultado = mysql_query($query) or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
 
 		$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].", ";
 
@@ -339,7 +453,7 @@
 			$query.= " '".noHtml($_POST['solucao'])."',";
 		}
 		$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
-		$resultado = mysql_query($query)or die ('ERRO AO TENTAR INCLUIR ASSENTAMENTO! '.$query);
+		$resultado = mysql_query($query)or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
 
 		$query1 = "INSERT INTO solucoes (numero, problema, solucao, data, responsavel) values (".$_POST['numero'].", ";
 
@@ -349,21 +463,29 @@
 			$query1.= " '".noHtml($_POST['problema'])."','".noHtml($_POST['solucao'])."',";
 		}
 		$query1.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
-		$resultado1 = mysql_query($query1)or die ('ERRO AO TENTAR INCLUIR SOLUCÃO! '.$query1);
+		$resultado1 = mysql_query($query1)or die (TRANS('MSG_ERR_INSERT_SOLUTION').$query1);
 
 		$status = 4; //encerrado
 		if ($atendimento==null) {
-			$query2 = "UPDATE ocorrencias SET status=".$status.", local=".$_POST['loc'].", problema =".$_POST['prob'].",operador=".$_SESSION['s_uid'].", instituicao='".$_POST['inst']."', equipamento='".$_POST['etiqueta']."', contato='".noHtml($_POST['contato'])."', data_fechamento='".date('Y-m-d H:i:s')."', data_atendimento='".date('Y-m-d H:i:s')."' WHERE numero='".$_POST['numero']."'";
+			$query2 = "UPDATE ocorrencias SET status=".$status.", local=".$_POST['loc'].", problema ='".$radio_prob."', ".
+				"operador=".$_SESSION['s_uid'].", instituicao='".$_POST['inst']."', equipamento='".$_POST['etiqueta']."', ".
+				"contato='".noHtml($_POST['contato'])."', data_fechamento='".date('Y-m-d H:i:s')."', ".
+				"data_atendimento='".date('Y-m-d H:i:s')."', oco_script_sol=".$_POST['script_sol']." WHERE numero='".$_POST['numero']."'";
 
 		} else {
-			$query2 = "UPDATE ocorrencias SET status=".$status.", local=".$_POST['loc'].",problema =".$_POST['prob'].", operador=".$_SESSION['s_uid'].", instituicao='".$_POST['inst']."', equipamento='".$_POST['etiqueta']."', contato='".noHtml($_POST['contato'])."', data_fechamento='".date('Y-m-d H:i:s')."' WHERE numero='".$_POST['numero']."'";
+			$query2 = "UPDATE ocorrencias SET status=".$status.", local=".$_POST['loc'].",problema ='".$radio_prob."', ".
+				"operador=".$_SESSION['s_uid'].", instituicao='".$_POST['inst']."', equipamento='".$_POST['etiqueta']."', ".
+				"contato='".noHtml($_POST['contato'])."', data_fechamento='".date('Y-m-d H:i:s')."', oco_script_sol=".$_POST['script_sol']." ".
+				"WHERE numero='".$_POST['numero']."'";
 
 		}
 		$resultado2 = mysql_query($query2);
 
 		if (($resultado == 0) or ($resultado1 == 0) or ($resultado2 == 0))
 		{
-			$aviso = "Um erro ocorreu ao tentar incluir dados no sistema.";
+			$aviso = TRANS('MSG_ERR_INSERT_DATA_SYSTEM');
+			print $aviso;
+			exit;
 		}
 		else {
 
@@ -373,10 +495,10 @@
 			$rowDoc1 = mysql_fetch_array($execDoc1);
 			if ($regDoc1 >0) {
 				$sqlDoc  = "update doc_time set doc_close=doc_close+".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." where doc_id = ".$rowDoc1['doc_id']."";
-				$execDoc =mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!<br>').$sqlDoc;
+				$execDoc =mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 			} else {
 				$sqlDoc = "insert into doc_time (doc_oco, doc_open, doc_edit, doc_close, doc_user) values (".$_POST['numero'].", 0, 0, ".diff_em_segundos($_POST['data_gravada'],date("Y-m-d H:i:s"))." ,".$_SESSION['s_uid'].")";
-				$execDoc = mysql_query($sqlDoc) or die ('ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!!<br>').$sqlDoc;
+				$execDoc = mysql_query($sqlDoc) or die (TRANS('MSG_ERR_UPDATE_TIME_DOC_CALL').'<br>').$sqlDoc;
 			}
 
 			##ROTINAS PARA GRAVAR O TEMPO DO CHAMADO EM CADA STATUS
@@ -417,7 +539,7 @@
 
 
 			$qryfull = $QRY["ocorrencias_full_ini"]." WHERE o.numero = ".$_POST['numero']."";
-			$execfull = mysql_query($qryfull) or die('ERRO, NÃO FOI POSSÍVEL RECUPERAR AS VARIÁVEIS DE AMBIENTE!'.$qryfull);
+			$execfull = mysql_query($qryfull) or die(TRANS('MSG_ERR_RESCUE_VARIA_SURROU').$qryfull);
 			$rowfull = mysql_fetch_array($execfull);
 
 			$VARS = array();
@@ -436,13 +558,13 @@
 			$VARS['%versao%'] = VERSAO;
 
 			$qryconf = "SELECT * FROM mailconfig";
-			$execconf = mysql_query($qryconf) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE ENVIO DE E-MAIL!');
+			$execconf = mysql_query($qryconf) or die (TRANS('MSG_ERR_RESCUE_SEND_EMAIL'));
 			$rowconf = mysql_fetch_array($execconf);
 
 			if (isset($_POST['mailAR']) ){
 				$event = 'encerra-para-area';
 				$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-				$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+				$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 				$rowmsg = mysql_fetch_array($execmsg);
 				send_mail($event, $rowSis['sis_email'], $rowconf, $rowmsg, $VARS);
 
@@ -451,15 +573,15 @@
 			if (isset($_POST['mailUS'])) {
 				$event = 'encerra-para-usuario';
 				$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-				$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+				$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 				$rowmsg = mysql_fetch_array($execmsg);
 
 				$sqlMailUs = "select * from usuarios where user_id = ".$_POST['abertopor']."";
-				$execMailUs = mysql_query($sqlMailUs) or die('NÃO FOI POSSÍVEL ACESSAR A BASE DE USUÁRIOS PARA O ENVIO DE EMAIL!');
+				$execMailUs = mysql_query($sqlMailUs) or die(TRANS('MSG_ERR_NOT_ACCESS_USER_SENDMAIL'));
 				$rowMailUs = mysql_fetch_array($execMailUs);
 
 				$qryresposta = "select u.*, a.* from usuarios u, sistemas a where u.AREA = a.sis_id and u.user_id = ".$_SESSION['s_uid']."";
-				$execresposta = mysql_query($qryresposta) or die ('NÃO FOI POSSÍVEL IDENTIFICAR O EMAIL PARA RESPOSTA!');
+				$execresposta = mysql_query($qryresposta) or die (TRANS('MSG_ERR_NOT_IDENTIFY_EMAIL'));
 				$rowresposta = mysql_fetch_array($execresposta);
 
 				/*$flag = mail_user_encerramento($rowMailUs['email'], $rowresposta['sis_email'], $rowMailUs['nome'],$_GET['numero'],
@@ -467,7 +589,7 @@
 				send_mail($event, $rowMailUs['email'], $rowconf, $rowmsg, $VARS);
 			}
 
-			$aviso = "Ocorrência encerrada com sucesso!";
+			$aviso = TRANS('MSG_OCCO_FINISH_SUCESS');
 		}
 
 		print "<script>mensagem('".$aviso."'); redirect('abertura.php');</script>";
@@ -478,13 +600,13 @@
 <!--
 
 	function valida(){
-		var ok = validaForm('idProb','COMBO','Problema',1);
+		var ok = validaForm('idProblema','COMBO','Problema',1);
 
 		if (ok) var ok = validaForm('idEtiqueta','INTEIROFULL','Etiqueta',0);
 		if (ok) var ok = validaForm('idContato','','Contato',1);
 		if (ok) var ok = validaForm('idLocal','COMBO','Local',1);
 		if (ok) var ok = validaForm('idData_fechamento','DATAHORA','Data',1);
-		if (ok) var ok = validaForm('idProblema','','Descrição técnica',1);
+		if (ok) var ok = validaForm('idDesc','','Descrição técnica',1);
 		if (ok) var ok = validaForm('idSolucao','','Solução',1);
 
 		return ok;

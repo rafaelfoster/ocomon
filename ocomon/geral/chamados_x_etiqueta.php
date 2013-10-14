@@ -33,13 +33,13 @@ if (!isset($_POST['ok']))
 	print "<html>";
 	print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
 	print "	<BR><BR>";
-	print "	<B><center>::: Relatório de chamados por equipamentos :::</center></B><BR><BR>";
+	print "	<B><center>::: ".TRANS('TLT_REPORT_CALL_FOR_EQUIP')." :::</center></B><BR><BR>";
 	print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1'>";
 	print "		<TABLE border='0' align='center' cellspacing='2'  bgcolor=".BODY_COLOR.">";
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Área Responsável:</td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 	print "					<td class='line'><Select name='area' class='select'>";
-	print "							<OPTION value=-1 selected>-->Todos<--</OPTION>";
+	print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
 									$query= "SELECT * FROM sistemas WHERE sis_status not in (0) order by sistema";
 									$resultado=mysql_query($query);
 									$linhas = mysql_num_rows($resultado);
@@ -53,18 +53,18 @@ if (!isset($_POST['ok']))
 	print "					 </td>";
 	print "				</tr><tr>";
 
-	print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
+	print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 	print "				</tr>";
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
+	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 	print "				</tr>";
 
 	print "				<tr>";
-	print "					<td bgcolor=".TD_COLOR.">Tipo de relatório:</td>";
+	print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 	print "					<td class='line'><select name='saida' class='data'>";
-	print "							<option value=-1 selected>Normal</option>";
+	print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
 //	print "							<option value=1>Relatório 1 linha</option>";
 	print "						</select>";
 	print "					</td>";
@@ -73,10 +73,10 @@ if (!isset($_POST['ok']))
 	print "		<TABLE align='center'>";
 	print "			<tr>";
 	print "	            <td class='line'>";
-	print "					<input type='submit' value='Pesquisar' name='ok' class='button'>";
+	print "					<input type='submit' value='".TRANS('BT_SEARCH')."' name='ok' class='button'>";
 	print "	            </TD>";
 	print "	            <td class='line'>";
-	print "					<INPUT type='reset' value='Limpar campos' name='cancelar' class='button'>";
+	print "					<INPUT type='reset' value='".TRANS('BT_CLEAR')."' name='cancelar' class='button'>";
 	print "				</TD>";
 	print "			</tr>";
 	print "	    </TABLE>";
@@ -102,7 +102,7 @@ else //if $ok==Pesquisar
 
 	if ((!($_POST['d_ini'])) || !$_POST['d_fim'])
 	{
-		print "<script>window.alert('O período deve ser informado!'); history.back();</script>";
+		print "<script>window.alert('".TRANS('MSG_ALERT_PERIOD')."'); history.back();</script>";
 	}
 	else
 	{
@@ -123,7 +123,7 @@ else //if $ok==Pesquisar
 
 			if($linhas==0)
 			{
-				print "<script>window.alert('Não há dados no período informado!'); history.back();</script>";
+				print "<script>window.alert('".TRANS('MSG_ALERT_NO_PERIOD')."'); history.back();</script>";
 			}
 			else //if($linhas==0)
 			{
@@ -134,12 +134,12 @@ else //if $ok==Pesquisar
 						echo "<br><br>";
 						$background = '#CDE5FF';
 						print "<table class='centro' cellspacing='0' border='1' align='center'>";
-						print "<tr><td bgcolor='".$background."' colspan='5' align='center'><b>RELATÓRIO DE TOTAL DE CHAMADOS POR ETIQUETA</b><br>PERÍODO: ".$d_ini." a ".$d_fim."</td>";
-						print "<tr><td bgcolor='".$background."' width='255'><B>   QUANTIDADE</td>".
-								"<td bgcolor='".$background."' ><B>INSTITUIÇÃO</td>".
-								"<td bgcolor='".$background."' ><B>ETIQUETA</td>".
-								"<td bgcolor='".$background."' ><B>LOCALIZAÇÃO</td>".
-								"<td bgcolor='".$background."' ><B>AREA</td>".
+						print "<tr><td bgcolor='".$background."' colspan='5' align='center'><b>".TRANS('TLT_REP_TOT_CALL_LABEL')."</b><br>".TRANS('FIELD_PERIOD_2').": ".$d_ini." a ".$d_fim."</td>";
+						print "<tr><td bgcolor='".$background."' width='255'><B>   ".TRANS('COL_AMOUNT')."</td>".
+								"<td bgcolor='".$background."' ><B>".TRANS('FIELD_INSTITUTION')."</td>".
+								"<td bgcolor='".$background."' ><B>".TRANS('FIELD_TAG').";</td>".
+								"<td bgcolor='".$background."' ><B>".TRANS('FIELD_LOCALIZATION')."</td>".
+								"<td bgcolor='".$background."' ><B>".TRANS('FIELD_AREA_2')."</td>".
 								"</tr>";
 						$conta = 0;
 						while ($row = mysql_fetch_array($resultado))
@@ -153,7 +153,7 @@ else //if $ok==Pesquisar
 								"</tr>";
 						}//while
 
-						print "<tr><td bgcolor='".$background."' align='center'><b>TOTAL DE CHAMADOS:</b></TD><td bgcolor='".$background."' colspan='4' align='center'><b>".$conta."</b></td></tr>";
+						print "<tr><td bgcolor='".$background."' align='center'><b>".TRANS('FIELD_TOTAL_CALL').":</b></TD><td bgcolor='".$background."' colspan='4' align='center'><b>".$conta."</b></td></tr>";
 						print "</table>";
 
 						break;

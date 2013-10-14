@@ -45,27 +45,27 @@
 		reIndexArray($palavrasA);
 
 		if (isset($_POST['anyword']) || (count ($termos)==1)) {
-			$OPER = "<i>[Pelo menos uma das palavras";
+			$OPER = "<i>[".TRANS('OPT_ONE_WORD')."";
 		} else
-			$OPER = "<i>[Todas as palavras";
+			$OPER = "<i>[".TRANS('TXT_ALL_WORDS')."";
 
 		if (isset($_POST['data_inicial']) && !empty($_POST['data_inicial'])){
-			$OPER.=" e data a partir de ".$_POST['data_inicial']."";
+			$OPER.=" ".TRANS('TXT_AND_DATE_FROM')." ".$_POST['data_inicial']."";
 		}
 		if (isset($_POST['data_final']) && !empty($_POST['data_final'])) {
-			$OPER.=" até ".$_POST['data_final']."";
+			$OPER.=" ".TRANS('TXT_EVEN')." ".$_POST['data_final']."";
 		}
 
  		if (isset($_POST['operador']) && !empty($_POST['operador']) && $_POST['operador'] != -1) {
  			$sqlOper = "SELECT * FROM usuarios WHERE user_id = ".$_POST['operador']."";
- 			$execOper = mysql_query($sqlOper) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DO OPERADOR!');
+ 			$execOper = mysql_query($sqlOper) or die(TRANS('MSG_ERR_RESCUE_INFO_OPERAT'));
  			$rowOper = mysql_fetch_array($execOper);
 
- 			$OPER.=" e encerrados por ".$rowOper['nome']."";
+ 			$OPER.=" ".TRANS('TXT_FINISH_FROM')." ".$rowOper['nome']."";
  		}
 
 		if (isset($_POST['onlyImgs'])) {
-			$OPER.=" e apenas chamados com anexos";
+			$OPER.=" ".TRANS('TXT_ONLY_CALL_ATTACH')."";
 		}
 
 		$OPER.="].</i>";
@@ -94,7 +94,7 @@
 		//dump($arrayTeste, 'TESTE INVERTENDO');
 	//----- TESTES PARA ENCONTRAR O BUG ---------//
 
-		print "Termo perquisado: <i>\"".trim($_POST['problema'])."\".</i><br />Critério: ".$OPER."<br /><br />";
+		print "".TRANS('TXT_TERM_SEARCH').": <i>\"".trim($_POST['problema'])."\".</i><br />".TRANS('TXT_CRITERION').": ".$OPER."<br /><br />";
 
 		$qrySolucao = "";
 		$qryAssentamento = "";
@@ -174,7 +174,7 @@
                 $query.="\nGROUP BY numero ORDER BY numero";// Retorna todos os registros onde pelo menos um dos termos existe.
 		$query2 = $query;
 
-		$resultado = mysql_query($query) or die ('ERRO NA BUSCA DE INFORMAÇÕES DAS TABELAS!'.dump($query));
+		$resultado = mysql_query($query) or die (TRANS('MSG_ERR_SEARCH_INFO_TABLE')./*dump*/($query));
 		$resultado2 = mysql_query($query2);
 
 		$linhas = mysql_numrows($resultado);
@@ -187,10 +187,10 @@
 
 		if ($linhas==0)
 		{
-			print "Nenhuma solução localizada. (REMOVER ESSA LINHA!)";
-			dump($query,"QUERY EXECUTADA:");
-			exit;
-			$aviso = "Nenhuma solução localizada com esses critérios de busca.";
+			//print "Nenhuma solução localizada. (REMOVER ESSA LINHA!)";
+			//dump($query,"QUERY EXECUTADA:");
+			//exit;
+			$aviso = TRANS('MSG_NONE_SOLUT_CRITE');
 			print "<script>mensagem('".$aviso."'); history.back();</script>";
 		} else
 		if (!isset($_POST['anyword']) && count($termos)!=1) { //Condição  para checar se todos os termos existem
@@ -203,7 +203,7 @@
 						$qryChkOco[$i] = "SELECT * FROM ocorrencias WHERE numero = ".$rowA['numero']." AND ".
 									"\n (lower(descricao) like lower('%".$palavrasA[$i]."%') ".
 									"\n OR lower(descricao) like lower('%".noHtml($palavrasA[$i])."%')) ";
-						$execChkOco[$i] = mysql_query($qryChkOco[$i]) or die ('ERRO NA CONSULTA!<br>'.dump($qryChkOco));
+						$execChkOco[$i] = mysql_query($qryChkOco[$i]) or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkOco);
 						if (mysql_numrows($execChkOco[$i])>0) {
 							$achou[] = normaliza($palavrasA[$i]);
 							$achou = array_unique($achou);
@@ -212,7 +212,7 @@
 						$qryChkAss[$i] = "SELECT * FROM assentamentos WHERE ocorrencia = ".$rowA['numero']." AND ".
 									"\n (lower(assentamento) like lower('%".$palavrasA[$i]."%') ".
 									"\n OR lower(assentamento) like lower('%".noHtml($palavrasA[$i])."%') )";
-						$execChkAss[$i] = mysql_query($qryChkAss[$i])or die ('ERRO NA CONSULTA!<br>'.dump($qryChkAss));
+						$execChkAss[$i] = mysql_query($qryChkAss[$i])or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkAss);
 						if (mysql_numrows($execChkAss[$i])>0) {
 							$achou[] = normaliza($palavrasA[$i]);
 							$achou = array_unique($achou);
@@ -223,7 +223,7 @@
 									"\n (lower(problema) like lower('%".$palavrasA[$i]."%')) OR ".
 									"\n (lower(solucao) like lower('%".noHtml($palavrasA[$i])."%')) OR ".
 									"\n (lower(problema) like('%".noHtml($palavrasA[$i])."%')) )";
-						$execChkSol[$i] = mysql_query($qryChkSol[$i])or die ('ERRO NA CONSULTA!<br>'.dump($qryChkSol));
+						$execChkSol[$i] = mysql_query($qryChkSol[$i])or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkSol);
 						if (mysql_numrows($execChkSol[$i])>0) {
 							$achou[] = normaliza($palavrasA[$i]);
 							$achou = array_unique($achou);
@@ -256,10 +256,10 @@
 
                 print "<td class='line'>";
                 if ($totalRegs>1)
-                        print "<TR><td class='line'><B>Foram encontradas ".$totalRegs." soluções possíveis com os critérios passados. </B></TD></TR>";
+                        print "<TR><td class='line'><B>".TRANS('MSG_REGISTER_FIND')." ".$totalRegs." ".TRANS('TXT_SOLUT_CRITE_LAST')." </B></TD></TR>";
                 else
 		if ($totalRegs==1)
-                        print "<TR><td class='line'><B>Foi encontrada somente 1 solução possível com o critério passado.</B></TD></TR>";
+                        print "<TR><td class='line'><B>".TRANS('TXT_ONLY_ONE_SOLUT_CRITE_LAST').".</B></TD></TR>";
 		else
 		{
 			//print "Nenhuma solução localizada. (REMOVER ESSA LINHA!)";
@@ -277,7 +277,7 @@
 				$qryChkOco[$i] = "SELECT * FROM ocorrencias WHERE numero = ".$row['numero']." AND ".
 							"\n ( lower(descricao) like lower('%".$palavrasA[$i]."%') ".
 							"\n OR lower(descricao) like lower('%".noHtml($palavrasA[$i])."%') )";
-				$execChkOco[$i] = mysql_query($qryChkOco[$i]) or die ('ERRO NA CONSULTA!<br>'.dump($qryChkOco));
+				$execChkOco[$i] = mysql_query($qryChkOco[$i]) or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkOco);
 				if (mysql_numrows($execChkOco[$i])>0) {
 					$achou[] = normaliza($palavrasA[$i]);
 					//$achou[] = noHtml($palavrasA[$i]);
@@ -286,7 +286,7 @@
 				$qryChkAss[$i] = "SELECT * FROM assentamentos WHERE ocorrencia = ".$row['numero']." AND ".
 							"\n (lower(assentamento) like lower('%".$palavrasA[$i]."%') ".
 							"\n OR lower(assentamento) like lower('%".noHtml($palavrasA[$i])."%') )";
-				$execChkAss[$i] = mysql_query($qryChkAss[$i])or die ('ERRO NA CONSULTA!<br>'.dump($qryChkAss));
+				$execChkAss[$i] = mysql_query($qryChkAss[$i])or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkAss);
 				if (mysql_numrows($execChkAss[$i])>0) {
 					$achou[] = normaliza($palavrasA[$i]);
 					//$achou[] = noHtml($palavrasA[$i]);
@@ -297,7 +297,7 @@
 							"\n lower(problema) like lower('%".$palavrasA[$i]."%') OR ".
 							"\n lower(solucao) like lower('%".noHtml($palavrasA[$i])."%') OR ".
 							"\n lower(problema) like('%".noHtml($palavrasA[$i])."%') )";
-				$execChkSol[$i] = mysql_query($qryChkSol[$i])or die ('ERRO NA CONSULTA!<br>'.dump($qryChkSol));
+				$execChkSol[$i] = mysql_query($qryChkSol[$i])or die (TRANS('MSG_ERR_CONSUL').'<br>'/*.dump*/.$qryChkSol);
 				if (mysql_numrows($execChkSol[$i])>0) {
 					$achou[] = normaliza($palavrasA[$i]);
 					//$achou[] = noHtml($palavrasA[$i]);
@@ -311,21 +311,21 @@
 
 				print "<TABLE border='1' style=\"{border-collapse:collapse;}\" align='center' width='100%'>";
 				print "<tr>";
-					print "<TD align='left' bgcolor='".TD_COLOR."'>Número:</TD>";
+					print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 					print "<TD align='left'><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."&destaca=".$destacaProb."')\">".
 							"<font color='blue'>".$row['numero']."</font></a></TD>";
-					print "<TD align='left'>Data:</TD>";
+					print "<TD align='left'>".TRANS('OCO_DATE').":</TD>";
 					print "<TD align='left'>".datab($row['data'])."</TD>";
-					print "<TD align='left'>Operador:</TD>";
+					print "<TD align='left'>".TRANS('OCO_FIELD_OPERATOR').":</TD>";
 					print "<TD align='left'>".$row['nome']."</TD>";
 				print "</TR>";
 				print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Problema:</TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('OCO_FIELD_PROB').":</TD>";
 					print "<TD colspan='5' width='80%' align='left'>".destaca($destacaProb, nl2br($row['problema']))."</TD>";
 				print "</TR>";
 
 				print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>Solução:</TD>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_TIT_SOLUTION').":</TD>";
 					print "<TD colspan='5' width='80%' align='left'>".destaca($destacaProb, nl2br($row['solucao']))."</TD>";
 				print "</TR>";
 

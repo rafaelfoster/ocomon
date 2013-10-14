@@ -74,6 +74,8 @@
 		print "<div class='bubble_bottom'></div>";
 	print "</div>";
 
+	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+
 
 	$dt = new dateOpers; //Criado o objeto $dt
 	$dta = new dateOpers;
@@ -91,6 +93,8 @@
 	if ($_SESSION['s_uareas']) {
 		$uareas.=",".$_SESSION['s_uareas'];
 	}
+
+
 
 	$query = "SELECT a.*, u.*, ar.* from usuarios u, avisos a left join sistemas ar on a.area = ar.sis_id where (a.area in (".$uareas.") or a.area=-1) and a.origem=u.user_id and upper(a.status) = 'ALTA'";
 	$resultado = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
@@ -160,75 +164,72 @@
         if ($linhas>1)
                 print "<TR><TD class='line' ><b>".TRANS('FOUND','Foram encontrados')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_LENDING','empréstimos pendentes para este usuário').".</b></TD></TR><tr><td class='line'>&nbsp;</td></tr>";
 
-        //OCORRÊNCIAS VINCULADAS AO OPERADOR
-        //PAINEL 1 É O PAINEL SUPERIOR DA TELA DE ABERTURA
 
-	$query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (1) and o.operador = ".$_SESSION['s_uid']." ORDER BY numero";
+
+
+
+
+
+        #######################################################
+        #######################################################
+        ## OCORRENCIAS AGENDADAS ###
+
+	$query = $QRY["ocorrencias_full_ini"]." WHERE o.oco_scheduled=1 and o.sistema in (".$uareas.") ORDER BY numero";
 	$resultado_oco = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
         $linhas = mysql_num_rows($resultado_oco);
 
 	if ($linhas == 0) {
-        	echo mensagem("".TRANS('OCO_NOT_PENDING_TO_USER','Não existem ocorrências pendentes para o usuário')."&nbsp;".$_SESSION['s_usuario'].".");
+        	echo mensagem("".TRANS('OCO_NOT_SCHEDULED_CALLS','Não existem ocorrências agendadas no sistema'));
         }
-        else {//OCORRENCIAS VINCULADAS AO OPERADOR
-		if ($linhas>1) {
-			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS VINCULADOS AO OPERADOR LOGADO
-			if (!isset($_SESSION['ICON_CHAVE'])) {
-				$_SESSION['ICON_CHAVE']="close.png";
-			}
+        else {//
+		if ($linhas>=1) {
+			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS AGENDADOS
 
-			if (!isset($_SESSION['CHAVE'])) {
-				$_SESSION['CHAVE'] = "";
-			} else
-			if (isset($_GET['CHAVE'])) {
-				if ($_GET['CHAVE'] == "{display:none}") {
-					$_SESSION['CHAVE'] = "";
-					$_SESSION['ICON_CHAVE']="close.png";
-				} else {
-					$_SESSION['CHAVE'] = "{display:none}";
-					$_SESSION['ICON_CHAVE']="open.png";
-				}
-			}
+// 			if (!isset($_SESSION['ICON_CHAVE2'])) {
+// 				$_SESSION['ICON_CHAVE2']="open.png";
+// 			}
 
-			print "<tr><TD><IMG ID='imgVinculados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE']."' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Vinculados') ; redirect('".$_SERVER['PHP_SELF']."?".
-				"CHAVE=".$_SESSION['CHAVE']."')\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
-				"".TRANS('OCO_PENDING')."</font>&nbsp;".TRANS('OCO_TO_USER','para o usuário')."&nbsp;".$_SESSION['s_usuario'].".</b></td></tr>";
+// 			if (!isset($_SESSION['CHAVE2'])) {
+// 				$_SESSION['CHAVE2'] = "{display:none}";
+// 			} else
+// 			if (isset($_GET['CHAVE2'])) {
+// 				if ($_GET['CHAVE2'] == "") {
+// 					$_SESSION['CHAVE2'] = "{display:none}";
+// 					$_SESSION['ICON_CHAVE2']="open.png";
+// 				} else {
+// 					$_SESSION['CHAVE2'] = "";
+// 					$_SESSION['ICON_CHAVE2']="close.png";
+// 				}
+// 			}
+
+// 			print "<tr><TD><IMG ID='imgAgendados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE2']."' width='9' height='9' ".
+// 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Agendados') ; redirect('".$_SERVER['PHP_SELF']."?".
+// 				"CHAVE2=".$_SESSION['CHAVE2']."')\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
+// 				"".TRANS('OCO_SCHEDULED')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</b></td></tr>";
+
+			print "<tr><TD><IMG ID='imgAgendados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE2']."' width='9' height='9' ".
+				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Agendados') ; ajaxFunction('idDivSessionAgendados', 'updateCollapseSession.php', 'idLoad', 'CHAVE2=idChave2');".
+				"\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
+				"".TRANS('OCO_SCHEDULED')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</b></td></tr>";
+
+			print "<input type='hidden' name='chave2' id='idChave2' value='".$_SESSION['CHAVE2']."'>";
+			print "<div id='idDivSessionAgendados' style='{display:none;}'></div>";
+
 
 		} else {
-			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS VINCULADOS AO OPERADOR LOGADO
-			if (!isset($_SESSION['ICON_CHAVE'])) {
-				$_SESSION['ICON_CHAVE']="close.png";
-			}
-
-			if (!isset($_SESSION['CHAVE'])) {
-				$_SESSION['CHAVE'] = "";
-			} else
-			if (isset($_GET['CHAVE'])) {
-				if ($_GET['CHAVE'] == "{display:none}") {
-					$_SESSION['CHAVE'] = "";
-					$_SESSION['ICON_CHAVE']="close.png";
-				} else {
-					$_SESSION['CHAVE'] = "{display:none}";
-					$_SESSION['ICON_CHAVE']="open.png";
-				}
-			}
-
-			print "<TR><td class='line' ><b>".TRANS('THEREIS')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_OCORRENCIA','ocorrência')."&nbsp;<font color='red'>".TRANS('OCO_PENDING_ONE','pendente')."</font>&nbsp;".TRANS('OCO_TO_USER','')."&nbsp;".$_SESSION['s_usuario'].".<b></TD></TR>";
+			print "<TR><td class='line' ><b>".TRANS('THERE_IS_ARE')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_OCORRENCIA','ocorrência')."&nbsp;<font color='red'>".TRANS('OCO_SCHEDULED','agendada')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</font>.<b></TD></TR>";
 		}
-		//print "<TD  class='line' >";
 
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr><td colspan='4'><div id='Vinculados' style='".$_SESSION['CHAVE']."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
+		print "<tr><td colspan='4'><div id='Agendados' style='".$_SESSION['CHAVE2']."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 		print "<TABLE class='header_centro'  border-top: thin solid #999999;}' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
 		print "<TR class='header'>";
-			print "<TD  class='line' >".TRANS('OCO_CALL','Chamado')."</TD><TD class='line' >".TRANS('OCO_PROB','Problema')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_CONTACT','Contato')."<BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
-				"<TD  class='line'  WIDTH='250'>".TRANS('OCO_LOCAL','Local')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_STATUS','Status')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_VALID_TIME','Tempo Válido')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_RESPONSE','RESP.')."</TD><TD class='line' >".TRANS('OCO_SOLUC','SOLUC.')."</TD>";
+			print "<TD  class='line' >".TRANS('OCO_NUMBER_BRIEF')."</TD><TD class='line' >".TRANS('OCO_PROB')."</TD>".
+				"<TD  class='line' >".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_PHONE')."</TD>".
+				"<TD  class='line'  WIDTH='250'>".TRANS('OCO_LOCAL')."</TD>".
+				"<TD  class='line' >".TRANS('OCO_STATUS')."</TD>".
+				"<TD  class='line' ><a title='".TRANS('HNT_REMAIN_TIME')."'>".TRANS('OCO_REMAIN_TIME')."</a></TD>";
 		print "</TR>";
         }
         $i=0;
@@ -241,7 +242,244 @@
 			$trClass = "lin_impar";
             	}
             	$j++;
-		print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+		print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+
+		$qryImg = "select * from imagens where img_oco = ".$rowAT['numero']."";
+		$execImg = mysql_query($qryImg) or die (TRANS('ERR_QUERY'));
+		$rowTela = mysql_fetch_array($execImg);
+		$regImg = mysql_num_rows($execImg);
+		if ($regImg!=0) {
+			$linkImg = "<a onClick=\"javascript:popup_wide('listFiles.php?COD=".$rowAT['numero']."')\"><img src='../../includes/icons/attach2.png'></a>";
+		} else $linkImg = "";
+
+		$sqlSubCall = "select * from ocodeps where dep_pai = ".$rowAT['numero']." or dep_filho=".$rowAT['numero']."";
+		$execSubCall = mysql_query($sqlSubCall) or die (TRANS('ERR_QUERY').'<br>'.$sqlSubCall);
+		$regSub = mysql_num_rows($execSubCall);
+		if ($regSub > 0) {
+			#É CHAMADO PAI?
+			$sqlSubCall = "select * from ocodeps where dep_pai = ".$rowAT['numero']."";
+			$execSubCall = mysql_query($sqlSubCall) or die (TRANS('ERR_QUERY').$sqlSubCall);
+			$regSub = mysql_num_rows($execSubCall);
+			$comDeps = false;
+			while ($rowSubPai = mysql_fetch_array($execSubCall)){
+				$sqlStatus = "select o.*, s.* from ocorrencias o, `status` s  where o.numero=".$rowSubPai['dep_filho']." and o.`status`=s.stat_id and s.stat_painel not in (3) ";
+				$execStatus = mysql_query($sqlStatus) or die (TRANS('ERR_QUERY').$sqlStatus);
+				$regStatus = mysql_num_rows($execStatus);
+				if ($regStatus > 0) {
+					$comDeps = true;
+				}
+			}
+			if ($comDeps) {
+				$imgSub = "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'></a>";
+			} else
+				$imgSub =  "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'></a>";
+		} else
+			$imgSub = "";
+
+		print "<TD  class='line'  ".$valign."><a href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$rowAT['numero']."</a>".$imgSub."</TD>";
+		print "<TD  class='line'  ".$valign.">".$linkImg."&nbsp;".$rowAT['problema']."</TD>";
+		print "<TD  class='line'  ".$valign."><b>".$rowAT['contato']."</b><br>".$rowAT['telefone']."</TD>";
+		print "<TD  class='line'  ".$valign."><b>".$rowAT['setor']."</b><br>";
+		$texto = trim($rowAT['descricao']);
+		if (strlen($texto)>200){
+			$texto = substr($texto,0,195)." ..... ";
+		};
+	        print "<a class='no' href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$texto."</a>";
+	        print "</TD>";
+
+            	print "<TD  class='line'  ".$valign.">".$rowAT['chamado_status']."</TD>";
+
+		// if (array_key_exists($rowAT['cod_area'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
+				//$areaChamado = $rowAT['cod_area']; //Recebe o valor da área de atendimento do chamado
+		// } else $areaChamado = 1; //Carga horária default definida no arquivo config.inc.php
+		$areaChamado = "";
+		$areaChamado=testaArea($areaChamado,$rowAT['area_cod'],$H_horarios);
+
+		$data = $rowAT['data_abertura'];
+
+		$diff = date_diff($data,date("Y-m-d H:i:s"));
+		$sep = explode ("dias",$diff);
+
+		if ($sep[0]>5) { //Se a programação for maior do que 5 dias, o tempo é mostrado em dias para não ficar muito pesado.
+			$diff = $sep[0]." dias";
+			$segundos = ($sep[0]*86400);
+		} else {
+			$dta->setData1($data);
+			$dta->setData2(date("Y-m-d H:i:s"));
+
+			$dta->tempo_valido($dta->data1,$dta->data2,$H_horarios[$areaChamado][0],$H_horarios[$areaChamado][1],$H_horarios[$areaChamado][2],$H_horarios[$areaChamado][3],"H");
+			$diff = $dta->tValido;
+			$diff2 = $dta->diff["hValido"];
+			$segundos = $dta->diff["sValido"]; //segundos válidos
+		}
+       		print "<TD  class='line'  ".$valign.">".$diff."&nbsp;<img height='16' width='16' src='".ICONS_PATH."sla.png' title='".TRANS('HNT_REMAIN_TIME')."'></TD>";
+
+		## O CHAMADO ENTRA P/ FILA NORMAL DE ATENDIMENTO
+		if ($rowAT['data_abertura'] <= date("Y-m-d H:i:s")){
+			$error = "";
+
+			$qryUpdSchedule = "UPDATE ocorrencias SET oco_scheduled=0, `status`=1 WHERE numero = ".$rowAT['numero']."";
+			$execUpdSchedule = mysql_query($qryUpdSchedule) or die ($qryUpdSchedule);
+
+			$qryConfig = "SELECT * FROM config";
+			$execConfig = mysql_query($qryConfig);
+			$row_config = mysql_fetch_array($execConfig);
+
+			##TRATANDO O STATUS ANTERIOR
+			//Verifica se o status 'atual' já foi gravado na tabela 'tempo_status' , em caso positivo, atualizo o tempo, senão devo gravar ele pela primeira vez.
+			//$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$rowAT['numero']." and ts_status = ".$row_config['conf_schedule_status']." ";
+			$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$rowAT['numero']." and ts_status = ".$rowAT['status_cod']." ";
+			$exec_sql = mysql_query($sql_ts_anterior);
+
+			if ($exec_sql == 0) $error= " erro 1";
+
+			$achou = mysql_num_rows($exec_sql);
+			if ($achou >0){ //esse status já esteve setado em outro momento
+				$row_ts = mysql_fetch_array($exec_sql);
+
+				$areaT = "";
+				$areaT=testaArea($areaT,$rowAT['area_cod'],$H_horarios);
+
+				$dt = new dateOpers;
+				$dt->setData1($row_ts['ts_data']);
+				//$dt->setData2(date("Y-m-d H:i:s"));  //SUBSTITUÍ date("Y-m-d H:i:s") POR $rowAT['data_abertura']
+				$dt->setData2($rowAT['data_abertura']);
+				$dt->tempo_valido($dt->data1,$dt->data2,$H_horarios[$areaT][0],$H_horarios[$areaT][1],$H_horarios[$areaT][2],$H_horarios[$areaT][3],"H");
+				$segundos = $dt->diff["sValido"]; //segundos válidos
+
+				//$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+".$segundos.") , ts_data ='".date("Y-m-d H:i:s")."' where ts_ocorrencia = ".$rowAT['numero']." and
+						//ts_status = ".$row_config['conf_schedule_status']." ";
+				$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+".$segundos.") , ts_data ='".$rowAT['data_abertura']."' where ts_ocorrencia = ".$rowAT['numero']." and
+						ts_status = ".$rowAT['status_cod']." ";
+
+				$exec_upd = mysql_query($sql_upd);
+				if ($exec_upd ==0) $error.= " erro 2";
+
+			} else {
+				//$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$rowAT['numero'].", ".$row_config['conf_schedule_status'].", 0, '".date("Y-m-d H:i:s")."' )";
+				$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$rowAT['numero'].", ".$rowAT['status_cod'].", 0, '".$rowAT['data_abertura']."' )";
+				$exec_ins = mysql_query ($sql_ins);
+				if ($exec_ins == 0) $error.= " erro 3 ";
+			}
+			##TRATANDO O NOVO STATUS
+			//verifica se o status 'novo' já está gravado na tabela 'tempo_status', se estiver eu devo atualizar a data de início. Senão estiver gravado então devo gravar pela primeira vez
+			$sql_ts_novo = "select * from tempo_status where ts_ocorrencia = ".$rowAT['numero']." and ts_status = 1 ";
+			$exec_sql = mysql_query($sql_ts_novo);
+			if ($exec_sql == 0) $error.= " erro 4";
+
+			$achou_novo = mysql_num_rows($exec_sql);
+			if ($achou_novo > 0) { //status já existe na tabela tempo_status
+				$sql_upd = "update tempo_status set ts_data = '".$rowAT['data_abertura']."' where ts_ocorrencia = ".$rowAT['numero']." and ts_status = 1 ";
+				$exec_upd = mysql_query($sql_upd);
+				if ($exec_upd == 0) $error.= " erro 5";
+			} else {//status novo na tabela tempo_status
+				$sql_ins = "insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$rowAT['numero'].", 1, 0, '".$rowAT['data_abertura']."' )";
+				$exec_ins = mysql_query($sql_ins);
+				if ($exec_ins == 0) $error.= " erro 6 ";
+			}
+
+			print "<script type=\"text/javascript\">redirect('abertura.php');</script>";
+		}
+
+		print "</TR>";
+	        $i++;
+        } //while
+        print "</TABLE>";
+	print "</div>";
+        print "</td>";
+
+
+
+        #######################################################
+        #######################################################
+
+
+
+
+        print "<TABLE border='0' cellpadding='0' cellspacing='0' align='center' width='100%' bgcolor='".$cor3."'>";
+        print "<TR width=100%>";
+        print "</TR>";
+
+        print "<tr><TD>&nbsp</td></tr>";
+
+
+
+        //OCORRÊNCIAS VINCULADAS AO OPERADOR
+        //PAINEL 1 É O PAINEL SUPERIOR DA TELA DE ABERTURA
+
+	$query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (1) and o.operador = ".$_SESSION['s_uid']." ".
+				"and o.oco_scheduled=0 ORDER BY numero";
+	$resultado_oco = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
+        $linhas = mysql_num_rows($resultado_oco);
+
+	if ($linhas == 0) {
+        	echo mensagem("".TRANS('OCO_NOT_PENDING_TO_USER','Não existem ocorrências pendentes para o usuário')."&nbsp;".$_SESSION['s_usuario'].".");
+        }
+        else {//OCORRENCIAS VINCULADAS AO OPERADOR
+		if ($linhas>1) {
+			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS VINCULADOS AO OPERADOR LOGADO
+
+// 			if (!isset($_SESSION['ICON_CHAVE'])) {
+// 				$_SESSION['ICON_CHAVE']="close.png";
+// 			}
+//
+// 			if (!isset($_SESSION['CHAVE'])) {
+// 				$_SESSION['CHAVE'] = "";
+// 			} else
+// 			if (isset($_GET['CHAVE'])) {
+// 				if ($_GET['CHAVE'] == "{display:none}") {
+// 					$_SESSION['CHAVE'] = "";
+// 					$_SESSION['ICON_CHAVE']="close.png";
+// 				} else {
+// 					$_SESSION['CHAVE'] = "{display:none}";
+// 					$_SESSION['ICON_CHAVE']="open.png";
+// 				}
+// 			}
+
+// 			print "<tr><TD><IMG ID='imgVinculados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE']."' width='9' height='9' ".
+// 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Vinculados') ; redirect('".$_SERVER['PHP_SELF']."?".
+// 				"CHAVE=".$_SESSION['CHAVE']."')\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
+// 				"".TRANS('OCO_PENDING')."</font>&nbsp;".TRANS('OCO_TO_USER','para o usuário')."&nbsp;".$_SESSION['s_usuario'].".</b></td></tr>";
+
+ 			print "<tr><TD><IMG ID='imgVinculados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE']."' width='9' height='9' ".
+ 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Vinculados') ; ajaxFunction('idDivSessionPendentes', 'updateCollapseSession.php', 'idLoad', 'CHAVE=idChave');".
+ 				"\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
+ 				"".TRANS('OCO_PENDING')."</font>&nbsp;".TRANS('OCO_TO_USER','para o usuário')."&nbsp;".$_SESSION['s_usuario'].".</b></td></tr>";
+
+			print "<input type='hidden' name='chave' id='idChave' value='".$_SESSION['CHAVE']."'>";
+			print "<div id='idDivSessionPendentes' style='{display:none;}'></div>";
+
+
+		} else {
+			print "<TR><td class='line' ><b>".TRANS('THERE_IS_ARE')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_OCORRENCIA','ocorrência')."&nbsp;<font color='red'>".TRANS('OCO_PENDING_ONE','pendente')."</font>&nbsp;".TRANS('OCO_TO_USER','')."&nbsp;".$_SESSION['s_usuario'].".<b></TD></TR>";
+		}
+		//print "<TD  class='line' >";
+
+		print "<tr><td colspan='4'></td></tr>";
+		print "<tr><td colspan='4'><div id='Vinculados' style='".$_SESSION['CHAVE']."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
+
+		print "<TABLE class='header_centro'  border-top: thin solid #999999;}' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
+		print "<TR class='header'>";
+			print "<TD  class='line' >".TRANS('OCO_NUMBER_BRIEF')."</TD><TD class='line' >".TRANS('OCO_PROB','Problema')."</TD>".
+				"<TD  class='line' >".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
+				"<TD  class='line'  WIDTH='250'>".TRANS('OCO_LOCAL')."</TD>".
+				"<TD  class='line' >".TRANS('OCO_STATUS')."</TD>".
+				"<TD  class='line' ><a title='".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."</a></TD>".
+				"<TD  class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
+				"<TD class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC','SOLUC.')."</a></TD>";
+		print "</TR>";
+        }
+        $i=0;
+        $j=2;
+        while ($rowAT = mysql_fetch_array($resultado_oco))
+        {
+        	if ($j % 2) {
+			$trClass = "lin_par";
+            	} else {
+			$trClass = "lin_impar";
+            	}
+            	$j++;
+		print "<tr class=".$trClass." id='linhaxx".$j."' onMouseOver=\"destaca('linhaxx".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhaxx".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhaxx".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 		$qryImg = "select * from imagens where img_oco = ".$rowAT['numero']."";
 		$execImg = mysql_query($qryImg) or die (TRANS('ERR_QUERY'));
@@ -284,7 +522,8 @@
 		if (strlen($texto)>200){
 			$texto = substr($texto,0,195)." ..... ";
 		};
-		print $texto;
+		//print $texto;
+	        print "<a class='no' href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$texto."</a>";
 	        print "</TD>";
             	print "<TD  class='line'  ".$valign.">".$rowAT['chamado_status']."</TD>";
 
@@ -501,7 +740,8 @@
 		}
 	}
 
-        $query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (2) and o.sistema in (".$uareas.") ORDER BY ".$_SESSION['ORDERBY']."";
+        $query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (2) and o.sistema in (".$uareas.") ".
+        			" and o.oco_scheduled=0 ORDER BY ".$_SESSION['ORDERBY']."";
 
 	$resultado = mysql_query($query);
         $linhas = mysql_num_rows($resultado);
@@ -513,9 +753,13 @@
 		$_SESSION['s_paging_full'] = $_GET['FULL'];
 	}
 
-	//$PAGE->setSQL($query,(isset($_GET['FULL'])?$_GET['FULL']:0));
 	$PAGE->setSQL($query,$_SESSION['s_paging_full']);
 	$PAGE->execSQL();
+
+// 	if (isset($_GET['LIMIT']))
+// 		$PAGE->setLimit($_GET['LIMIT']);
+// 	$PAGE->setSQL($query,(isset($_GET['FULL'])?$_GET['FULL']:0));
+// 	$PAGE->execSQL();
 
         if ($linhas == 0) {
         	echo mensagem("".TRANS('OCO_NOT_PENDING_IN_SYSTEM','Não existe nenhuma ocorrência pendente no sistema').".");
@@ -540,9 +784,10 @@
         	"<TD  class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PROB')\" title='Ordena por tipo de problema'>".TRANS('OCO_PROB')."".$ICON_ORDER_PROB."</a></TD>".
         	"<TD  class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=CONTATO')\" title='Ordena pelo contato'>".TRANS('OCO_CONTACT')."".$ICON_ORDER_CONTATO."</a><BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
         	"<TD  class='line' WIDTH=250><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=LOCAL')\" title='Ordena por Localização'>".TRANS('OCO_LOCAL')."".$ICON_ORDER_LOCAL."</a><br>".TRANS('OCO_DESC')."</TD>".
-        	"<TD  class='line' nowrap><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=DATA')\" title='Ordena por data'>".TRANS('OCO_VALID_TIME')."".$ICON_ORDER_DATA."</a></TD>".
+        	"<TD  class='line' nowrap><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=DATA')\" title='Order by ".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."".$ICON_ORDER_DATA."</a></TD>".
         	//<td class='line'>Ação</TD>
-        	"<TD  class='line' >".TRANS('OCO_RESPONSE')."</TD><TD  class='line' >".TRANS('OCO_SOLUC')."</TD>";
+        	"<TD  class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
+        	"<TD  class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC')."</a></TD>";
         print "</TR>";
         $i=0;
         $j=2;
@@ -557,7 +802,7 @@
 		}
 		$j++;
 
-		print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."','".$_SESSION['s_colorMarca']."');\">";
+		print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linha".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 		$sqlSubCall = "select * from ocodeps where dep_pai = ".$row['numero']." or dep_filho=".$row['numero']."";
 		$execSubCall = mysql_query($sqlSubCall) or die (TRANS('ERR_QUERY').'<br>'.$sqlSubCall);

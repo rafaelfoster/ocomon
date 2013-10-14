@@ -37,7 +37,7 @@
 	$PAGE->setRegPerPage(10);
 
 
-	print "<BR><B>".TRANS('ADM_COMPONENTS').":</B><BR>";
+	print "<BR><B>".TRANS('MNL_COMPONENTES_MODEL','Modelos de componentes').":</B><BR>";
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
@@ -85,7 +85,7 @@
 				"AND mdit_tipo = item_cod ".$qryFiltro."".
 				"ORDER BY item_nome, mdit_fabricante, mdit_desc, mdit_desc_capacidade";
 
-        $resultado = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
+        $resultado = mysql_query($query) or die (TRANS('FIELD_ERROR').':<BR>'.$query);
 
 
 	if (isset($_GET['LIMIT']))
@@ -95,13 +95,13 @@
 
 	if ((!isset($_GET['action'])) and !isset($_POST['submit'])){
 
-		//print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true&tipo=".$tipo."'>Incluir Componente.</a></TD></TR>";
-		print "<TR><TD><input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_RECORD','',0)."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\"></TD></TR>";
+		print "<TR><TD bgcolor='".BODY_COLOR."'>".
+				//"<a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true&tipo=".$tipo."'>".TRANS('TTL_INCLUDE_COMP_MODEL','Incluir modelo de componente').".</a>".
+				"<input type='button' class='button' id='idBtIncluir' value='".TRANS('TTL_INCLUDE_COMP_MODEL','',0)."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true&tipo=".$tipo."');\">".
+				"</TD></TR>";
 		if (mysql_numrows($resultado) == 0)
 		{
-			print "<tr><td>";
-			print mensagem(TRANS('MSG_NO_RECORDS'));
-			print "</td></tr>";
+			echo "<tr><td>".mensagem(TRANS('MSG_NO_EXIST_COMP_CAD_SYSTEM'))."</td></tr>";
 		}
         else
         {
@@ -112,7 +112,8 @@
 
 
 
-		print "".TRANS('THERE_IS_ARE')." <b>".$PAGE->NUMBER_REGS."</b> ".TRANS('RECORDS_IN_SYSTEM').". ".TRANS('SHOWING_PAGE')." ".$PAGE->PAGE." (".$PAGE->NUMBER_REGS_PAGE." ".TRANS('RECORDS').")</td></tr>";
+		//print "<tr><td>Filtro:</td><td><input type='text' class='text' name='filtro' value='".$P_FILTRO."'><input type='submit' class='button' value='Filtrar'></td></tr>";
+		print "".TRANS('THERE_IS_ARE')." <b>".$PAGE->NUMBER_REGS."</b> ".TRANS('TXT_COMP_MODEL_CAD_SYSTEM')." ".TRANS('SHOWING_PAGE')." ".$PAGE->PAGE." (".$PAGE->NUMBER_REGS_PAGE." ".TRANS('RECORDS').")</td></tr>";
 		//print "<TABLE border='0' cellpadding='5' cellspacing='0'  width='50%'>";
 		print "<TR class='header'><td class='line'>".TRANS('COL_TYPE')."</TD><td class='line'>".TRANS('COL_MODEL')."</TD><td class='line'><b>".TRANS('COL_EDIT')."</b></TD><td class='line'><b>".TRANS('COL_DEL')."</b></TD>";
 		$j=2;
@@ -128,13 +129,11 @@
 				$trClass = "lin_impar";
 			}
 			$j++;
-			//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
-
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 			print "<td class='line'>".$row['item_nome']."</TD>";
 			print "<td class='line'>".$row['mdit_fabricante']." ".$row['mdit_desc']." ".$row['mdit_desc_capacidade']." ".$row['mdit_sufixo']."</TD>";
-			print "<td class='line'><a onClick=\"redirect('itens.php?action=alter&cod=".$row['mdit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></TD>";
-			print "<td class='line'><a onClick=\"confirma('".TRANS('ENSURE_DEL')."?','itens.php?action=excluir&cod=".$row['mdit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
+			print "<td class='line'><a onClick=\"redirect('itens.php?action=alter&cod=".$row['mdit_cod']."&cellStyle=true')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='".TRANS('HNT_EDIT')."'></a></TD>";
+			print "<td class='line'><a onClick=\"confirma('".TRANS('MSG_DEL_UNIT_IN_SYSTEM')."','".$_SERVER['PHP_SELF']."?action=excluir&cod=".$row['mdit_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 			print "</TR>";
 		}
 		//print "</TABLE>";
@@ -147,7 +146,7 @@
 	} else
 	if ((isset($_GET['action'])  && $_GET['action']=="incluir") && (!isset($_POST['submit']))) {
 
-		print "<B>".TRANS('CADASTRE_COMPONENT').":<br>";
+		print "<B>".TRANS('SUBTTL_CAD_COMP_MODEL','Cadastro de modelos de componentes').":<br>";
 		//print "<form name='incluir' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		//print "<TABLE border='0' cellpadding='5' cellspacing='0' width='50%'>";
 		print "<tr>";
@@ -156,7 +155,7 @@
 			$select = "select * from itens order by item_nome";
 			$exec = mysql_query($select);
 			print "<select  class='select' name=item_tipo id='idItem'>";
-			print "<option value=-1 selected>".TRANS('SEL_COMPONENT_TYPE')."</option>";
+			print "<option value=-1 selected>".TRANS('SEL_TYPE_ITEM')."</option>";
 			while($row = mysql_fetch_array($exec)){
 				print "<option value=".$row['item_cod']."";
 				if ($row['item_cod']==$tipo) print " selected";
@@ -167,12 +166,12 @@
 		print "</tr>";
 
 		print "<TR>";
-		print "<TD width='30%'  bgcolor='".TD_COLOR."'>".TRANS('COL_MANUFACTURE').":</TD>";
+		print "<TD width='30%'  bgcolor='".TD_COLOR."'>".TRANS('COL_MANUFACTURE')."*:</TD>";
 		print "<TD width='70%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='item_fabricante' id='idFabricante'></TD>";
 		print "</TR>";
 
 		print "<TR>";
-			print "<TD width='30%'  bgcolor='".TD_COLOR."'>".TRANS('COL_MODEL').":</TD>";
+			print "<TD width='30%'  bgcolor='".TD_COLOR."'><a title='modelo do componente'>".TRANS('COL_MODEL')."*:</a></TD>";
 			print "<TD width='70%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text'  class='text' name='item_descricao' id='idModelo'></TD>";
 		print "</TR>";
 
@@ -186,9 +185,9 @@
 		print "</TR>";
 
 
-		print "<tr><td><input type='submit' class='button' name='submit' value='".TRANS('bt_cadastrar')."'></td>";
+		print "<tr><td><input type='submit' class='button' name='submit' value='".TRANS('BT_INCLUDE')."'></td>";
 
-		print "<td><input type='reset' class='button' name='reset' value='".TRANS('bt_cancelar')."' onClick=\"javascript:fecha();\"></td></tr>";
+		print "<td><input type='reset' class='button' name='reset' value='".TRANS('BT_CANCEL')."' onClick=\"javascript:fecha();\"></td></tr>";
 
 		//print "</table>";
 		//print "</form>";
@@ -202,7 +201,7 @@
 		//$rowAlter = mysql_fetch_array($exec);
 		$row = mysql_fetch_array($exec);
 
-		print "<B>".TRANS('TTL_EDIT_RECORD').":<br>";
+		print "<B>".TRANS('SUBTTL_EDIT_COMP').":<br>";
 		//print "<form name='alter' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		//print "<TABLE border='0' cellpadding='1' cellspacing='0' width='50%'>";
 
@@ -223,21 +222,21 @@
 
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor= '".TD_COLOR."'>".TRANS('COL_MANUFACTURE').":</TD>";
-                print "<TD width='30%' align='left' bgcolor= '".BODY_COLOR."'><INPUT type='text' class='text' name='item_fabricante' id='idFabricante' value='".$row['mdit_fabricante']."'></TD>";
+                print "<TD width='30%' align='left' bgcolor= '".BODY_COLOR."'><INPUT type='text' class='text' name='item_fabricante' id='idFabricante' value='".$row['mdit_fabricante']."' maxlength='100' size='100'></TD>";
 		print "</tr>";
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor= '".TD_COLOR."'>".TRANS('COL_MODEL').":</TD>";
-                print "<TD width='30%' align='left' bgcolor= '".BODY_COLOR."'><INPUT type='text' class='text' name='item_descricao' id='idModelo' value='".$row['mdit_desc']."'></TD>";
+                print "<TD width='20%' align='left' bgcolor= '".TD_COLOR."'>".TRANS('FIELD_DESC_MODEL').":</TD>";
+                print "<TD width='30%' align='left' bgcolor= '".BODY_COLOR."'><INPUT type='text' class='text' name='item_descricao' id='idModelo' value='".$row['mdit_desc']."' maxlength='100' size='100'></TD>";
         print "</TR>";
 
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_POWER').":</TD>";
-                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='item_capacidade' id='idCapacidade' value='".$row['mdit_desc_capacidade']."'></TD>";
+                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='item_capacidade' id='idCapacidade' value='".$row['mdit_desc_capacidade']."' maxlength='100' size='100'></TD>";
         print "</TR>";
 
         print "<TR>";
-                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SUFIX').":</TD>";
-                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='item_sufixo' id='idSufixo' value='".$row['mdit_sufixo']."'></TD>";
+                print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_SUFIX').":</TD>";
+                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='item_sufixo' id='idSufixo' value='".$row['mdit_sufixo']."' maxlength='100' size='100'></TD>";
         print "</TR>";
 
 		print "<tr> <td colspan='2'>";
@@ -245,7 +244,7 @@
 		print "</tr>";
 
 		print "<tr><td class='line'><input type='submit' class='button' name='submit' value='".TRANS('BT_ALTER')."'></td>";
-		print "<td class='line'><input type='reset' name='reset' class='button' value='".TRANS('bt_cancelar')."' onclick=\"javascript:fecha()\"></td></tr>";
+		print "<td class='line'><input type='reset' name='reset' class='button' value='".TRANS('BT_CANCEL')."' onclick=\"javascript:fecha()\"></td></tr>";
 
 		//print "</table>";
 		//print "</form>";
@@ -257,19 +256,19 @@
 			$achou = mysql_numrows($execAcha);
 
 			if ($achou){
-				print "<script>mensagem('".TRANS('MSG_CANT_DEL_COMPONENT')."!');".
-						" redirect('itens.php');</script>";
+				print "<script>mensagem('".TRANS('MSG_NOT_DEL_EQUIP_ASSOC')."');".
+						" redirect('".$_SERVER['PHP_SELF']."');</script>";
 				exit;
 			} else {
 
 				$qry = "DELETE FROM modelos_itens WHERE mdit_cod = ".$_GET['cod']."";
-				$exec = mysql_query($qry) or die (TRANS('ERR_DEL'));
+				$exec = mysql_query($qry) or die (TRANS('MSG_ERR_DEL_REGISTER'));
 				print "<script>mensagem('".TRANS('OK_DEL')."');".
-						" redirect('itens.php?tipo=".$tipo."');</script>";
+						" redirect('".$_SERVER['PHP_SELF']."?tipo=".$tipo."');</script>";
 			}
 	} else
 
-	if ($_POST['submit']== TRANS('bt_cadastrar')){
+	if ($_POST['submit']== TRANS('BT_INCLUDE')){
 
 		if (isset($_POST['item_tipo']) && isset($_POST['item_descricao'])) {
 
@@ -284,23 +283,25 @@
 			$exec= mysql_query($qry);
 			$achou = mysql_numrows($exec);
 			if ($achou){
-				print "<script>mensagem('".TRANS('MSG_RECORD_EXISTS','',0)."'); redirect('".$_SERVER['PHP_SELF']."?tipo=".$_POST['item_tipo']."');</script>";
+
+				print "<script>mensagem('".TRANS('MSG_COMP_CAD_SYSTEM')."'); redirect('".$_SERVER['PHP_SELF']."?tipo=". $_POST['item_tipo']."'); </script>";
+
 			} else {
 
 				$qry = "INSERT INTO modelos_itens (mdit_fabricante, mdit_desc, mdit_desc_capacidade,mdit_sufixo, mdit_tipo )".
 							" values ('".noHtml($_POST['item_fabricante'])."','".noHtml($_POST['item_descricao'])."', ".
 							"".noHtml($mdit_desc_capacidade).", '".noHtml($_POST['item_sufixo'])."', '".$_POST['item_tipo']."')";
 
-				$exec = mysql_query($qry) or die (TRANS('ERR_INSERT').'!<br>'.$qry);
-				print "<script>mensagem('".TRANS('OK_INSERT')."'); redirect('itens.php');</script>";
+				$exec = mysql_query($qry) or die (TRANS('MSG_ERR_INCLUDE_COMP').'<br>'.$qry);
+				print "<script>mensagem('".TRANS('MSG_DATA_INCLUDE_OK')."'); redirect('".$_SERVER['PHP_SELF']."?tipo=".$_POST['item_tipo']."');</script>";
 				}
 		} else {
-				print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."!'); redirect('itens.php?tipo=".$_POST['item_tipo']."');</script>";
+				print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."'); redirect('".$_SERVER['PHP_SELF']."?tipo=".$_POST['item_tipo']."');</script>";
 		}
 
 	} else
 
-	if ($_POST['submit'] = "Alterar"){
+	if ($_POST['submit'] = TRANS('BT_ALTER')){
 		if (isset($_POST['item_tipo']) && isset($_POST['item_descricao'])) {
 
 			if (isset($_POST['item_capacidade']) && $_POST['item_capacidade']=="") {
@@ -314,13 +315,15 @@
 					" mdit_sufixo = '".noHtml($_POST['item_sufixo'])."' ,mdit_tipo = '".$_POST['item_tipo']."'".
 						"WHERE mdit_cod=".$_POST['cod']."";
 
-			$exec= mysql_query($qry) or die(TRANS('ERR_EDIT').$qry);
+			$exec= mysql_query($qry) or die(TRANS('MSG_NOT_ALTER_REG'). $qry);
 
 
-			print "<script>mensagem('".TRANS('OK_EDIT')."'); redirect('itens.php?tipo=".$_POST['item_tipo']."');</script>";
+			print "<script>mensagem('".TRANS('MSG_DATA_ALTER_OK')."'); redirect('".$_SERVER['PHP_SELF']."?tipo=".$_POST['item_tipo']."');</script>";
 
 		} else {
-			print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."'); redirect('".$_SERVER['PHP_SELF']."');</script>";
+
+			print "<script>mensagem('".TRANS('MSG_EMPTY_DATA')."'); history.back(); </script>";
+
 		}
 	}
 

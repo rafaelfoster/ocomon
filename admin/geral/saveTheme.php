@@ -56,7 +56,7 @@
 			}
 			$j++;
 
-			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 			print "<td class='line'>".$row['tm_nome']."</TD>";
 			print "<td class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=alter&id=".$row['tm_id']."')\"><img height='16' width='16' src='".ICONS_PATH."edit.png' title='Alterar o registro'></a></td>";
@@ -223,6 +223,9 @@
 
 		$_SESSION['s_colorDestaca'] = $rowTema['tm_color_destaca'];
 		$_SESSION['s_colorMarca'] = $rowTema['tm_color_marca'];
+		$_SESSION['s_colorLinPar'] = $rowTema['tm_color_lin_par'];
+		$_SESSION['s_colorLinImpar'] = $rowTema['tm_color_lin_impar'];
+
 
 		//print "<script>mensagem('Tema carregado com sucesso! Tecle F5 para atualizar a página!'); window.opener.location.reload(); window.self.close(); </script>";
 		print "<script>mensagem('O Esquema será carregado agora!'); window.opener.open('../../index.php?LOAD=ADMIN','_parent',''); window.self.close(); </script>"; //?LOAD=ADMIN

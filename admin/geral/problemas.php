@@ -21,6 +21,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	include ("../../includes/classes/paging.class.php");
 
 	$_SESSION['s_page_admin'] = $_SERVER['PHP_SELF'];
 
@@ -34,21 +35,24 @@
 
 	print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' onSubmit=\"return valida()\">";
 
+
+	$PAGE = new paging("PRINCIPAL");
+	$PAGE->setRegPerPage($_SESSION['s_page_size']);
+
 	if (!isset($_GET['cellStyle'])) {
 		$cellStyle = "cellpadding='5' cellspacing='0'";
 	} else
 		$cellStyle = "cellpadding='0' cellspacing='1'";
 	print "<TABLE border='0' align='left' ".$cellStyle."  width='100%' bgcolor='".BODY_COLOR."'>";
 
+	if (isset($_POST['search'])){
+		$search = $_POST['search'];
+	} else
+		$search = "";
 
 		$qry_config = "SELECT * FROM config ";
         	$exec_config = mysql_query($qry_config) or die (TRANS('ERR_TABLE_CONFIG'));
 		$row_config = mysql_fetch_array($exec_config);
-
-
-
-/*		$query = "select * from problemas as p left join sistemas as s on prob_area = sis_id left join sla_solucao as sl on ".
-				"sl.slas_cod = p.prob_sla ";*/
 
 		$query = "SELECT * FROM problemas as p ".
 					"LEFT JOIN sistemas as s on p.prob_area = s.sis_id ".
@@ -59,32 +63,56 @@
 
 		if (isset($_GET['cod'])) {
 			$query.= " WHERE p.prob_id = ".$_GET['cod']." ";
+		} else
+		if (isset($_POST['search'])) {
+			$query.= " WHERE lower(p.problema) like lower(('%".noHtml($_POST['search'])."%')) ";
 		}
+
+
+
 		$query .=" ORDER  BY s.sistema, p.problema";
 		$resultado = mysql_query($query) or die(TRANS('ERR_QUERY'));
 		$registros = mysql_num_rows($resultado);
 
+		if (isset($_GET['LIMIT']))
+			$PAGE->setLimit($_GET['LIMIT']);
+		$PAGE->setSQL($query,(isset($_GET['FULL'])?$_GET['FULL']:0));
+
 	if ((!isset($_GET['action'])) && empty($_POST['submit'])) {
 
+		$PAGE->execSQL();
 		//print "<TR><TD bgcolor='".BODY_COLOR."'><a href='".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true'>Incluir novo tipo de Problema</a></TD></TR>";
 		print "<TR><TD><input type='button' class='button' id='idBtIncluir' value='".TRANS('BT_NEW_RECORD','',0)."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?action=incluir&cellStyle=true');\"></TD></TR>";
+
+		print "<tr>".//<td>".TRANS('FIELD_SEARCH')."</td>".
+		"<td colspan='4'><input type='text' class='text' name='search' id='idSearch' value='".$search."'>&nbsp;".
+			"<input type='submit' name='BT_SEARCH' class='button' value='".TRANS('BT_FILTER')."'>".
+		"</td></tr>";
+
+		if (isset($_POST['search'])) {
+			print "<script>foco('idSearch');</script>";
+		}
+
 		if (mysql_num_rows($resultado) == 0)
 		{
+			print "<tr><td align='center'>";
 			echo mensagem(TRANS('NO_RECORDS'));
+			print "</tr></td>";
 		}
 		else
 		{
 			$cor=TD_COLOR;
 			$cor1=TD_COLOR;
 			print "<tr><td colspan='8'>";
-			print "".TRANS('THERE_IS_ARE')." <b>".$registros."</b> ".TRANS('RECORDS_IN_SYSTEM').".</td>";
+			//print "<TD colspan='5' width='400' align='left'><B>".TRANS('FOUND')." <font color=red>".$PAGE->NUMBER_REGS."</font> ".TRANS('TXT_ITEM_SUPPLY').". ".TRANS('SHOWING_PAGE')." ".$PAGE->PAGE." (".$PAGE->NUMBER_REGS_PAGE." ".TRANS('RECORDS').")</B></TD>";
+			print "<B>".TRANS('FOUND')." <font color=red>".$PAGE->NUMBER_REGS."</font> ".TRANS('RECORDS_IN_SYSTEM').". ".TRANS('SHOWING_PAGE')." ".$PAGE->PAGE." (".$PAGE->NUMBER_REGS_PAGE." ".TRANS('RECORDS').")</B></TD>";
 			print "</tr>";
 			print "<TR class='header'><td class='line'>".TRANS('COL_PROB','Problema')."</TD><td class='line'>".TRANS('COL_AREA','')."</TD><td class='line'>".TRANS('COL_SLA','SLA')."</TD>".
 				"<td class='line'>".$row_config['conf_prob_tipo_1']."</TD><td class='line'>".$row_config['conf_prob_tipo_2']."</TD>".
 				"<td class='line'>".$row_config['conf_prob_tipo_3']."</TD><td class='line'>".TRANS('COL_EDIT','')."</TD><td class='line'>".TRANS('COL_DEL','')."</TD></tr>";
 
 			$j=2;
-			while ($row = mysql_fetch_array($resultado))
+			while ($row = mysql_fetch_array($PAGE->RESULT_SQL))
 			{
 				if ($j % 2)
 				{
@@ -95,10 +123,9 @@
 					$trClass = "lin_impar";
 				}
 				$j++;
-				//print "<tr class=".$trClass." id='linha".$j."' onMouseOver=\"destaca('linha".$j."');\" onMouseOut=\"libera('linha".$j."');\"  onMouseDown=\"marca('linha".$j."');\">";
-				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 				print "<td class='line'>".$row['problema']."</td>";
-				print "<td class='line'>".$row['sistema']."</td>";
+				print "<td class='line'>".NVL($row['sistema'])."</td>";
 				print "<td class='line'>".($row['slas_desc']==''?'&nbsp;':$row['slas_desc'])."</td>";
 				print "<td class='line'>".($row['probt1_desc']==''?'&nbsp;':$row['probt1_desc'])."</td>";
 				print "<td class='line'>".($row['probt2_desc']==''?'&nbsp;':$row['probt2_desc'])."</td>";
@@ -108,7 +135,9 @@
 
 				print "</TR>";
 			}
-			//print "</TABLE>";
+			print "<tr><td colspan='8'>";
+			$PAGE->showOutputPages();
+			print "</td></tr>";
 		}
 
 	} else
@@ -214,7 +243,7 @@
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 		print "<TR>";
 
-		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('bt_cadastrar')."' name='submit'>";
+		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit'  class='button' value='".TRANS('BT_CAD')."' name='submit'>";
 		print "</TD>";
 		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset'  class='button' value='".TRANS('bt_cancelar')."' name='cancelar' onClick=\"javascript:history.back()\"></TD>";
 
@@ -399,15 +428,15 @@
 
 		$erro=false;
 
-		$qryl = "SELECT * FROM problemas WHERE problema='".$_POST['problema']."'";
-		$resultado = mysql_query($qryl);
-		$linhas = mysql_num_rows($resultado);
-
-		if ($linhas > 0)
-		{
-				$aviso =TRANS('MSG_RECORD_EXISTS');
-				$erro = true;
-		}
+// 		$qryl = "SELECT * FROM problemas WHERE problema='".$_POST['problema']."' and prob_area = '".$_POST['area']."'";
+// 		$resultado = mysql_query($qryl);
+// 		$linhas = mysql_num_rows($resultado);
+//
+// 		if ($linhas > 0)
+// 		{
+// 				$aviso =TRANS('MSG_RECORD_EXISTS');
+// 				$erro = true;
+// 		}
 
 		if (!$erro)
 		{
@@ -458,7 +487,7 @@
 <!--
 	function valida(){
 		var ok = validaForm('idProblema','','Problema',1);
-		if (ok) var ok = validaForm('idArea','COMBO','Área',1);
+		//if (ok) var ok = validaForm('idArea','COMBO','Área',1);
 		if (ok) var ok = validaForm('idSla','COMBO','SLA',1);
 
 		return ok;

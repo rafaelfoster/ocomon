@@ -23,21 +23,21 @@
 	$_SESSION['s_page_invmon'] = $_SERVER['PHP_SELF'];
 
 	$cab = new headers;
-	$cab->set_title($TRANS["html_title"]);
+	$cab->set_title(TRANS('TTL_INVMON'));
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<BR><B>Busca de equipamentos por localização antiga e/ou período de remanejamento:</font></font></B><BR>";
+	print "<BR><B>".TRANS('TTL_LOCAL_HIST_PREVIEUS').":</font></font></B><BR>";
 
 	print "<FORM name='form1' method='POST' action='mostra_consulta_hist_local.php' onSubmit='return valida()'>";
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 	NL();
 	print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Tipo de equipamento: </b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_TYPE_EQUIP').": </b></TD>";
 		print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<SELECT class=select name='comp_tipo_equip'>";
-		print "<option value=-1 selected>Todos</option>";
+		print "<option value=-1 selected>".TRANS('FIELD_ALL')."</option>";
 		$query = "SELECT * from tipo_equip  order by tipo_nome";
 		$resultado = mysql_query($query);
 		$linhas = mysql_numrows($resultado);
@@ -50,10 +50,10 @@
 		print "</tr>";
 
 	print "<TR>";
-		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Localização anterior:</b></TD>";
+		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_PREVIOUS_LOCAL').":</b></TD>";
 		print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<SELECT class='select' name='comp_local' id='idComp_local'>";
-		print "<option value=-1 selected>Selecione</option>";
+		print "<option value=-1 selected>".TRANS('SEL_SELECT')."</option>";
 		$query = "SELECT * from localizacao  order by local";
 		$resultado = mysql_query($query);
 		$linhas = mysql_numrows($resultado);
@@ -66,12 +66,12 @@
 		print "</tr>";
 
 // 	print "<TR>";
-// 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Data inicial:</b></TD>";
+// 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".TRANS('OCO_FIELD_DATE_BEGIN').":</b></TD>";
 // 		print "<TD colspan='3' align='left' bgcolor='".BODY_COLOR."'>".
 // 				"<input type='text' class='text' disabled name='dInicio' size='10'></TD>";
 // 	print "</tr>";
 // 	print "<TR>";
-// 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>Data final:</b></TD>";
+// 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>OCO_FIELD_DATE_FINISH:</b></TD>";
 // 		print "<TD colspan='3'  align='left' bgcolor='".BODY_COLOR."'>".
 // 			"<input type='text' class='text' disabled name='dFinal' size='10'></TD>";
 // 	print "</tr>";
@@ -79,10 +79,10 @@
 
 	NL(4);
 	print "<TR>";
-		print "<TD bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='Consultar' name='ok'>";
+		print "<TD bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('MNL_CON')."' name='ok'>";
 		print "</TD>";
 		print "<TD colspan='3' bgcolor='".BODY_COLOR."'>".
-			"<INPUT type='reset' value='Cancelar' class='button' onClick='javascript:history.back()'></TD>";
+			"<INPUT type='reset' value='".TRANS('BT_CANCEL')."' class='button' onClick='javascript:history.back()'></TD>";
 	print "</TR>";
 
 	print "</table>";
@@ -94,7 +94,7 @@ print "</form>";
 	function valida(){
 
 		//var ok = validaForm('idComp_inst','COMBO','Unidade',1);
-		var ok = validaForm('idComp_local','COMBO','Localização',1);
+		var ok = validaForm('idComp_local','COMBO','<?print TRANS('COL_LOCALIZATION');?>',1);
 		//if (ok) var ok = validaForm('idComp_inv','ETIQUETA','Etiqueta',1);
 
 		return ok;
