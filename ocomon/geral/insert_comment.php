@@ -42,7 +42,7 @@
 	
 	if (!isset($_POST['submit'])){
 		print "<tr>";
-		//print "<td>".TRANS('INSERT_COMMENT','Inserir comentário')."</td>";
+		//print "<td>".TRANS('INSERT_COMMENT','Inserir comentario')."</td>";
 		print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".
 				"".TRANS('INSERT_COMMENT')."</textarea>";

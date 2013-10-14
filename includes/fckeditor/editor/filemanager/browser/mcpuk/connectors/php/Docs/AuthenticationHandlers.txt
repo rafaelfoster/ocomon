@@ -36,7 +36,7 @@ i.e. If i wanted to call it MySQL the file i would create would be
 MySQL.php in the Auth folder.
 
 Skeleton for the new authentication class::
-<?php 
+<?php
 class Auth {
 	function authenticate($data,$config) {
 	

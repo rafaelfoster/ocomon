@@ -287,7 +287,7 @@ $TRANS['MNL_OCORRENCIAS'] = $TRANS['MNS_OCORRENCIAS'];
 $TRANS['MNL_AREAS'] = "Areas";
 $TRANS['MNL_PROBLEMAS'] = "Problems";
 $TRANS['MNL_STATUS'] = "State";
-$TRANS['MNL_PRIORIDADES'] = "Priorities";
+$TRANS['MNL_PRIORIDADES'] = "Response Level";
 $TRANS['MNL_FERIADOS'] = "Holidays";
 $TRANS['MNL_INVENTARIO'] = $TRANS['MNS_INVENTARIO'];
 $TRANS['MNL_EQUIPAMENTOS'] = "Devices";
@@ -498,7 +498,7 @@ $TRANS['REP_PROB_AREA'] = "Problems by area";
 //BY FL�VIO
 $TRANS['ADM_PROBS']="Management of problem types";
 $TRANS['ADM_STATUS']="Management of State";
-$TRANS['ADM_PRIORITIES']="Management of priorities";
+$TRANS['ADM_PRIORITIES']= "Management of Response Levels";//"Management of priorities";
 $TRANS['ADM_HOLIDAYS']="Management of holidays";
 $TRANS['ADM_OCO'] = "Tickets";
 $TRANS['ADM_EQUIP_TYPE'] = "Management of equipament types";
@@ -553,7 +553,7 @@ $TRANS['HNT_COMPONENT_POWER'] = "Fill with an integer value corresponding to the
 
 $TRANS['CADASTRE_PROB']="Cadastre of problem types";
 $TRANS['CADASTRE_STAT']="Cadastre of State types";
-$TRANS['CADASTRE_PRIORITIES']="Cadastre of prioritie levels";
+$TRANS['CADASTRE_PRIORITIES']= "Cadastre of Response Levels";//"Cadastre of prioritie levels";
 $TRANS['CADASTRE_HOLIDAYS']="Cadastro of holidays";
 $TRANS['CADASTRE_EQUIP_TYPE']="Cadastre of equipment types";
 $TRANS['CADASTRE_COMPONENT'] = "Cadastre of component types";
@@ -1981,4 +1981,21 @@ $TRANS['INV_FROM_DATE_REGISTER']="Since";
 
 $TRANS['TTL_LIST_FILES']="Files attached to the ticket number";
 
+$TRANS['THEREIS']="There is";
+$TRANS['OCO_ONLY_ONE_CALL']="only one ticket";
+
+
+$TRANS['MNL_PRIORIDADES_ATEND'] = "Queue priority";
+$TRANS['ADM_PRIORIDADES_ATEND'] = "Queue priority Management";
+$TRANS['COL_DEFAULT'] = "Default";
+$TRANS['COL_COLOR'] = "Color";
+$TRANS['CADASTRE_PRIORITY_ATEND'] = "Cadastre of queue priorities";
+$TRANS['P'] = "P.";
+$TRANS['HNT_PRIORITY'] = "Queue priority";
+$TRANS['OCO_PRIORITY'] = "Priority";
+$TRANS['MSG_UPDATE_PRIOR'] = "This script will update all tickets that are already in the system to the default queue prioritie you defined";
+$TRANS['MSG_UPDATE_PRIOR_OK'] = "All old tickets were updated to the default queue prioritie!";
+$TRANS['LINK_UPDATE_TICKETS_PRIOR'] = "Click here to update all old tickets to the default queue prioritie you defined";
+$TRANS['DEFAULT_PRIOR_NOT_DEFINED'] = "Before update the tickets it's necessary to define the default queue prioritie!";
+$TRANS['OPT_FIELD_PRIOR'] = "field: PRIORITY";
 ?>

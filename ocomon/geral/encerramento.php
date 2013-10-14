@@ -135,6 +135,15 @@
 
 		print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' name='form1' onSubmit='return valida()'>";
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
+		
+		$getPriorityDesc = "SELECT * FROM prior_atend WHERE pr_cod = '".$rowABS['oco_prior']."'";
+		$execGetPrior = mysql_query($getPriorityDesc);
+		$rowGet = mysql_fetch_array($execGetPrior);
+		print "<TR>";
+			print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+			print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";
+		print "</TR>";		
+		
 		print "<TR>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['numero']."<td class='line'>";

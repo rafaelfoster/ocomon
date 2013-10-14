@@ -123,9 +123,7 @@
 				}
 				$j++;
 
-
-				//print "<tr class=".$trClass." id='linha".$j."".$a."' onMouseOver=\"destaca('linha".$j."".$a."');\" onMouseOut=\"libera('linha".$j."".$a."');\"  onMouseDown=\"marca('linha".$j."".$a."');\">";
-				print "<tr class=".$trClass." id='linha".$j."".$a."' onMouseOver=\"destaca('linha".$j."".$a."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$j."".$a."');\"  onMouseDown=\"marca('linha".$j."".$a."','".$_SESSION['s_colorMarca']."');\">";
+				print "<tr class=".$trClass." id='linha".$j."".$a."' onMouseOver=\"destaca('linha".$j."".$a."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$j."".$a."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linha".$j."".$a."','".$_SESSION['s_colorMarca']."');\">";
 
 				$qryImg = "select * from imagens where img_oco = ".$rowDetail['numero']."";
 				$execImg = mysql_query($qryImg) or die (TRANS('MSG_ERR_RESCUE_INFO_IMAGE'));

@@ -49,6 +49,8 @@
 	$resultado = mysql_query($query);
 	$row = mysql_fetch_array($resultado);
 	
+	//print $query;
+	
 	$GLOBALACCESS = false;
 	
 	$qryId = "SELECT * FROM global_tickets WHERE gt_ticket = ".$COD."";
@@ -183,12 +185,22 @@
 	
 
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
-        	print "<TR>";
-                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
-                	print "<TD width='30%' align='left'><input class='disable' value='".$row['numero']."' disabled></TD>";
-                	print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
-                	print "<TD colspan='3' width='30%' align='left'  ><input class='disable' value='".$row['area']."' disabled></TD>";
+
+		$getPriorityDesc = "SELECT * FROM prior_atend WHERE pr_cod = '".$row['oco_prior']."'";
+		$execGetPrior = mysql_query($getPriorityDesc);
+		$rowGet = mysql_fetch_array($execGetPrior);
+		print "<TR>";
+			print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+			print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";
+			//print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' style='{background-color:".$rowGet['pr_color'].";}'; disabled></TD>";
 		print "</TR>";
+	
+	print "<TR>";
+		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
+		print "<TD width='30%' align='left'><input class='disable' value='".$row['numero']."' disabled></TD>";
+		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
+		print "<TD colspan='3' width='30%' align='left'  ><input class='disable' value='".$row['area']."' disabled></TD>";
+	print "</TR>";
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
                 print "<TD width='30%' align='left' ><input class='disable' value='".$row['problema']."' disabled></TD>";
@@ -346,7 +358,7 @@
 				" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 		//style='{padding-left:5px;}'
-		print "<tr><td colspan='6' ><div id='Assentamento2' >"; //style='{display:none}'
+		print "<tr><td colspan='6'><div id='Assentamento2'>"; //style='{display:none}'
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 		$i = 0;
 		while ($rowAssentamento2 = mysql_fetch_array($resultado2)){
@@ -380,8 +392,9 @@
 			print "<tr><td colspan='4'><input type='button' class='button' onClick=\"ajaxFunction('idDivDetails', 'insert_comment.php', 'idLoad', 'numero=idNumero', 'urlid=idUrl');\" value='".TRANS('INSERT_COMMENT','Inserir comentário',0)."'></td></tr>";
 		} else
 			print "<tr><td colspan='4'><input type='button' class='button' onClick=\"ajaxFunction('idDivDetails', 'insert_comment.php', 'idLoad', 'numero=idNumero');\" value='".TRANS('INSERT_COMMENT','Inserir comentário',0)."'></td></tr>";
-		print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";//style='{display:none;}'
-		print "</form>";		
+		//print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";//style='{display:none;}'
+		print "</form>";
+		print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";	
 	}
 		######################################################
 		## E-MAILS ENVIADOS SOBRE ESSA OCORRï¿½NCIA
@@ -438,9 +451,9 @@
 						print "<tr><td colspan='6' ><div id='linhax".$j."' style='{display:none}'>"; //style='{display:none}'
 						print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
 
-							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_TO').":</b> ".$rowMail['mhist_address']."</td></tr>";
-							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_CC').":</b> ".$rowMail['mhist_address_cc']."</td></tr>";
-							print "<tr><td class='textarea'>".nl2br($rowMail['mhist_body'])."</td></tr>";
+							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_TO').":</b> ".toHtml($rowMail['mhist_address'])."</td></tr>";
+							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_CC').":</b> ".toHtml($rowMail['mhist_address_cc'])."</td></tr>";
+							print "<tr><td class='textarea'>".nl2br(toHtml($rowMail['mhist_body']))."</td></tr>";
 							//print "<tr><td>".$rowMail['mhist_body']."</td></tr>";
 							NL();
 

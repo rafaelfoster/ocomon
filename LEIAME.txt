@@ -1,6 +1,6 @@
 #
-# OcoMon - versão 2.0RC4
-# Data: Fevereiro de 2008
+# OcoMon - versão 2.0RC5
+# Data: Junho de 2009
 # Autor: Flávio Ribeiro (flaviorib@gmail.com)
 #
 # Linceça: GPL
@@ -56,14 +56,14 @@ Dentro do diretório do MYSQL no seu servidor digite:
 mysql -u USERNAME -p create database ocomon
 
 Para a criação das tabelas, você precisa apenas rodar um único arquivo SQL para popular a base do sistema:
-o arquivo é: DB_OCOMON_2.0RC4_FULL.SQL (em ocomon/install/2.0RC4/)
+o arquivo é: DB_OCOMON_2.0RC5_FULL.SQL (em ocomon/install/2.0RC5/). Importante: defina o conjunto de caracteres do arquivo como UTF8 na importação.
 
 Você pode executar o script acima através do próprio mysql (seguindo o mesmo procedimento citado abaixo) ou através de algum
 gerenciador gráfico como o phpMyAdmin por exemplo.
 
 Você também pode rodar o script citado da seguinte forma:
 Dentro do diretório do MYSQL no seu servidor digite:
-mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0RC4_FULL.SQL (considerando que o script está dentro do diretório do mysql)
+mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0RC5_FULL.SQL (considerando que o script está dentro do diretório do mysql)
 
 Onde:
 	USERNAME=nome do usuário "root" do MySQL
@@ -81,10 +81,18 @@ ATUALIZAÇÃO:
 Caso esteja atualizando apartir de uma versão anterior, basta sobrescrever os scripts da pasta do OcoMon pelos scripts da nova versão e importar para o MySQL o arquivo de atualização correspondente à sua versão atual. Os arquivos de atualização obedecem a seguinte nomenclatura: UPDATE-FROM{versão-anterior}-TO-{versao-final}.SQL
 
 
+	DEFINIÇÃO DE PRIORIDADES DE ATENDIMENTO
+	========================================
+	1 - Ir ao menu Admin-> Ocorrências-> Prioridades de atendimento e cadastrar os tipos de prioridades de seu interesse. Ex: Urgente, Alto, Normal, Baixo.. etc.
+	2 - Definir um dos tipos de prioridade criados como sendo padrão;
+	3 - Na tela de cadastro de tipos de prioridades, clicar no link para atualizar os chamados antigos para o tipo de prioridade padrão do sistema;
+	4 - Caso não deseje que o campo "Prioridade" apareça na tela de abertura de chamados do usuário-final, será necessário configurar esse comportamento no menu Admin -> Perfis de tela de abertura;
+
+
 CONFIGURAÇÃO
 ============
 
-Todas as configurações necessárias deverao ser feitas no arquivo config.inc.php e no menu Admin->Configurações.
+Todas as configurações necessárias deverão ser feitas no arquivo config.inc.php e no menu Admin->Configurações.
 você não conseguirá utilizar o OCOMON até ter configurado o arquivo config.inc.php. Para isso é necessário criar uma cópia do arquivo
 config.inc.php-dist e renomeá-lo para config.inc.php. Quanto à sua configuração, o arquivo é auto-explicativo. :)
 

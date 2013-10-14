@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -213,11 +213,11 @@ class FileUpload {
 		</head>
 		<body>
 		<script type="text/javascript">
-			window.parent.frames['frmUpload'].OnUploadCompleted(<?php  echo $disp; ?>) ;
+			window.parent.frames['frmUpload'].OnUploadCompleted(<?php echo $disp; ?>) ;
 		</script>
 		</body>
 		</html>
-		<?php 
+		<?php
 		
 	}
 	

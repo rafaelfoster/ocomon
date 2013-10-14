@@ -119,6 +119,7 @@
 			print "<tr><td>".TRANS('OPT_FIELD_ATTACH')."</td><td>".transbool($row['conf_scr_upload'])."</td></tr>";
 
 			print "<tr><td>".TRANS('OPT_FIELD_REPLICATE')."</td><td>".transbool($row['conf_scr_replicate'])."</td></tr>";
+			print "<tr><td>".TRANS('OPT_FIELD_PRIOR')."</td><td>".transbool($row['conf_scr_prior'])."</td></tr>";
 			print "<tr><td>".TRANS('OPT_FIELD_SEND_EMAIL')."</td><td>".transbool($row['conf_scr_mail'])."</td></tr>";
 			print "<tr><td colspan='2'>".TRANS('OPT_FIELD_MSG').":</td></tr><tr><td colspan='2'>".$row['conf_scr_msg']."</td></tr>";
 
@@ -376,6 +377,16 @@
 		print ">".TRANS('YES')."</option>";
 		print "</select></td></tr>";
 
+		print "<tr><td>".TRANS('OPT_FIELD_PRIOR')."</td><td>";//.transbool($row['conf_scr_replicate'])."</td></tr>";
+		print "<select name='prioridade' class='select'>";
+		print "<option value='0'";
+		if ($row['conf_scr_prior'] == 0) print " selected";
+		print ">".TRANS('NOT')."</option>";
+		print "<option value='1'";
+		if ($row['conf_scr_prior'] == 1) print " selected";
+		print ">".TRANS('YES')."</option>";
+		print "</select></td></tr>";
+
 
 		print "<tr><td>".TRANS('OPT_FIELD_SEND_EMAIL')."</td><td>";//.transbool($row['conf_scr_mail'])."</td></tr>";
 		print "<select name='mail' class='select'>";
@@ -432,7 +443,8 @@
 				"conf_scr_foward = ".$_POST['foward'].", ".
 				"conf_scr_status = ".$_POST['status'].", conf_scr_replicate = ".$_POST['replicar']." ,".
 				"conf_scr_upload = ".$_POST['upload']." ,".
-				"conf_scr_mail = ".$_POST['mail'].", conf_scr_msg = '".noHtml($_POST['msg'])."' ".
+				"conf_scr_mail = ".$_POST['mail'].", conf_scr_msg = '".noHtml($_POST['msg'])."' ,".
+				"conf_scr_prior = ".$_POST['prioridade']." ".
 				
 				"WHERE conf_cod=".$_POST['COD']." ".
 				

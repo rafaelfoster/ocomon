@@ -282,7 +282,7 @@ $TRANS['MNL_OCORRENCIAS'] = $TRANS['MNS_OCORRENCIAS'];
 $TRANS['MNL_AREAS'] = "Áreas";
 $TRANS['MNL_PROBLEMAS'] = "Problemas";
 $TRANS['MNL_STATUS'] = "Status";
-$TRANS['MNL_PRIORIDADES'] = "Prioridades";
+$TRANS['MNL_PRIORIDADES'] = "Níveis de Resposta";
 $TRANS['MNL_FERIADOS'] = "Feriados";
 $TRANS['MNL_INVENTARIO'] = $TRANS['MNS_INVENTARIO'];
 $TRANS['MNL_EQUIPAMENTOS'] = "Equipamentos";
@@ -614,7 +614,7 @@ $TRANS['REP_PROB_AREA'] = "Problemas por área de atendimento";
 //BY FLÁVIO
 $TRANS['ADM_PROBS']="Administração de Tipos de Problemas";
 $TRANS['ADM_STATUS']="Administração de Tipos de Status";
-$TRANS['ADM_PRIORITIES']="Administração de Tipos de Prioridades";
+$TRANS['ADM_PRIORITIES']= "Administração de Níveis de Resposta";//"Administração de Tipos de Prioridades";
 $TRANS['ADM_HOLIDAYS']="Administração de Feriados";
 $TRANS['ADM_OCO'] = "Ocorrências";
 $TRANS['ADM_EQUIP_TYPE'] = "Administração de Tipos de equipamentos";
@@ -669,7 +669,7 @@ $TRANS['HNT_COMPONENT_POWER'] = "Entre com um valor inteiro correspondente à cap
 
 $TRANS['CADASTRE_PROB']="Cadastro de Tipos de Problemas";
 $TRANS['CADASTRE_STAT']="Cadastro de Tipos de Status";
-$TRANS['CADASTRE_PRIORITIES']="Cadastro de Níveis de prioridades";
+$TRANS['CADASTRE_PRIORITIES']= "Cadastro de níveis de resposta"; //"Cadastro de Níveis de prioridades";
 $TRANS['CADASTRE_HOLIDAYS']="Cadastro de Feriados";
 $TRANS['CADASTRE_EQUIP_TYPE']="Cadastro de Tipos de Equipamentos";
 $TRANS['CADASTRE_COMPONENT'] = "Cadastro de tipos de componentes";
@@ -1943,5 +1943,23 @@ $TRANS['FILL_UNIT_TAG'] = "Os campos Unidade e etiqueta devem ser preenchidos!";
 $TRANS['FILL_LOCATION'] = "O local deve ser preenchido!";
 
 $TRANS['MSG_NOT_FOUND'] = "Nenhum registro encontrado!";
+
+$TRANS['MNL_PRIORIDADES_ATEND'] = "Prioridades de atendimendo";
+$TRANS['ADM_PRIORIDADES_ATEND'] = "Administração de prioridades de atendimento";
+$TRANS['COL_DEFAULT'] = "Padrão";
+$TRANS['COL_COLOR'] = "Cor";
+$TRANS['CADASTRE_PRIORITY_ATEND'] = "Cadastro de prioridades de atendimento";
+$TRANS['P'] = "P.";
+$TRANS['HNT_PRIORITY'] = "Prioridade de atendimento";
+$TRANS['OCO_PRIORITY'] = "Prioridade";
+$TRANS['MSG_UPDATE_PRIOR'] = "Esse script atualizará todas as ocorrências antigas para o nível de prioridade padrão do sistema";
+$TRANS['MSG_UPDATE_PRIOR_OK'] = "Todas as ocorrências antigas foram atualizadas para nível de prioridade de atendimento padrão definido por você!";
+$TRANS['LINK_UPDATE_TICKETS_PRIOR'] = "Clique aqui para atualizar todos os chamados antigos para a prioridade que for definida como padrão";
+$TRANS['DEFAULT_PRIOR_NOT_DEFINED'] = "Antes de atualizar os chamados já existentes é necessário definir qual será a prioridade padrão para os novos chamados do sistema!";
+$TRANS['OPT_FIELD_PRIOR'] = "Campo: PRIORIDADE";
+
+
+
+
 
 ?>

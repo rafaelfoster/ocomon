@@ -618,6 +618,7 @@
 	$ICON_ORDER_DATA = "";
 	$ICON_ORDER_LOCAL = "";
 	$ICON_ORDER_CONTATO = "";
+	$ICON_ORDER_PRIOR = "";
         if (!isset($_SESSION['ORDERBY'])) {
         	$_SESSION['ORDERBY'] = "area, numero";
         	$_SESSION['TEXTO_ORDER'] = "área e número do chamado (padrão)";
@@ -627,6 +628,7 @@
 		$ICON_ORDER_PROB = "";
 		$ICON_ORDER_LOCAL = "";
 		$ICON_ORDER_CONTATO = "";
+		$ICON_ORDER_PRIOR = "";
         } //else
 
         if (isset($_GET['ORDERBY'])) {
@@ -674,6 +676,15 @@
 	        		$_SESSION['ORDERBY'] = "contato";
 	        		$_SESSION['TEXTO_ORDER'] = "contato";
 	        	}
+        	} else
+        	if ($_GET['ORDERBY'] == "PRIOR"){
+        		if ($_SESSION['ORDERBY'] == "pr_atendimento, data_abertura") {
+        			$_SESSION['ORDERBY'] = "pr_atendimento desc, data_abertura";
+        			$_SESSION['TEXTO_ORDER'] = "Prioridade Z-a";
+        		} else {
+	        		$_SESSION['ORDERBY'] = "pr_atendimento, data_abertura";
+	        		$_SESSION['TEXTO_ORDER'] = "Prioridade Z-a";
+	        	}
         	}
         }
 
@@ -684,6 +695,7 @@
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "data_abertura") {
@@ -692,6 +704,7 @@
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "area desc, numero") {
@@ -700,6 +713,7 @@
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "area, numero") {
@@ -708,6 +722,7 @@
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "area, problema desc, numero") {
@@ -716,6 +731,7 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "area, problema, numero") {
@@ -724,6 +740,7 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_LOCAL = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "setor desc") {
@@ -732,6 +749,7 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "setor") {
@@ -740,6 +758,7 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_PRIOR = "";
 		} else
 		if ($_SESSION['ORDERBY'] == "contato desc") {
 			$ICON_ORDER_CONTATO = "<img src='../../includes/css/OrderDesc.png' width='16' height='16' align='absmiddle'>";
@@ -747,6 +766,7 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
+			$ICON_ORDER_PRIOR = "";
 		}
 		else
 		if ($_SESSION['ORDERBY'] == "contato") {
@@ -755,12 +775,34 @@
 			$ICON_ORDER_AREA = "";
 			$ICON_ORDER_PROB = "";
 			$ICON_ORDER_LOCAL = "";
+			$ICON_ORDER_PRIOR = "";
 		}
+		else
+		if ($_SESSION['ORDERBY'] == "pr_atendimento, data_abertura") {
+			$ICON_ORDER_PRIOR = "<img src='../../includes/css/OrderDesc.png' width='16' height='16' align='absmiddle'>";
+			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_DATA = "";
+			$ICON_ORDER_AREA = "";
+			$ICON_ORDER_PROB = "";
+			$ICON_ORDER_LOCAL = "";
+		}
+		else
+		if ($_SESSION['ORDERBY'] == "pr_atendimento desc, data_abertura") {
+			$ICON_ORDER_PRIOR = "<img src='../../includes/css/OrderAsc.png' width='16' height='16' align='absmiddle'>";
+			$ICON_ORDER_CONTATO = "";
+			$ICON_ORDER_DATA = "";
+			$ICON_ORDER_AREA = "";
+			$ICON_ORDER_PROB = "";
+			$ICON_ORDER_LOCAL = "";
+		}		
 	}
 
         $query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (2) and o.sistema in (".$uareas.") ".
         			" and o.oco_scheduled=0 ORDER BY ".$_SESSION['ORDERBY']."";
 
+	//print $query;
+	
+	
 	$resultado = mysql_query($query);
         $linhas = mysql_num_rows($resultado);
 
@@ -797,6 +839,8 @@
         print "<TD  class='line' >";
         print "<TABLE class='header_centro'  STYLE='{border-top: thin solid #999999;}' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
 
+
+	//FILA DE CHAMADOS
         print "<TR class='header'>";
         print "<TD  class='line'  nowrap>".TRANS('OCO_NUMBER_BRIEF','N.º')."&nbsp;/&nbsp;<a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=AREA')\" title='Ordena por Área de atendimento'>".TRANS('OCO_AREA','Área')."".$ICON_ORDER_AREA."</a></TD>".
         	"<TD  class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PROB')\" title='Ordena por tipo de problema'>".TRANS('OCO_PROB')."".$ICON_ORDER_PROB."</a></TD>".
@@ -804,6 +848,8 @@
         	"<TD  class='line' WIDTH=250><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=LOCAL')\" title='Ordena por Localização'>".TRANS('OCO_LOCAL')."".$ICON_ORDER_LOCAL."</a><br>".TRANS('OCO_DESC')."</TD>".
         	"<TD  class='line' nowrap><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=DATA')\" title='Order by ".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."".$ICON_ORDER_DATA."</a></TD>".
         	//<td class='line'>Ação</TD>
+        	//"<TD  class='line' nowrap><a title='".TRANS('HNT_PRIORITY')."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PRIOR')\">".TRANS('P')."".$ICON_ORDER_PRIOR."</a></TD>".
+        	"<TD  class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PRIOR')\" title='Ordena por ".TRANS('HNT_PRIORITY')."'>".TRANS('P')."".$ICON_ORDER_PRIOR."</a></TD>".
         	"<TD  class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
         	"<TD  class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC')."</a></TD>";
         print "</TR>";
@@ -931,8 +977,16 @@
 // 		print "<a href='mostra_consulta.php?numero=".$row['numero']."'><img title='Consultar' width='15' height='15' src='".$imgsPath."consulta.gif' border='0'></a>";
 // 		print "</TD>";
 
-		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
-		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
+		if (!isset($row['cor'])){
+			$COR = '#CCCCCC';
+		} else {
+			$COR = $row['cor'];
+		}
+		//style='{background-color:".$row['pr_color'].";}';
+		print "<TD  class='line' ".$valign." align='center'><input type='text' class='quadro' disabled style='{background-color:".$COR.";}';></TD>";
+
+		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
+		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
 
 		echo "</TR>";
             	$i++;

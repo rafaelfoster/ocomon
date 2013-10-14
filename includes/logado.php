@@ -1,6 +1,6 @@
 <?php 
 
- /*                        Copyright 2005 Flávio Ribeiro
+ /*                        Copyright 2005 FlÃ¡vio Ribeiro
   
          This file is part of OCOMON.
   

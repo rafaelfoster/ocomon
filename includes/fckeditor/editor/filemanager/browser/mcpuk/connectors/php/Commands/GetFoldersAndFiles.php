@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -34,11 +34,11 @@ class GetFoldersAndFiles {
 	function run() {
 
 		header ("Content-Type: application/xml; charset=utf-8");
-		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
 <!DOCTYPE Connector [
 
-<?php  include "dtd/iso-lat1.ent";?>
+<?php include "dtd/iso-lat1.ent";?>
 	
 	<!ELEMENT Connector	(CurrentFolder,Folders,Files)>
 		<!ATTLIST Connector command CDATA "noname">
@@ -60,10 +60,10 @@ class GetFoldersAndFiles {
 		<!ATTLIST File size CDATA "0">
 ] >
 		
-<Connector command="GetFoldersAndFiles" resourceType="<?php  echo $this->type; ?>">
-	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->fckphp_config['urlprefix'] . $this->actual_cwd; ?>" />
+<Connector command="GetFoldersAndFiles" resourceType="<?php echo $this->type; ?>">
+	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->fckphp_config['urlprefix'] . $this->actual_cwd; ?>" />
 	<Folders>
-<?php 
+<?php
 			$files=array();
 			if ($dh=opendir($this->real_cwd)) {
 				while (($filename=readdir($dh))!==false) {

@@ -348,6 +348,14 @@ print ".text3
 }";
 
 
+print ".quadro
+{
+	height:13px;
+	width:13px;
+	border: 1px solid #CCCCCC;
+}";
+
+
 print "input.disable, select.disable
 {
 	height:20px;

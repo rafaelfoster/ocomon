@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -46,11 +46,11 @@ class CreateFolder {
 	
 	function run() {
 		header ("content-type: text/xml");
-		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="CreateFolder" resourceType="<?php  echo $this->type; ?>">
-	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
-	<?php 
+<Connector command="CreateFolder" resourceType="<?php echo $this->type; ?>">
+	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
+	<?php
 		$newdir=str_replace("//","/",($this->real_cwd."/".$this->newfolder));
 		
 		//Check the new name
@@ -80,9 +80,9 @@ class CreateFolder {
 		}
 		
 	?>
-	<Error number="<?php  echo "".$err_no; ?>" />
+	<Error number="<?php echo "".$err_no; ?>" />
 </Connector>
-		<?php 
+		<?php
 	}
 }
 

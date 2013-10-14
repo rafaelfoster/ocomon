@@ -140,11 +140,11 @@
 		$slaR2 = 1800; //AMARELO
 		$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
 
-		$sla3 = 6; //INICIO DO VERMELHO - Tempo de SOLUÇÃO EM HORAS
-		$sla2 = 4; //INÍCIO DO AMARELO
-		$slaR3 = 14400; //Tempo de RESPOSTA em segundos VERMELHO
-		$slaR2 = 7200; //AMARELO
-		$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
+		//$sla3 = 6; //INICIO DO VERMELHO - Tempo de SOLUÇÃO EM HORAS
+		//$sla2 = 4; //INÍCIO DO AMARELO
+		//$slaR3 = 14400; //Tempo de RESPOSTA em segundos VERMELHO
+		//$slaR2 = 7200; //AMARELO
+		//$percLimit = 20; //Limite em porcento que um chamado pode estourar para ficar no SLA2 antes de ficar no vermelho
 
 
 		$corSla1 = "green";

@@ -299,7 +299,7 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 				o.status as status_cod, o.data_atendimento as data_atendimento, o.instituicao as unidade_cod,
 				o.aberto_por as aberto_por_cod, o.oco_scheduled, o.oco_real_open_date, o.date_first_queued, 
 
-				o.oco_script_sol,
+				o.oco_script_sol, o.oco_prior, 
 
 				i.inst_nome as unidade,
 
@@ -324,7 +324,7 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 
 				slr.slas_desc as sla_resposta, slr.slas_tempo as sla_resposta_tempo,
 
-				sol.script_desc
+				sol.script_desc, prioridade_atendimento.pr_nivel as pr_atendimento, prioridade_atendimento.pr_color as cor
 
 			FROM
 				ocorrencias as o left join sistemas as a on a.sis_id = o.sistema
@@ -340,6 +340,8 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 				left join sla_solucao as slr on slr.slas_cod = pr.prior_sla
 
 				left join script_solution as sol on sol.script_cod = o.oco_script_sol
+				
+				left join prior_atend as prioridade_atendimento on prioridade_atendimento.pr_cod = o.oco_prior
 				";
 
 

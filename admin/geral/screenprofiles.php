@@ -292,6 +292,13 @@
 		print "<option value='1'selected>".TRANS('YES')."</option>";
 		print "</select></td></tr>";
 
+
+		print "<tr><td>".TRANS('OPT_FIELD_PRIOR')."</td><td>";//.transbool($row['conf_scr_replicate'])."</td></tr>";
+		print "<select name='prioridade' class='select'>";
+		print "<option value='0'>".TRANS('NOT')."</option>";
+		print "<option value='1'selected>".TRANS('YES')."</option>";
+		print "</select></td></tr>";
+
 		print "<tr><td>".TRANS('OPT_FIELD_SEND_EMAIL')."</td><td>";//.transbool($row['conf_scr_mail'])."</td></tr>";
 		print "<select name='mail' class='select'>";
 		print "<option value='0'>".TRANS('NOT')."</option>";
@@ -317,13 +324,13 @@
 		$qry = "INSERT INTO configusercall (conf_name, conf_user_opencall, conf_opentoarea, conf_scr_area, conf_scr_prob, conf_scr_desc, ".
 				"conf_scr_unit, conf_scr_tag, conf_scr_chktag, conf_scr_chkhist, conf_scr_contact, conf_scr_fone, conf_scr_local, ".
 				"conf_scr_btloadlocal, conf_scr_searchbylocal, conf_scr_operator, conf_scr_date, conf_scr_schedule, conf_scr_foward, ".
-				"conf_scr_status, conf_scr_replicate, conf_scr_upload, conf_scr_mail, conf_scr_msg) ".
+				"conf_scr_status, conf_scr_replicate, conf_scr_upload, conf_scr_mail, conf_scr_msg, conf_scr_prior) ".
 				"values ".
 				"('".$_POST['screen_name']."', ".$_POST['useropencall'].", ".$_POST['toarea'].", ".$_POST['area'].", ".$_POST['problema'].", ".
 				"".$_POST['descricao'].", ".$_POST['unidade'].", ".$_POST['etiqueta'].", ".$_POST['chktag'].", ".$_POST['chkhist'].", ".
 				"".$_POST['contato'].", ".$_POST['telefone'].", ".$_POST['local'].", ".$_POST['loadlocal'].", ".$_POST['searchlocal']." , ".
 				"".$_POST['operador'].", ".$_POST['data'].", ".$_POST['date_schedule'].", ".$_POST['foward'].", ".$_POST['status'].", ".
-				"".$_POST['replicar']." ,".$_POST['upload']." , ".$_POST['mail'].", '".noHtml($_POST['msg'])."' )";
+				"".$_POST['replicar']." ,".$_POST['upload']." , ".$_POST['mail'].", '".noHtml($_POST['msg'])."', ".$_POST['prioridade']." )";
 				
 
 		//print $qry;

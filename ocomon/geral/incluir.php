@@ -479,6 +479,37 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 		print "</tr>";
 
+		if ((!empty($rowconf) && $rowconf['conf_scr_prior']) || empty($rowconf)) {
+			print "<TR>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+			print "<TD  width='30%' align='left' bgcolor='".BODY_COLOR."'>";
+				print "<select name='prioridade' class='select' id='idPrioridade'>";
+	
+				$sql = "select * from prior_atend where pr_default = 1 ";
+				$commit1 = mysql_query($sql);
+				$rowR = mysql_fetch_array($commit1);
+					print "<option value=-1>".TRANS('OCO_PRIORITY')."</option>";
+						$sql2="select * from prior_atend order by pr_nivel";
+						$commit2 = mysql_query($sql2);
+						while($rowB = mysql_fetch_array($commit2)){
+							print "<option value=".$rowB["pr_cod"]."";
+							if ($rowB['pr_cod'] == $rowR['pr_cod'] ) {
+								print " selected";
+							}
+							print ">".$rowB["pr_desc"]."</option>";
+						} // while
+	
+				print "</select>";
+				print "</td>";
+			print "</tr>";
+		} else {
+			$sql = "select * from prior_atend where pr_default = 1 ";
+			$commit1 = mysql_query($sql);
+			$rowR = mysql_fetch_array($commit1);			
+			print "<input type='hidden' name='prioridade' value='".$rowR['pr_cod']."'>";
+		}
+
+
 		print "<tr>";
 		//if ($rowconf['conf_scr_mail'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
 		if ((!empty($rowconf) && $rowconf['conf_scr_mail']) || empty($rowconf)) {
@@ -599,7 +630,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 					$query = "";
 					$query = "INSERT INTO ocorrencias (problema, descricao, instituicao, equipamento, sistema, contato, telefone, local, operador, ".
-						"data_abertura, data_fechamento, status, data_atendimento, aberto_por, oco_scheduled, oco_real_open_date, date_first_queued )".
+						"data_abertura, data_fechamento, status, data_atendimento, aberto_por, oco_scheduled, oco_real_open_date, date_first_queued, oco_prior )".
 						" values ".
 						//"(".$problema.",  ";
 						"(".$catProb.",  ";
@@ -613,11 +644,11 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 					if (!$schedule){
 						$query.="".$_POST['instituicao'].",'".$_POST['equipamento']."','".$sistema."',".
 						"'".noHtml($_POST['contato'])."','".$_POST['telefone']."',".$_POST['local'].",".$operator.",".
-						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."')";
+						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."', '".$_POST['prioridade']."')";
 					} else {
 						$query.="".$_POST['instituicao'].",'".$_POST['equipamento']."','".$sistema."',".
 						"'".noHtml($_POST['contato'])."','".$_POST['telefone']."',".$_POST['local'].",".$operator.",".
-						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', NULL)";					
+						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', NULL, '".$_POST['prioridade']."')";					
 					}
 
 					$resultado = mysql_query($query) or die (TRANS('ERR_QUERY'));

@@ -48,8 +48,8 @@ class auth {
 
 				$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
 								"<TR>".
-									"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
-									"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".(formatDate(date("Y/m/d H:i"), " %H:%M"))."</b>".$help."</p></TD>";
+									"<TD nowrap width='75%'><b>".$this->texto."</b></td>".
+									"<td width='25%' nowrap><p class='parag' align='right'><b>".TRANS(date("l")).",&nbsp;".(formatDate(date("Y/m/d H:i"), " %H:%M"))."</b>".$help."</p></TD>";
 				$this->saida.= "</TR>".
 						"</TABLE>";
 			}

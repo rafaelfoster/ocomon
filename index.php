@@ -77,7 +77,7 @@ print "<head>";
 
 print "<title>OCOMON ".VERSAO."</title>";
 print "<link rel='stylesheet' href='includes/css/estilos.css.php'>"; //type='text/css'
-print "</head><body onLoad='setHeight();'>";
+print "</head><body onLoad=\"setHeight('centro'); setHeight('centro2')\">";
 
 print "<table width='100%' border='0px' id='geral'><tr><td colspan='2'>";
 
@@ -184,10 +184,10 @@ if ($_SESSION['s_logado']){
  	}else
  		$PARAM = "";
 
-	print "<tr><td style=\"{width:15%; }\" id='centro'>";
+	print "<tr><td style=\"{width:15%;}\" id='centro'>";//id='centro'
 	print "<iframe class='frm_menu' src='menu.php?".$sis."".$PARAM."' name='menu' align='left' width='100%' height='100%' frameborder='0' STYLE='{border-right: thin solid #999999; border-bottom: thin solid #999999;}'></iframe>";
 	print "</td>";
-	print "<td style=\"{width:100%;}\"><iframe class='frm_centro' src='".$sisPath."".$sistem."'  name='centro' align='center' width='100%' height='100%' frameborder='0' STYLE='{border-bottom: thin solid #999999;}'></iframe></td>";
+	print "<td style=\"{width:100%;}\" id='centro2'><iframe class='frm_centro' src='".$sisPath."".$sistem."'  name='centro' align='center' width='100%' height='100%' frameborder='0' STYLE='{border-bottom: thin solid #999999;}'></iframe></td>";
 	print "</tr>";
 	} else {
 		//print "<form name='logar' method='post' action='".$commonPath."login.php?=".session_id()."' onSubmit=\"return valida()\">";
@@ -293,17 +293,18 @@ var GLArray = new Array();
 			return false;
 	}
 
-	function setHeight(){
+	function setHeight(id){
 
-		var obj = document.getElementById('centro');
+		var obj = document.getElementById(id);
 		if (obj!=null) {
-			obj.style.height = screen.availHeight - 300;
+			obj.style.height = screen.availHeight - 270;
 			marca('<?php print $marca;?>');
 		} else {
 			document.logar.login.focus();
 		}
 		return true;
 	}
+
 
 	function mini_popup(pagina)	{ //Exibe uma janela popUP
 		x = window.open(pagina,'_blank','dependent=yes,width=400,height=260,scrollbars=yes,statusbar=no,resizable=yes');

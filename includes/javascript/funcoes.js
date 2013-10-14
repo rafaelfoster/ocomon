@@ -354,7 +354,6 @@ function validaForm(id,tipo,campo,obrigatorio){
 
 
 	if ((obj.value == "")&&(obrigatorio==1)){
-		//alert("O campo [" + campo + "] deve ser preenchido!");
 		alert("O campo [" + campo + "] deve ser preenchido!");
 		obj.focus();
 		return false;
@@ -365,7 +364,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "INTEIRO")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINT.test(obj.value)){
-			alert ("O campo ["+ campo +"] deve conter apenas numeros inteiros não iniciados por ZERO!");
+			alert ("O campo "+ campo +" deve conter apenas numeros inteiros não iniciados por ZERO!");
 			obj.focus();
 			return false;
 		}
@@ -374,7 +373,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "COMBO")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINT.test(obj.value)){
-			alert ("O campo ["+ campo +"] deve ser selecionado!");
+			alert ("O campo "+ campo +" deve ser selecionado!");
 			obj.focus();
 			return false;
 		}
@@ -383,7 +382,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "INTEIROFULL")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINTFULL.test(obj.value)){
-			alert ("O campo ["+ campo +"] deve conter apenas numeros inteiros!");
+			alert ("O campo "+ campo +" deve conter apenas numeros inteiros!");
 			obj.focus();
 			return false;
 		}

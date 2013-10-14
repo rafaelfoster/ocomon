@@ -6,7 +6,7 @@
 <body>
 
 <pre>
-<?php 
+<?php
   require 'class.phpmailer.php';
   require 'class.pop3.php';
 

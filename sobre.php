@@ -1,9 +1,9 @@
-<?php
+<?php 
     print "<html><head><title>Sobre o Ocomon</title>"; 
     
 			print "<style type=\"text/css\"><!--";
-			print "body.corpo {background-color:#F6F6F6;}";
-            print "p{font-size:12px; margin-left:10%; margin-right: 10%; text-indent: 1cm; text-align:justify;}";
+			print "body.corpo {background-color:#F6F6F6; font-family:helvetica;}";
+            print "p{font-size:12px;  margin-left:10%; margin-right: 10%; text-indent: 1cm; text-align:justify;}";
 			print "ul{font-size:12px; margin-left:10%; margin-right: 10%; text-indent: 1cm; text-align:justify;}";
             print "table.pop {width:100%; margin-left:auto; margin-right: auto; text-align:left; 
 					border: 0px; border-spacing:1 ;background-color:#cde5ff; padding-top:10px; }";
@@ -14,14 +14,13 @@
 	print "<center><b>O ocomon</b></center>";
 	print "<p>O Ocomon surgiu em Março de 2002 como projeto pessoal do programador Franque Custódio, tendo como características".
 			" iniciais o cadastro, acompanhamento, controle e consulta de ocorrências de suporte e tendo como primeiro usuário".
-			" o Centro Universitário La Salle (UNILASALLE). A apartir de então, o sistema foi assumido pelo Analista de Suporte ".
-			"Flávio Ribeiro que adotou a ferramenta e desde então a tem aperfeiçoado e implementado diversas características ".
-			"buscando atender a questões de ordem prática, operacional e gerencial de áreas de suporte técnico como Helpdesks e Service Desks. ".
-			"Em Maio de 2003 surgiu a primeira versão do módulo de inventário (Invmon), e a partir daí e todas as informações de atendimentos ".
-			"começaram as estar vinculadas ao respectivo ".
+			" o Centro Universitário La Salle (UNILASALLE) que adotou a ferramenta e desde então tem realizado sua manutenção interna pelo ".
+			"seu próprio setor de Helpdesk buscando atender a questões de ordem prática e operacional da área de suporte. ".
+			"Baseado no código do Ocomon, em Maio de 2003 surgiu a primeira versão do Invmon, sistema de inventário para equipamentos".
+			" de informática e a partir daí e todas as informações de atendimentos começaram as estar vinculadas ao respectivo ".
 			"equipamento, acrescentando grande praticidade e valor ao sistema de atendimento.".
 			" Com a percepção da necessidade crescente de informações mais relacionadas com à questão de qualidade no suporte,".
-			" no início de 2004 foram adicionadas características de gerenciamento de SLAs, mudando de ".
+			" no início de 2004 foram adicionadas características de gerenciamento de SLAs no sistema Ocomon, mudando de ".
 			"forma sensível a maneira como o gerenciamento de chamados vinha acontecendo e obtendo crescente melhoria da qualidade".
 			" final de acordo com os indicadores fixados para os serviços realizados.</p>";
 			
@@ -80,16 +79,16 @@
 	print "<p><b>Questões técnicas:</b></p>";
 	print "<p>O Ocomon foi concebido sob a visão de software opensource sob o modelo GPL de licenciamento, ".
 			"utilizando tecnologias e ferramentas livres para o seu desenvolvimento e manutenção.</p>";
-	print "<p>Abaixo listo as principais questões técnicas do sistema:</p>";
-	print "<ul><li>Linguagem: PHP versão: a partir da 4.3x até a 5x , HTML, CSS, Javascript;</li>".
-			"<li>Banco de dados: MySQL versão: A partir da 4.1x;</li>".
+	print "<p>Abaixo listamos as principais questões técnicas do sistema:</p>";
+	print "<ul><li>Linguagem: PHP versão:4.3x, HTML, CSS, Javascript;</li>".
+			"<li>Banco de dados: MySQL versão: 4.1x;</li>".
 			"<li>Autenticação de usuários: a autenticação de usuários pode ser feita tanto ".
 			"na própria base do sistema quanto através de uma base LDAP em algum ponto da rede.</li></ul>";
-			
-	print "<p>Novas funcionalidades têm sido acrescentadas ao sistema ao longo do tempo e o objetivo é torná-lo cada ".
-		"vez mais aderente às boas práticas relacionadas tanto à operacionalização quanto à gestão de áreas de atendimento técnico.".
-			"";
-	print "<p>Atenciosamente</p><p><a href='mailto:flaviorib@gmail.com'>Flávio Ribeiro</a></p>";		
+	print "<p>Página do projeto:<a href='http://ocomonphp.sourceforge.net' target='_blank'>ocomonphp.sourceforge.net</a></p>";		
+	
+	print "<p>Esperamos que o Ocomon possa lhe ser tão útil quanto nos é aqui no ".
+			"<a href='http://www.unilasalle.edu.br' target='_blank'>Unilasalle!</a></p>";
+	print "<p>Atenciosamente</p><p><a href='mailto:flavio@unilasalle.edu.br'>Flávio Ribeiro</a></p>";		
 			
     print "</body></html>";
 

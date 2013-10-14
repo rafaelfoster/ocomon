@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -113,12 +113,12 @@ if (in_array($command,$valid_commands)) {
 		$fckphp_config=$auth->authenticate($extra,$fckphp_config);
 		if ($fckphp_config['authSuccess']!==true) {
 			header ("content-type: text/xml");
-			echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+			echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 			?>
 <Connector command="authentication_failed" resourceType="authentication_failed">
 	<CurrentFolder path="authentication_failed" url="authentication_failed" />
 	<Error number="-1" />
-</Connector><?php 
+</Connector><?php
 			if ($fckphp_config['Debug']===true  && $fckphp_config['Debug_Output']) recordOutput();
 			exit(0);
 		}

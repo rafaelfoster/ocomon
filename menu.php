@@ -103,6 +103,7 @@
 ..|".TRANS('MNL_PROBLEMAS')."|".$admDirPath."problemas.php|||centro
 ..|".TRANS('MNL_STATUS')."|".$admDirPath."status.php|||centro
 ..|".TRANS('MNL_PRIORIDADES')."|".$admDirPath."prioridades.php|||centro
+..|".TRANS('MNL_PRIORIDADES_ATEND')."|".$admDirPath."prioridades_atendimento.php|||centro
 ..|".TRANS('MNL_FERIADOS')."|".$admDirPath."feriados.php||".$iconsPath."feriado.png|centro
 ..|".TRANS('MNL_SOLUCOES')."|".$admDirPath."tipo_solucoes.php|||centro
 ..|".TRANS('MNL_OCORRENCIAS')."|".$ocoDirPath."ocorrencias.php|||centro

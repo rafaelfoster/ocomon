@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -45,12 +45,12 @@ class GetUploadProgress {
 			if ($uploadProgressHandler=='') {
 				//Progresshandler not specified, return generic response
 		?>
-<Connector command="GetUploadProgress" resourceType="<?php  echo $this->type; ?>">
-	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
+<Connector command="GetUploadProgress" resourceType="<?php echo $this->type; ?>">
+	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
 	<Progress max="2" value="1" />
 	<RefreshURL url="" />
 </Connector>
-		<?php 
+		<?php
 				exit(0);
 			}
 			
@@ -72,14 +72,14 @@ class GetUploadProgress {
 		$status=isset($vals[$index['STATUS'][0]]['value'])?$vals[$index['STATUS'][0]]['value']:1;
 		
 		header ("content-type: text/xml");
-		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="GetUploadProgress" resourceType="<?php  echo $this->type; ?>">
-	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
-	<Progress max="<?php  echo $totalBytes; ?>" value="<?php  echo $readBytes; ?>" />
-	<RefreshURL url="<?php  echo htmlentities($refreshURL); ?>" />
+<Connector command="GetUploadProgress" resourceType="<?php echo $this->type; ?>">
+	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
+	<Progress max="<?php echo $totalBytes; ?>" value="<?php echo $readBytes; ?>" />
+	<RefreshURL url="<?php echo htmlentities($refreshURL); ?>" />
 </Connector>
-		<?php 
+		<?php
 		xml_parser_free($parser);
 	}
 }

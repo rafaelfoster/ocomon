@@ -857,8 +857,8 @@ function envia_email_new_user($login, $nome, $email, $rand, $site)
 function noHtml ($string) {
 
 	$string=addslashes($string);
-	$string=addslashes($string);
-	return stripslashes(htmlspecialchars($string));
+	//$string=addslashes($string);
+	return stripslashes(htmlspecialchars($string, ENT_QUOTES));
 }
 
 function toHtml ($string){
@@ -1004,7 +1004,7 @@ function send_mail($event, $e_destino,$mailConf, $msgConf, $envVars){
 }
 
 
-function mail_send($mailConf,$to,$cc,$subject,$body,$replyto){
+function mail_send($mailConf,$to,$cc,$subject,$body,$replyto, $envVars){
 
 //$mailConf: array com as informações de conexão smtp
 
@@ -1062,12 +1062,15 @@ function mail_send($mailConf,$to,$cc,$subject,$body,$replyto){
 	}
 
 
-	$mail->Subject = $subject;
+	//$mail->Subject = $subject;
+	$mail->Subject = transvars($subject,$envVars);
 
 	if ($mailConf['mail_ishtml']){
-		$mail->Body = nl2br($body);
+		//$mail->Body = nl2br($body);
+		$mail->Body = nl2br(transvars($body,$envVars));
 	} else {
-		$mail->Body = nl2br($body);
+		//$mail->Body = nl2br($body);
+		$mail->Body = nl2br(transvars($body,$envVars));
 	}
 
 	$mail->AltBody = nl2br($body);

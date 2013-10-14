@@ -1,4 +1,4 @@
-<?php  
+<?php 
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -41,11 +41,11 @@ class DeleteFile {
 		if (file_exists($thumb)) $result2=unlink($thumb);
 		
 		header ("content-type: text/xml");
-		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="DeleteFile" resourceType="<?php  echo $this->type; ?>">
-	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
-	<?php 
+<Connector command="DeleteFile" resourceType="<?php echo $this->type; ?>">
+	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
+	<?php
 		if ($result1&&$result2) {
 			$err_no=0;
 		} else {
@@ -53,9 +53,9 @@ class DeleteFile {
 		}
 		
 	?>
-	<Error number="<?php  echo "".$err_no; ?>" />
+	<Error number="<?php echo "".$err_no; ?>" />
 </Connector>
-		<?php 
+		<?php
 	}
 }
 

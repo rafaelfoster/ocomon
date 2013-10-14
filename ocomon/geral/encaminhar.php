@@ -82,6 +82,32 @@
 		print "<input type='hidden' name='MAX_FILE_SIZE' value='".$row_config['conf_upld_size']."' />";
 
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
+        	
+        	
+			print "<TR>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+			print "<TD  width='30%' align='left' bgcolor='".BODY_COLOR."'>";
+				print "<select name='prioridade' class='select'>";
+
+				$sql = "select * from prior_atend where pr_cod = '".$row['oco_prior']."'";
+				$commit1 = mysql_query($sql);
+				$rowR = mysql_fetch_array($commit1);
+					print "<option value=-1>".TRANS('OCO_PRIORITY')."</option>";
+						$sql2="select * from prior_atend order by pr_nivel";
+						$commit2 = mysql_query($sql2);
+						while($rowB = mysql_fetch_array($commit2)){
+							print "<option value=".$rowB["pr_cod"]."";
+							if ($rowB['pr_cod'] == $rowR['pr_cod'] ) {
+								print " selected";
+							}
+							print ">".$rowB["pr_desc"]."</option>";
+						} // while
+
+				print "</select>";
+        		print "</td>";
+        	print "</tr>";
+        	
+        	
         	print "<TR>";
                 	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
                 	print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."' ><input class='disable' value='".$row['numero']."' disabled></TD>";
@@ -139,7 +165,7 @@
 				print "</div>";
 			print "</TD>";
 
-
+			print "</tr>";
 			#########################################################
 
 			print "<tr><td colspan='6' ><div id='divProblema'>"; //style='{display:none}'
@@ -780,12 +806,12 @@
 				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta'])) ) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}  else
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb." , instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			} else
@@ -793,11 +819,11 @@
 				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta']) )) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				} else {
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", status=".$depois.", ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			}
