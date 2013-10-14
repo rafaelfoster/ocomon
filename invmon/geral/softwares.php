@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -381,11 +381,11 @@
 <script type="text/javascript">
 <!--
 	function valida(){
-		var ok = validaForm('idSoftware','','<?print TRANS('COL_SOFT');?>',1);
-		if (ok) var ok = validaForm('idVersao','','<?print TRANS('COL_VERSION');?>',1);
-		if (ok) var ok = validaForm('idFabricante','COMBO','<?print TRANS('COL_MANUFACTURE');?>',1);
-		if (ok) var ok = validaForm('idCategoria','COMBO','<?print TRANS('COL_CAT');?>',1);
-		if (ok) var ok = validaForm('idLicenca','COMBO','<?print TRANS('COL_LICENSE');?>',1);
+		var ok = validaForm('idSoftware','','<?php print TRANS('COL_SOFT');?>',1);
+		if (ok) var ok = validaForm('idVersao','','<?php print TRANS('COL_VERSION');?>',1);
+		if (ok) var ok = validaForm('idFabricante','COMBO','<?php print TRANS('COL_MANUFACTURE');?>',1);
+		if (ok) var ok = validaForm('idCategoria','COMBO','<?php print TRANS('COL_CAT');?>',1);
+		if (ok) var ok = validaForm('idLicenca','COMBO','<?php print TRANS('COL_LICENSE');?>',1);
 
 		return ok;
 	}
@@ -394,7 +394,7 @@
 </script>
 
 
-<?
+<?php 
 print "</body>";
 print "</html>";
 ?>

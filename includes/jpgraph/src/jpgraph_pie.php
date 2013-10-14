@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File:	JPGRAPH_PIE.PHP
 // Description:	Pie plot extension for JpGraph

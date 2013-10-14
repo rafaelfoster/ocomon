@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -154,7 +154,7 @@
 						 print "<option value=".$rowp['pred_cod'].">".$rowp['pred_desc']."</option>";
 					} // while
 			print "</select>";
-			print "<input type='button' name='predio' value='".TRANS('ACT_NEW')."' class='minibutton' onClick=\"javascript:mini_popup('predios.php?action=incluir&popup=true')\"></td>";
+			print "<input type='button' name='predio' value='".TRANS('ACT_NEW','',0)."' class='minibutton' onClick=\"javascript:mini_popup('predios.php?action=incluir&popup=true')\"></td>";
 
 		print "</tr>";
 		print "<tr>";
@@ -424,7 +424,7 @@
 </script>
 
 
-<?
+<?php 
 print "</table>";
 print "</form>";
 print "</body>";

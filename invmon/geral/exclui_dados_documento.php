@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -36,52 +36,52 @@
 <B>Excluir Registro do Sistema:</B>
 <BR>
 
-<FORM method="POST" action=<?PHP_SELF?>>
-<TABLE border="1"  align="center" width="100%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action=<?php _SELF?>>
+<TABLE border="1"  align="center" width="100%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Código:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,0);?></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Código:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,0);?></TD>
         </TABLE>
         </TR>
 
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Material:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,1);?></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Material:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,1);?></TD>
         </TABLE>
         </TR>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?> valign="top">Quantidade:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,2);?></TD>
-        </TABLE>
-        </TR>
-
-        <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Caixa:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,3);?></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?> valign="top">Quantidade:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,2);?></TD>
         </TABLE>
         </TR>
 
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Obs:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,5);?></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Caixa:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,3);?></TD>
+        </TABLE>
+        </TR>
+
+        <TR>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Obs:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,5);?></TD>
         </TABLE>
         </TR>
 
                         <TR>
-                        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+                        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
                         <BR>
-                        <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="  Ok  " name="ok">
+                        <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="  Ok  " name="ok">
                                 <input type="hidden" name="rodou" value="sim">
                         </TD>
-                        <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                        <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
                         </TABLE>
                         </TR>
-                        <?
+                        <?php 
                         if ($rodou == "sim")
                         {
                                 $query = "DELETE FROM materiais WHERE mat_cod='$mat_cod'";
@@ -105,9 +105,9 @@
 
         ?>
 
-        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
         <TR>
-                <TD align="center" width="100%" bgcolor=<?print BODY_COLOR?>><a href=materiais.php>Voltar</a></TD>
+                <TD align="center" width="100%" bgcolor=<?php print BODY_COLOR?>><a href=materiais.php>Voltar</a></TD>
         </TR>
         </TABLE>
 </TABLE>

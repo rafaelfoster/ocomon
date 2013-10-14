@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -801,15 +801,15 @@
 
 	function valida(){
 
-		var ok = validaForm('idTipo','COMBO','<?print TRANS('FIELD_TYPE_EQUIP');?>' ,1);
-		if (ok) var ok = validaForm('idFab','COMBO','<?print TRANS('COL_MANUFACTURE');?>',1);
-		if (ok) var ok = validaForm('idEtiqueta','INTEIRO','<?print TRANS('OCO_FIELD_TAG');?>',1);
-		if (ok) var ok = validaForm('idModelo','COMBO','<?print TRANS('COL_MODEL');?>',1);
-		if (ok) var ok = validaForm('idLocal','COMBO','<?print TRANS('FIELD_LOCALIZATION');?>',1);
-		if (ok) var ok = validaForm('idSituac','COMBO','<?print TRANS('COL_SITUAC');?>',1);
-		if (ok) var ok = validaForm('idUnidade','COMBO','<?print TRANS('OCO_FIELD_UNIT');?>',1);
-		if (ok) var ok = validaForm('idValor','MOEDASIMP','<?print TRANS('FIELD_EQUIP_VALUE');?>',0);
-		if (ok) var ok = validaForm('idDataCompra','DATA','<?print TRANS('FIELD_DATE_PURCHASE');?>',0);
+		var ok = validaForm('idTipo','COMBO','<?php print TRANS('FIELD_TYPE_EQUIP');?>' ,1);
+		if (ok) var ok = validaForm('idFab','COMBO','<?php print TRANS('COL_MANUFACTURE');?>',1);
+		if (ok) var ok = validaForm('idEtiqueta','INTEIRO','<?php print TRANS('OCO_FIELD_TAG');?>',1);
+		if (ok) var ok = validaForm('idModelo','COMBO','<?php print TRANS('COL_MODEL');?>',1);
+		if (ok) var ok = validaForm('idLocal','COMBO','<?php print TRANS('FIELD_LOCALIZATION');?>',1);
+		if (ok) var ok = validaForm('idSituac','COMBO','<?php print TRANS('COL_SITUAC');?>',1);
+		if (ok) var ok = validaForm('idUnidade','COMBO','<?php print TRANS('OCO_FIELD_UNIT');?>',1);
+		if (ok) var ok = validaForm('idValor','MOEDASIMP','<?php print TRANS('FIELD_EQUIP_VALUE');?>',0);
+		if (ok) var ok = validaForm('idDataCompra','DATA','<?php print TRANS('FIELD_DATE_PURCHASE');?>',0);
 
 		return ok;
 
@@ -869,7 +869,7 @@
 
 
 team = new Array(
-<?
+<?php 
 $conta = 0;
 $conta_sub = 0;
 $sql="select * from tipo_equip order by tipo_nome";//Somente as áreas ativas

@@ -1,4 +1,4 @@
-<?
+<?php 
     print "<html><head><title>Configuração global para envio de e-mails</title>"; 
     
 			print "<style type=\"text/css\"><!--";

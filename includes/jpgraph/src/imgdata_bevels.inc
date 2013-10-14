@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	IMGDATA_BEVELS.INC
 // Description:	Base64 encoded images for round bevels

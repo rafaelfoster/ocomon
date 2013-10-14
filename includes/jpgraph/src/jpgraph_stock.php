@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_STOCK.PHP
 // Description:	Stock plot extension for JpGraph

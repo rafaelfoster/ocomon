@@ -1,4 +1,4 @@
-<?php 
+<?php  
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -41,13 +41,13 @@ class DeleteFolder {
 		}
 		
 		header ("content-type: text/xml");
-		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="DeleteFolder" resourceType="<?php echo $this->type; ?>">
-	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
-	<Error number="<?php echo "".$err_no; ?>" />
+<Connector command="DeleteFolder" resourceType="<?php  echo $this->type; ?>">
+	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
+	<Error number="<?php  echo "".$err_no; ?>" />
 </Connector>
-		<?php
+		<?php 
 	}
 	
 	

@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -24,13 +24,13 @@
 
 ?>
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>OcoMon - Módulo de Ocorrências</b></TD>";
                         echo menu_usuario();
@@ -48,19 +48,19 @@
 <BR>
 
 <FORM method="POST" action="mostra_relatorio_individual.php">
-<TABLE border="1"  align="center" width="100%" bgcolor=<?print BODY_COLOR?>>
+<TABLE border="1"  align="center" width="100%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Número:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="numero"  maxlength="100" size="10"></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Número:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="numero"  maxlength="100" size="10"></TD>
         </TABLE>
         </TR>
         <TR>
         <TR>
-        <TABLE border="0"  cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE border="0"  cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
                 <BR>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="    Ok    " name="ok"></TD>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="    Ok    " name="ok"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
         </TABLE>
         </TR>
 </TABLE>

@@ -10,13 +10,13 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/layersmenu.inc.php';
@@ -52,7 +52,7 @@ print $header;
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with a Vertical Layers Menu</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with a Vertical Layers Menu</b>
 </div>
 </div>
 
@@ -60,7 +60,7 @@ print $header;
 <tr>
 <td width="20%" valign="top">
 <div style="height: 3px"></div>
-<?php
+<?php 
 $mid->printMenu('vermenu1');
 /* alternatively:
 $vermenu1 = $mid->getMenu('vermenu1');
@@ -86,14 +86,14 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>
 </tr>
 </table>
 
-<?php
+<?php 
 $mid->printFooter();
 /* alternatively:
 $footer = $mid->getFooter();

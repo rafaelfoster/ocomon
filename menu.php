@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -32,12 +32,12 @@
 	//-->
 	</style>
 	<script language='JavaScript' type='text/javascript'>
-	<?
+	<?php 
 	require_once $phplmDirPath.'libjs/layersmenu-browser_detection.js'
 	?>
 	</script>
 	<script language='JavaScript' type='text/javascript' src='includes/menu/phplm320/libjs/layerstreemenu-cookies.js'></script>
-	<?
+	<?php 
 	require_once $phplmDirPath.'lib/PHPLIB.php';
 	require_once $phplmDirPath.'lib/layersmenu-common.inc.php';
 	require_once $phplmDirPath.'lib/treemenu.inc.php';
@@ -94,6 +94,7 @@
 	$menuAdmin =".|".TRANS('MNL_CONF')."
 ..|".TRANS('MNL_CONF_GERAL')."|".$admDirPath."configGeral.php|||centro
 ..|".TRANS('MNL_CONF_ABERTURA')."|".$admDirPath."configuserscreen.php|||centro
+..|".TRANS('MNL_SCREEN_PROFILE')."|".$admDirPath."screenprofiles.php|||centro
 ..|".TRANS('MNL_CONF_SMTP')."|".$admDirPath."configmail.php|||centro
 ..|".TRANS('MNL_CONF_MSG')."|".$admDirPath."configmsgs.php|||centro
 ..|".TRANS('MNL_CONF_APARENCIA')."|".$admDirPath."aparencia.php|||centro
@@ -146,12 +147,14 @@
 // ADICIONADO PARA USUARIO SOMENTE CONSULTAS E ABERTURA DE OCORRENCIA
 	$menuTheme = ".|".TRANS('MNL_THEME')."|".$ocoDirPath."user_theme.php|".TRANS('MNL_THEME_HNT')."|".$iconsPath."colors.png|centro";
 	$menuSenha = ".|".TRANS('MNL_SENHA')."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
+	$menuLang = ".|".TRANS('MNL_LANG')."|".$ocoDirPath."user_lang.php||".$iconsPath."brasil-flag-icon.png|centro";
 	//.|".TRANS('MNL_INICIO']."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_INICIO_HNT']."|".$iconsPath."gohome.png|centro
 	$menuSimples =".|||||
 .|".TRANS('MNL_ABRIR')."|".$ocoDirPath."incluir.php|".TRANS('MNL_ABRIR_HNT')."|".$iconsPath."fone.png|centro
 .|".TRANS('MNL_MEUS')."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_MEUS_HNT')."|".$iconsPath."search.png|centro
 ".$menuTheme."
-".$menuSenha."";
+".$menuSenha."
+".$menuLang."";
 //.|".TRANS('MNL_SENHA']."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro
 
 	$mid->setMenuStructureString($menuSimples);
@@ -161,7 +164,8 @@
 	$menuHome =".|".TRANS('MNL_INICIO')."|home.php|".TRANS('MNL_INICIO_HNT')."|".$iconsPath."gohome.png|centro
 .|".TRANS('MNL_MEUS')."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_MEUS_HNT')."|".$iconsPath."search.png|centro
 ".$menuTheme."
-".$menuSenha."";
+".$menuSenha."
+".$menuLang."";
 
 	$mid->setMenuStructureString($menuHome);
 	$mid->parseStructureForMenu('treemenu5');

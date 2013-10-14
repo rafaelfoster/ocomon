@@ -1,4 +1,4 @@
-<?
+<?php 
 
  header ("Content-type: image/png");
 $im = @ImageCreate (50, 100)

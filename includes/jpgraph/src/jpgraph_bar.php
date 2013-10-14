@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File:	JPGRAPH_BAR.PHP
 // Description:	Bar plot extension for JpGraph

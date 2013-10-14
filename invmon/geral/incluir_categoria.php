@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -36,21 +36,21 @@
 <B>Inclusão de categoria de softwares:</B>
 <BR><br>
 
-<FORM method="POST" action=<?PHP_SELF?>>
-<TABLE border="0"  align="left" width="40%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action=<?php _SELF?>>
+<TABLE border="0"  align="left" width="40%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Categoria:</TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="categoria"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Categoria:</TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="categoria"></TD>
         </TR>
 		
 		<tr><td colspan="2"></td></tr>
         <TR>
-                <TD align="center" width="20%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="Cadastrar" name="submit">
+                <TD align="center" width="20%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="Cadastrar" name="submit">
                 </TD>
-				<TD align="center" width="30%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar" onClick="javascript:window.close()"></TD>
+				<TD align="center" width="30%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar" onClick="javascript:window.close()"></TD>
         </TR>
 
-        <?
+        <?php 
                 if ($submit == "Cadastrar")
                 {
                         $erro="não";

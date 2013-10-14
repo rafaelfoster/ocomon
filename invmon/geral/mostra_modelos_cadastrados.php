@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -182,16 +182,16 @@
 				print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
                 ?>
 
-                <td class='line'><?print $row["fab_nome"]?></td>
-                <td class='line'><? print $row["modelo"]?></td>
+                <td class='line'><?php print $row["fab_nome"]?></td>
+                <td class='line'><?php  print $row["modelo"]?></td>
 
-				<td class='line'><? print $row["equipamento"]?></td>
+				<td class='line'><?php  print $row["equipamento"]?></td>
 
                 <td class='line'>Alterar</TD>
                 <td class='line'>Excluir</TD>
 
 
-                <?
+                <?php 
                   /*      $problemas = mysql_result($resultado,$i,1);
                         $query = "SELECT * FROM problemas WHERE prob_id='$problemas'";
                         $resultado3 = mysql_query($query);   */

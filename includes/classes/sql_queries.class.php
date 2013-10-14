@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 class sql_query {
 	

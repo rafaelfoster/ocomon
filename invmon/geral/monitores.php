@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
   
@@ -28,13 +28,13 @@
 ?>
 
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>InvMon - controle de inventário  -  Usuário: <font color=red>$s_usuario</font></b></TD>";
                         echo menu_usuario();
@@ -51,7 +51,7 @@
 
         <br>
         <B>Cadastro de monitores:</B>
-<?
+<?php 
 
         print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='$cor'>";
 
@@ -106,16 +106,16 @@
                 $j++;
                 ?>
                 <TR>
-                <TD bgcolor=<?print $color;?>><a href=mostra_consulta_inv.php?comp_inv=<?print mysql_result($resultado,$i,1);?>&comp_inst=<?print mysql_result($resultado,$i,9);?>><?print mysql_result($resultado,$i,1);?></a></TD>
-                <td bgcolor=<?print $color;?>><? print mysql_result($resultado,$i,11).mysql_result($resultado,$i,13);?></td>
-                <td bgcolor=<?print $color;?>><? print mysql_result($resultado,$i,5)?></td>
-                <td bgcolor=<?print $color;?>><? print mysql_result($resultado,$i,16)?></td>
-                <td bgcolor=<?print $color;?>><a href=mostra_consulta_inv.php?comp_inv=<? print mysql_result($resultado,$i,7);?>><? print mysql_result($resultado,$i,7);?></a>
-                <TD bgcolor=<?print $color;?>><a href=altera_dados_monitor.php?mon_inv=<?print mysql_result($resultado,$i,1);?>>Alterar</a></TD>
-                <TD bgcolor=<?print $color;?>><a href=exclui_dados_monitor.php?mon_inv=<?print mysql_result($resultado,$i,1);?>>Excluir</a></TD>
+                <TD bgcolor=<?php print $color;?>><a href=mostra_consulta_inv.php?comp_inv=<?php print mysql_result($resultado,$i,1);?>&comp_inst=<?php print mysql_result($resultado,$i,9);?>><?php print mysql_result($resultado,$i,1);?></a></TD>
+                <td bgcolor=<?php print $color;?>><?php  print mysql_result($resultado,$i,11).mysql_result($resultado,$i,13);?></td>
+                <td bgcolor=<?php print $color;?>><?php  print mysql_result($resultado,$i,5)?></td>
+                <td bgcolor=<?php print $color;?>><?php  print mysql_result($resultado,$i,16)?></td>
+                <td bgcolor=<?php print $color;?>><a href=mostra_consulta_inv.php?comp_inv=<?php  print mysql_result($resultado,$i,7);?>><?php  print mysql_result($resultado,$i,7);?></a>
+                <TD bgcolor=<?php print $color;?>><a href=altera_dados_monitor.php?mon_inv=<?php print mysql_result($resultado,$i,1);?>>Alterar</a></TD>
+                <TD bgcolor=<?php print $color;?>><a href=exclui_dados_monitor.php?mon_inv=<?php print mysql_result($resultado,$i,1);?>>Excluir</a></TD>
 
 
-                <?
+                <?php 
                   /*      $problemas = mysql_result($resultado,$i,1);
                         $query = "SELECT * FROM problemas WHERE prob_id='$problemas'";
                         $resultado3 = mysql_query($query);   */

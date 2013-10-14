@@ -14,7 +14,7 @@
 <title>The PHP Layers Menu System</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'phplm320/libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'phplm320/libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="phplm320/libjs/layerstreemenu-cookies.js"></script>
@@ -23,7 +23,7 @@
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with a JavaScript Tree Menu</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with a JavaScript Tree Menu</b>
 </div>
 </div>
 
@@ -34,7 +34,7 @@
 <div class="normal">
 JavaScript Tree Menu
 </div>
-<?php
+<?php 
 require_once 'phplm320/lib/PHPLIB.php';
 require_once 'phplm320/lib/layersmenu-common.inc.php';
 require_once 'phplm320/lib/treemenu.inc.php';
@@ -81,7 +81,7 @@ src="phplm320/images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'phplm320/README.ihtml'; ?>
+<?php  require_once 'phplm320/README.ihtml'; ?>
 </div>
 </div>
 </td>

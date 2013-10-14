@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 	//include ("../../includes/logado.php");
 

@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	IMGDATA_SQUARES.INC
 // Description:	Base64 encoded images for squares

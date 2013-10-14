@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -106,20 +106,20 @@
                         $j++;
 			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
                         ?>
-                        <td class='line'><?print $row['mat_cod'];?></TD>
-                        <td class='line'><?print $row['mat_nome'];?></TD>
-						<td class='line'><?print $row['marc_nome'];?></TD>
-                        <td class='line'><?print $row['mat_qtd'];?></TD>
-                        <td class='line'><?print $row['mat_caixa'];?></TD>
-						<td class='line'><a href=altera_dados_documento.php?mat_cod=<?print $row['mat_cod'];?>>Alterar</a></TD>
-						<td class='line'><a href=exclui_dados_documento.php?mat_cod=<?print $row['mat_cod'];?>>Excluir</a></TD>
+                        <td class='line'><?php print $row['mat_cod'];?></TD>
+                        <td class='line'><?php print $row['mat_nome'];?></TD>
+						<td class='line'><?php print $row['marc_nome'];?></TD>
+                        <td class='line'><?php print $row['mat_qtd'];?></TD>
+                        <td class='line'><?php print $row['mat_caixa'];?></TD>
+						<td class='line'><a href=altera_dados_documento.php?mat_cod=<?php print $row['mat_cod'];?>>Alterar</a></TD>
+						<td class='line'><a href=exclui_dados_documento.php?mat_cod=<?php print $row['mat_cod'];?>>Excluir</a></TD>
 
-                        <?print "</TR>";
+                        <?php print "</TR>";
                         $i++;
                 }
 
                 print "<TABLE border='0' cellpadding='3' cellspacing='0' align='center' width='100%' >";
-				?><FORM method="POST" action=<?PHP_SELF?>><?
+				?><FORM method="POST" action=<?php _SELF?>><?php 
 				print "<TR>";
 				print "<TD width='750' bgcolor='white' align='left'><FONT SIZE=2 STYLE=font-size: 11pt><FONT FACE=Arial, sans-serif><B>Foram encontrados <font color=red>$linhasTotal</font> documentos cadastrados. Mostrados de <font color=red>$min</font> a <font color=red>$top</font>.</B></font></font></TD>";
 				print "<TD width='50' bgcolor='white' align='left'></td>";

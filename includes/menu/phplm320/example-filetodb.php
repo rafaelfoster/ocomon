@@ -1,7 +1,7 @@
 <pre>
-<?php print basename(__FILE__); ?> - output the DB SQL dump corresponding to the Menu Structure
+<?php  print basename(__FILE__); ?> - output the DB SQL dump corresponding to the Menu Structure
 
-<?php
+<?php 
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/layersmenu-process.inc.php';
 $mid = new ProcessLayersMenu();

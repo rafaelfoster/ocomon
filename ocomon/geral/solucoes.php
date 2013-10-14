@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -25,9 +25,9 @@ include ("logado.php");
 
 ?>
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
-<?
+<?php 
         if ($s_usuario!="admin")
         {
                 echo "<META HTTP-EQUIV=REFRESH   CONTENT=\"0;
@@ -37,10 +37,10 @@ include ("logado.php");
 ?>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>OcoMon - Módulo de Ocorrências</b></TD>";
                         echo menu_usuario();
@@ -57,24 +57,24 @@ include ("logado.php");
 <B>Manutenção de Soluções e Problemas</B>
 <BR>
 
-<FORM method="POST" action=<?PHP_SELF?>>
-<TABLE border="1"  align="center" width="100%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action=<?php _SELF?>>
+<TABLE border="1"  align="center" width="100%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Número:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="numero" maxlength="100" size="10"></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Número:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="numero" maxlength="100" size="10"></TD>
         </TABLE>
         </TR>
         <TR>
         <TR>
-        <TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
                 <BR>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="    Ok    " name="ok" onclick="ok=sim"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="    Ok    " name="ok" onclick="ok=sim"></TD>
                         <input type="hidden" name="rodou" value="sim">
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
         </TABLE>
         </TR>
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $query  = "SELECT * FROM solucoes WHERE numero='$numero'";
@@ -111,11 +111,11 @@ include ("logado.php");
                                         $j++;
                                         ?>
                                         <TR>
-                                        <TD bgcolor=<?print $color;?>><?print datab(mysql_result($resultado,$i,3));?></TD>
-                                        <TD bgcolor=<?print $color;?>><?print mysql_result($resultado,$i,4);?></TD>
-                                        <TD bgcolor=<?print $color;?>><a href=altera_dados_solucoes.php?numero=<?print mysql_result($resultado,$i,0);?>>Alterar</a></TD>
-                                        <TD bgcolor=<?print $color;?>><a href=exclui_dados_solucoes.php?numero=<?print mysql_result($resultado,$i,0);?>>Excluir</a></TD>
-                                        <?print "</TR>";
+                                        <TD bgcolor=<?php print $color;?>><?php print datab(mysql_result($resultado,$i,3));?></TD>
+                                        <TD bgcolor=<?php print $color;?>><?php print mysql_result($resultado,$i,4);?></TD>
+                                        <TD bgcolor=<?php print $color;?>><a href=altera_dados_solucoes.php?numero=<?php print mysql_result($resultado,$i,0);?>>Alterar</a></TD>
+                                        <TD bgcolor=<?php print $color;?>><a href=exclui_dados_solucoes.php?numero=<?php print mysql_result($resultado,$i,0);?>>Excluir</a></TD>
+                                        <?php print "</TR>";
                                         $i++;
                                 }
                         }

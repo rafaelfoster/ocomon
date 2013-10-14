@@ -1,141 +1,159 @@
 #
-# OcoMon - vers„o 2.0rc3_testing
-# Data: Agosto de 2008
-# Autor: Fl·vio Ribeiro (flaviorib@gmail.com)
+# OcoMon - vers√£o 2.0RC4
+# Data: Fevereiro de 2008
+# Autor: Fl√°vio Ribeiro (flaviorib@gmail.com)
 #
-# LinceÁa: GPL
+# Lince√ßa: GPL
 #
+
+
+ATEN√á√ÉO:
+=========
+
+Se voc√™ deseja instalar o OcoMon por conta pr√≥pria, √© necess√°rio que saiba o que √© um servidor WEB e conhe√ßa o processo gen√©rico de instala√ß√£o de sistemas WEB. Al√©m disso, √© necess√°rio ter conhecimento m√≠nimo em MySQL (processo de cria√ß√£o de banco e importa√ß√£o de tabelas bem como cria√ß√£o de usu√°rios e permiss√µes de acesso) e PHP.
+
+Caso n√£o tenha os requisitos citados, recomendo que encarregue a tarefa de instala√ß√£o do OcoMon a outra pessoa que atenda os mesmos.
+
 
 REQUISITOS:
 ============
 
     * Sistema Operacional: Independente;
     * Servidor Web (preferencialmente Apache);
-    * Linguagem: PHP vers„o:4.3x ou superior, HTML, CSS, Javascript;
-    * Banco de dados: MySQL vers„o: 4.1x ou superior;
-    * Navegador: Embora o sistema tambÈm funcione no Internet Explorer (com algumas limitaÁıes de layout), recomendo fortemente
-    	a utilizaÁ„o do mesmo no Firefox. Os principais testes do Ocomon s„o realizados utilizando o Firefox pois È um navegador multi-plataforma
-    	e bastante confi·vel. USE O OCOMON COM O FIREFOX!! :-)
+    * Linguagem: PHP vers√£o:4.3x ou superior, HTML, CSS, Javascript;
+    * Banco de dados: MySQL vers√£o: 4.1x ou superior;
+    * Navegador: Embora o sistema tamb√©m funcione no Internet Explorer (com algumas limita√ß√µes de layout), recomendo fortemente
+    	a utiliza√ß√£o do mesmo no Firefox. Os principais testes do Ocomon s√£o realizados utilizando o Firefox pois √© um navegador multi-plataforma
+    	e bastante confi√°vel. USE O OCOMON COM O FIREFOX!! :-)
 
 Notas importantes:
 
-    * Para o sistema funcionar adequadamente È necess·rio que seu navegador permita que sistema rode funÁıes
+    * Para o sistema funcionar adequadamente √© necess√°rio que seu navegador permita que sistema rode fun√ß√µes
 		javascript e aceite cookies do sistema.
-    * Para a visualizaÁ„o dos gr·ficos È necess·rio que o PHP esteja compilado com suporte ‡ biblioteca GD;
-    * Para o upload de imagens È necess·rio que essa propriedade esteja habilitada no arquivo de configuraÁıes do PHP (php.ini);
-    * Para o envio de e-mails o Ocomon pode utilizar um SMTP especificado por vocÍ. Caso vocÍ desabilite a opÁ„o de SMTP os e-mails
-    		ser„o enviados utilizando a funÁ„o "mail" do PHP e o arquivo php.ini deve estar configurado corretamente para funcionar de
+    * Para a visualiza√ß√£o dos gr√°ficos √© necess√°rio que o PHP esteja compilado com suporte √† biblioteca GD;
+    * Para o upload de imagens √© necess√°rio que essa propriedade esteja habilitada no arquivo de configura√ß√µes do PHP (php.ini);
+    * Para o envio de e-mails o Ocomon pode utilizar um SMTP especificado por voc√™. Caso voc√™ desabilite a op√ß√£o de SMTP os e-mails
+    		ser√£o enviados utilizando a fun√ß√£o "mail" do PHP e o arquivo php.ini deve estar configurado corretamente para funcionar de
     		maneira adequada.
 
-INSTALA«√O
+INSTALA√á√ÉO
 ==========
 
-Primeira instalaÁ„o:
+Primeira instala√ß√£o:
 
-Copiar o diretÛrio 'ocomon_XX' para o seu web server (/usr/local/apache2/htdocs/ usualmente no FreeBSD ou var/www/html, em sistemas Linux com Apache).
-As permissıes dos arquivos podem ser as default do seu servidor, apenas o diretÛrio /includes/logs deve ter permiss„o de escrita
-para todos os usu·rios, pois È o diretÛrio onde s„o gravados os arquivos de log do sistema.
+Descompactar o arquivo do OcoMon para o seu web server (/usr/local/apache2/htdocs/ usualmente no FreeBSD ou var/www/html, em sistemas Linux com Apache).
+As permiss√µes dos arquivos podem ser as default do seu servidor, apenas o diret√≥rio /includes/logs deve ter permiss√£o de escrita
+para todos os usu√°rios, pois √© o diret√≥rio onde s√£o gravados alguns arquivos de log do sistema.
 
-Criar um novo banco de dados no MySQL e nome·-lo: 'ocomon' (ou qualquer ou nome sugestivo). … recomend·vel a criaÁ„o de um usu·rio
-especÌfico, no banco de dados, para manipulaÁ„o da base do Ocomon.
+Criar um novo banco de dados no MySQL e nome√°-lo: 'ocomon' (ou qualquer ou nome sugestivo). √â recomend√°vel a cria√ß√£o de um usu√°rio
+espec√≠fico, no banco de dados, para manipula√ß√£o da base do Ocomon.
 
 Ex:
 GRANT USAGE ON * . * TO 'ocomon_user'@'localhost' IDENTIFIED BY 'senha' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 ;
 GRANT SELECT , INSERT , UPDATE , DELETE ON `base_ocomon` . * TO 'ocomon_user'@'localhost';
 
-Dentro do diretÛrio do MYSQL no seu servidor digite:
+Dentro do diret√≥rio do MYSQL no seu servidor digite:
 mysql -u USERNAME -p create database ocomon
 
-Para a criaÁ„o das tabelas, vocÍ precisa apenas rodar um ˙nico arquivo SQL para popular a base do sistema:
-o arquivo È: DB_OCOMON_2.0rc3_TESTING_FULL.sql (em ocomon/install/testing/)
+Para a cria√ß√£o das tabelas, voc√™ precisa apenas rodar um √∫nico arquivo SQL para popular a base do sistema:
+o arquivo √©: DB_OCOMON_2.0RC4_FULL.SQL (em ocomon/install/2.0RC4/)
 
-VocÍ pode executar o script acima atravÈs do prÛprio mysql (seguindo o mesmo procedimento citado abaixo) ou atravÈs de algum
-gerenciador gr·fico como o phpMyAdmin por exemplo.
+Voc√™ pode executar o script acima atrav√©s do pr√≥prio mysql (seguindo o mesmo procedimento citado abaixo) ou atrav√©s de algum
+gerenciador gr√°fico como o phpMyAdmin por exemplo.
 
-VocÍ tambÈm pode rodar o script citado da seguinte forma:
-Dentro do diretÛrio do MYSQL no seu servidor digite:
-mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0rc3_TESTING_FULL.sql (considerando que o script est· dentro do diretÛrio do mysql)
+Voc√™ tamb√©m pode rodar o script citado da seguinte forma:
+Dentro do diret√≥rio do MYSQL no seu servidor digite:
+mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0RC4_FULL.SQL (considerando que o script est√° dentro do diret√≥rio do mysql)
 
 Onde:
-	USERNAME=nome do usu·rio "root" do MySQL
-	DATABASENAME=nome do banco de dados criado para receber os dados do Ocomon (se vocÍ escolher um nome
-		     diferente de "ocomon", n„o esqueÁa de alterar no arquivo includes/config.inc.php
-	VocÍ dever· digitar a senha de root para iniciar a execuÁ„o dos scripts.
+	USERNAME=nome do usu√°rio "root" do MySQL
+	DATABASENAME=nome do banco de dados criado para receber os dados do Ocomon (se voc√™ escolher um nome
+		     diferente de "ocomon", n√£o esque√ßa de alterar no arquivo includes/config.inc.php
+	Voc√™ dever√° digitar a senha de root para iniciar a execu√ß√£o dos scripts.
 
 
-ApÛs a instalaÁ„o, È recomend·vel a exclus„o da pasta "install" dentro de ocomon/install;
+Ap√≥s a instala√ß√£o, √© recomend√°vel a exclus√£o da pasta "install" dentro de ocomon/install;
 
 
-AtualizaÁ„o:
-
-Caso esteja atualizando apartir da vers„o 2.0a, a base a ser importada È a DB_UPDATE_FROM_2.0a.sql.
-
-
-CONFIGURA«√O
+ATUALIZA√á√ÉO:
 ============
 
-Todas as configuraÁıes necess·rias deverao ser feitas no arquivo config.inc.php e no menu Admin->ConfiguraÁıes.
-vocÍ n„o conseguir· utilizar o OCOMON atÈ ter configurado o arquivo config.inc.php. Para isso È necess·rio criar uma cÛpia do arquivo
-config.inc.php-dist e renome·-lo para config.inc.php. Quanto ‡ sua configuraÁ„o, o arquivo È auto-explicativo. :)
+Caso esteja atualizando apartir de uma vers√£o anterior, basta sobrescrever os scripts da pasta do OcoMon pelos scripts da nova vers√£o e importar para o MySQL o arquivo de atualiza√ß√£o correspondente √† sua vers√£o atual. Os arquivos de atualiza√ß√£o obedecem a seguinte nomenclatura: UPDATE-FROM{vers√£o-anterior}-TO-{versao-final}.SQL
+
+
+CONFIGURA√á√ÉO
+============
+
+Todas as configura√ß√µes necess√°rias deverao ser feitas no arquivo config.inc.php e no menu Admin->Configura√ß√µes.
+voc√™ n√£o conseguir√° utilizar o OCOMON at√© ter configurado o arquivo config.inc.php. Para isso √© necess√°rio criar uma c√≥pia do arquivo
+config.inc.php-dist e renome√°-lo para config.inc.php. Quanto √† sua configura√ß√£o, o arquivo √© auto-explicativo. :)
 
 Iniciando o uso do OCOMON:
 
 Passo a passo:
 
 ACESSO
-usu·rio: admin
-senha: admin (N„o esqueÁa de alterar esse senha t„o logo tenha acesso ao sistema!!)
+usu√°rio: admin
+senha: admin (N√£o esque√ßa de alterar esse senha t√£o logo tenha acesso ao sistema!!)
 
-Novos usu·rios podem ser criados no menu ADMIN-USU¡RIOS
+Novos usu√°rios podem ser criados no menu ADMIN-USU√ÅRIOS
 
 
 
 IMPORTANTE!!
 ==============
 
-CONFIGURA«√O DE ABERTURA DE CHAMADOS PELO USU¡RIO FINAL:
+CONFIGURA√á√ÉO DE ABERTURA DE CHAMADOS PELO USU√ÅRIO FINAL:
 
-Para a abertura de chamados funcionar adequadamente È necess·rio observar os seguintes pontos:
+Para a abertura de chamados funcionar adequadamente √© necess√°rio observar os seguintes pontos:
 
-	1 - Cadastre uma nova ·rea de atendimento, e desmarque a opÁ„o "Presta atendimento". Essa ·rea ser· criada
-		especificamente p·ra abertura de chamados. O e-mail dessa ·rea n„o precisa ser um e-mail v·lido pois
-		n„o ser· utilizado pelo sistema.
+	1 - Cadastre uma nova √°rea de atendimento, e desmarque a op√ß√£o "Presta atendimento". Essa √°rea ser√° criada
+		especificamente p√°ra abertura de chamados. O e-mail dessa √°rea n√£o precisa ser um e-mail v√°lido pois
+		n√£o ser√° utilizado pelo sistema.
 
-	2 - Configure a ·rea criada como "¡rea de nÌvel somente abertura".
+	2 - Configure a √°rea criada como "√Årea de n√≠vel somente abertura".
 
-	3 - Para cadastrar usu·rios como somente abertura de chamados, utilize o auto-cadastro na tela de login do sistema.
-		Se for cadastrar manualmente cada usu·rio de abertura observe que o nÌvel deve ser definido como "Somente abertura"
-		e a ·rea deve ser a ·rea criada para abertura de chamados sem definiÁıes de ·reas secund·rias.
+	3 - Para cadastrar usu√°rios como somente abertura de chamados, utilize o auto-cadastro na tela de login do sistema.
+		Se for cadastrar manualmente cada usu√°rio de abertura observe que o n√≠vel deve ser definido como "Somente abertura"
+		e a √°rea deve ser a √°rea criada para abertura de chamados sem defini√ß√µes de √°reas secund√°rias.
 
 
 	AGENDAMENTO DE CHAMADOS:
 
-	Para o controle de SLAs funcionar adequadamente, È necess·rio a criaÁ„o de mais dois STATUS
-	(menu Admin->OcorrÍncias->Status) especÌficos, um para ser utilizado automaticamente no agendamento de chamados na
-	abertura dos mesmos e outro para ser utilizado automaticamente no agendamento de chamados j· abertos(na ediÁ„o).
+	Para o controle de SLAs funcionar adequadamente, √© necess√°rio a cria√ß√£o de mais dois STATUS
+	(menu Admin->Ocorr√™ncias->Status) espec√≠ficos, um para ser utilizado automaticamente no agendamento de chamados na
+	abertura dos mesmos e outro para ser utilizado automaticamente no agendamento de chamados j√° abertos(na edi√ß√£o).
 
-	- O status a ser criado para agendamento na abertura dever·, OBRIGATORIAMENTE, ter dependÍncia igual a "SERVI«O DE TERCEIROS" ou
-	"A ¡REA T…CNICA".
+	- O status a ser criado para agendamento na abertura dever√°, OBRIGATORIAMENTE, ter depend√™ncia igual a "SERVI√áO DE TERCEIROS" ou
+	"A √ÅREA T√âCNICA".
 
-	- O status a ser criado para agendamento na ediÁ„o dever·, OBRIGATORIAMENTE, ter dependÍncia igual a "INDEPENDENTE" ou
-	"AO USU¡RIO".
+	- O status a ser criado para agendamento na edi√ß√£o dever√°, OBRIGATORIAMENTE, ter depend√™ncia igual a "INDEPENDENTE" ou
+	"AO USU√ÅRIO".
 
-	Os status criados dever„o ser utilizados no menu Admin->ConfiguraÁıes->Agendamento de chamados
+	Os status criados dever√£o ser utilizados no menu Admin->Configura√ß√µes->Agendamento de chamados
 
 
 
-DOCUMENTA«√O:
+DOCUMENTA√á√ÉO:
 =============
 
-Atualmente, a principal fonte de documentaÁ„o do sistema È o FÛrum (http://softwarelivre.unilasalle.edu.br/ocomon_forum/). AlÈm
-deste, h· tambÈm a lista de discuss„o (http://svrmail.lasalle.tche.br/mailman/listinfo/ocomon-l).
+Toda a documenta√ß√£o do OcoMon est√° dispon√≠vel no site do projeto:
+
+- Site do projeto: http://ocomonphp.sourceforge.net/
+
+- Manual/wiki: http://ocomonphp.wiki.sourceforge.net/manual
+
+- F√≥rum: http://softwarelivre.unilasalle.edu.br/ocomon_forum
+
+- Lista de discuss√µes: http://svrmail.lasalle.tche.br/mailman/listinfo/ocomon-l
 
 
-Espero que esse sistema lhe seja ˙til e lhe ajude no seu gerenciamento de suporte e equipamentos de inform·tica
-da mesma forma que j· ajuda uma sÈrie de empresas no Brasil.
+
+Espero que esse sistema lhe seja √∫til e lhe ajude no seu gerenciamento de suporte e equipamentos de inform√°tica
+da mesma forma que j√° ajuda uma s√©rie de empresas no Brasil.
 
 Bom uso!! :)
 
-Fl·vio Ribeiro
+Fl√°vio Ribeiro
 flaviorib@gmail.com
 

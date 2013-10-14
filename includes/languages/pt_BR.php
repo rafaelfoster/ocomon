@@ -1,4 +1,4 @@
-<?php
+<?php 
 //ARQUIVO DE IDIOMA
 
 $TRANS["idioma"] = "Português do Brasil";
@@ -333,7 +333,7 @@ $TRANS['OPT_ESQUEMA_PERMITE_USERS']="PERMITE QUE USUÁRIOS SELECIONEM ESQUEMAS";
 $TRANS['OPT_DIRETIVA']="Diretiva";
 $TRANS['OPT_VALOR']="Valor";
 $TRANS['OPT_ALLOW_USER_OPEN']="Permite que usuários abram chamados";
-$TRANS['OPT_AREA_ONLY_OPEN']="Área de nível Somente Abertura";
+$TRANS['OPT_AREA_ONLY_OPEN']="Área de nível Somente Abertura para usuários que se auto-cadastram";
 $TRANS['OPT_AREA_USER_OPENTO']="Usuários abrem chamados para a área";
 $TRANS['OPT_TTL_CUSTON_OPEN']="Customização para a tela de abertura de chamados";
 
@@ -446,7 +446,7 @@ $TRANS['COL_EDIT']="Alterar";
 $TRANS['COL_DEL']="Excluir";
 $TRANS['ACTIVE']="ATIVO";
 $TRANS['INACTIVE']="INATIVO";
-$TRANS['CADASTRE_AREA']="Cadastro de Áreas de Atendimento";
+$TRANS['CADASTRE_AREA']="Cadastro de Áreas de Atendimento.";
 $TRANS['SEL_STATUS']="Selecione o Status";
 
 $TRANS['TTL_EDIT_RECORD']="Edição do registro";
@@ -1025,7 +1025,7 @@ $TRANS['MSG_ERR_NOT_INFO_IMAGE'] = "NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA
 $TRANS['MSG_ERR_RESCUE_INFO_SUBCALL'] = "ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE SUB-CHAMADOS!";
 $TRANS['MSG_ERR_RESCUE_INFO_STATUS_CALL_SON'] = "ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS!";
 $TRANS['MSG_ERR_RESCUE_DATA_OCCO'] = "ERRO NA TENTATIVA DE RECUPERAR OS DADOS DAS OCORRÊNCIAS!";
-$TRANS['FIELD_CALL_SUBCALL_DEPEND'] = "Chamado com vínculos'>Sub-Chamados / Dependências";
+$TRANS['FIELD_CALL_SUBCALL_DEPEND'] = "Chamado com vínculos' > Sub-Chamados / Dependências";
 $TRANS['FIELD_NESTING'] = "Assentamento";
 
 //ENCERRAMENTO.PHP
@@ -1372,7 +1372,7 @@ $TRANS['TTL_ADMIN_DOC_CAD'] = "Administração de documentos cadastrados";
 $TRANS['SUBTTL_DOC_CAD'] = "Cadastro de Documentos";
 $TRANS['TXT_IN_CADASTRE'] = "cadastrados.";
 $TRANS['COL_BOX'] = "Caixa";
-$TRANS['COL_OBS'] = "'>Obs";
+$TRANS['COL_OBS'] = "Obs";
 $TRANS['COL_MODEL_EQUIP'] = "Modelo de equipamento";
 $TRANS['FIELD_ASSOC_MODEL'] = "Associado ao modelo";
 $TRANS['FIELD_NAME_MODEL'] = "Nome do modelo";
@@ -1872,23 +1872,76 @@ $TRANS['BT_FILTER']="Filtrar";
 $TRANS['OPT_MSG']="Mensagem";
 $TRANS['OCO_FIELD_REAL_DATE_OPEN']="Data real de abertura";
 $TRANS['OCO_FIELD_LAST_SCHEDULE']="Data do último agendamento";
-$TRANS['MSG_DISABLED_IN_DEMO']="Desabilitado no Demo";
+$TRANS['TTL_PREVIEWS_EXP_GUARANTEE_FULL']="VENCIMENTOS DE GARANTIA (até 5 anos)";
+$TRANS['WARRANTY_EXPIRE']="Vencimento da garantia";
+$TRANS['SHOW_FULL_5_YEARS']="Mostrar todas até 5 anos";
+$TRANS['SHOW_ONLY_3_YEARS']="Mostrar apenas os próximos 3 anos";
 
+$TRANS['CHECK_ASSET_PRIVATED']="Privado";
+$TRANS['CHECK_ASSET_PUBLIC']="Público";
+$TRANS[''] = "";
+$TRANS['ALERT_AREA_PERMISSION'] = "Não esqueça de atribuir as permissões de acesso à nova área.";
+$TRANS['SCREEN_PROFILE_COD']="Código";
+$TRANS['SCREEN_NAME']="Perfil de abertura de chamados";
+$TRANS['SEL_SCREEN']="Selecione o perfil";
+$TRANS['SCREEN_PROFILE_NAME']="Nome do perfil";
+$TRANS['LINKED_AREAS']="Áreas de atendimento associadas a esse perfil";
+$TRANS['COL_SCREEN_PROFILE']="Tela para abetura de chamados";
+$TRANS['SCREEN_FULL']="Completa";
+$TRANS['MSG_ALTER_LANG_DISABLE_ADMIN']="Essa opção está desabilitada";
+$TRANS['MSG_LANG_LOAD_SUCESS']="Arquivo de idioma carregado com sucesso";
+$TRANS['MNL_LANG']="Idioma";
+$TRANS['MSG_ERR_NOT_ALLOWED']="Acesso não autorizado!";
+$TRANS['GLOBAL_LINK']="Link global para acesso à ocorrência";
+$TRANS['GENERATE_GLOBAL_LINK']="Gerar link";
+$TRANS['MNL_SCREEN_PROFILE']="Perfis de tela de abertura";
+$TRANS['INSERT_COMMENT']="Inserir comentário";
 
+$TRANS['EDIT']="Editar";
+$TRANS['DEL']="Excluir";
+$TRANS['OCO_NOT_PENDING_TO_USER']="Não existem ocorrências pendentes para o usuário";
+$TRANS['OCO_FIELD_ATTACH_FILE']="Anexar arquivo";
+$TRANS['COL_STATUS']="Status";
+$TRANS['MSG_NO_EXIST_CLOSE_CALLS']="Não existem ocorrências concluídas por você no sistema";
 
+$TRANS['MSG_LINK_CONFIRM_SUBSCRIBE']="Clique aqui para confirmar sua incrição";
 
+$TRANS['ALERT_NO_RECORDS']="Não há nenhum registro cadastrado!";
 
+$TRANS['MSG_OCCO_EDIT_SUCCESS'] = "Operação realizada com sucesso!";
 
+$TRANS['MSG_OCCO_SUBTICKET'] = "Essa ocorrência será um sub-chamado da ocorrência";
 
+$TRANS['EDIT_CURRENT_COLOR'] = "Edita a cor atual";
 
+$TRANS['SHORT_OF'] = "de";
+$TRANS['SHORT_BY'] = "por";
+$TRANS['SHORT_IN'] = "em";
 
+$TRANS['SLA_TO_TICKET'] = "SLAs para a ocorrência";
 
+$TRANS['RESPONSE_SLA'] = "SLA de resposta";
 
+$TRANS['SOLVE_SLA'] = "SLA de solução";
 
+$TRANS['MSG_DISABLED_END_USER_TICKET'] = "A abertura de chamados pelo usuário final não está habilitada";
 
+$TRANS['FULL_NAME'] = "Nome Completo";
 
+$TRANS['RETYPE_PASS'] = "Digite novamente";
 
+$TRANS['USERNAME_ALREADY_EXISTS'] = "Esse nome de usuário já existe no sistema. Por favor escolha outro.";
 
+$TRANS['ERROR_TEMP_USER'] = "ERRO NA TENTATIVA DE CRIAR USUÁRIO TEMPORÁRIO. SUA SOLICITAÇÃO NÃO FOI PROCESSADA!";
 
+$TRANS['AUTO_CADASTRE_SUCCESS'] = "Sua solicitação foi efetuada com sucesso! Aguarde o e-mail de confirmação.";
+
+$TRANS['PASS_DONT_MATCH'] = "As senhas digitadas não conferem!";
+
+$TRANS['FILL_UNIT_TAG'] = "Os campos Unidade e etiqueta devem ser preenchidos!";
+
+$TRANS['FILL_LOCATION'] = "O local deve ser preenchido!";
+
+$TRANS['MSG_NOT_FOUND'] = "Nenhum registro encontrado!";
 
 ?>

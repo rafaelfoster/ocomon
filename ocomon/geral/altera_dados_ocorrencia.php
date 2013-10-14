@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -139,18 +139,18 @@
 					print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 				?>
 				<script type="text/javascript">
-					var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+					var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 					if (bar ==1) {
 						var oFCKeditor = new FCKeditor( 'descricao' ) ;
 						oFCKeditor.BasePath = '../../includes/fckeditor/';
-						oFCKeditor.Value =  '<?print $row['descricao'];?>';
+						oFCKeditor.Value =  '<?php print $row['descricao'];?>';
 						oFCKeditor.ToolbarSet = 'ocomon';
 						oFCKeditor.Width = '570px';
 						oFCKeditor.Height = '100px';
 						oFCKeditor.Create() ;
 					}
 				</script>
-				<?
+				<?php 
 
 				print "</TD>";
 			print "</TR>";
@@ -279,18 +279,18 @@
 				}
 				?>
 				<script type="text/javascript">
-					var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+					var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 					if (bar ==1) {
 						var oFCKeditor = new FCKeditor( 'assentamento' ) ;
 						oFCKeditor.BasePath = '../../includes/fckeditor/';
-						oFCKeditor.Value = '<?print "".TRANS('TXTAREA_OCCO_DIRECT_MODIFY')." ".$_SESSION['s_usuario']."";?>';
+						oFCKeditor.Value = '<?php print "".TRANS('TXTAREA_OCCO_DIRECT_MODIFY')." ".$_SESSION['s_usuario']."";?>';
 						oFCKeditor.ToolbarSet = 'ocomon';
 						oFCKeditor.Width = '570px';
 						oFCKeditor.Height = '100px';
 						oFCKeditor.Create() ;
 					}
 				</script>
-				<?
+				<?php 
 				if ($data_atend =="") {
 					print "<input type='checkbox' value='ok' name='resposta' checked title='".TRANS('HNT_NOT_MARK_OPT_FIRST_REPLY_CALL')."'>".TRANS('FIELD_FIRST_REPLY')."";
 				}
@@ -608,7 +608,7 @@ print "</FORM>";
 	}
 -->
 </script>
-<?
+<?php 
 print "</body>";
 print "</html>";
 ?>

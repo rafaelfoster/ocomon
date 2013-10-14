@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -125,30 +125,30 @@
 ?>
 
 
-<TABLE border="0"  align="left" width="100%" bgcolor=<?print BODY_COLOR?>>
+<TABLE border="0"  align="left" width="100%" bgcolor=<?php print BODY_COLOR?>>
         
 		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Tipo de equipamento:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["equipamento"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Tipo de equipamento:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["equipamento"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Fabricante:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fab_nome"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Fabricante:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fab_nome"]?></TD>
        </TR>
         
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Código de Inventário:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["etiqueta"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Código de Inventário:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["etiqueta"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Número de Série:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["serial"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Número de Série:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["serial"]?></TD>
        </TR>		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Modelo:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["modelo"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Modelo:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["modelo"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Local:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["local"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Local:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["local"]?></TD>
        </TR>				
 
 	
@@ -159,45 +159,45 @@
 	<tr><td colspan='4'></td></tr>
 		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Nome do computadr:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["nome"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Nome do computadr:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["nome"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>MB:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["mb"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>MB:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["mb"]?></TD>
        </TR>				
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Processador:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["processador"].$row["clock"]." MHZ"?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Processador:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["processador"].$row["clock"]." MHZ"?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Memória:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["memoria"]." MB"?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Memória:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["memoria"]." MB"?></TD>
        </TR>				
 
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Placa de vídeo:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_video"].$row["video"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Placa de vídeo:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_video"].$row["video"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Placa de som:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_som"].$row["som"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Placa de som:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_som"].$row["som"]?></TD>
        </TR>	
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>HD:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_hd"]." ".$row["hd"]." ".$row["hd_capacidade"]." GB"?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>HD:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_hd"]." ".$row["hd"]." ".$row["hd_capacidade"]." GB"?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Unidade CD-ROM:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_cdrom"].$row["cdrom"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Unidade CD-ROM:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_cdrom"].$row["cdrom"]?></TD>
        </TR>				
 
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Unidade Gravadora de CD:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_gravador"].$row["gravador"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Unidade Gravadora de CD:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_gravador"].$row["gravador"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Unidade de DVD:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fabricante_dvd"].$row["dvd"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Unidade de DVD:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fabricante_dvd"].$row["dvd"]?></TD>
        </TR>				
 
 	<tr><td colspan='4'></td></tr>
@@ -207,15 +207,15 @@
 	<tr><td colspan='4'></td></tr>
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Tipo de Impressora:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["impressora"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Tipo de Impressora:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["impressora"]?></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Monitor:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["polegada_nome"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Monitor:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["polegada_nome"]?></TD>
 		</tr>
 		<tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Scanner:</b></TD>
-                <TD colspan='3' width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["resolucao_nome"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Scanner:</b></TD>
+                <TD colspan='3' width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["resolucao_nome"]?></TD>
         
        </TR>				
 
@@ -225,44 +225,44 @@
 	</TR>
 	<tr><td colspan='4'></td></tr>		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Unidade:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["instituicao"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Unidade:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["instituicao"]?></TD>
                
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Centro de Custo:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $centroCusto?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Centro de Custo:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $centroCusto?></TD>
 		</tr>
 
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Fornecedor:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["fornecedor_nome"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Fornecedor:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["fornecedor_nome"]?></TD>
                
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Nota Fiscal:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["nota"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Nota Fiscal:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["nota"]?></TD>
 		</tr>
 		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Valor:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["valor"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Valor:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["valor"]?></TD>
                
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Data da Compra:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["data_compra"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Data da Compra:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["data_compra"]?></TD>
 		</tr>
 		
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Data do cadastro:</b></TD>
-                <TD colspan='3' width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print datab($hoje);?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Data do cadastro:</b></TD>
+                <TD colspan='3' width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print datab($hoje);?></TD>
         </TR>
 		
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Comentário:</b></TD>
-                <TD colspan='3' width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row["comentario"]?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Comentário:</b></TD>
+                <TD colspan='3' width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row["comentario"]?></TD>
         </TR>		
 
 
 
 		
-                        <?
+                        <?php 
                      
                                 $sql = "DELETE FROM historico WHERE hist_inv = '$comp_inv' and hist_inst= '$comp_inst'";
 								$resultadoSQL = mysql_query($sql);
@@ -292,7 +292,7 @@
         ?>
 		<script language="javascript">
 		<!--
-			mensagem('<?print $aviso;?>');
+			mensagem('<?php print $aviso;?>');
 			history.back();
 			
 		//-->

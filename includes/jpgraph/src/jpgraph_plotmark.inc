@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	JPGRAPH_PLOTMARK.PHP
 // Description:	Class file. Handles plotmarks

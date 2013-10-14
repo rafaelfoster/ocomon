@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_LOG.PHP
 // Description:	Log scale plot extension for JpGraph

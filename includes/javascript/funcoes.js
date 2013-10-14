@@ -5,7 +5,7 @@
 	var GLArray = new Array();
 
 	function popup(pagina)	{ //Exibe uma janela popUP
-		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=no,statusbar=no,resizable=no');
+		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=yes,statusbar=no,resizable=no');
 		x.moveTo(10,10);
 
 		return false
@@ -42,6 +42,13 @@
 
 	function mini_popup(pagina)	{ //Exibe uma janela popUP
 		x = window.open(pagina,'_blank','dependent=yes,width=400,height=250,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+	function popup_alerta_mini(pagina)	{ //Exibe uma janela popUP
+		x=window.open(pagina,'_blank','dependent=yes,width=400,height=250,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(100,100);
 		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
 		return false
 	}
@@ -347,6 +354,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 
 
 	if ((obj.value == "")&&(obrigatorio==1)){
+		//alert("O campo [" + campo + "] deve ser preenchido!");
 		alert("O campo [" + campo + "] deve ser preenchido!");
 		obj.focus();
 		return false;
@@ -357,7 +365,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "INTEIRO")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINT.test(obj.value)){
-			alert ("O campo "+ campo +" deve conter apenas numeros inteiros não iniciados por ZERO!");
+			alert ("O campo ["+ campo +"] deve conter apenas numeros inteiros não iniciados por ZERO!");
 			obj.focus();
 			return false;
 		}
@@ -366,7 +374,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "COMBO")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINT.test(obj.value)){
-			alert ("O campo "+ campo +" deve ser selecionado!");
+			alert ("O campo ["+ campo +"] deve ser selecionado!");
 			obj.focus();
 			return false;
 		}
@@ -375,7 +383,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	if ((tipo == "INTEIROFULL")&&(obj.value != "")) {
 		//validar dados numéricos
 		if (!regINTFULL.test(obj.value)){
-			alert ("O campo "+ campo +" deve conter apenas numeros inteiros!");
+			alert ("O campo ["+ campo +"] deve conter apenas numeros inteiros!");
 			obj.focus();
 			return false;
 		}
@@ -499,7 +507,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 	}
 
 
-        return true;
+	return true;
 }
 
 	function exibeEscondeImg(obj) {
@@ -692,7 +700,7 @@ function validaForm(id,tipo,campo,obrigatorio){
 		var j;
 		var array = new Array();
 
-		for (i=3; i<args; i++){//Jogando os argumentos (apartir do quarto pois os tres primeiros sao fixos) para um array
+		for (i=3; i<args; i++){//Jogando os argumentos (apartir do terceiro pois os tres primeiros sao fixos) para um array
 			j = i-3;
 			array[j] = ajaxFunction.arguments[i];
 		}

@@ -1,4 +1,4 @@
-<?php
+<?php 
 // vim: set expandtab tabstop=4 shiftwidth=4:
 // This code that was derived from the original PHPLIB Template class
 // is copyright by Kristian Koehntopp, NetUSE AG and was released

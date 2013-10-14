@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -179,16 +179,16 @@
 		function valida(){
 			var ok = false;
 
-			var ok = validaForm('idSigla','','<?print TRANS('TPL_SIGLA')?>',1);
-			if (ok) var ok = validaForm('idMlDesc','','<?print TRANS('ML_DESC')?>',1);
-			if (ok) var ok = validaForm('idMlList','MULTIEMAIL','<?print TRANS('ML_ADDRESS_TO')?>',1);
-			if (ok) var ok = validaForm('idMlListCc','MULTIEMAIL','<?print TRANS('ML_ADDRESS_CC')?>',1);
+			var ok = validaForm('idSigla','','<?php print TRANS('TPL_SIGLA')?>',1);
+			if (ok) var ok = validaForm('idMlDesc','','<?php print TRANS('ML_DESC')?>',1);
+			if (ok) var ok = validaForm('idMlList','MULTIEMAIL','<?php print TRANS('ML_ADDRESS_TO')?>',1);
+			if (ok) var ok = validaForm('idMlListCc','MULTIEMAIL','<?php print TRANS('ML_ADDRESS_CC')?>',1);
 
 			return ok;
 		}
 	//-->
 	</script>
-	<?
+	<?php 
 
 
 print "</body>";

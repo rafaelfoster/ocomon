@@ -107,7 +107,7 @@ CREATE TABLE `dominios` (
   `dom_cod` int(4) NOT NULL auto_increment,
   `dom_desc` varchar(15) NOT NULL default '',
   PRIMARY KEY  (`dom_cod`)
-)   COMMENT='Tabela de DomÌnios de Rede';
+)   COMMENT='Tabela de Dom√≠nios de Rede';
 
 -- --------------------------------------------------------
 
@@ -252,7 +252,7 @@ CREATE TABLE `historico` (
   PRIMARY KEY  (`hist_cod`),
   KEY `hist_inv` (`hist_inv`),
   KEY `hist_inst` (`hist_inst`)
-)   COMMENT='Tabela de controle de histÛrico de locais por onde o equipam';
+)   COMMENT='Tabela de controle de hist√≥rico de locais por onde o equipam';
 
 -- --------------------------------------------------------
 
@@ -284,7 +284,7 @@ CREATE TABLE `instituicao` (
   PRIMARY KEY  (`inst_cod`),
   KEY `inst_cod` (`inst_cod`),
   KEY `inst_status` (`inst_status`)
-)   COMMENT='Tabela de InstituiÁıes Lasalistas';
+)   COMMENT='Tabela de Institui√ß√µes Lasalistas';
 
 -- --------------------------------------------------------
 
@@ -311,7 +311,7 @@ CREATE TABLE `licencas` (
   `lic_cod` int(4) NOT NULL auto_increment,
   `lic_desc` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`lic_cod`)
-)   COMMENT='Tabela de tipos de licenÁas de softwares';
+)   COMMENT='Tabela de tipos de licen√ßas de softwares';
 
 -- --------------------------------------------------------
 
@@ -400,7 +400,7 @@ CREATE TABLE `modulos` (
   `modu_nome` varchar(15)  NOT NULL default '',
   PRIMARY KEY  (`modu_cod`),
   KEY `modu_nome` (`modu_nome`)
-)  COMMENT='Tabela de m√≥dulos do sistema';
+)  COMMENT='Tabela de m√É¬≥dulos do sistema';
 
 -- --------------------------------------------------------
 
@@ -441,7 +441,7 @@ CREATE TABLE `moldes` (
   `mold_fab` int(4) default NULL,
   PRIMARY KEY  (`mold_marca`),
   KEY `mold_cod` (`mold_cod`)
-)   COMMENT='Tabela de padrıes de configuraÁıes';
+)   COMMENT='Tabela de padr√µes de configura√ß√µes';
 
 -- --------------------------------------------------------
 
@@ -453,7 +453,7 @@ CREATE TABLE `nivel` (
   `nivel_cod` int(4) NOT NULL auto_increment,
   `nivel_nome` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`nivel_cod`)
-)   COMMENT='Tabela de nÌveis de acesso ao invmon';
+)   COMMENT='Tabela de n√≠veis de acesso ao invmon';
 
 -- --------------------------------------------------------
 
@@ -502,7 +502,7 @@ CREATE TABLE `permissoes` (
   `perm_flag` int(4) NOT NULL default '0',
   PRIMARY KEY  (`perm_cod`),
   KEY `perm_area` (`perm_area`,`perm_modulo`,`perm_flag`)
-)   COMMENT='Tabela para permissoes das ·reas';
+)   COMMENT='Tabela para permissoes das √°reas';
 
 -- --------------------------------------------------------
 
@@ -515,7 +515,7 @@ CREATE TABLE `polegada` (
   `pole_nome` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`pole_cod`),
   KEY `pole_cod` (`pole_cod`)
-)   COMMENT='Tabela de polegadas de monitores de vÌdeo';
+)   COMMENT='Tabela de polegadas de monitores de v√≠deo';
 
 -- --------------------------------------------------------
 
@@ -527,7 +527,7 @@ CREATE TABLE `predios` (
   `pred_cod` int(4) NOT NULL auto_increment,
   `pred_desc` varchar(15) NOT NULL default '',
   PRIMARY KEY  (`pred_cod`)
-)   COMMENT='Tabela de predios - vinculada a tabela de localiza√ß√µes';
+)   COMMENT='Tabela de predios - vinculada a tabela de localiza√É¬ß√É¬µes';
 
 -- --------------------------------------------------------
 
@@ -585,7 +585,7 @@ CREATE TABLE `resolucao` (
   `resol_nome` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`resol_cod`),
   KEY `resol_cod` (`resol_cod`)
-)   COMMENT='Tabela de resoluÁıes para scanners';
+)   COMMENT='Tabela de resolu√ß√µes para scanners';
 
 -- --------------------------------------------------------
 
@@ -616,7 +616,7 @@ CREATE TABLE `situacao` (
   `situac_desc` varchar(200) default NULL,
   PRIMARY KEY  (`situac_cod`),
   KEY `situac_cod` (`situac_cod`)
-)   COMMENT='Tabela de situaÁ„o de computadores quanto ao seu funcionamen';
+)   COMMENT='Tabela de situa√ß√£o de computadores quanto ao seu funcionamen';
 
 -- --------------------------------------------------------
 
@@ -631,7 +631,7 @@ CREATE TABLE `sla_solucao` (
   PRIMARY KEY  (`slas_cod`),
   KEY `slas_tempo` (`slas_tempo`),
   KEY `slas_tempo_2` (`slas_tempo`)
-)   COMMENT='Tabela de SLAs de tempo de soluÁ„o';
+)   COMMENT='Tabela de SLAs de tempo de solu√ß√£o';
 
 -- --------------------------------------------------------
 
@@ -725,7 +725,7 @@ CREATE TABLE `tempo_garantia` (
   `tempo_meses` int(4) NOT NULL default '0',
   PRIMARY KEY  (`tempo_cod`),
   KEY `tempo_meses` (`tempo_meses`)
-)   COMMENT='Tabela de tempos de duraÁ„o das garantias';
+)   COMMENT='Tabela de tempos de dura√ß√£o das garantias';
 
 -- --------------------------------------------------------
 
@@ -754,7 +754,7 @@ CREATE TABLE `tipo_equip` (
   `tipo_nome` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`tipo_cod`),
   KEY `tipo_cod` (`tipo_cod`)
-)   COMMENT='Tabela de Tipos de Equipamentos de inform·tica';
+)   COMMENT='Tabela de Tipos de Equipamentos de inform√°tica';
 
 -- --------------------------------------------------------
 
@@ -844,7 +844,7 @@ VALUES ('', 'admin', 'Administrador do Sistema', '21232f297a57a5a743894a0e4a801f
 -- Extraindo dados da tabela `assistencia`
 -- 
 
-INSERT INTO `assistencia` (`assist_cod`, `assist_desc`) VALUES (1, 'Contrato de ManutenÁ„o');
+INSERT INTO `assistencia` (`assist_cod`, `assist_desc`) VALUES (1, 'Contrato de Manuten√ß√£o');
 INSERT INTO `assistencia` (`assist_cod`, `assist_desc`) VALUES (2, 'Garantia do Fabricante');
 INSERT INTO `assistencia` (`assist_cod`, `assist_desc`) VALUES (3, 'Sem Cobertura');
 
@@ -853,8 +853,8 @@ INSERT INTO `assistencia` (`assist_cod`, `assist_desc`) VALUES (3, 'Sem Cobertur
 -- Extraindo dados da tabela `modulos`
 -- 
 
-INSERT INTO `modulos` VALUES (2, 'invent·rio');
-INSERT INTO `modulos` VALUES (1, 'ocorrÍncias');
+INSERT INTO `modulos` VALUES (2, 'invent√°rio');
+INSERT INTO `modulos` VALUES (1, 'ocorr√™ncias');
 
 
 -- 
@@ -862,22 +862,22 @@ INSERT INTO `modulos` VALUES (1, 'ocorrÍncias');
 -- 
 
 INSERT INTO `sistemas` VALUES (1, 'DEFAULT', 1, 'default@yourdomain.com', 1);
-INSERT INTO `sistemas` VALUES (2, 'USU¡RIOS', 1, 'default@yourdomain.com', 0);
+INSERT INTO `sistemas` VALUES (2, 'USU√ÅRIOS', 1, 'default@yourdomain.com', 0);
 
 -- 
 -- Extraindo dados da tabela `categorias`
 -- 
 
-INSERT INTO `categorias` VALUES (1, 'EscritÛrio');
+INSERT INTO `categorias` VALUES (1, 'Escrit√≥rio');
 INSERT INTO `categorias` VALUES (2, 'Browser');
 INSERT INTO `categorias` VALUES (3, 'Editor');
 INSERT INTO `categorias` VALUES (4, 'Visualizador');
 INSERT INTO `categorias` VALUES (5, 'Jogos');
 INSERT INTO `categorias` VALUES (6, 'Sistema Operacional');
-INSERT INTO `categorias` VALUES (7, 'AntivÌrus');
+INSERT INTO `categorias` VALUES (7, 'Antiv√≠rus');
 INSERT INTO `categorias` VALUES (8, 'E-mail');
 INSERT INTO `categorias` VALUES (9, 'Desenvolvimento');
-INSERT INTO `categorias` VALUES (10, 'Utilit·rios');
+INSERT INTO `categorias` VALUES (10, 'Utilit√°rios');
 INSERT INTO `categorias` VALUES (11, 'Compactador');
 
 
@@ -886,15 +886,15 @@ INSERT INTO `categorias` VALUES (11, 'Compactador');
 -- 
 
 INSERT INTO `itens` VALUES (1, 'HD');
-INSERT INTO `itens` VALUES (2, 'Placa de vÌdeo');
+INSERT INTO `itens` VALUES (2, 'Placa de v√≠deo');
 INSERT INTO `itens` VALUES (3, 'Placa de rede');
 INSERT INTO `itens` VALUES (4, 'Placa de som');
 INSERT INTO `itens` VALUES (5, 'CD-ROM');
 INSERT INTO `itens` VALUES (6, 'Modem');
-INSERT INTO `itens` VALUES (7, 'MemÛria');
+INSERT INTO `itens` VALUES (7, 'Mem√≥ria');
 INSERT INTO `itens` VALUES (8, 'DVD');
 INSERT INTO `itens` VALUES (9, 'Gravador');
-INSERT INTO `itens` VALUES (10, 'Placa m„e');
+INSERT INTO `itens` VALUES (10, 'Placa m√£e');
 INSERT INTO `itens` VALUES (11, 'Processador');
 
 
@@ -951,7 +951,7 @@ INSERT INTO `fabricantes` VALUES (40, 'Yamaha', 1);
 INSERT INTO `fabricantes` VALUES (41, 'CP Eletronica', 1);
 INSERT INTO `fabricantes` VALUES (42, 'Kingston', 1);
 INSERT INTO `fabricantes` VALUES (43, 'Encore', 1);
-INSERT INTO `fabricantes` VALUES (44, 'GÍnius', 1);
+INSERT INTO `fabricantes` VALUES (44, 'G√™nius', 1);
 INSERT INTO `fabricantes` VALUES (45, 'Planet', 1);
 INSERT INTO `fabricantes` VALUES (46, 'Inovar', 1);
 INSERT INTO `fabricantes` VALUES (47, 'InFocus', 1);
@@ -1074,42 +1074,42 @@ INSERT INTO `modelos_itens` VALUES (19, 'Seagate', 'IDE 5400rpm', 20, 1, 21, 'GB
 INSERT INTO `modelos_itens` VALUES (20, 'Toshiba', 'IDE 5400rpm', 12, 1, 22, 'GB');
 INSERT INTO `modelos_itens` VALUES (21, 'Toshiba', 'IDE 5400rpm', 20, 1, 23, 'GB');
 INSERT INTO `modelos_itens` VALUES (22, 'Hitashi', 'IDE 4200rpm', 20, 1, 24, 'GB');
-INSERT INTO `modelos_itens` VALUES (23, 'GenÈrico', 'IDE 4200rpm', 40, 1, 25, 'GB');
+INSERT INTO `modelos_itens` VALUES (23, 'Gen√©rico', 'IDE 4200rpm', 40, 1, 25, 'GB');
 INSERT INTO `modelos_itens` VALUES (24, 'Quantum', 'IDE', 4, 1, 26, 'GB');
 INSERT INTO `modelos_itens` VALUES (25, 'Seagate', 'IDE', 4, 1, 27, 'GB');
 INSERT INTO `modelos_itens` VALUES (26, 'Maxtor', 'IDE 5400rpm', 4, 1, 28, 'GB');
 INSERT INTO `modelos_itens` VALUES (27, 'Western Digital', 'IDE', 1.2, 1, 29, 'GB');
-INSERT INTO `modelos_itens` VALUES (28, 'GenÈrico', 'M1614TA', 1, 1, 30, 'GB');
+INSERT INTO `modelos_itens` VALUES (28, 'Gen√©rico', 'M1614TA', 1, 1, 30, 'GB');
 INSERT INTO `modelos_itens` VALUES (29, 'Samsung', 'IDE', 2.1, 1, 31, 'GB');
 INSERT INTO `modelos_itens` VALUES (30, 'Quantum', 'IDE', 2.1, 1, 32, 'GB');
 INSERT INTO `modelos_itens` VALUES (31, 'Quantum', 'IDE', 3.2, 1, 33, 'GB');
 INSERT INTO `modelos_itens` VALUES (32, 'Maxtor', 'IDE', 6.5, 1, 34, 'GB');
 INSERT INTO `modelos_itens` VALUES (33, 'Seagate', 'IDE', 2.5, 1, 35, 'GB');
-INSERT INTO `modelos_itens` VALUES (34, 'GenÈrico', 'IDE', 4, 1, 36, 'GB');
+INSERT INTO `modelos_itens` VALUES (34, 'Gen√©rico', 'IDE', 4, 1, 36, 'GB');
 INSERT INTO `modelos_itens` VALUES (35, 'Western Digital', 'IDE', 6, 1, 37, 'GB');
 INSERT INTO `modelos_itens` VALUES (36, 'Fujitsu', 'IDE', 6, 1, 38, 'GB');
-INSERT INTO `modelos_itens` VALUES (37, 'GenÈrico', 'IDE', 20, 1, 39, 'GB');
-INSERT INTO `modelos_itens` VALUES (38, 'GenÈrico', 'IDE', 6, 1, 40, 'GB');
+INSERT INTO `modelos_itens` VALUES (37, 'Gen√©rico', 'IDE', 20, 1, 39, 'GB');
+INSERT INTO `modelos_itens` VALUES (38, 'Gen√©rico', 'IDE', 6, 1, 40, 'GB');
 INSERT INTO `modelos_itens` VALUES (39, 'Fujitsu', 'IDE', 1, 1, 41, 'GB');
-INSERT INTO `modelos_itens` VALUES (40, 'GenÈrico', 'IDE', 3, 1, 42, 'GB');
+INSERT INTO `modelos_itens` VALUES (40, 'Gen√©rico', 'IDE', 3, 1, 42, 'GB');
 INSERT INTO `modelos_itens` VALUES (41, 'Samsung', 'Ultra DMA', 40, 1, 43, 'GB');
-INSERT INTO `modelos_itens` VALUES (42, 'GenÈrico', 'IDE', 2, 1, 44, 'GB');
+INSERT INTO `modelos_itens` VALUES (42, 'Gen√©rico', 'IDE', 2, 1, 44, 'GB');
 INSERT INTO `modelos_itens` VALUES (43, 'Quantum', 'IDE', 1, 1, 45, 'GB');
 INSERT INTO `modelos_itens` VALUES (44, 'Quantum', 'IDE 5400rpm', 10, 1, 46, 'GB');
 INSERT INTO `modelos_itens` VALUES (45, 'Samsung', 'IDE 5400rpm', 5, 1, 47, 'GB');
 INSERT INTO `modelos_itens` VALUES (46, 'Paladium', 'IDE 5400rpm', 1.2, 1, 48, 'GB');
-INSERT INTO `modelos_itens` VALUES (47, 'GenÈrico', 'IDE', 10, 1, 49, 'GB');
+INSERT INTO `modelos_itens` VALUES (47, 'Gen√©rico', 'IDE', 10, 1, 49, 'GB');
 INSERT INTO `modelos_itens` VALUES (48, 'Quantum', 'IDE 5400rpm', 3, 1, 50, 'GB');
-INSERT INTO `modelos_itens` VALUES (49, 'GenÈrico', 'IDE 5400rpm', 30, 1, 51, 'GB');
+INSERT INTO `modelos_itens` VALUES (49, 'Gen√©rico', 'IDE 5400rpm', 30, 1, 51, 'GB');
 INSERT INTO `modelos_itens` VALUES (50, 'IBM', 'SCSI', 4.3, 1, 52, 'GB');
 INSERT INTO `modelos_itens` VALUES (51, 'Samsung', 'IDE 5400 rpm', 1.6, 1, 53, 'GB');
 INSERT INTO `modelos_itens` VALUES (52, 'Samsung', 'IDE 5400 rpm', 9, 1, 54, 'GB');
 INSERT INTO `modelos_itens` VALUES (53, 'Seagate', 'IDE 5400 rpm', 8, 1, 55, 'GB');
-INSERT INTO `modelos_itens` VALUES (54, 'GenÈrico', 'IDE', 15, 1, 56, 'GB');
-INSERT INTO `modelos_itens` VALUES (55, 'GenÈrico', 'IDE', 1, 1, 57, 'GB');
-INSERT INTO `modelos_itens` VALUES (56, 'GenÈrico', 'IDE', 0.8, 1, 58, 'GB');
-INSERT INTO `modelos_itens` VALUES (57, 'GenÈrico', 'IDE 5400 rpm', 0, 1, 59, 'GB');
-INSERT INTO `modelos_itens` VALUES (58, 'GenÈrico', 'IDE', 0.4, 1, 60, 'GB');
+INSERT INTO `modelos_itens` VALUES (54, 'Gen√©rico', 'IDE', 15, 1, 56, 'GB');
+INSERT INTO `modelos_itens` VALUES (55, 'Gen√©rico', 'IDE', 1, 1, 57, 'GB');
+INSERT INTO `modelos_itens` VALUES (56, 'Gen√©rico', 'IDE', 0.8, 1, 58, 'GB');
+INSERT INTO `modelos_itens` VALUES (57, 'Gen√©rico', 'IDE 5400 rpm', 0, 1, 59, 'GB');
+INSERT INTO `modelos_itens` VALUES (58, 'Gen√©rico', 'IDE', 0.4, 1, 60, 'GB');
 INSERT INTO `modelos_itens` VALUES (59, 'SIS', '6326', NULL, 2, 2, NULL);
 INSERT INTO `modelos_itens` VALUES (60, 'Trident', 'Blade 3D on Board/AGP 4MB', NULL, 2, 3, NULL);
 INSERT INTO `modelos_itens` VALUES (61, 'Trident', '9440', NULL, 2, 4, NULL);
@@ -1186,9 +1186,9 @@ INSERT INTO `modelos_itens` VALUES (131, 'Compex', '100TX', NULL, 3, 26, NULL);
 INSERT INTO `modelos_itens` VALUES (132, 'Intel', '21140 10/100', NULL, 3, 27, NULL);
 INSERT INTO `modelos_itens` VALUES (133, 'DEC', 'DC 21041 Ehernet', NULL, 3, 28, NULL);
 INSERT INTO `modelos_itens` VALUES (134, 'Davicom', 'PCI', NULL, 3, 29, NULL);
-INSERT INTO `modelos_itens` VALUES (135, 'GenÈrico', 'NE2000', NULL, 3, 30, NULL);
+INSERT INTO `modelos_itens` VALUES (135, 'Gen√©rico', 'NE2000', NULL, 3, 30, NULL);
 INSERT INTO `modelos_itens` VALUES (136, 'Via', 'VT6105 RHINE III', NULL, 3, 31, NULL);
-INSERT INTO `modelos_itens` VALUES (137, 'NE 2000', 'Compat√≠vel', NULL, 3, 32, NULL);
+INSERT INTO `modelos_itens` VALUES (137, 'NE 2000', 'Compat√É¬≠vel', NULL, 3, 32, NULL);
 INSERT INTO `modelos_itens` VALUES (138, 'SIS', '900 10/100', NULL, 3, 33, NULL);
 INSERT INTO `modelos_itens` VALUES (139, 'VIA', 'Rhine II Fast Ethernet', NULL, 3, 34, NULL);
 INSERT INTO `modelos_itens` VALUES (140, 'Yes', 'Ne2000 Chipset', NULL, 3, 35, NULL);
@@ -1200,14 +1200,14 @@ INSERT INTO `modelos_itens` VALUES (145, 'Creative', 'SB AWE 64', NULL, 4, 2, NU
 INSERT INTO `modelos_itens` VALUES (146, 'Xwave', 'PCI', NULL, 4, 3, NULL);
 INSERT INTO `modelos_itens` VALUES (147, 'Yamaha', 'OPL 3 on board', NULL, 4, 4, NULL);
 INSERT INTO `modelos_itens` VALUES (148, 'Iwill', 'On board', NULL, 4, 5, NULL);
-INSERT INTO `modelos_itens` VALUES (149, 'C M√©dia', '8738 audio driver on board', NULL, 4, 6, NULL);
+INSERT INTO `modelos_itens` VALUES (149, 'C M√É¬©dia', '8738 audio driver on board', NULL, 4, 6, NULL);
 INSERT INTO `modelos_itens` VALUES (150, 'Forte Media', 'FM 801', NULL, 4, 8, NULL);
 INSERT INTO `modelos_itens` VALUES (151, 'Yamaha', 'Native DSXG-PCI', NULL, 4, 11, NULL);
-INSERT INTO `modelos_itens` VALUES (152, 'C M√©dia', 'CMI8738 integrated', NULL, 4, 12, NULL);
+INSERT INTO `modelos_itens` VALUES (152, 'C M√É¬©dia', 'CMI8738 integrated', NULL, 4, 12, NULL);
 INSERT INTO `modelos_itens` VALUES (153, 'ESS', 'Maestro technology-2E', NULL, 4, 13, NULL);
 INSERT INTO `modelos_itens` VALUES (154, 'Acer Labs', 'M5451 AC-link', NULL, 4, 14, NULL);
-INSERT INTO `modelos_itens` VALUES (155, 'C M√©dia', 'CMI 8330', NULL, 4, 15, NULL);
-INSERT INTO `modelos_itens` VALUES (156, 'C M√©dia', 'CMI 8338', NULL, 4, 16, NULL);
+INSERT INTO `modelos_itens` VALUES (155, 'C M√É¬©dia', 'CMI 8330', NULL, 4, 15, NULL);
+INSERT INTO `modelos_itens` VALUES (156, 'C M√É¬©dia', 'CMI 8338', NULL, 4, 16, NULL);
 INSERT INTO `modelos_itens` VALUES (157, 'Creative', 'SB 16', NULL, 4, 17, NULL);
 INSERT INTO `modelos_itens` VALUES (158, 'Creative', 'SB 32', NULL, 4, 18, NULL);
 INSERT INTO `modelos_itens` VALUES (159, 'Creative', 'VIBRA 16C', NULL, 4, 19, NULL);
@@ -1225,7 +1225,7 @@ INSERT INTO `modelos_itens` VALUES (170, 'Troni', 'CSI-56x', NULL, 5, 7, NULL);
 INSERT INTO `modelos_itens` VALUES (171, 'Sony', '52x', NULL, 5, 8, NULL);
 INSERT INTO `modelos_itens` VALUES (172, 'Samsung', '48x', NULL, 5, 9, NULL);
 INSERT INTO `modelos_itens` VALUES (173, 'LG', '52x', NULL, 5, 10, NULL);
-INSERT INTO `modelos_itens` VALUES (174, 'GenÈrico', '56x', NULL, 5, 11, NULL);
+INSERT INTO `modelos_itens` VALUES (174, 'Gen√©rico', '56x', NULL, 5, 11, NULL);
 INSERT INTO `modelos_itens` VALUES (175, 'Liteon', '48x', NULL, 5, 12, NULL);
 INSERT INTO `modelos_itens` VALUES (176, 'LG', '48x', NULL, 5, 13, NULL);
 INSERT INTO `modelos_itens` VALUES (177, 'Max', '48x', NULL, 5, 14, NULL);
@@ -1250,19 +1250,19 @@ INSERT INTO `modelos_itens` VALUES (195, 'ESS', 'ES56STH-PI', NULL, 6, 9, NULL);
 INSERT INTO `modelos_itens` VALUES (196, 'Motorola', 'SM56 PCI', NULL, 6, 10, NULL);
 INSERT INTO `modelos_itens` VALUES (197, 'US Robotics', '33.6 voice', NULL, 6, 11, NULL);
 INSERT INTO `modelos_itens` VALUES (198, 'Toshiba', '8x24x', NULL, 8, 1, NULL);
-INSERT INTO `modelos_itens` VALUES (199, 'GenÈrico(notes)', '24x', NULL, 8, 2, NULL);
+INSERT INTO `modelos_itens` VALUES (199, 'Gen√©rico(notes)', '24x', NULL, 8, 2, NULL);
 INSERT INTO `modelos_itens` VALUES (200, 'LG', '50 x Combo', NULL, 8, 3, NULL);
 INSERT INTO `modelos_itens` VALUES (201, 'Sony', '12x40x', NULL, 8, 4, NULL);
 INSERT INTO `modelos_itens` VALUES (202, 'LG', '12x8x32x', NULL, 9, 2, NULL);
 INSERT INTO `modelos_itens` VALUES (203, 'Samsung', '32x10x40x', NULL, 9, 3, NULL);
 INSERT INTO `modelos_itens` VALUES (204, 'HP', '12x8x32', NULL, 9, 4, NULL);
 INSERT INTO `modelos_itens` VALUES (205, 'NEC', '48x', NULL, 9, 5, NULL);
-INSERT INTO `modelos_itens` VALUES (206, 'GenÈrico(notes)', '24x', NULL, 9, 6, NULL);
+INSERT INTO `modelos_itens` VALUES (206, 'Gen√©rico(notes)', '24x', NULL, 9, 6, NULL);
 INSERT INTO `modelos_itens` VALUES (207, 'TEAC', '4x4x24', NULL, 9, 7, NULL);
 INSERT INTO `modelos_itens` VALUES (208, 'LG', '24x10x40', NULL, 9, 8, NULL);
 INSERT INTO `modelos_itens` VALUES (209, 'Mitsumi', '54x', NULL, 9, 9, NULL);
 INSERT INTO `modelos_itens` VALUES (210, 'Yamaha', '4x4x16', NULL, 9, 10, NULL);
-INSERT INTO `modelos_itens` VALUES (211, 'GenÈrico', 'GCE-8523B', NULL, 9, 11, NULL);
+INSERT INTO `modelos_itens` VALUES (211, 'Gen√©rico', 'GCE-8523B', NULL, 9, 11, NULL);
 INSERT INTO `modelos_itens` VALUES (212, 'LG', '52X24X52X', NULL, 9, 12, NULL);
 INSERT INTO `modelos_itens` VALUES (213, 'Iwill', 'XA 100 Plus ATX', NULL, 10, 1, NULL);
 INSERT INTO `modelos_itens` VALUES (214, 'Digitron', 'BB745sV AT', NULL, 10, 3, NULL);
@@ -1281,29 +1281,29 @@ INSERT INTO `modelos_itens` VALUES (226, 'Amptron', 'PM8400C/8400D/8600B/8600C',
 INSERT INTO `modelos_itens` VALUES (227, 'Amptron', 'PM598', NULL, 10, 16, NULL);
 INSERT INTO `modelos_itens` VALUES (228, 'Kaimei', 'KM-T5-V2', NULL, 10, 17, NULL);
 INSERT INTO `modelos_itens` VALUES (229, 'Shuttle', 'HOT-541', NULL, 10, 18, NULL);
-INSERT INTO `modelos_itens` VALUES (230, 'GenÈrico', 'Chipset Intel 82430 FX', NULL, 10, 19, NULL);
+INSERT INTO `modelos_itens` VALUES (230, 'Gen√©rico', 'Chipset Intel 82430 FX', NULL, 10, 19, NULL);
 INSERT INTO `modelos_itens` VALUES (231, 'Hsin Tech', '519/529', NULL, 10, 20, NULL);
 INSERT INTO `modelos_itens` VALUES (232, 'Gem light', 'GMB-P56IPS', NULL, 10, 21, NULL);
 INSERT INTO `modelos_itens` VALUES (233, 'Via', 'VT82C42M', NULL, 10, 22, NULL);
 INSERT INTO `modelos_itens` VALUES (234, 'OPTI Viper', '82C557M', NULL, 10, 23, NULL);
-INSERT INTO `modelos_itens` VALUES (235, 'GenÈrico', 'Chipset SB82371FB', NULL, 10, 24, NULL);
-INSERT INTO `modelos_itens` VALUES (236, 'GenÈrico', 'Chipset SIS 5591', NULL, 10, 25, NULL);
+INSERT INTO `modelos_itens` VALUES (235, 'Gen√©rico', 'Chipset SB82371FB', NULL, 10, 24, NULL);
+INSERT INTO `modelos_itens` VALUES (236, 'Gen√©rico', 'Chipset SIS 5591', NULL, 10, 25, NULL);
 INSERT INTO `modelos_itens` VALUES (237, 'PC Chips', 'M598', NULL, 10, 26, NULL);
 INSERT INTO `modelos_itens` VALUES (238, 'PC Chips', 'M748 LMRT', NULL, 10, 27, NULL);
-INSERT INTO `modelos_itens` VALUES (239, 'GenÈrico', 'Chipset ALi M1531 Aladdin', NULL, 10, 28, NULL);
-INSERT INTO `modelos_itens` VALUES (240, 'GenÈrico', 'Chipset SIS 5597', NULL, 10, 29, NULL);
+INSERT INTO `modelos_itens` VALUES (239, 'Gen√©rico', 'Chipset ALi M1531 Aladdin', NULL, 10, 28, NULL);
+INSERT INTO `modelos_itens` VALUES (240, 'Gen√©rico', 'Chipset SIS 5597', NULL, 10, 29, NULL);
 INSERT INTO `modelos_itens` VALUES (241, 'Amptron', 'PM9900', NULL, 10, 30, NULL);
 INSERT INTO `modelos_itens` VALUES (242, 'Amptron', 'PM9200', NULL, 10, 31, NULL);
 INSERT INTO `modelos_itens` VALUES (243, 'Amptron', 'PM8800', NULL, 10, 32, NULL);
 INSERT INTO `modelos_itens` VALUES (244, 'DTK', 'PAM - 0057I - E1', NULL, 10, 33, NULL);
 INSERT INTO `modelos_itens` VALUES (245, 'Amptron', 'PM 7900/8800', NULL, 10, 34, NULL);
-INSERT INTO `modelos_itens` VALUES (246, 'GenÈrico', 'Chipset Intel Triton 82430VX', NULL, 10, 35, NULL);
+INSERT INTO `modelos_itens` VALUES (246, 'Gen√©rico', 'Chipset Intel Triton 82430VX', NULL, 10, 35, NULL);
 INSERT INTO `modelos_itens` VALUES (247, 'Fugutech', 'M507', NULL, 10, 36, NULL);
 INSERT INTO `modelos_itens` VALUES (248, 'PC Chips', 'M715', NULL, 10, 37, NULL);
 INSERT INTO `modelos_itens` VALUES (249, 'Amptron', 'PM8600A', NULL, 10, 38, NULL);
-INSERT INTO `modelos_itens` VALUES (250, 'GenÈrico', 'Chipset SIS 540', NULL, 10, 39, NULL);
-INSERT INTO `modelos_itens` VALUES (251, 'GenÈrico', 'Chipset Utron VXPRO II', NULL, 10, 40, NULL);
-INSERT INTO `modelos_itens` VALUES (252, 'Gen√©rica', 'Chipset sis530', NULL, 10, 41, NULL);
+INSERT INTO `modelos_itens` VALUES (250, 'Gen√©rico', 'Chipset SIS 540', NULL, 10, 39, NULL);
+INSERT INTO `modelos_itens` VALUES (251, 'Gen√©rico', 'Chipset Utron VXPRO II', NULL, 10, 40, NULL);
+INSERT INTO `modelos_itens` VALUES (252, 'Gen√É¬©rica', 'Chipset sis530', NULL, 10, 41, NULL);
 INSERT INTO `modelos_itens` VALUES (253, 'Soyo', '5EH', NULL, 10, 42, NULL);
 INSERT INTO `modelos_itens` VALUES (254, 'Via', 'VT8364', NULL, 10, 43, NULL);
 INSERT INTO `modelos_itens` VALUES (255, 'A-Trend', 'ATC-6130', NULL, 10, 44, NULL);
@@ -1317,7 +1317,7 @@ INSERT INTO `modelos_itens` VALUES (262, 'MSI', 'MS-6378', NULL, 10, 51, NULL);
 INSERT INTO `modelos_itens` VALUES (263, 'PcChips', 'M810LR', NULL, 10, 52, NULL);
 INSERT INTO `modelos_itens` VALUES (264, 'Shuttle', 'HOT-569', NULL, 10, 53, NULL);
 INSERT INTO `modelos_itens` VALUES (265, 'Soyo', '4SAW', NULL, 10, 54, NULL);
-INSERT INTO `modelos_itens` VALUES (266, 'GenÈrico', 'Chipset Intel FW82371AB', NULL, 10, 55, NULL);
+INSERT INTO `modelos_itens` VALUES (266, 'Gen√©rico', 'Chipset Intel FW82371AB', NULL, 10, 55, NULL);
 INSERT INTO `modelos_itens` VALUES (267, 'PcChips', 'LMR 598', NULL, 10, 56, NULL);
 INSERT INTO `modelos_itens` VALUES (268, 'Soyo', 'Chipset SIS85c496', NULL, 10, 57, NULL);
 INSERT INTO `modelos_itens` VALUES (269, 'ALI', 'M1429GA1', NULL, 10, 58, NULL);
@@ -1397,10 +1397,10 @@ INSERT INTO `modelos_itens` VALUES (342, 'Intel', 'AC''97 82801BA(m) (Compaq/Del
 INSERT INTO `modelos_itens` VALUES (346, 'Intel Pentium', 'Xeon', 1200, 11, NULL, 'Mhz');
 INSERT INTO `modelos_itens` VALUES (345, 'Intel Pentium', 'Xeon', 2200, 11, NULL, 'Mhz');
 INSERT INTO `modelos_itens` VALUES (347, 'N/A', '', 2000, 7, NULL, 'MB');
-INSERT INTO `modelos_itens` VALUES (348, 'GenÈrico', 'Ultra 3 SCSI 15.000 Rpm', 36, 1, NULL, 'Gb');
+INSERT INTO `modelos_itens` VALUES (348, 'Gen√©rico', 'Ultra 3 SCSI 15.000 Rpm', 36, 1, NULL, 'Gb');
 INSERT INTO `modelos_itens` VALUES (349, 'N/A', 'Tigon3 10/100/1000', NULL, 3, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (350, 'N/A', 'N/A', NULL, 2, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (351, 'GenÈrico', 'SCSI 10.000 Rpm', 36, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (351, 'Gen√©rico', 'SCSI 10.000 Rpm', 36, 1, NULL, 'GB');
 INSERT INTO `modelos_itens` VALUES (352, 'N/A', 'Marvel 10/100/1000', NULL, 3, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (353, 'ATI', 'Mach64-GR Graphics Accelerator', NULL, 2, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (354, 'N/A', 'N/A', NULL, 10, NULL, NULL);
@@ -1408,10 +1408,10 @@ INSERT INTO `modelos_itens` VALUES (355, 'Intel', 'Pentium Xeon', 2400, 11, NULL
 INSERT INTO `modelos_itens` VALUES (356, 'ATI', 'Rage XL', 8, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (361, 'ATI', 'LT PRO AGP', 8, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (362, 'Via Tech', 'AC\\''97 Audio Controller', NULL, 4, 9, NULL);
-INSERT INTO `modelos_itens` VALUES (363, 'N/A', 'Cabo Paralelo padr√£o', NULL, 12, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (363, 'N/A', 'Cabo Paralelo padr√É¬£o', NULL, 12, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (364, 'Leadership', 'XPC Stereo', 160, 13, NULL, 'Watts');
 INSERT INTO `modelos_itens` VALUES (365, 'Sunshine', 'Lince - toshiba', NULL, 13, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (366, 'N/A', 'Gen√©rica', NULL, 13, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (366, 'N/A', 'Gen√É¬©rica', NULL, 13, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (367, 'Multi-media', 'MS-560', 100, 13, NULL, 'Watts');
 INSERT INTO `modelos_itens` VALUES (368, 'NVIDIA', 'GeForce4 MX Integrated', 32, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (369, 'SoundMAX', 'Digital Audio', NULL, 4, NULL, NULL);
@@ -1420,7 +1420,7 @@ INSERT INTO `modelos_itens` VALUES (371, '3Com', '3C920B-EMB Integrated (HP)', N
 INSERT INTO `modelos_itens` VALUES (372, 'Seagate', 'IDE 7200rpm', 40, 1, NULL, 'GB');
 INSERT INTO `modelos_itens` VALUES (373, 'AMD', 'Atlhon XP', 1900, 11, NULL, 'Mhz');
 INSERT INTO `modelos_itens` VALUES (374, 'HP', '0830h', NULL, 10, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (375, 'GenÈrico', 'IDE', 0.325, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (375, 'Gen√©rico', 'IDE', 0.325, 1, NULL, 'GB');
 INSERT INTO `modelos_itens` VALUES (376, 'Intel', '486 DX2', 50, 11, NULL, 'Mhz');
 INSERT INTO `modelos_itens` VALUES (377, 'N/A', 'Chips & Tech Accelerator', NULL, 2, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (378, 'N/A', '', 6, 7, NULL, 'MB');
@@ -1432,24 +1432,24 @@ INSERT INTO `modelos_itens` VALUES (383, '', 'Mini-Dimm', NULL, 14, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (384, '', 'Serial', NULL, 15, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (385, '', 'PS/2', NULL, 15, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (387, 'Intel', 'Pentium Pro', 200, 11, NULL, 'MHZ');
-INSERT INTO `modelos_itens` VALUES (388, 'GenÈrico', 'SCSI', 4, 1, NULL, 'GB');
-INSERT INTO `modelos_itens` VALUES (389, 'GenÈrico', '8x', NULL, 5, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (388, 'Gen√©rico', 'SCSI', 4, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (389, 'Gen√©rico', '8x', NULL, 5, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (390, 'Intel', '82443BX', NULL, 10, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (391, 'Intel', '82443GX', NULL, 10, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (392, 'GenÈrico', 'SCSI', 36, 1, NULL, 'GB');
-INSERT INTO `modelos_itens` VALUES (393, 'GenÈrico', 'SCSI', 8, 1, NULL, 'GB');
-INSERT INTO `modelos_itens` VALUES (394, 'GenÈrico', 'SCSI', 18, 1, NULL, 'GB');
-INSERT INTO `modelos_itens` VALUES (395, '', 'GenÈrico', 45, 5, NULL, 'X');
+INSERT INTO `modelos_itens` VALUES (392, 'Gen√©rico', 'SCSI', 36, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (393, 'Gen√©rico', 'SCSI', 8, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (394, 'Gen√©rico', 'SCSI', 18, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (395, '', 'Gen√©rico', 45, 5, NULL, 'X');
 INSERT INTO `modelos_itens` VALUES (396, 'Max', '40x', NULL, 5, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (397, 'Intel', 'Pentium III', 350, 11, NULL, 'MHZ');
 INSERT INTO `modelos_itens` VALUES (398, 'Intel', 'Pentium II', 350, 11, NULL, 'MHZ');
-INSERT INTO `modelos_itens` VALUES (399, 'GenÈrico', 'SCSI', 9, 1, NULL, 'GB');
+INSERT INTO `modelos_itens` VALUES (399, 'Gen√©rico', 'SCSI', 9, 1, NULL, 'GB');
 INSERT INTO `modelos_itens` VALUES (400, 'Intel', '82555', NULL, 3, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (401, 'N/A', '', 196, 7, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (402, '3Com', '3c 905', NULL, 3, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (403, 'GenÈrico', '45x', NULL, 5, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (403, 'Gen√©rico', '45x', NULL, 5, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (404, 'Netgear', 'FA310TX', NULL, 3, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (405, 'GenÈrico', 'Drive de disquete', NULL, 16, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (405, 'Gen√©rico', 'Drive de disquete', NULL, 16, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (406, 'Trident', '3D Blade (PCI)', 8, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (407, 'Mitsumi', 'FX48++M', NULL, 5, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (408, 'ATI', 'Radeon IGP 345M', 64, 2, NULL, 'MB');
@@ -1465,7 +1465,7 @@ INSERT INTO `modelos_itens` VALUES (417, 'Intel', 'Pentium IV HT', 2800, 11, NUL
 INSERT INTO `modelos_itens` VALUES (418, 'Dell', 'Optiplex GX-270', NULL, 10, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (419, 'Intel', '82865G Graphics Controller', 64, 2, NULL, 'Mb');
 INSERT INTO `modelos_itens` VALUES (420, 'Intel', 'Pro / 1000 MT (Dell)', NULL, 3, NULL, NULL);
-INSERT INTO `modelos_itens` VALUES (421, 'Intel', 'AC¬¥97 - 82801EB (Dell GX-270)', NULL, 4, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (421, 'Intel', 'AC√Ç¬¥97 - 82801EB (Dell GX-270)', NULL, 4, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (422, 'Trident', '9685', 2, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (423, 'Nvidia', 'GeForce4 MX 440 AGP', 64, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (424, 'Samsung', 'DVD Combo (CDRW) SM-352F', NULL, 8, NULL, NULL);
@@ -1476,7 +1476,7 @@ INSERT INTO `modelos_itens` VALUES (428, 'Intel', 'Pentium IV A', 2800, 11, NULL
 INSERT INTO `modelos_itens` VALUES (429, 'Intel', '82845 G Graphics Controller', 64, 2, NULL, 'MB');
 INSERT INTO `modelos_itens` VALUES (430, 'nVidia', 'GeForce4 MX 4000', 64, -1, NULL, 'Mb');
 INSERT INTO `modelos_itens` VALUES (431, 'NVidia', 'GeForce4 MX 4000', 64, 2, NULL, 'Mb');
-INSERT INTO `modelos_itens` VALUES (432, 'GenÈrico', 'Intel Brookdale-G I845G', NULL, 10, NULL, NULL);
+INSERT INTO `modelos_itens` VALUES (432, 'Gen√©rico', 'Intel Brookdale-G I845G', NULL, 10, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (433, 'SIS', '7012', NULL, 4, NULL, NULL);
 INSERT INTO `modelos_itens` VALUES (434, 'Samsung', '7200 RPM', 80, 1, NULL, 'GB');
 INSERT INTO `modelos_itens` VALUES (435, 'Samsung', 'IDE 7200rpm', 80, 1, NULL, 'GB');
@@ -1535,10 +1535,10 @@ INSERT INTO `polegada` VALUES (3, '17 polegadas');
 -- Extraindo dados da tabela `prioridades`
 -- 
 
-INSERT INTO `prioridades` VALUES (2, 'NÌVEL 1', 18);
-INSERT INTO `prioridades` VALUES (3, 'NÌVEL 2', 19);
-INSERT INTO `prioridades` VALUES (4, 'NÌVEL 3', 20);
-INSERT INTO `prioridades` VALUES (5, 'NÌVEL 4', 2);
+INSERT INTO `prioridades` VALUES (2, 'N√≠VEL 1', 18);
+INSERT INTO `prioridades` VALUES (3, 'N√≠VEL 2', 19);
+INSERT INTO `prioridades` VALUES (4, 'N√≠VEL 3', 20);
+INSERT INTO `prioridades` VALUES (5, 'N√≠VEL 4', 2);
 
 
 -- 
@@ -1562,12 +1562,12 @@ INSERT INTO `resolucao` VALUES (3, '1200 DPI');
 -- 
 
 INSERT INTO `situacao` VALUES (1, 'Operacional', 'Equipamento sem problemas de funcionamento');
-INSERT INTO `situacao` VALUES (2, 'N„o Operacional', 'Equipamento utilizado apenas para testes de hardware e n„o funcionando');
-INSERT INTO `situacao` VALUES (3, 'Em manutenÁ„o', 'Equipamento aguardando peÁa para manutenÁ„o');
+INSERT INTO `situacao` VALUES (2, 'N√£o Operacional', 'Equipamento utilizado apenas para testes de hardware e n√£o funcionando');
+INSERT INTO `situacao` VALUES (3, 'Em manuten√ß√£o', 'Equipamento aguardando pe√ßa para manuten√ß√£o');
 INSERT INTO `situacao` VALUES (4, 'Furtado', 'Equipamentos furtados da empresa.');
-INSERT INTO `situacao` VALUES (5, 'Trocado', 'Equipamento trocado por outro em funÁ„o da sua garantia.');
-INSERT INTO `situacao` VALUES (6, 'Aguardando orÁamento', 'Aguardando orÁamento para conserto');
-INSERT INTO `situacao` VALUES (7, 'Sucateado', 'Equipamento n„o possui condiÁıes para conserto');
+INSERT INTO `situacao` VALUES (5, 'Trocado', 'Equipamento trocado por outro em fun√ß√£o da sua garantia.');
+INSERT INTO `situacao` VALUES (6, 'Aguardando or√ßamento', 'Aguardando or√ßamento para conserto');
+INSERT INTO `situacao` VALUES (7, 'Sucateado', 'Equipamento n√£o possui condi√ß√µes para conserto');
 
 
 
@@ -1591,7 +1591,7 @@ INSERT INTO `sla_solucao` VALUES (13, 5760, '4 dias');
 INSERT INTO `sla_solucao` VALUES (14, 10080, '1 semana');
 INSERT INTO `sla_solucao` VALUES (15, 20160, '2 semanas');
 INSERT INTO `sla_solucao` VALUES (16, 30240, '3 semanas');
-INSERT INTO `sla_solucao` VALUES (17, 43200, '1 mÍs');
+INSERT INTO `sla_solucao` VALUES (17, 43200, '1 m√™s');
 INSERT INTO `sla_solucao` VALUES (18, 5, '5 minutos');
 INSERT INTO `sla_solucao` VALUES (19, 10, '10 minutos');
 INSERT INTO `sla_solucao` VALUES (20, 20, '20 minutos');
@@ -1602,9 +1602,9 @@ INSERT INTO `sla_solucao` VALUES (21, 25, '25 minutos');
 -- Extraindo dados da tabela `status_categ`
 -- 
 
-INSERT INTO `status_categ` VALUES (1, 'AO USU¡RIO');
-INSERT INTO `status_categ` VALUES (2, '¿ ¿REA T…CNICA');
-INSERT INTO `status_categ` VALUES (3, '¿ SERVI«OS DE TERCEIROS');
+INSERT INTO `status_categ` VALUES (1, 'AO USU√ÅRIO');
+INSERT INTO `status_categ` VALUES (2, '√Ä √ÄREA T√âCNICA');
+INSERT INTO `status_categ` VALUES (3, '√Ä SERVI√áOS DE TERCEIROS');
 INSERT INTO `status_categ` VALUES (4, 'INDEPENDENTE');
 
 
@@ -1616,11 +1616,11 @@ INSERT INTO `status` VALUES (1, 'Aguardando atendimento', 2, 2);
 INSERT INTO `status` VALUES (2, 'Em atendimento', 2, 1);
 INSERT INTO `status` VALUES (3, 'Em estudo', 2, 1);
 INSERT INTO `status` VALUES (4, 'Encerrada', 4, 3);
-INSERT INTO `status` VALUES (7, 'Agendado com usu¡rio', 1, 2);
+INSERT INTO `status` VALUES (7, 'Agendado com usu√Årio', 1, 2);
 INSERT INTO `status` VALUES (12, 'Cancelado', 4, 3);
 INSERT INTO `status` VALUES (15, 'Todos', 4, 2);
-INSERT INTO `status` VALUES (16, 'Aguardando feedback do usu¡rio', 1, 2);
-INSERT INTO `status` VALUES (19, 'IndisponÕvel para atendimento', 1, 2);
+INSERT INTO `status` VALUES (16, 'Aguardando feedback do usu√Årio', 1, 2);
+INSERT INTO `status` VALUES (19, 'Indispon√çvel para atendimento', 1, 2);
 INSERT INTO `status` VALUES (21, 'Encaminhado para operador', 2, 1);
 INSERT INTO `status` VALUES (22, 'Interrompido para atender outro chamado', 2, 1);
 INSERT INTO `status` VALUES (25, 'Aguardando retorno do fornecedor', 3, 1);
@@ -1662,7 +1662,7 @@ INSERT INTO `tipo_equip` VALUES (12, 'Servidor SCSI');
 -- Extraindo dados da tabela `tipo_garantia`
 -- 
 
-INSERT INTO `tipo_garantia` VALUES (1, 'Balc„o');
+INSERT INTO `tipo_garantia` VALUES (1, 'Balc√£o');
 INSERT INTO `tipo_garantia` VALUES (2, 'On site');
 
 
@@ -1675,7 +1675,7 @@ INSERT INTO `tipo_imp` VALUES (2, 'Jato de tinta');
 INSERT INTO `tipo_imp` VALUES (3, 'Laser');
 INSERT INTO `tipo_imp` VALUES (4, 'Multifuncional');
 INSERT INTO `tipo_imp` VALUES (5, 'Copiadora');
-INSERT INTO `tipo_imp` VALUES (6, 'Matricial cupom n„o fiscal');
+INSERT INTO `tipo_imp` VALUES (6, 'Matricial cupom n√£o fiscal');
 
 
 
@@ -1731,7 +1731,7 @@ CREATE TABLE `configusercall` (
 `conf_scr_mail` INT( 1 ) DEFAULT '1' NOT NULL ,
 `conf_scr_msg` TEXT NOT NULL ,
 PRIMARY KEY ( `conf_cod` )
-) COMMENT = 'tabela de configuraÁ„o para usu·rios de somente abertura de chamados';
+) COMMENT = 'tabela de configura√ß√£o para usu√°rios de somente abertura de chamados';
 
 
 ALTER TABLE `configusercall` ADD `conf_opentoarea` INT( 4 ) DEFAULT '1' NOT NULL AFTER `conf_nivel` ;
@@ -1749,7 +1749,7 @@ ALTER TABLE `configusercall` ADD `conf_user_opencall` INT( 1 ) DEFAULT '0' NOT N
 ALTER TABLE `configusercall` CHANGE `conf_nivel` `conf_custom_areas` VARCHAR( 200 ) NOT NULL;
 
 
-INSERT INTO `configusercall` VALUES (1, 0, '2', 2, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 'Seu chamado foi aberto com sucesso no sistema de ocorrÍncias! O n˙mero È %numero%. Aguarde o atendimento pela equipe de suporte.');
+INSERT INTO `configusercall` VALUES (1, 0, '2', 2, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 'Seu chamado foi aberto com sucesso no sistema de ocorr√™ncias! O n√∫mero √© %numero%. Aguarde o atendimento pela equipe de suporte.');
 
 
 ALTER TABLE `usuarios` ADD `user_admin` INT( 1 ) DEFAULT '0' NOT NULL ;
@@ -1766,7 +1766,7 @@ CREATE TABLE `utmp_usuarios` (
   PRIMARY KEY  (`utmp_cod`),
   UNIQUE KEY `utmp_login` (`utmp_login`,`utmp_email`),
   KEY `utmp_rand` (`utmp_rand`)
-)  COMMENT='Tabela de transiÁ„o para cadastro de usu·rios';
+)  COMMENT='Tabela de transi√ß√£o para cadastro de usu√°rios';
 
 
 CREATE TABLE `mailconfig` (
@@ -1803,17 +1803,17 @@ VALUES (
 '', '1', 'mail.smtp.com', '0', NULL , NULL , 'mail@yourdomain.com', '1'
 );
 
-INSERT INTO `msgconfig` VALUES (1, 'abertura-para-usuario', 'Sistema Ocomon', 'reply-to', 'CHAMADO ABERTO NO SISTEMA', 'Caro %usuario%,<br />Seu chamado foi aberto com sucesso no sistema de atendimento.<br />O n&uacute;mero do chamado &eacute; %numero%<br />Aguarde o atendimento pela equipe de suporte.<br />%site%', 'Caro %usuario%,\r\nSeu chamado foi aberto com sucesso no sistema de atendimento.\r\nO n˙mero do chamado È %numero%\r\nAguarde o atendimento pela equipe de suporte.\r\n%site%');
-INSERT INTO `msgconfig` VALUES (2, 'abertura-para-area', 'Sistema Ocomon', 'reply-to', 'CHAMADO ABERTO PARA %area%', 'Sistema Ocomon<br />Foi aberto um novo chamado t&eacute;cnico para ser atendido pela &aacute;rea %area%.<br />O n&uacute;mero do chamado &eacute; %numero%<br />Descri&ccedil;&atilde;o: %descricao%<br />Contato: %contato%<br />Setor: %setor%<br />Ramal: %ramal%<br />Chamado aberto pelo operador: %operador%<br />%site%', 'Sistema Ocomon\r\nFoi aberto um novo chamado tÈcnico para ser atendido pela ·rea %area%.\r\nO n˙mero do chamado È %numero%\r\nDescriÁ„o: %descricao%\r\nContato: %contato%\r\nSetor: %setor%\r\nRamal: %ramal%\r\nChamado aberto pelo operador: %operador%\r\n%site%');
-INSERT INTO `msgconfig` VALUES (3, 'encerra-para-area', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CHAMADO ENCERRADO', 'Sistema Ocomon<br />O chamado %numero% foi fechado pelo operador %operador%<br />Descri&ccedil;&atilde;o t&eacute;cnica: %descricao%<br />Solu&ccedil;&atilde;o: %solucao%', 'Sistema Ocomon\r\nO chamado %numero% foi fechado pelo operador %operador%\r\nDescriÁ„o tÈcnica: %descricao%\r\nSoluÁ„o: %solucao%');
-INSERT INTO `msgconfig` VALUES (4, 'encerra-para-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON -CHAMADO ENCERRADO NO SISTEMA', 'Caro %contato%<br />Seu chamado foi encerrado no sistema de atendimento.<br />N&uacute;mero do chamado: %numero%<br />Para maiores informa&ccedil;&otilde;es acesso o sistema com seu nome de usu&aacute;rio e senha no endere&ccedil;o abaixo:<br />%site%', 'Caro %contato%\r\nSeu chamado foi encerrado no sistema de atendimento.\r\nN˙mero do chamado: %numero%\r\nPara maiores informaÁıes acesso o sistema com seu nome de usu·rio e senha no endereÁo abaixo:\r\n%site%');
-INSERT INTO `msgconfig` VALUES (5, 'edita-para-area', 'SISTEMA OCOMON', 'reply-to', 'CHAMADO EDITADO PARA %area%', '<span style="color: rgb(0, 0, 0);">Sistema Ocomon</span><br />Foram adicionadas informa&ccedil;&otilde;es ao chamado %numero% para a &aacute;rea %area%<br />Descri&ccedil;&atilde;o: %descricao%<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Contato: %contato%<br />Ramal: %ramal%<br />Ocorr&ecirc;ncia editada pelo operador: %operador%<br />%site%', 'Sistema Ocomon\r\nForam adicionadas informaÁıes ao chamado %numero% para a ·rea %area%\r\nDescriÁ„o: %descricao%\r\nAlteraÁ„o mais recente: %assentamento%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorrÍncia editada pelo operador: %operador%\r\n%site%');
-INSERT INTO `msgconfig` VALUES (6, 'edita-para-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - ALTERA«’ES NO SEU CHAMADO', 'Caro %contato%,<br />O chamado %numero% foi editado no sistema de atendimento.<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Para maiores informa&ccedil;&otilde;es acesse o sistema com seu usu&aacute;rio e senha no endere&ccedil;o abaixo:<br />%site%', 'Caro %contato%,\r\nO chamado %numero% foi editado no sistema de atendimento.\r\nAlteraÁ„o mais recente: %assentamento%\r\nPara maiores informaÁıes acesse o sistema com seu usu·rio e senha no endereÁo abaixo:\r\n%site%');
-INSERT INTO `msgconfig` VALUES (7, 'edita-para-operador', 'SISTEMA OCOMON', 'reply-to', 'CHAMADO PARA %operador%', 'Caro %operador%,<br />O chamado %numero% foi editado e est&aacute; direcionado a voc&ecirc;.<br />Descri&ccedil;&atilde;o: %descricao%<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Contato: %contato%&nbsp;&nbsp; <br />Ramal: %ramal%<br />Ocorr&ecirc;ncia editada pelo operador: %editor%<br />%site%', 'Caro %operador%,\r\nO chamado %numero% foi editado e est· direcionado a vocÍ.\r\nDescriÁ„o: %descricao%\r\nAlteraÁ„o mais recente: %assentamento%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorrÍncia editada pelo operador: %editor%\r\n%site%');
-INSERT INTO `msgconfig` VALUES (8, 'cadastro-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CONFIRMA«√O DE CADASTRO', 'Prezado %usuario%,<br />Sua solicita&ccedil;&atilde;o para cria&ccedil;&atilde;o do login &quot;%login%&quot; foi bem sucedida!<br />Para confirmar sua inscri&ccedil;&atilde;o clique no link abaixo:<br />%linkconfirma%', 'Prezado %usuario%,\r\nSua solicitaÁ„o para criaÁ„o do login &quot;%login%&quot; foi bem sucedida!\r\nPara confirmar sua inscriÁ„o clique no link abaixo:\r\n%linkconfirma%');
+INSERT INTO `msgconfig` VALUES (1, 'abertura-para-usuario', 'Sistema Ocomon', 'reply-to', 'CHAMADO ABERTO NO SISTEMA', 'Caro %usuario%,<br />Seu chamado foi aberto com sucesso no sistema de atendimento.<br />O n&uacute;mero do chamado &eacute; %numero%<br />Aguarde o atendimento pela equipe de suporte.<br />%site%', 'Caro %usuario%,\r\nSeu chamado foi aberto com sucesso no sistema de atendimento.\r\nO n√∫mero do chamado √© %numero%\r\nAguarde o atendimento pela equipe de suporte.\r\n%site%');
+INSERT INTO `msgconfig` VALUES (2, 'abertura-para-area', 'Sistema Ocomon', 'reply-to', 'CHAMADO ABERTO PARA %area%', 'Sistema Ocomon<br />Foi aberto um novo chamado t&eacute;cnico para ser atendido pela &aacute;rea %area%.<br />O n&uacute;mero do chamado &eacute; %numero%<br />Descri&ccedil;&atilde;o: %descricao%<br />Contato: %contato%<br />Setor: %setor%<br />Ramal: %ramal%<br />Chamado aberto pelo operador: %operador%<br />%site%', 'Sistema Ocomon\r\nFoi aberto um novo chamado t√©cnico para ser atendido pela √°rea %area%.\r\nO n√∫mero do chamado √© %numero%\r\nDescri√ß√£o: %descricao%\r\nContato: %contato%\r\nSetor: %setor%\r\nRamal: %ramal%\r\nChamado aberto pelo operador: %operador%\r\n%site%');
+INSERT INTO `msgconfig` VALUES (3, 'encerra-para-area', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CHAMADO ENCERRADO', 'Sistema Ocomon<br />O chamado %numero% foi fechado pelo operador %operador%<br />Descri&ccedil;&atilde;o t&eacute;cnica: %descricao%<br />Solu&ccedil;&atilde;o: %solucao%', 'Sistema Ocomon\r\nO chamado %numero% foi fechado pelo operador %operador%\r\nDescri√ß√£o t√©cnica: %descricao%\r\nSolu√ß√£o: %solucao%');
+INSERT INTO `msgconfig` VALUES (4, 'encerra-para-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON -CHAMADO ENCERRADO NO SISTEMA', 'Caro %contato%<br />Seu chamado foi encerrado no sistema de atendimento.<br />N&uacute;mero do chamado: %numero%<br />Para maiores informa&ccedil;&otilde;es acesso o sistema com seu nome de usu&aacute;rio e senha no endere&ccedil;o abaixo:<br />%site%', 'Caro %contato%\r\nSeu chamado foi encerrado no sistema de atendimento.\r\nN√∫mero do chamado: %numero%\r\nPara maiores informa√ß√µes acesso o sistema com seu nome de usu√°rio e senha no endere√ßo abaixo:\r\n%site%');
+INSERT INTO `msgconfig` VALUES (5, 'edita-para-area', 'SISTEMA OCOMON', 'reply-to', 'CHAMADO EDITADO PARA %area%', '<span style="color: rgb(0, 0, 0);">Sistema Ocomon</span><br />Foram adicionadas informa&ccedil;&otilde;es ao chamado %numero% para a &aacute;rea %area%<br />Descri&ccedil;&atilde;o: %descricao%<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Contato: %contato%<br />Ramal: %ramal%<br />Ocorr&ecirc;ncia editada pelo operador: %operador%<br />%site%', 'Sistema Ocomon\r\nForam adicionadas informa√ß√µes ao chamado %numero% para a √°rea %area%\r\nDescri√ß√£o: %descricao%\r\nAltera√ß√£o mais recente: %assentamento%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorr√™ncia editada pelo operador: %operador%\r\n%site%');
+INSERT INTO `msgconfig` VALUES (6, 'edita-para-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - ALTERA√á√ïES NO SEU CHAMADO', 'Caro %contato%,<br />O chamado %numero% foi editado no sistema de atendimento.<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Para maiores informa&ccedil;&otilde;es acesse o sistema com seu usu&aacute;rio e senha no endere&ccedil;o abaixo:<br />%site%', 'Caro %contato%,\r\nO chamado %numero% foi editado no sistema de atendimento.\r\nAltera√ß√£o mais recente: %assentamento%\r\nPara maiores informa√ß√µes acesse o sistema com seu usu√°rio e senha no endere√ßo abaixo:\r\n%site%');
+INSERT INTO `msgconfig` VALUES (7, 'edita-para-operador', 'SISTEMA OCOMON', 'reply-to', 'CHAMADO PARA %operador%', 'Caro %operador%,<br />O chamado %numero% foi editado e est&aacute; direcionado a voc&ecirc;.<br />Descri&ccedil;&atilde;o: %descricao%<br />Altera&ccedil;&atilde;o mais recente: %assentamento%<br />Contato: %contato%&nbsp;&nbsp; <br />Ramal: %ramal%<br />Ocorr&ecirc;ncia editada pelo operador: %editor%<br />%site%', 'Caro %operador%,\r\nO chamado %numero% foi editado e est√° direcionado a voc√™.\r\nDescri√ß√£o: %descricao%\r\nAltera√ß√£o mais recente: %assentamento%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorr√™ncia editada pelo operador: %editor%\r\n%site%');
+INSERT INTO `msgconfig` VALUES (8, 'cadastro-usuario', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CONFIRMA√á√ÉO DE CADASTRO', 'Prezado %usuario%,<br />Sua solicita&ccedil;&atilde;o para cria&ccedil;&atilde;o do login &quot;%login%&quot; foi bem sucedida!<br />Para confirmar sua inscri&ccedil;&atilde;o clique no link abaixo:<br />%linkconfirma%', 'Prezado %usuario%,\r\nSua solicita√ß√£o para cria√ß√£o do login &quot;%login%&quot; foi bem sucedida!\r\nPara confirmar sua inscri√ß√£o clique no link abaixo:\r\n%linkconfirma%');
    
 
-INSERT INTO `msgconfig` VALUES ('', 'cadastro-usuario-from-admin', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CONFIRMA«√O DE CADASTRO', 'Prezado %usuario%<br />Seu cadastro foi efetuado com sucesso no sistema de chamados do Helpdesk<br />Seu login &eacute;: %login%<br />Para abrir chamados acesse o site %site%<br />Atenciosamente Helpdesk Unilasalle', 'Prezado %usuario%\r\nSeu cadastro foi efetuado com sucesso no sistema de chamados do Helpdesk\r\nSeu login È: %login%\r\nPara abrir chamados acesse o site %site%\r\nAtenciosamente Helpdesk Unilasalle');
+INSERT INTO `msgconfig` VALUES ('', 'cadastro-usuario-from-admin', 'SISTEMA OCOMON', 'reply-to', 'OCOMON - CONFIRMA√á√ÉO DE CADASTRO', 'Prezado %usuario%<br />Seu cadastro foi efetuado com sucesso no sistema de chamados do Helpdesk<br />Seu login &eacute;: %login%<br />Para abrir chamados acesse o site %site%<br />Atenciosamente Helpdesk Unilasalle', 'Prezado %usuario%\r\nSeu cadastro foi efetuado com sucesso no sistema de chamados do Helpdesk\r\nSeu login √©: %login%\r\nPara abrir chamados acesse o site %site%\r\nAtenciosamente Helpdesk Unilasalle');
 
 ALTER TABLE `mailconfig` CHANGE `mail_user` `mail_user` VARCHAR( 40 ) DEFAULT NULL;
 
@@ -1872,7 +1872,7 @@ CREATE TABLE `config` (
 `conf_upld_size` INT( 10 ) NOT NULL DEFAULT '307200',
 `conf_upld_width` INT( 5 ) NOT NULL DEFAULT '800',
 `conf_upld_height` INT( 5 ) NOT NULL DEFAULT '600'
-) TYPE = MYISAM COMMENT = 'Tabela de configuraÁıes diversas do sistema';
+) TYPE = MYISAM COMMENT = 'Tabela de configura√ß√µes diversas do sistema';
 
 
 INSERT INTO `config` ( `conf_cod` , `conf_sql_user` , `conf_sql_passwd` , `conf_sql_server` , `conf_sql_db` , `conf_db_ccusto` , `conf_tb_ccusto` , `conf_ccusto_id` , `conf_ccusto_desc` , `conf_ccusto_cod` , `conf_ocomon_site` , `conf_inst_terceira` , `conf_log_path` , `conf_logo_path` , `conf_icons_path` , `conf_help_icon` , `conf_help_path` , `conf_language` , `conf_auth_type` , `conf_upld_size` , `conf_upld_width` , `conf_upld_height` )
@@ -2105,7 +2105,7 @@ INDEX ( `lck_uid` ) ,
 UNIQUE (
 `lck_oco`
 )
-) TYPE = MYISAM COMMENT = 'Tabela de Lock para chamados em ediÁ„o';
+) TYPE = MYISAM COMMENT = 'Tabela de Lock para chamados em edi√ß√£o';
 
 ALTER TABLE `materiais` CHANGE `mat_caixa` `mat_caixa` VARCHAR( 30 ) NULL DEFAULT '';
 
@@ -2161,7 +2161,7 @@ INDEX ( `eqp_equip_inv` , `eqp_equip_inst` , `eqp_piece_id` )
 `hp_date` DATETIME NOT NULL ,
 PRIMARY KEY ( `hp_id` ) ,
 INDEX ( `hp_piece_id` , `hp_piece_local` , `hp_comp_inv` , `hp_comp_inst` )
-) ENGINE = MYISAM CHARACTER SET latin1 COLLATE latin1_swedish_ci COMMENT = 'Tabela de histÛrico de movimentacıes de peÁas avulsas';
+) ENGINE = MYISAM CHARACTER SET latin1 COLLATE latin1_swedish_ci COMMENT = 'Tabela de hist√≥rico de movimentac√µes de pe√ßas avulsas';
 
 
  CREATE TABLE `email_warranty` (
@@ -2179,7 +2179,7 @@ ADD `conf_wrty_area` INT( 4 ) NOT NULL DEFAULT '1';
 
 
 INSERT INTO `msgconfig` (`msg_cod`, `msg_event`, `msg_fromname`, `msg_replyto`, `msg_subject`, `msg_body`, `msg_altbody`)
-VALUES (NULL , 'mail-about-warranty', 'SISTEMA OCOMON', 'ocomon@yourdomain.com', 'OCOMON - VENCIMENTO DE GARANTIA', 'Aten&ccedil;&atilde;o: <br />Existem equipamentos com o prazo de garantia prestes a expirar.<br /><br />Tipo de equipamento: %tipo%<br />N&uacute;mero de s&eacute;rie: %serial%<br />Partnumber: %partnumber%<br />Modelo: %modelo%<br />Departamento: %local%<br />Fornecedor: %fornecedor%<br />Nota fiscal: %notafiscal%<br />Vencimento: %vencimento%', 'AtenÁ„o:\r\nExistem equipamentos com o prazo de garantia prestes a expirar.\r\n\r\nTipo de equipamento: %tipo%\r\nN˙mero de sÈrie: %serial%\r\nPartnumber: %partnumber%\r\nModelo: %modelo%\r\nDepartamento: %local%\r\nFornecedor: %fornecedor%\r\nNota fiscal: %notafiscal%\r\nVencimento: %vencimento%');
+VALUES (NULL , 'mail-about-warranty', 'SISTEMA OCOMON', 'ocomon@yourdomain.com', 'OCOMON - VENCIMENTO DE GARANTIA', 'Aten&ccedil;&atilde;o: <br />Existem equipamentos com o prazo de garantia prestes a expirar.<br /><br />Tipo de equipamento: %tipo%<br />N&uacute;mero de s&eacute;rie: %serial%<br />Partnumber: %partnumber%<br />Modelo: %modelo%<br />Departamento: %local%<br />Fornecedor: %fornecedor%<br />Nota fiscal: %notafiscal%<br />Vencimento: %vencimento%', 'Aten√ß√£o:\r\nExistem equipamentos com o prazo de garantia prestes a expirar.\r\n\r\nTipo de equipamento: %tipo%\r\nN√∫mero de s√©rie: %serial%\r\nPartnumber: %partnumber%\r\nModelo: %modelo%\r\nDepartamento: %local%\r\nFornecedor: %fornecedor%\r\nNota fiscal: %notafiscal%\r\nVencimento: %vencimento%');
 
 
 ALTER TABLE `estoque` CHANGE `estoq_data_compra` `estoq_data_compra` DATETIME NULL DEFAULT '0000-00-00 00:00:00';
@@ -2212,7 +2212,7 @@ ALTER TABLE `hist_pieces` ADD `hp_technician` INT( 4 ) NULL ;
 ALTER TABLE `hist_pieces` ADD INDEX ( `hp_technician` ) ;
 
 
-INSERT INTO `msgconfig` (`msg_cod`, `msg_event`, `msg_fromname`, `msg_replyto`, `msg_subject`, `msg_body`, `msg_altbody`) VALUES (NULL, 'abertura-para-operador', 'SISTEMA OCOMON', 'ocomon@yourdomain.com', 'CHAMADO ABERTO PARA VOC ', '<span style="font-weight: bold;">SISTEMA OCOMON %versao%</span><br />Caro %operador%,<br />O chamado <span style="font-weight: bold;">%numero%</span> foi aberto e direcionado a voc&ecirc;.<br /><span style="font-weight: bold;">Descri&ccedil;&atilde;o: </span>%descricao%<br /><span style="font-weight: bold;">Contato: </span>%contato%<br /><span style="font-weight: bold;">Ramal:</span> %ramal%<br />Ocorr&ecirc;ncia aberta pelo operador: %aberto_por%<br />%site%', 'SISTEMA OCOMON %versao%\r\nCaro %operador%,\r\nO chamado %numero% foi aberto e direcionado a vocÍ.\r\nDescriÁ„o: %descricao%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorrÍncia aberta pelo operador: %aberto_por%\r\n%site%');
+INSERT INTO `msgconfig` (`msg_cod`, `msg_event`, `msg_fromname`, `msg_replyto`, `msg_subject`, `msg_body`, `msg_altbody`) VALUES (NULL, 'abertura-para-operador', 'SISTEMA OCOMON', 'ocomon@yourdomain.com', 'CHAMADO ABERTO PARA VOC√ä', '<span style="font-weight: bold;">SISTEMA OCOMON %versao%</span><br />Caro %operador%,<br />O chamado <span style="font-weight: bold;">%numero%</span> foi aberto e direcionado a voc&ecirc;.<br /><span style="font-weight: bold;">Descri&ccedil;&atilde;o: </span>%descricao%<br /><span style="font-weight: bold;">Contato: </span>%contato%<br /><span style="font-weight: bold;">Ramal:</span> %ramal%<br />Ocorr&ecirc;ncia aberta pelo operador: %aberto_por%<br />%site%', 'SISTEMA OCOMON %versao%\r\nCaro %operador%,\r\nO chamado %numero% foi aberto e direcionado a voc√™.\r\nDescri√ß√£o: %descricao%\r\nContato: %contato%\r\nRamal: %ramal%\r\nOcorr√™ncia aberta pelo operador: %aberto_por%\r\n%site%');
 
 CREATE TABLE `script_solution` (
 `script_cod` INT( 4 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -2253,7 +2253,7 @@ CREATE TABLE `mail_hist` (
 `mhist_date` DATETIME NOT NULL ,
 `mhist_technician` INT( 4 ) NOT NULL ,
 INDEX ( `mhist_technician` )
-) TYPE = MYISAM COMMENT = 'Tabela de histÛrico de emails enviados';
+) TYPE = MYISAM COMMENT = 'Tabela de hist√≥rico de emails enviados';
 
 ALTER TABLE `mail_hist` ADD `mhist_subject` VARCHAR( 40 ) NOT NULL AFTER `mhist_address` ;
 ALTER TABLE `mail_hist` ADD `mhist_address_cc` TEXT NULL AFTER `mhist_address` ;
@@ -2263,3 +2263,50 @@ ALTER TABLE `mail_hist` ADD `mhist_oco` INT( 6 ) NOT NULL AFTER `mhist_cod` ;
 ALTER TABLE `mail_hist` ADD INDEX ( `mhist_oco` ) ;
 
 ALTER TABLE `mailconfig` ADD `mail_from_name` VARCHAR( 30 ) NOT NULL DEFAULT 'SISTEMA_OCOMON';
+
+
+
+-- FIM DA VERS√ÉO 2.0RC3--------
+
+-- IN√çCIO VERS√ÉO 2.0RC4.1 -----
+
+ALTER TABLE `assentamentos` CHANGE `responsavelbkp` `asset_privated` TINYINT( 1 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE `configusercall` ADD `conf_ownarea_2` VARCHAR( 200 ) NULL AFTER `conf_ownarea` ;
+
+update configusercall set conf_ownarea_2 = conf_ownarea;
+
+ALTER TABLE `configusercall` ADD `conf_name` VARCHAR( 50 ) NULL DEFAULT 'Default' AFTER `conf_cod` ;
+
+ALTER TABLE `sistemas` ADD `sis_screen` INT( 2 ) NULL ;
+
+ALTER TABLE `sistemas` ADD INDEX ( `sis_screen` ) ;
+
+
+CREATE TABLE `uprefs` (
+`upref_uid` INT( 4 ) NOT NULL ,
+`upref_lang` VARCHAR( 50 ) NULL ,
+PRIMARY KEY ( `upref_uid` ) ,
+INDEX ( `upref_lang` )
+) ENGINE = MYISAM COMMENT = 'Tabela de preferencias diversas dos usuarios';
+
+
+CREATE TABLE `global_tickets` (
+`gt_ticket` INT( 6 ) NOT NULL ,
+`gt_id` VARCHAR( 200 ) NOT NULL ,
+PRIMARY KEY ( `gt_ticket` ) ,
+INDEX ( `gt_id` )
+) ENGINE = MYISAM COMMENT = 'tabela para permitir acesso global as ocorrencias';
+
+
+ALTER TABLE `utmp_usuarios` CHANGE `utmp_login` `utmp_login` VARCHAR( 100 ) NOT NULL;
+
+ALTER TABLE `ocorrencias` ADD `date_first_queued` DATETIME NULL ;
+
+
+INSERT INTO `temas` (`tm_nome`, `tm_color_destaca`, `tm_color_marca`, `tm_color_lin_par`, `tm_color_lin_impar`, `tm_color_body`, `tm_color_td`, `tm_borda_width`, `tm_borda_color`, `tm_tr_header`, `tm_color_topo`, `tm_color_topo_font`, `tm_color_barra`, `tm_color_menu`, `tm_color_barra_font`, `tm_color_barra_hover`, `tm_barra_fundo_destaque`, `tm_barra_fonte_destaque`, `tm_color_font_tr_header`, `tm_color_borda_header_centro`) VALUES
+('black_edition', '#CCCCCC', '#FFFFCC', '#E3E1E1', '#F6F6F6', '#FFFFFF', '#999999', 2, '#FFFFFF', '#999999', '#000000', '#FFFFFF', '#000000', 'IMG_DEFAULT', '#FFFFFF', '#000000', '#FFFFFF', '#000000', '#000000', '#FF0000');
+
+
+-- FIM DA VERS√ÉO 2.0RC4.1 -------------------
+

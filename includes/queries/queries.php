@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 $QRY["total_equip"] = "SELECT count(*)total from equipamentos";
 
@@ -193,7 +193,33 @@ $QRY["vencimentos"] = "SELECT count(*) AS quantidade,
 		GROUP BY vencimento, modelo
 		ORDER BY vencimento, modelo";
 
+$QRY["vencimentos_full"] = "SELECT count(*) AS quantidade,
+                 date_add(date_format(comp_data_compra, '%Y-%m-%d') , INTERVAL tempo_meses MONTH) AS vencimento,
+                 marc_nome AS modelo, fab_nome AS fabricante, tipo_nome AS tipo
+		FROM equipamentos, tempo_garantia, marcas_comp, fabricantes, tipo_equip
+		WHERE
 
+		 comp_garant_meses = tempo_cod AND comp_tipo_equip NOT IN (5)
+                AND comp_marca = marc_cod AND comp_fab = fab_cod AND comp_tipo_equip = tipo_cod
+                AND (date_format(curdate() , '%Y') = date_format(date_add(comp_data_compra, INTERVAL tempo_meses MONTH) , '%Y')
+                OR date_format(curdate() , '%Y' )+5>= date_format(date_add(comp_data_compra, INTERVAL tempo_meses MONTH) , '%Y' ))
+		GROUP BY vencimento, modelo
+		ORDER BY vencimento, modelo";
+
+
+$QRY["vencimentos_list_ini"] = "SELECT comp_inv as etiqueta, comp_inst,
+		date_add(date_format(comp_data_compra, '%Y-%m-%d') , INTERVAL tempo_meses MONTH) AS vencimento,
+		marc_nome AS modelo, fab_nome AS fabricante, tipo_nome AS tipo
+		FROM equipamentos, tempo_garantia, marcas_comp, fabricantes, tipo_equip
+		WHERE
+
+		comp_garant_meses = tempo_cod AND comp_tipo_equip NOT IN (5)
+		AND comp_marca = marc_cod AND comp_fab = fab_cod AND comp_tipo_equip = tipo_cod
+		AND (date_format(curdate() , '%Y') = date_format(date_add(comp_data_compra, INTERVAL tempo_meses MONTH) , '%Y')
+		OR date_format(curdate() , '%Y' )+5>= date_format(date_add(comp_data_compra, INTERVAL tempo_meses MONTH) , '%Y' ))
+		";
+	//AND	date_add(date_format(comp_data_compra, '%Y-%m-%d') , INTERVAL tempo_meses MONTH) = '2008-02-13'
+$QRY["vencimentos_list_fim"] = "ORDER BY vencimento, etiqueta, modelo";
 
 $QRY["vencimentos_piecesOK"] = "SELECT count(*) AS quantidade, ".
                 "\n\ti.item_nome AS tipo, model.mdit_fabricante as fabricante, model.mdit_desc as modelo, ".
@@ -271,7 +297,7 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 				o.sistema as area_cod, o.contato as contato, o.telefone as telefone, o.local as setor_cod,
 				o.operador as operador_cod, o.data_abertura as data_abertura, o.data_fechamento as data_fechamento,
 				o.status as status_cod, o.data_atendimento as data_atendimento, o.instituicao as unidade_cod,
-				o.aberto_por as aberto_por_cod, o.oco_scheduled, o.oco_real_open_date,
+				o.aberto_por as aberto_por_cod, o.oco_scheduled, o.oco_real_open_date, o.date_first_queued, 
 
 				o.oco_script_sol,
 
@@ -319,7 +345,13 @@ $QRY["ocorrencias_full_ini"] = "SELECT
 
 $QRY["useropencall"]= "SELECT c.*, a.*, b.sistema as ownarea, b.sis_id as ownarea_cod ".
 					"FROM configusercall as c, sistemas as a, sistemas as b ".
+					"WHERE c.conf_opentoarea = a.sis_id and c.conf_ownarea = b.sis_id and c.conf_cod = 1";//codigo 1 reservado para configuracoes globais
+
+
+$QRY["useropencall_custom"]= "SELECT c.*, a.*, b.sistema as ownarea, b.sis_id as ownarea_cod ".
+					"FROM configusercall as c, sistemas as a, sistemas as b ".
 					"WHERE c.conf_opentoarea = a.sis_id and c.conf_ownarea = b.sis_id";
+
 
 $QRY["locais"] = "SELECT l .  * , r.reit_nome, pr.prior_nivel AS prioridade, d.dom_desc AS dominio, pred.pred_desc as predio
 		FROM localizacao AS l

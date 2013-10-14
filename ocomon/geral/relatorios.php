@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -97,8 +97,8 @@ print "</BODY>";
 
 
 	function checa_permissao(URL){
-		var admin = '<?print $_SESSION['s_nivel'];?>';
-		var area_admin = '<?print $_SESSION['s_area_admin']?>';
+		var admin = '<?php print $_SESSION['s_nivel'];?>';
+		var area_admin = '<?php print $_SESSION['s_area_admin']?>';
 		if( (admin!=1) && (area_admin!=1) ) {
 			window.alert('Acesso Restrito!');
 		} else
@@ -108,6 +108,6 @@ print "</BODY>";
 	}
 
 </script>
-<?
+<?php 
 print "</HTML>";
 ?>

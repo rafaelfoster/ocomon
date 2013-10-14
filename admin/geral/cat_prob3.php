@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -177,7 +177,7 @@ print "</body>";
 	}
 -->
 </script>
-<?
+<?php 
 print "</html>";
 
 ?>

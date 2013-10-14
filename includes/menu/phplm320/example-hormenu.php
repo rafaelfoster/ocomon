@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
 
-<?php
+<?php 
 /* TO USE RELATIVE PATHS: */
 $myDirPath = '';
 $myWwwPath = '';
@@ -13,20 +13,20 @@ $myWwwPath = '';
 //$myWwwPath = '/~pratesi/phplayersmenu/';
 ?>
 
-<link rel="stylesheet" href="<?php print $myWwwPath; ?>layersmenu-demo.css" type="text/css"></link>
-<link rel="stylesheet" href="<?php print $myWwwPath; ?>layersmenu-gtk2.css" type="text/css"></link>
-<link rel="shortcut icon" href="<?php print $myWwwPath; ?>LOGOS/shortcut_icon_phplm.png"></link>
+<link rel="stylesheet" href="<?php  print $myWwwPath; ?>layersmenu-demo.css" type="text/css"></link>
+<link rel="stylesheet" href="<?php  print $myWwwPath; ?>layersmenu-gtk2.css" type="text/css"></link>
+<link rel="shortcut icon" href="<?php  print $myWwwPath; ?>LOGOS/shortcut_icon_phplm.png"></link>
 <title>The PHP Layers Menu System</title>
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once $myDirPath . 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once $myDirPath . 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
-<script language="JavaScript" type="text/javascript" src="<?php print $myWwwPath; ?>libjs/layersmenu-library.js"></script>
-<script language="JavaScript" type="text/javascript" src="<?php print $myWwwPath; ?>libjs/layersmenu.js"></script>
+<script language="JavaScript" type="text/javascript" src="<?php  print $myWwwPath; ?>libjs/layersmenu-library.js"></script>
+<script language="JavaScript" type="text/javascript" src="<?php  print $myWwwPath; ?>libjs/layersmenu.js"></script>
 
-<?php
+<?php 
 require_once $myDirPath . 'lib/PHPLIB.php';
 require_once $myDirPath . 'lib/layersmenu-common.inc.php';
 require_once $myDirPath . 'lib/layersmenu.inc.php';
@@ -82,7 +82,7 @@ print $header;
 </head>
 <body>
 
-<?php
+<?php 
 $mid->printMenu('menuHorizontal1');
 /* alternatively:
 $hormenu1 = $mid->getMenu('hormenu1');
@@ -92,26 +92,26 @@ print $hormenu1;
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with a Horizontal Layers Menu</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with a Horizontal Layers Menu</b>
 <div style="height: 5px"></div>
 <a href="http://phplayersmenu.sourceforge.net/"><img border="0"
-src="<?php print $myWwwPath; ?>LOGOS/powered_by_phplm.png" alt="Powered by PHP Layers Menu"
+src="<?php  print $myWwwPath; ?>LOGOS/powered_by_phplm.png" alt="Powered by PHP Layers Menu"
 height="31" width="88" /></a>&nbsp;<a
 href="http://validator.w3.org/check/referer"><img border="0"
-src="<?php print $myWwwPath; ?>images/valid-xhtml10.png" alt="Valid XHTML 1.0!"
+src="<?php  print $myWwwPath; ?>images/valid-xhtml10.png" alt="Valid XHTML 1.0!"
 height="31" width="88" /></a>&nbsp;<a
 href="http://jigsaw.w3.org/css-validator/"><img border="0"
-src="<?php print $myWwwPath; ?>images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
+src="<?php  print $myWwwPath; ?>images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 </div>
 </div>
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once $myDirPath . 'README.ihtml'; ?>
+<?php  require_once $myDirPath . 'README.ihtml'; ?>
 </div>
 </div>
 
-<?php
+<?php 
 $mid->printFooter();
 /* alternatively:
 $footer = $mid->getFooter();

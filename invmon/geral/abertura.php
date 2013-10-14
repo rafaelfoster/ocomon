@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Fl�io Ribeiro
 

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+</HEAD><BODY BGCOLOR="white" TEXT="black">
+<FONT SIZE="4">
+</FONT></CENTER>
+
+<H1>Ocomon 1.50 - Changelog da versão</H1>
+<H2>Principais mudanças</H2>
+<H1>1. Padronização e Segurança</H1>
+<UL>
+<LI>Re-escrita do código do sistema para atender às recomendações do PHP quanto às diretivas <I>register_globals</I> e <I>Error_reporting</I>;
+</UL>
+
+<H1>2. Internacionalização</H1>
+<UL>
+<LI>Suporte a multi-idiomas (por enquanto apenas Português e Inglês);
+</UL>
+
+<H1>3. Layout do Sistema</H1>
+<H2>3.1. Refinamento do layout e ergonomia do sistema;</H2>
+<UL>
+<LI>Personalização do esquema de cores do sistema;
+<P></P>
+</UL>
+
+	<BLOCKQUOTE>
+	- é possível criar esquemas de cores através do próprio ocomon;
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- é possível salvar e carregar esquemas de cores salvos;
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- é possível liberar para que cada usuário possa escolher um tema existente;
+	</BLOCKQUOTE>
+<P></P>
+<UL>
+<LI>Novo sistema de calendário, mais elegante e integrado ao layout.
+<P></P>
+<LI>Tela inicial do sistema: Balões indicam a descrição dos chamados truncados na tela inicial;
+<P></P>
+<LI>Ordenação das colunas na tela principal das ocorrências com indicação visual da coluna ordenada;
+<P></P>
+<LI>Collapse na ocorrências vinculadas ao operador;
+<P></P>
+<LI>Collapse dos assentamentos nos chamados;
+<P></P>
+<LI>Diversos ajustes nas telas do sistema;
+</UL>
+
+<H1>4. Diversos</H1>
+<UL>
+<LI>Aperfeiçoamento da busca de soluções, agora é possível definir se queremos que o retorno traga chamados que possam todos os termos pesquisados ou pelo menos um dos termos em qualquer das tabelas vinculadas às ocorrências. Além disso o retorno vem destacando (<I>highlight</I>) os termos pesquisados, facilitando sua identificação.
+<P></P>
+<LI>Tela de listagem de equipamentos: agora a checkbox de navegação encadeada permanece com a última seleção realizada;
+<P></P>
+<LI>Aprimoramento do comportamento dos botões de navegação;
+<P></P>
+<LI>Na tela dos meus chamados (menu Home) agora também é possível visualizar os chamados concluídos por mim.
+<P></P>
+<LI>Melhoramento do cadastro de feriados, agora é possível definir se o feriado é uma data fixa (se repete anualmente) ou não.
+<P></P>
+<LI>Help contextual. A maioria das telas possui um ícone de help onde há uma explicação sobre as funções das mesmas. Aos poucos todas as telas terão o seu próprio help.
+<P></P>
+<LI>Gerenciamento de modelos de configurações de equipamentos, antes não éra possível editar as informações do modelo de configuração;
+<P></P>
+<LI>Criação de até 3 níveis de agrupamentos por tipo de problema;
+<P></P>
+<LI>Relatório de problemas por agrupamentos;
+<P></P>
+<LI>Mudança do formato do campo para telefone para suportar formatos com traço (expressão regular);
+<P></P>
+<LI>Mudança do formato do campo para login e senha para suportar pontos e underlines (expressão regular);
+<P></P>
+<LI>Pesquisa de equipamentos a partir de uma data específica de compra ou cadastro (antes só retornava equipamentos da data específica);
+<P></P>
+<LI>Alerta para edição de chamado já em edição por outro operador;
+<P></P>
+<LI>Mais diretivas podem ser configuradas no menu de administração;
+<P></P>
+</UL>
+
+	<BLOCKQUOTE>
+	- Barra de formatação wysiwyg para edição de chamados (configurável);
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- Seleção de Idioma
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- Upload de arquivos: agora é possível definir os tipos de arquivos permitidos para upload (ODF, PDF, OpenOffice.Org, MS Office, RTF ou TXT) além das imagens;
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- Permitir ou bloquear a seleção de esquemas de cores para os operadores/usuários;
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- Definição do endereço no seu site interno para acesso ao Ocomon, essa configuração ficava no arquivo config.inc,php;
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	- Configuração do número de registros por página (nas telas de inventário), antes isso era fixo (<I>hard-coded</I>) no código no sistema;
+	</BLOCKQUOTE>
+<P></P>
+<H1>5. Correções de Bugs</H1>
+<UL>
+<LI>Correção da exclusão de equipamentos - verificação de ocorrências vinculadas;
+<P></P>
+<LI>Correção da tela dos meus chamados, quando era dado o refresh na tela, ficavam aparecendo apenas as ocorrências ATIVAS;
+<P></P>
+<LI>Correção do erro que era gerado ao tentar alterar as informações de usuários auto-cadastrados;
+<P></P>
+<LI>Tratamento do erro gerado ao tentar encerrar uma ocorrência já encerrada previamente;
+<P></P>
+<LI>Diversas outras correções de bugs menores.
+</UL>
+
+<H1>6. FALTA ARRUMAR</H1>
+<P>
+NOVOS CADASTRADOS:
+</P>
+	<BLOCKQUOTE>
+	tipos de itens de estoque
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	tamanho de monitores
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	resolução de scanners
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	tipos de impressoras
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	tempo de garantia
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	dependências de chamados
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	LDAP + AD
+	</BLOCKQUOTE>
+<P></P>
+	<BLOCKQUOTE>
+	Outros....
+	</BLOCKQUOTE>
+
+<!-- html code generated by txt2tags 2.0 (http://txt2tags.sf.net) -->
+<!-- cmdline: txt2tags -t html /var/www/ocomon_dev/changelog/changelog_1.50.txt -->
+</BODY></HTML>

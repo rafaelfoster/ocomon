@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -140,18 +140,18 @@
 					print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 				?>
 				<script type="text/javascript">
-					var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+					var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 					if (bar ==1) {
 						var oFCKeditor = new FCKeditor( 'assentamento' ) ;
 						oFCKeditor.BasePath = '../../includes/fckeditor/';
-						oFCKeditor.Value = '<?print "".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."";?>';
+						oFCKeditor.Value = '<?php print "".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."";?>';
 						oFCKeditor.ToolbarSet = 'ocomon';
 						oFCKeditor.Width = '570px';
 						oFCKeditor.Height = '100px';
 						oFCKeditor.Create() ;
 					}
 				</script>
-				<?
+				<?php 
 		print "</TR>";
 
 		print "<TR>";
@@ -249,6 +249,7 @@
 					// if (array_key_exists($row['sistema'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
 						// $areaT = $row['sistema']; //Recebe o valor da área de atendimento do chamado
 					// } else $areaT = 1; //Carga horária default definida no arquivo config.inc.php
+					$areaT = 0;
 					$areaT = testaArea($areaT,$row['area_cod'],$H_horarios);
 
 					$dt = new dateOpers;
@@ -292,7 +293,8 @@
 		$_SESSION['aviso'] = $aviso;
 		$_SESSION['origem'] = "abertura.php";
 
-		print "<script>redirect('mensagem.php')</script>";
+		//print "<script>redirect('mensagem.php')</script>";
+		print "<script>redirect('mostra_consulta.php?numero=".$_POST['numero']."&justOpened=true');</script>";
 	}
 
 print "</TABLE>";
@@ -323,7 +325,7 @@ print "</FORM>";
 
 -->
 </script>
-<?
+<?php 
 print "</BODY>";
 print "</HTML>";
 ?>

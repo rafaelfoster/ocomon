@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -558,7 +558,7 @@ else //if $ok==Pesquisar
 
 
 	  </script>
-    <?
+    <?php 
 
 
 

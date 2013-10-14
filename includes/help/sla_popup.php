@@ -1,4 +1,4 @@
-<?
+<?php 
     print "<html><head><title>Indicadores de SLA</title>";
 
 	print "<style type=\"text/css\"><!--";

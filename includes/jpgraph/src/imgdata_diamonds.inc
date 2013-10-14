@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	IMGDATA_DIAMONDS.INC
 // Description:	Base64 encoded images for diamonds

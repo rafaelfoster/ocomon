@@ -1,4 +1,4 @@
-<?php
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -170,7 +170,7 @@
 
 		$query = "";
 
-    		$query = "SELECT o.numero, o.data_abertura, o.data_atendimento, o.data_fechamento, o.sistema as cod_area, ".
+    		$query = "SELECT o.numero, o.data_abertura, o.data_atendimento, o.data_fechamento, o.sistema as cod_area, o.date_first_queued, ".
 					"s.sistema as area, 	p.problema as problema, sl.slas_desc as sla, sl.slas_tempo as tempo , l.*, pr.*, ".
 					"res.slas_tempo as resposta, res.slas_desc as resposta_desc, u.nome as operador ".
 				"FROM localizacao as l left join prioridades as pr on pr.prior_cod = l.loc_prior left join sla_solucao as res on ".
@@ -319,12 +319,22 @@
 							$area=testaArea($_POST['area'],$row['cod_area'],$H_horarios);
 
 							#TRABALHA SOBRE O TEMPO DE RESPOSTA
-							$dtR->setData1($row['data_abertura']);
+							
+							if (isset($row['date_first_queued'])){
+								$dtR->setData1($row['date_first_queued']);
+							} else {
+								$dtR->setData1($row['data_abertura']);
+							}
+							
 							$dtR->setData2($row['data_atendimento']);
 							$dtR->tempo_valido($dtR->data1,$dtR->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
 
 							#TRABALHA SOBRE O TEMPO DE SOLUÇÃO
-							$dtS->setData1($row['data_abertura']);
+							if (isset($row['date_first_queued'])){
+								$dtS->setData1($row['date_first_queued']);
+							} else {
+								$dtS->setData1($row['data_abertura']);
+							}
 							$dtS->setData2($row['data_fechamento']);
 							$dtS->tempo_valido($dtS->data1,$dtS->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
 							$t_horas = $dtS->diff["hValido"];
@@ -768,7 +778,7 @@
 <script type='text/javascript'>
 <!--
 	team = new Array(
-		<?
+		<?php 
 		$sql="select * from sistemas where sis_status NOT in (0) order by sistema";//Somente as áreas ativas
 		$sql_result=mysql_query($sql);
 		echo mysql_error();

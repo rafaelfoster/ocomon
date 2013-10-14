@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");

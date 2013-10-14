@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
   	include ("../../includes/config.inc.php");
   	include ("../../includes/classes/conecta.class.php");

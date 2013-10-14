@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -42,6 +42,10 @@
 		$header= TRANS('TXT_REPORT_PERSON');
 	} else
 		$header = $_REQUEST['header'];
+
+
+	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+
 
 	$qry = "SELECT conf_page_size AS page FROM config";
 	$qry_exec = mysql_query($qry) or die (TRANS('MSG_NECESS_UPDATE_TABLE_CONF'));
@@ -554,6 +558,12 @@
 			}
 			$ordena = substr($ordena,0,-1);
 		}
+
+		if (isset($_REQUEST['VENCIMENTO'])){
+			$query.=  "AND comp_tipo_equip NOT IN (5) ".
+				"AND date_add(date_format(comp_data_compra, '%Y-%m-%d') , INTERVAL tempo_meses MONTH) = '".$_REQUEST['VENCIMENTO']."'";
+		}
+
 		$query.= $QRY["full_detail_fim"];
 		$query.= "  order by ".$ordena."";
 
@@ -964,6 +974,12 @@
 			$param.= "comp_assist=".$_REQUEST['comp_assist']."";
 		};
 
+		if (isset($_REQUEST['VENCIMENTO'])) {
+			if (strlen($texto) > $tam) $texto.= ", ";
+
+			$texto.="[<b>".TRANS('WARRANTY_EXPIRE')."</b> = ".$_REQUEST['VENCIMENTO']."]";
+			$param.= "VENCIMENTO=".$_REQUEST['VENCIMENTO']."";
+		};
 
 		if (strlen($texto)==$tam) {$texto.="[<b>".TRANS('COL_TYPE')."</b> = ".TRANS('FIELD_ALL')."]";}; //Se nenhum campo foi selecionado para a consulta então todos os equipamentos são listados!!
 
@@ -1840,7 +1856,7 @@
 				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=instituicao,etiqueta&coluna=instituicao&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_UNIT')."'.>".TRANS('OCO_FIELD_UNIT')."</a>".$ICON_ORDER['instituicao']."</TD>".
 				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=equipamento,modelo&coluna=tipo&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_TYPE_EQUIP')."'>".TRANS('COL_TYPE')."</a>".$ICON_ORDER['tipo']."</TD>".
 				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=fab_nome,modelo&coluna=modelo&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_MODEL_EQUIP')."'>".TRANS('COL_MODEL')."</a>".$ICON_ORDER['modelo']."</TD>".
-				"<td class='line'><b><a onClick=\"redirect('m".$_SERVER['PHP_SELF']."?ordena=local&coluna=local&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_LOCAL')."'>".TRANS('COL_LOCALIZATION')."</a>".$ICON_ORDER['local']."</TD>".
+				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=local&coluna=local&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_LOCAL')."'>".TRANS('COL_LOCALIZATION')."</a>".$ICON_ORDER['local']."</TD>".
 				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=situac_nome&coluna=situacao&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_SITUAC')."'>".TRANS('COL_SITUAC')."</a>".$ICON_ORDER['situacao']."</TD>";
 		if ($_SESSION['s_invmon']==1)
 			print "<td class='line'><b>".TRANS('COL_EDIT')."</TD>";
@@ -1885,7 +1901,9 @@
 			print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
 
 
-			print "<td class='line'><a ".$alerta." onClick=\"montaPopup('mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_SHOW_DATEIL_EQUIP_CAD')."'>".$row['etiqueta']."</a></TD>";
+			//print "<td class='line'><a ".$alerta." onClick=\"montaPopup('mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\" title='".TRANS('HNT_SHOW_DATEIL_EQUIP_CAD')."'>".$row['etiqueta']."</a></TD>";
+			print "<td class='line'><a ".$alerta." onClick=\"exibeEscondeImg('idTr".$j."'); exibeEscondeImg('idDivLinha".$j."'); ajaxFunction('idDivLinha".$j."', 'mostra_consulta_inv.php', 'idLoad', 'comp_inv=idEtiqueta".$j."', 'comp_inst=idUnidade".$j."' , 'INDIV=idINDIV');\" title='".TRANS('HNT_SHOW_DATEIL_EQUIP_CAD')."'>".$row['etiqueta']."</a></TD>";
+
 			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_UNIT')." ".$row['instituicao'].".' href=\"javascript:monta_link('?comp_inst%5B%5D=".$row['cod_inst']."&ordena=fab_nome,modelo,local,etiqueta&coluna=instituicao&ordenado=".$ordenado."','".$param."','comp_inst')\">".$row['instituicao']."</a></td>";
 			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_TYPE')." ".$row['equipamento'].".' href=\"javascript:monta_link('?comp_tipo_equip=".$row['tipo']."&ordena=fab_nome,modelo,local,etiqueta&coluna=tipo&ordenado=".$ordenado."','".$param."','comp_tipo_equip')\">".$row['equipamento']."</a></td>";
 			print "<td class='line'><a ".$alerta." title='".TRANS('HNT_FILTER_EQUIP_MODEL')." ".$row['fab_nome']." ".$row['modelo'].".' href=\"javascript:monta_link('?comp_marca=".$row['modelo_cod']."&ordena=local,etiqueta&coluna=modelo&ordenado=".$ordenado."','".$param."','comp_marca')\">".$row['fab_nome']." ".$row['modelo']."</a></td>";
@@ -1897,6 +1915,12 @@
 				print "<td class='line'><a ".$alerta." onClick =\"return confirma('".TRANS('MSG_DEL_REG')."','exclui_equipamento.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."')\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></a></TD>";
 			}
 			print "</TR>";
+
+			print "<tr id='idTr".$j."' style='{display:none;}'><td colspan='8'><div id='idDivLinha".$j."' style='{display:none;}'></div></td></tr>";
+			print "<input type='hidden' name='etiquetaAjax".$j."' id='idEtiqueta".$j."' value='".$row['etiqueta']."'>";
+			print "<input type='hidden' name='unidadeAjax".$j."' id='idUnidade".$j."' value='".$row['cod_inst']."'>";
+			print "<input type='hidden' name='INDIV' id='idINDIV' value='INDIV'>";
+
 			$i++;
 		}
 		print "</TABLE>";
@@ -2015,7 +2039,7 @@
 	<SCRIPT LANGUAGE="JAVASCRIPT">
 	<!--
 
-		desabilitaLinks(<?print $_SESSION['s_invmon'];?>);
+		desabilitaLinks(<?php print $_SESSION['s_invmon'];?>);
 
 
 		function desabilita(v){
@@ -2079,9 +2103,10 @@
 			//FIM DO BLOCO ALTERADO
 			window.location.href=clicado+"&"+parametro+"&"+encadeado;
 		}
+
 		//-->
 		</SCRIPT>
-		<?
+		<?php 
 			//else
 			//	if (negar()==false){
 			//		negaCampo = "";

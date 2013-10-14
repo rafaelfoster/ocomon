@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -89,10 +89,10 @@
 
 
                 ?>
-                <td class='line'><a href='mostra_consulta_comp.php?comp_marca=<?print $row['codigo'];?>'><?print $row['codigo'];?></a></TD>
-                <td class='line'><? print $linkImg."&nbsp;".$row['modelo'];?></td>
-                <td class='line'><? print $row['tipo'];?></td>
-                <?
+                <td class='line'><a href='mostra_consulta_comp.php?comp_marca=<?php print $row['codigo'];?>'><?php print $row['codigo'];?></a></TD>
+                <td class='line'><?php  print $linkImg."&nbsp;".$row['modelo'];?></td>
+                <td class='line'><?php  print $row['tipo'];?></td>
+                <?php 
 				print "<td class='line'><a onClick=\"redirect('altera_dados_marca_comp.php?marc_cod=".$row['codigo']."')\"><img src='".ICONS_PATH."edit.png' title='Editar o registro'></a></TD>";
 				print "<td class='line'><a onClick=\"confirma('Tem Certeza que deseja excluir esse registro do sistema?','exclui_dados_marca_comp.php?marc_cod=".$row['codigo']."')\"><img src='".ICONS_PATH."drop.png' title='Excluir o registro'></a></TD>";
 				print "</TR>";

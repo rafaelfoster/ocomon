@@ -1,4 +1,4 @@
-<?session_start();
+<?php session_start();
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -25,8 +25,11 @@
 	print "<HTML><BODY bgcolor='".BODY_COLOR."'>";
 	$auth = new auth;
 
+	$menuTable = false;
+	
 	if (isset($_GET['INDIV'])) {
 		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
+		$menuTable = true;
 	} else
 		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
@@ -45,13 +48,43 @@
 	$query = $QRY["ocorrencias_full_ini"]." where numero in (".$COD.") order by numero";
 	$resultado = mysql_query($query);
 	$row = mysql_fetch_array($resultado);
+	
+	$GLOBALACCESS = false;
+	
+	$qryId = "SELECT * FROM global_tickets WHERE gt_ticket = ".$COD."";
+	$execId = mysql_query($qryId);
+	$rowID = mysql_fetch_array($execId);	
+	
+	if (isset($_GET['id'])){
+		if (!strcmp($_GET['id'],$rowID['gt_id'])) $GLOBALACCESS = true; else $GLOBALACCESS = false;
+	}
+	
+	if ($_SESSION['s_nivel'] == 3 && !$GLOBALACCESS){ //SOMENTE ABERTURA
+		if ($row['aberto_por_cod'] != $_SESSION['s_uid']){
+			print "".TRANS('MSG_ERR_NOT_ALLOWED')."";
+			exit;
+		}
+	}
 
-        $query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia=".$COD."";
+        if ($_SESSION['s_nivel'] < 3) {
+        	$query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia=".$COD."";
+        } else 
+        	$query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia=".$COD." and a.asset_privated = 0";
+        
         $resultado2 = mysql_query($query2);
         $linhas=mysql_numrows($resultado2);
 
-	if ($_SESSION['s_nivel'] == 1) $linkEdita = "<td align='right' width='10%' ><a href='altera_dados_ocorrencia.php?numero=".$COD."'>".TRANS('FIELD_EDIT_ADMIN')."</a>&nbsp;|&nbsp;</td>"; else //&nbsp;|&nbsp;
-		$linkEdita = "";
+	
+	if (isset($_GET['GEN'])){
+		if (empty($rowID['gt_id'])){
+			$qryGenLink = "INSERT INTO global_tickets (gt_ticket, gt_id) values (".$COD.", ".random().")";
+			$execGenLink = mysql_query($qryGenLink) or die('ERROR TRYING TO GENERATE_GLOBAL_LINK');
+		}
+	}
+	
+	
+// 	if ($_SESSION['s_nivel'] == 1) $linkEdita = "<td align='right' width='10%' ><a href='altera_dados_ocorrencia.php?numero=".$COD."'>".TRANS('FIELD_EDIT_ADMIN')."</a>&nbsp;|&nbsp;</td>"; else //&nbsp;|&nbsp;
+// 		$linkEdita = "";
 
 	$sqlPai = "select * from ocodeps where dep_filho = ".$COD." ";
 	$execpai = mysql_query($sqlPai) or die (TRANS('ERR_QUERY'));
@@ -84,19 +117,21 @@
 		}
 
 	</script>
-	<?
-
+	<?php 
+	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
 
 	print "<BR><B>".TRANS('TTL_CONS_OCCO')."</B><BR>".$msgPai."</br>";
 
 	if (isset($_GET['justOpened']) && $_GET['justOpened']==true) {
-		$msg = TRANS('MSG_OCCO_INCLUDE_SUCESS');
+		$msg = TRANS('MSG_OCCO_EDIT_SUCCESS');
 		//$msg.="<br><a align='center' onClick=\"exibeEscondeImg('idAlerta');\"><img src='".ICONS_PATH."/stop.png' width='16px' height='16px'>&nbsp;Fechar</a>";
 		print "</table>";//#EFEFE7
 		print "<div class='alerta' id='idAlerta'><table class='divAlerta'><tr><td colspan='2'><a align='center' onClick=\"exibeEscondeImg('idAlerta');\" title='".TRANS('FIELD_HIDE')."'><img src='".ICONS_PATH."/ok.png' width='16px' height='16px'><b>".$msg."</b></a></td></tr></table></div>";
 		//exit;
 	}
 
+	
+	$menuTable? print "<table width='80%'><tr>":"";
 
 	if ($row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
 		print "<TD align='right' width='10%' ><a href='encerramento.php?numero=".$row['numero']."'>".TRANS('FIELD_FINISH_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //
@@ -104,7 +139,7 @@
 
 	print "<TD align='right' width='10%' ><a href='mostra_relatorio_individual.php?numero=".$row['numero']."' target='_blank'>".TRANS('FIELD_PRINT_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
 	if ($_SESSION['s_nivel'] < 3)
-		print "<TD align='right' width='10%' ><a href='encaminhar.php?numero=".$row['numero']."'>".TRANS('FIELD_EDIT_OCCO')."</a>&nbsp;|&nbsp;</TD>".$linkEdita.""; //&nbsp;|&nbsp;
+		print "<TD align='right' width='10%' ><a href='encaminhar.php?numero=".$row['numero']."'>".TRANS('FIELD_EDIT_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //".$linkEdita."
 
 	if (($row['status_cod']!=2) && ($row['status_cod']!=4) && ($_SESSION['s_nivel'] < 3)) {
 		print "<TD align='right' width='10%' ><a href='atender.php?numero=".$COD."'>".TRANS('FIELD_ADVERT')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
@@ -144,9 +179,8 @@
 			"&numero=".$row['numero']."')\">".TRANS('SEND_EMAIL')."</a></TD>"; //&nbsp;|&nbsp;
 	}
 
-
-	//print "</table>";
-	//print "</tr>";
+	$menuTable? print "</tr></table>":"";
+	
 
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
         	print "<TR>";
@@ -200,9 +234,9 @@
 		print "</TR>";
 		print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_CONTACT').":</TD>";
-                print "<TD width='30%' align='left' ><input class='disable' value='".$row['contato']."' disabled></TD>";
+                print "<TD width='30%' align='left'><input class='disable' value='".$row['contato']."' disabled></TD>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PHONE').":</TD>";
-                print "<TD colspan='3' width='30%' align='left' ><input class='disable' value='".$row['telefone']."' disabled></TD>";
+                print "<TD colspan='3' width='30%' align='left'><input class='disable' value='".$row['telefone']."' disabled></TD>";
 	print "</TR>";
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_LOCAL').":</TD>";
@@ -281,7 +315,22 @@
 					"<b><font color='blue'><u><a onClick=\"popup_alerta_mini('mostra_hist_status.php?numero=".$COD."&popup=true')\">".
 					"".$row['chamado_status']."</u></a></font></b>".
 				"</TD>";
-			print "<TD colspan='2' align='left'>&nbsp;</td>";
+			
+			
+			$qryId = "SELECT * FROM global_tickets WHERE gt_ticket = ".$COD."";
+			$execId = mysql_query($qryId);
+			$rowID = mysql_fetch_array($execId);			
+			
+			$global_link = "";
+			if (!empty($rowID['gt_id'])) {
+				$global_link = $_SESSION['s_ocomon_site']."ocomon/geral/mostra_consulta.php?numero=".$COD."&id=".$rowID['gt_id'];
+			} else {
+				$global_link = "<a href='".$_SERVER['PHP_SELF']."?numero=".$COD."&GEN=1'>".TRANS('GENERATE_GLOBAL_LINK')."</a>";
+			}
+			
+			
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('GLOBAL_LINK').":</td>".
+				"<td>".$global_link."</td>";
 		print "</TR>";
 
 		if ($row['oco_scheduled']==1){
@@ -302,12 +351,14 @@
 		$i = 0;
 		while ($rowAssentamento2 = mysql_fetch_array($resultado2)){
 			$printCont = $i+1;
+			$transAssetText = "";
+			if ($rowAssentamento2['asset_privated']==1) $transAssetText = TRANS('CHECK_ASSET_PRIVATED'); else $transAssetText = "";
 			print "<TR>";
 			print "<TD width='20%' ' bgcolor='".TD_COLOR."' valign='top'>".
-					"".TRANS('FIELD_NESTING')." ".$printCont." de ".$linhas." por ".$rowAssentamento2['nome']." em ".
+					"".TRANS('FIELD_NESTING')." ".$printCont." ".TRANS('SHORT_OF')." ".$linhas." ".TRANS('SHORT_BY')." ".$rowAssentamento2['nome']." ".TRANS('SHORT_IN')." ".
 					//"".datab($rowAssentamento2['data'])."".
 					"".formatDate($rowAssentamento2['data'])."".
-				"</TD>";
+				"<br /><b>".$transAssetText."</b></TD>";
 
 			if (isset($_GET['destaca'])){
 				print "<TD colspan='4' align='left'  class='textareaDisable' valign='top'>".destaca($_GET['destaca'], nl2br($rowAssentamento2['assentamento']))."</TD>";
@@ -320,8 +371,20 @@
 		print "</table></div></td></tr>";
 	}
 
+	
+	if ($_SESSION['s_nivel']== 3) {
+		print "<form name='short' method='post' action='".$_SERVER['PHP_SELF']."'>";
+		print "<input type='hidden' name='hidNumero' id='idNumero' value='".$COD."'>";
+		if (isset($_GET['id'])){
+			print "<input type='hidden' name='urlid' id='idUrl' value='".$_GET['id']."'>";
+			print "<tr><td colspan='4'><input type='button' class='button' onClick=\"ajaxFunction('idDivDetails', 'insert_comment.php', 'idLoad', 'numero=idNumero', 'urlid=idUrl');\" value='".TRANS('INSERT_COMMENT','Inserir comentário',0)."'></td></tr>";
+		} else
+			print "<tr><td colspan='4'><input type='button' class='button' onClick=\"ajaxFunction('idDivDetails', 'insert_comment.php', 'idLoad', 'numero=idNumero');\" value='".TRANS('INSERT_COMMENT','Inserir comentário',0)."'></td></tr>";
+		print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";//style='{display:none;}'
+		print "</form>";		
+	}
 		######################################################
-		## E-MAILS ENVIADOS SOBRE ESSA OCORRÊNCIA
+		## E-MAILS ENVIADOS SOBRE ESSA OCORRï¿½NCIA
 		$qryMail = "SELECT * FROM mail_hist m, usuarios u WHERE m.mhist_technician=u.user_id AND ".
 					"m.mhist_oco=".$_REQUEST['numero']." ORDER BY m.mhist_date";
 		$execMail = mysql_query($qryMail) or die (TRANS('ERR_QUERY'));
@@ -396,12 +459,13 @@
 	//$rowTela = mysql_fetch_array($execTela);
 	$isTela = mysql_num_rows($execTela);
 	$cont = 0;
+	print "<table>";
 	while ($rowTela = mysql_fetch_array($execTela)) {
 	//if ($isTela !=0) {
 		$cont++;
 		print "<tr>";
 		$size = round($rowTela['img_size']/1024,1);
-		print "<TD  bgcolor='".TD_COLOR."' >Anexo ".$cont."&nbsp;[".$rowTela['img_tipo']."]<br>(".$size."k):</td>";
+		print "<TD  bgcolor='".TD_COLOR."' >".TRANS('FIELD_ATTACH')." ".$cont."&nbsp;[".$rowTela['img_tipo']."](".$size."k):</td>";
 
 		if(isImage($rowTela["img_tipo"])) {
 			$viewImage = "&nbsp;<a onClick=\"javascript:popupWH('../../includes/functions/showImg.php?".
@@ -416,7 +480,9 @@
 				"".$rowTela['img_nome']."</a>".$viewImage."</TD>";
 		print "</tr>";
 	}
+	print "</table>";
 	print "<br>";
+
 
         $qrySubCall = "select * from ocodeps where dep_pai = ".$row['numero']."";
         $execSubCall = mysql_query($qrySubCall) or die(TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$qrySubCall);
@@ -481,7 +547,7 @@ print "</TABLE>";
 
 ?>
 <script type="text/javascript">
-	desabilitaLinks(<?print $_SESSION['s_ocomon'];?>);
+	desabilitaLinks(<?php print $_SESSION['s_ocomon'];?>);
 
 	function invertView(id) {
 		var element = document.getElementById(id);
@@ -497,7 +563,7 @@ print "</TABLE>";
 		}
 	}
 </script>
-<?
+<?php 
 print "</body>";
 print "</html>";
 ?>

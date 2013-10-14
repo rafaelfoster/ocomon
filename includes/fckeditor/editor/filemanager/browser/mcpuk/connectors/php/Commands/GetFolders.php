@@ -1,4 +1,4 @@
-<?php 
+<?php  
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -32,12 +32,12 @@ class GetFolders {
 	
 	function run() {
 		header ("content-type: text/xml");
-		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="GetFolders" resourceType="<?php echo $this->type; ?>">
-	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
+<Connector command="GetFolders" resourceType="<?php  echo $this->type; ?>">
+	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
 	<Folders>
-		<?php
+		<?php 
 			if ($dh=opendir($this->real_cwd)) {
 				while (($filename=readdir($dh))!==false) {
 					if (($filename!=".")&&($filename!="..")) {
@@ -57,7 +57,7 @@ class GetFolders {
 		?>
 	</Folders>
 </Connector>
-		<?php
+		<?php 
 	}
 }
 

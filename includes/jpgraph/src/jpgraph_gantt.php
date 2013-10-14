@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File:	JPGRAPH_GANTT.PHP
 // Description:	JpGraph Gantt plot extension

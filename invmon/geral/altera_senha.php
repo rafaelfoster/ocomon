@@ -1,4 +1,4 @@
-<?php
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -29,28 +29,28 @@
 		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 ?>
 
-		<p align='center'><b><?print TRANS('TTL_ALTER_PASS');?></b></p>
-		<FORM method="POST" action="<?print $_SERVER['PHP_SELF'];?>" onSubmit="return valida()">
-		<center><TABLE border="0"  align="center" width="10%" bgcolor=<?print BODY_COLOR?>>
+		<p align='center'><b><?php print TRANS('TTL_ALTER_PASS');?></b></p>
+		<FORM method="POST" action="<?php print $_SERVER['PHP_SELF'];?>" onSubmit="return valida()">
+		<center><TABLE border="0"  align="center" width="10%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><?print TRANS('TTL_CURRENT_PASS'); ?>:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="password" name="passwordAtual" class='logon' id='idSenhaAtual'></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><?php print TRANS('TTL_CURRENT_PASS'); ?>:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="password" name="passwordAtual" class='logon' id='idSenhaAtual'></TD>
 	</tr>
 	<tr>
-         		<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><?print TRANS('TTL_NEWS_PASS');?></TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><input type="password" name="password" class='logon' id='idSenha'></TD>
+         		<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><?php print TRANS('TTL_NEWS_PASS');?></TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><input type="password" name="password" class='logon' id='idSenha'></TD>
 	</TR>
 	<tr>
-        		<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><?print TRANS('TTL_CONFIRM');?>:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="password" name="password2" class='logon' id='idSenha2'>
+        		<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><?php print TRANS('TTL_CONFIRM');?>:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="password" name="password2" class='logon' id='idSenha2'>
 
 			</TD>
 	</tr>
 	<tr>
 
-                <TD align="center" width="25%" bgcolor=<?print BODY_COLOR?>><input type="submit" class='button'  value="<?print TRANS('BT_ALTER');?>" name="ok">
+                <TD align="center" width="25%" bgcolor=<?php print BODY_COLOR?>><input type="submit" class='button'  value="<?php print TRANS('BT_ALTER');?>" name="ok">
                 </TD>
-			<TD align="left" width="25%" bgcolor=<?print BODY_COLOR?>><INPUT type="button"  class='button' value="<?print TRANS('BT_CANCEL');?>" name="desloca" ONCLICK="javascript:history.back()">
+			<TD align="left" width="25%" bgcolor=<?php print BODY_COLOR?>><INPUT type="button"  class='button' value="<?php print TRANS('BT_CANCEL');?>" name="desloca" ONCLICK="javascript:history.back()">
                 </TD>
 
 
@@ -58,7 +58,7 @@
 		</table></center>
 	</form>
 
-<?
+<?php 
 	if (isset($_POST['ok']))
         {
 		$erro=false;
@@ -99,11 +99,11 @@
        		?>
 		<script language="javascript">
 		<!--
-			mensagem('<?print $aviso;?>');
+			mensagem('<?php print $aviso;?>');
 			history.back();
 		//-->
 		</script>
-		<?
+		<?php 
 
         }
         ?>
@@ -134,5 +134,5 @@
 
 	</body>
 	</html>
-<?
+<?php 
 ?>

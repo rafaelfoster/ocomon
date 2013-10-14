@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -27,7 +27,7 @@
 <HTML>
 <BODY>
 
-<?
+<?php 
 
 
 	$col1 = 121; 
@@ -127,7 +127,7 @@
                 $j++;
                 ?>
 
-<?//STYLE="page-break-inside: avoid"
+<?php //STYLE="page-break-inside: avoid"
 
 
 
@@ -147,13 +147,13 @@
 				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">TIPO DE EQUIPAMENTO:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=10%>
-				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['equipamento']?></FONT></FONT></P>
+				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['equipamento']?></FONT></FONT></P>
 			</TH>
 			<TD WIDTH=10%>
 				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">FABRICANTE:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=10%>
-				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['fab_nome']?></FONT></FONT></P>
+				<P ALIGN=LEFT><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['fab_nome']?></FONT></FONT></P>
 			</TH>
 		</TR>
 	
@@ -165,13 +165,13 @@
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">Nº DA ETIQUETA:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=20%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['etiqueta']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['etiqueta']?></FONT></FONT></P>
 			</TH>
 			<TD WIDTH=20%>
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">Nº DE SÉRIE:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=20%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['serial']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['serial']?></FONT></FONT></P>
 			</TH>
 		</TR>
 		<TR VALIGN=TOP>
@@ -179,13 +179,13 @@
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">MODELO</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=10%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['modelo']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['modelo']?></FONT></FONT></P>
 			</TH>
 			<TD WIDTH=10%>
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">LOCALIZAÇÃO:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=10%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['local']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['local']?></FONT></FONT></P>
 			</TH>
 		</TR>
 		<TR VALIGN=TOP>
@@ -193,7 +193,7 @@
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">SITUAÇÃO:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=20%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['situac_nome']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['situac_nome']?></FONT></FONT></P>
 			</TH>
 			<TD WIDTH=20%>
 				<P ALIGN=LEFT STYLE="font-weight: medium"><BR>
@@ -209,7 +209,7 @@
 				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt">INSTITUIÇÃO:</FONT></FONT></P>
 			</TD>
 			<TH WIDTH=20%>
-				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?print $row['instituicao']?></FONT></FONT></P>
+				<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 9pt"><?php print $row['instituicao']?></FONT></FONT></P>
 			</TH>
 			<TD WIDTH=20%>
 				<P ALIGN=LEFT STYLE="font-weight: medium"><BR>
@@ -225,7 +225,7 @@
 		<hr width=80% align=left>
 			
 
-                <?
+                <?php 
                 print "<hr width=80% align=left>";
 				
 				//print "</TR>";

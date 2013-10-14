@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -31,13 +31,13 @@ $hoje = date("Y-m-d H:i:s");
 ?>
 
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>InvMon - Controle de Inventário  -  Usuário: <font color=red>$s_usuario</font></b></TD>";
                         echo menu_usuario();
@@ -55,15 +55,15 @@ $hoje = date("Y-m-d H:i:s");
 <B>Inclusão de monitores</B> (campos marcados com <B>*</B> devem ser preenchidos).
 <BR>
 
-<FORM method="POST" action=<?PHP_SELF?>>
-<TABLE border="1"  align="center" width="100%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action=<?php _SELF?>>
+<TABLE border="1"  align="center" width="100%" bgcolor=<?php print BODY_COLOR?>>
         
 		
        <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Unidade*:</b></TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_inst' size=1>";
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Unidade*:</b></TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_inst' size=1>";
                 print "<option value=-1 selected>Unidade: </option>";
                 $query = "SELECT * from instituicao  order by inst_nome";
                 $resultado = mysql_query($query);
@@ -72,10 +72,10 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -90,23 +90,23 @@ $hoje = date("Y-m-d H:i:s");
 		
 		
 		<TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Código de Inventário *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mon_inv" maxlength="10" size="39"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Código de Inventário *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mon_inv" maxlength="10" size="39"></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Número de Série *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mon_sn" maxlength="10" size="30"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Número de Série *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mon_sn" maxlength="10" size="30"></TD>
 
         </TABLE>
        </TR>
 
 
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Fabricante *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_fabricante' size=1>";
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Fabricante *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_fabricante' size=1>";
                 print "<option value=-1 selected>Selecione o fabricante ---------------</option>";
                 $query = "SELECT * from fabricantes order by fab_nome";
                 $resultado = mysql_query($query);
@@ -115,19 +115,19 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
                 </SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Modelo *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_modelo' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Modelo *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_modelo' size=1>";
                 print "<option value=-1 selected>Selecione o modelo -----------------</option>";
                 $query = "SELECT * from modelos order by modelo_desc";
                 $resultado = mysql_query($query);
@@ -136,10 +136,10 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -150,10 +150,10 @@ $hoje = date("Y-m-d H:i:s");
 
 
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Fornecedor *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_fornecedor' size=1>";
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Fornecedor *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_fornecedor' size=1>";
                 print "<option value=-1 selected>Selecione o fornecedor ---------------</option>";
                 $query = "SELECT * from fornecedores  order by forn_nome";
                 $resultado = mysql_query($query);
@@ -162,28 +162,28 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
                 </SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Nota Fiscal:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mon_nf" maxlength="30" size="30"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Nota Fiscal:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mon_nf" maxlength="30" size="30"></TD>
 
         </tr>
         </table>
 
 
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Inventário associado *:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_comp_inv' size=1>";
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Inventário associado *:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_comp_inv' size=1>";
                 print "<option value=-1 selected>Código de inventário associado</option>";
                 $query = "SELECT comp_inv from computadores  order by comp_inv";
                 $resultado = mysql_query($query);
@@ -192,18 +192,18 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,0);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,0);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
                 </SELECT>
                 </TD>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b>Localização*:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT name='mon_local' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b>Localização*:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT name='mon_local' size=1>";
                 print "<option value=-1 selected>Selecione o local</option>";
                 $query = "SELECT * from localizacao  order by local";
                 $resultado = mysql_query($query);
@@ -212,10 +212,10 @@ $hoje = date("Y-m-d H:i:s");
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -230,16 +230,16 @@ $hoje = date("Y-m-d H:i:s");
 
 
         <TR>
-        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
                 <BR>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="  Ok  " name="ok">
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="  Ok  " name="ok">
                         <input type="hidden" name="rodou" value="sim">
                 </TD>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
         </TABLE>
         </TR>
 
-        <?
+        <?php 
 
                 if ($rodou == "sim")
                 {

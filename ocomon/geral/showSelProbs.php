@@ -1,4 +1,4 @@
-<?/*                        Copyright 2005 Flávio Ribeiro
+<?php /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -21,8 +21,11 @@
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 
+	//print "<HTML>";
+	//print "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>";
 	$auth = new auth;
 	$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
+	
 
 				if (isset($_GET['prob'])){
 					$qryDesc = "SELECT * FROM problemas WHERE prob_id = ".$_GET['prob']."";

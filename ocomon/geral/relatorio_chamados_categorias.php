@@ -1,4 +1,4 @@
-<?php
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -383,7 +383,7 @@
                 return false
              }
         </script>
-<?
+<?php 
 		print "</BODY>";
     		print "</html>";
 

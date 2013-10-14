@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_CANVTOOLS.PHP
 // Description:	Some utilities for text and shape drawing on a canvas

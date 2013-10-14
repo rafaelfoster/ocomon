@@ -1,5 +1,5 @@
-<?
- /*                        Copyright 2005 FlÃ¡vio Ribeiro
+<?php 
+ /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -326,7 +326,7 @@ class dateOpers {
 	//	sabado: total de horas trabalhadas nos sábados
 	//	saida: formato da saída da função, se será em horas ou segundos
 	function tempo_valido($data1,$data2,$hora_ini,$hora_fim,$meio_dia,$sabado,$saida){
-		set_time_limit(300);
+		@set_time_limit(300);
 		$noData = false;
 		if (empty($data1)|| empty($data2)) {
 			$noData = true;

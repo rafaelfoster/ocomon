@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	JPGRAPH_GB2312.PHP
 // Description:	PHP4 Graph Plotting library. Chinese font conversions

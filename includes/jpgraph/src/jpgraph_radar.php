@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File:	JPGRAPH_RADAR.PHP
 // Description: Radar plot extension for JpGraph

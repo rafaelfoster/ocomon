@@ -1,4 +1,4 @@
-<?php
+<?php 
 ##INCLUDES GERAIS
 
 	include ("../../includes/classes/headers.class.php");
@@ -16,12 +16,12 @@
 
  	include ("../../includes/queries/queries.php");
 
-	print "<style type='text/css'>";
+	print "<style>"; //type='text/css'
 	?>
 	<!--
 		@import url('../../includes/css/estilos.css.php');
 	//-->
-	<?
+	<?php 
 	print "</style>";
 
 

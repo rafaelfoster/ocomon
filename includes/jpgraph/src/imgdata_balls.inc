@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	IMGDATA_ROUNDBALLS.INC
 // Description:	Base64 encoded images for small round markers

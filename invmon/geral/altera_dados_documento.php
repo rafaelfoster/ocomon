@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -39,28 +39,28 @@
 <B>Alterar Registro:</B>
 <BR>
 
-<FORM method="POST" action="<?$PHP_SELF?>" onSubmit="return valida()">
-<TABLE border="0"  align="left" width="40%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action="<?php $PHP_SELF?>" onSubmit="return valida()">
+<TABLE border="0"  align="left" width="40%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Código:</TD>
-                 <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row['mat_cod'];?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Código:</TD>
+                 <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row['mat_cod'];?></TD>
         </TR>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Material:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class='text' name="mat_nome" id="idMaterial" value="<?print $row['mat_nome'];?>" maxlength="100" size="100"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Material:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class='text' name="mat_nome" id="idMaterial" value="<?php print $row['mat_nome'];?>" maxlength="100" size="100"></TD>
         </TR>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Quantidade:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_qtd" id="idQtd" value="<?print $row['mat_qtd'];?>" maxlength="100" size="100"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Quantidade:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_qtd" id="idQtd" value="<?php print $row['mat_qtd'];?>" maxlength="100" size="100"></TD>
         </TR>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Caixa:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_caixa" id="idCaixa" value="<?print $row['mat_caixa'];?>" maxlength="100" size="100"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Caixa:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_caixa" id="idCaixa" value="<?php print $row['mat_caixa'];?>" maxlength="100" size="100"></TD>
         </TR>
         <TR>
-                	<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Modelo Associado:</TD>
-	                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-						<?
+                	<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Modelo Associado:</TD>
+	                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+						<?php 
 							print "<SELECT name='modelo' class='text' size=1>";
 							print "<option value= '-1'>Selecione o modelo</option>";
 							$query = "SELECT * from marcas_comp order by marc_nome";
@@ -80,25 +80,25 @@
 		
 		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Data:</TD>
-                 <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print $row['mat_data'];?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Data:</TD>
+                 <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print $row['mat_data'];?></TD>
         </TR>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Obs:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_obs" id="idObs" value="<?print $row['mat_obs'];?>" maxlength="100" size="100"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Obs:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class='text'  name="mat_obs" id="idObs" value="<?php print $row['mat_obs'];?>" maxlength="100" size="100"></TD>
         </TR>
 
         <TR>
-                <TD align="center" width="20%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="  Ok  " name="Liberar">
+                <TD align="center" width="20%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="  Ok  " name="Liberar">
                         <input type="hidden" name="rodou" value="sim">
                 </TD>
-                <TD align="center" width="80%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                <TD align="center" width="80%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
         </TR>
         <TR>
-                <TD colspan='2' align="center" width="100%" bgcolor=<?print BODY_COLOR?>><a href='javascript:history.back()'>Voltar</a></TD>
+                <TD colspan='2' align="center" width="100%" bgcolor=<?php print BODY_COLOR?>><a href='javascript:history.back()'>Voltar</a></TD>
         </TR>
 
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $erro = "não";

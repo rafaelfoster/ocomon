@@ -1,4 +1,4 @@
-<?
+<?php 
 print "<html><head><title>OcoMon Help: Tela principal</title>";
 
 	print "<style type=\"text/css\"><!--";

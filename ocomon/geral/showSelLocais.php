@@ -1,4 +1,4 @@
-<?/*                        Copyright 2005 Flávio Ribeiro
+<?php /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -47,7 +47,8 @@
 					{
 						print "<option value='".$rowi['loc_id']."'";
 							//if ($rowi['loc_id'] == $invLoc) print " selected";
-							if ($rowi['loc_id'] == $rowDesc['comp_local']) print " selected";
+							if (isset($rowDesc) && $rowDesc['comp_local'] == $rowi['loc_id']) print " selected";
+							//if ($rowi['loc_id'] == $rowDesc['comp_local']) print " selected";
 						print ">".$rowi['local']." - ".$rowi['predio']."</option>";
 					}
 				print "</SELECT>";

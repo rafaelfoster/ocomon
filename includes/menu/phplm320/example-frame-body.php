@@ -11,7 +11,7 @@
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 

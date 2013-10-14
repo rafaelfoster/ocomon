@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -19,8 +19,8 @@
   */
 
 is_file( "./includes/config.inc.php" )
-	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='README.txt'>README.txt</a> para obter as principais informações sobre a instalação do OCOMON!".
-		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.txt'>README.txt</a> to get the main informations about the Ocomon Installation!" );
+	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='README.TXT'>README.TXT</a> para obter as principais informações sobre a instalação do OCOMON!".
+		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.TXT'>README.TXT</a>to get the main informations about the Ocomon Installation!" );
 
 	session_start();
 	//session_destroy();
@@ -43,10 +43,14 @@ is_file( "./includes/config.inc.php" )
 	$conec = new conexao;
 	$conec->conecta('MYSQL') ;
 
+	if (is_file("./includes/icons/favicon.ico")) {
+		print "<link rel='shortcut icon' href='./includes/icons/favicon.ico'>";
+	}
+
 	$qryLang = "SELECT * FROM config";
 	$execLang = mysql_query($qryLang);
 	$rowLang = mysql_fetch_array($execLang);
-	$_SESSION['s_language']= $rowLang['conf_language'];
+	if (!isset($_SESSION['s_language'])) $_SESSION['s_language']= $rowLang['conf_language'];
 
 
 	$uLogado = $_SESSION['s_usuario'];
@@ -72,7 +76,7 @@ print "<html>";
 print "<head>";
 
 print "<title>OCOMON ".VERSAO."</title>";
-print "<link rel='stylesheet' type='text/css' href='includes/css/estilos.css.php'>";
+print "<link rel='stylesheet' href='includes/css/estilos.css.php'>"; //type='text/css'
 print "</head><body onLoad='setHeight();'>";
 
 print "<table width='100%' border='0px' id='geral'><tr><td colspan='2'>";
@@ -124,7 +128,8 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 		$sisPath="";
 		$sistem="home.php";
 		$marca = "HOME";
-		if (($_SESSION['s_ocomon']==1) && ($_SESSION['s_area'] != $rowconf['conf_ownarea'])) {
+		//if (($_SESSION['s_ocomon']==1) && ($_SESSION['s_area'] != $rowconf['conf_ownarea'])) {
+		if (($_SESSION['s_ocomon']==1) && !isIn($_SESSION['s_area'],$rowconf['conf_ownarea_2'])) {
 			print "<td id='OCOMON' width='7%'  class='barraMenu'><a class='barra'  onMouseOver=\"destaca('OCOMON')\" onMouseOut=\"libera('OCOMON')\" onclick=\"loadIframe('menu.php?sis=o','menu','".$ocoDirPath."abertura.php','centro',2,'OCOMON')\">&nbsp;".TRANS('MNS_OCORRENCIAS')."&nbsp;</a></td>";
 			if ($sis=="") $sis="sis=o";
 			$sisPath = $ocoDirPath;
@@ -132,7 +137,8 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 			$marca = "OCOMON";
 			//$home = "home=true";
 		} else 	// incluir para usuario simples.
-		if (($_SESSION['s_ocomon']==1) && ($_SESSION['s_area'] == $rowconf['conf_ownarea'])) {
+		//if (($_SESSION['s_ocomon']==1) && ($_SESSION['s_area'] == $rowconf['conf_ownarea'])) {
+		if (($_SESSION['s_ocomon']==1) && isIn($_SESSION['s_area'], $rowconf['conf_ownarea_2'])) {
 			print "<td id='OCOMON' width='7%'  class='barraMenu'><a class='barra'  onMouseOver=\"destaca('OCOMON')\" onMouseOut=\"libera('OCOMON')\" onclick=\"loadIframe('menu.php?sis=s','menu','".$ocoDirPath."abertura_user.php?action=listall','centro',3,'OCOMON')\">&nbsp;".TRANS('MNS_OCORRENCIAS')."&nbsp;</a></td>";
 			$sis="sis=s";
 			$sisPath = $ocoDirPath;
@@ -224,7 +230,7 @@ print "</body></html>";
 var GLArray = new Array();
 	function loadIframe(url1,iframeName1, url2,iframeName2,ACCESS,ID) {
 
-		var nivel_user = '<?print $_SESSION['s_nivel'];?>';
+		var nivel_user = '<?php print $_SESSION['s_nivel'];?>';
 		var HOM = document.getElementById('HOME');
 		var OCO = document.getElementById('OCOMON');
 		var INV = document.getElementById('INVMON');
@@ -292,7 +298,7 @@ var GLArray = new Array();
 		var obj = document.getElementById('centro');
 		if (obj!=null) {
 			obj.style.height = screen.availHeight - 300;
-			marca('<?print $marca;?>');
+			marca('<?php print $marca;?>');
 		} else {
 			document.logar.login.focus();
 		}
@@ -308,7 +314,7 @@ var GLArray = new Array();
 
 	function destaca(id){
 			var obj = document.getElementById(id);
-			var valor = '<?isset($rowStyle['tm_barra_fundo_destaque'])? print $rowStyle['tm_barra_fundo_destaque']: print ""?>';
+			var valor = '<?php isset($rowStyle['tm_barra_fundo_destaque'])? print $rowStyle['tm_barra_fundo_destaque']: print ""?>';
 			if (valor!=''){
 				if (obj!=null) {
 					obj.style.background = valor;
@@ -330,8 +336,8 @@ var GLArray = new Array();
 		var obj = document.getElementById(id);
 		verificaArray('guarda', id);
 
-		var valor = '<?isset($rowStyle['tm_barra_fundo_destaque'])? print $rowStyle['tm_barra_fundo_destaque']: print ""?>';
-		var valor2 = '<?isset ($rowStyle['tm_barra_fonte_destaque'])? print $rowStyle['tm_barra_fonte_destaque']: print ""?>';
+		var valor = '<?php isset($rowStyle['tm_barra_fundo_destaque'])? print $rowStyle['tm_barra_fundo_destaque']: print ""?>';
+		var valor2 = '<?php isset ($rowStyle['tm_barra_fonte_destaque'])? print $rowStyle['tm_barra_fonte_destaque']: print ""?>';
 		if (valor != '' && valor2 != '') {
 			if (obj!=null) {
 				obj.style.background = valor;  //'#666666'

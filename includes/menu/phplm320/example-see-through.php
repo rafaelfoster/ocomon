@@ -10,13 +10,13 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/layersmenu.inc.php';
@@ -45,13 +45,13 @@ $mid->printHeader();
 
 <body>
 
-<?php $mid->printMenu('hormenu1'); ?>
+<?php  $mid->printMenu('hormenu1'); ?>
 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
 <td valign="top">
 
-<?php $mid->printMenu('vermenu1'); ?>
+<?php  $mid->printMenu('vermenu1'); ?>
 
 </td>
 <td valign="top" width="100%">
@@ -107,7 +107,7 @@ Select list (select)
 
 <div class="normalbox">
 <div class="normal">
-<?php print basename(__FILE__); ?>
+<?php  print basename(__FILE__); ?>
 </div>
 </div>
 
@@ -115,7 +115,7 @@ Select list (select)
 </tr>
 </table>
 
-<?php
+<?php 
 $mid->printFooter();
 ?>
 

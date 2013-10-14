@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -94,7 +94,7 @@ print "</form>";
 	function valida(){
 
 		//var ok = validaForm('idComp_inst','COMBO','Unidade',1);
-		var ok = validaForm('idComp_local','COMBO','<?print TRANS('COL_LOCALIZATION');?>',1);
+		var ok = validaForm('idComp_local','COMBO','<?php print TRANS('COL_LOCALIZATION');?>',1);
 		//if (ok) var ok = validaForm('idComp_inv','ETIQUETA','Etiqueta',1);
 
 		return ok;
@@ -103,7 +103,7 @@ print "</form>";
 
 //-->
 </script>
-<?
+<?php 
 print "</body>";
 print "</html>";
 ?>

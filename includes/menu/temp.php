@@ -1,4 +1,4 @@
-<?php
+<?php 
 				$menu1 ="
 				appendSTMI('false','Admin','left','middle','','','-1','-1','0','normal','#92aecc','#92aecc','','1','-1','-1','blank.gif','blank.gif','-1','-1','0','','','_self','Arial','9pt','#666666','normal','normal','none','Arial','9pt','#ffffff','normal','normal','none','1','solid','#92aecc','#92aecc','#ffffff','#666666','#92aecc','#92aecc','#666666','#ffffff','','','','tiled','tiled');
 				beginSTMB('auto','20','0','vertically','arrow_desativada.gif','7','7','0','3','#ffffff','','tiled','#000000','1','solid','0','Normal','50','0','0','7','7','0','0','0','#7f7f7f','false','#000000','#000000','#000000','none');

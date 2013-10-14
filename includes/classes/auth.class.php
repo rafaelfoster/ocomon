@@ -1,4 +1,4 @@
-<?php
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -31,34 +31,30 @@ class auth {
 		{
 			print "<script>window.open('../../index.php','_parent','')</script>";
 			exit;
-		}
-
-		if($help!=''){//../../includes/icons/   align='top' //absmiddle  absbottom
-			$help = "&nbsp;<a><img align='absmiddle' src='".ICONS_PATH."help-16.png' width='16' height='16' border='0' onClick=\"return popupS('".HELP_PATH."".$help."')\"></a>";
-		}
-
-		//if (is_file("../../includes/languages/".LANGUAGE.""))
-			//include ("../../includes/languages/".LANGUAGE.""); else
-			//include ("./includes/languages/".LANGUAGE."");
-
-		if ($s_nivel>$permissao) //se o nível do usuário for maior do que a permissão necessária para o script..
-		{
-		        $this->saida= "<script>window.open('../../index.php','_parent','')</script>";
 		} else {
-			if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
-			if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_OCCO');
-			else $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
+			//print "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>";
+			if($help!=''){
+				$help = "&nbsp;<a><img align='absmiddle' src='".ICONS_PATH."help-16.png' width='16' height='16' border='0' onClick=\"return popupS('".HELP_PATH."".$help."')\"></a>";
+			}
 
-			//#C7C8C6//STYLE='{border-bottom:  solid #999999; }'
-			$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
-		                        		"<TR>". //bgcolor='".BODY_COLOR."'
-								"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
-								//"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".date ("d/m/Y H:i")."</b>".$help."</p></TD>";
-								"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".(formatDate(date("Y/m/d H:i"), " %H:%M"))."</b>".$help."</p></TD>";
-                        $this->saida.= "</TR>".
-					"</TABLE>";
+			if ($s_nivel>$permissao) //se o nível do usuário for maior do que a permissão necessária para o script..
+			{
+				$this->saida= "<script>window.open('../../index.php','_parent','')</script>";
+				exit;
+			} else {
+				if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
+				if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
+				else $this->texto = TRANS('MENU_TTL_MOD_OCCO');
+
+				$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
+								"<TR>".
+									"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
+									"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".(formatDate(date("Y/m/d H:i"), " %H:%M"))."</b>".$help."</p></TD>";
+				$this->saida.= "</TR>".
+						"</TABLE>";
+			}
+			print $this->saida;
 		}
-		print $this->saida;
 	}
 
 	function testa_user_hidden($s_usuario, $s_nivel, $s_nivel_desc, $permissao, $help=''){
@@ -67,35 +63,29 @@ class auth {
 		{
 			print "<script>window.open('../../index.php','_parent','')</script>";
 			exit;
-		}
-
-		if($help!=''){//../../includes/icons/   align='top' //absmiddle  absbottom
-			$help = "&nbsp;<a><img align='absmiddle' src='".ICONS_PATH."help-16.png' width='16' height='16' border='0' onClick=\"return popupS('".HELP_PATH."".$help."')\"></a>";
-		}
-
-		//if (is_file("../../includes/languages/".LANGUAGE.""))
-			//include ("../../includes/languages/".LANGUAGE.""); else
-			//include ("./includes/languages/".LANGUAGE."");
-
-		if ($s_nivel>$permissao) //se o nível do usuário for maior do que a permissão necessária para o script..
-		{
-		        $this->saida= "<script>window.open('../../index.php','_parent','')</script>";
 		} else {
-			if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
-			if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_OCCO');
-			else $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
+			//print "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>";
+			if($help!=''){//../../includes/icons/   align='top' //absmiddle  absbottom
+				$help = "&nbsp;<a><img align='absmiddle' src='".ICONS_PATH."help-16.png' width='16' height='16' border='0' onClick=\"return popupS('".HELP_PATH."".$help."')\"></a>";
+			}
 
-			//#C7C8C6//STYLE='{border-bottom:  solid #999999; }'
-			$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
-		                        		"<TR>". //bgcolor='".BODY_COLOR."'
-								//"<TD nowrap width='80%'><b>".$this->texto."</b></td>".
-								//"<td width='20%' nowrap><p class='parag'><b>".TRANS(date("l")).",&nbsp;".date ("d/m/Y H:i")."</b>".$help."</p></TD>";
-                        $this->saida.= "</TR>".
-					"</TABLE>";
-			$this->saida = "";
+			if ($s_nivel>$permissao) //se o nível do usuário for maior do que a permissão necessária para o script..
+			{
+				$this->saida= "<script>window.open('../../index.php','_parent','')</script>";
+				exit;
+			} else {
+				if (is_file( "./.invmon_dir" )) $this->texto = TRANS('MENU_TTL_MOD_INV'); else
+				if (is_file( "./.admin_dir" )) $this->texto = TRANS('MENU_TTL_MOD_ADMIN');
+				else $this->texto = TRANS('MENU_TTL_MOD_OCCO');
+
+				$this->saida =  "<TABLE class='header_centro' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
+								"<TR>".
+				$this->saida.= "</TR>".
+						"</TABLE>";
+				$this->saida = "";
+			}
+			print $this->saida;
 		}
-		print $this->saida;
 	}
-
 }
 ?>

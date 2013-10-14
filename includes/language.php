@@ -1,4 +1,4 @@
-<?php
+<?php 
 	//require_once ("../../includes/classes/conecta.class.php");
 	//require_once ("../../includes/functions/funcoes.inc");
 

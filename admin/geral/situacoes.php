@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -256,6 +256,6 @@
 </script>
 
 
-<?
+<?php 
 print "</body>";
 print "</html>";

@@ -1,5 +1,5 @@
-<?session_start();
- /*                        Copyright 2005 Flávio Ribeiro
+<?php session_start();
+ /*                        Copyright 2005 Fl?vio Ribeiro
 
          This file is part of OCOMON.
 
@@ -34,9 +34,25 @@
 	$row_config = mysql_fetch_array($exec_config);
 
 
-	$qry = $QRY["useropencall"];
+	$qry = $QRY["useropencall_custom"];
+	
+	//if(!empty($_SESSION['s_screen'])){
+		$qry.= " AND  c.conf_cod = '".$_SESSION['s_screen']."'";
+	//}
+	
+	//dump($qry,'QUERY:');
+	//dump($_SESSION);
+	//exit;
+	
 	$execqry = mysql_query($qry);
 	$rowconf = mysql_fetch_array($execqry);
+	
+	
+	$qryconfglobal = $QRY["useropencall"];
+	$execqryglobal = mysql_query($qryconfglobal);
+	$rowconf_global = mysql_fetch_array($execqryglobal);
+	
+	//dump($rowconf,'ROWCONF');
 
 	$qryarea = "SELECT * FROM sistemas where sis_id = ".$_SESSION['s_area']."";
 	$execarea = mysql_query($qryarea);
@@ -45,23 +61,30 @@
 
 
 	print "<HTML>";
+	print "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>";
 	print "<BODY bgcolor=".BODY_COLOR." onLoad=\"";//onLoad=\"Habilitar();
 
-	if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+	//if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+	if ((!empty($rowconf) && $rowconf['conf_scr_prob']) || empty($rowconf)) {
 		print "ajaxFunction('Problema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea', 'radio_prob=idRadioProb');";
 		print "ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea', 'radio_prob=idRadioProb'); ";
 	}
 
-	if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+	//if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+	if ((!empty($rowconf) && $rowconf['conf_scr_local']) || empty($rowconf)) {
 
-		print "ajaxFunction('idDivSelLocal', 'showSelLocais.php', 'idLoad', 'unidade=idUnidade', 'etiqueta=idEtiqueta'); ";
+		if (((!empty($rowconf) && $rowconf['conf_scr_unit']) || empty($rowconf))  && ((!empty($rowconf) && $rowconf['conf_scr_tag']) || empty($rowconf))) { 
+			print "ajaxFunction('idDivSelLocal', 'showSelLocais.php', 'idLoad', 'unidade=idUnidade', 'etiqueta=idEtiqueta'); ";
+		} else
+			print "ajaxFunction('idDivSelLocal', 'showSelLocais.php', 'idLoad'); ";
 	}
 
 
 	print "\">";
 
-	if (!$rowconf['conf_user_opencall'] and !$rowarea['sis_atende']){
-		print "<script>mensagem('".TRANS('MSG_DISABLED_OPENCALL','A abertura de chamados está desabilitada no sistema',0)."!'); redirect('abertura.php');</script>";
+	//if (!$rowconf['conf_user_opencall'] and !$rowarea['sis_atende']){ //VER
+	if ((!empty($rowconf) && !$rowconf['conf_user_opencall'])) {
+			print "<script>mensagem('".TRANS('MSG_DISABLED_OPENCALL','A abertura de chamados estÃ¡ desabilitada no sistema',0)."!'); redirect('abertura.php');</script>";
 	}
 
 
@@ -71,17 +94,17 @@
 		$execSql = mysql_query($sql) or die (TRANS('ERR_QUERY'));
 		$ocoOK = mysql_num_rows ($execSql);
 		if ($ocoOK != 0) {
-			$subCallMsg = "<font color='red'>Essa ocorrência será um sub-chamado da ocorrência ".$_REQUEST['pai']."</font>";
+			$subCallMsg = "<font color='red'>".TRANS('MSG_OCCO_SUBTICKET')."&nbsp;".$_REQUEST['pai']."</font>";
 		} else {
-			//$subCallMsg = "<font color='red'>A ocorrencia ".$_REQUEST['pai']." não pode possuir subchamados pois não está aberta no sistema!</font>";
-			print "<script>mensagem('A ocorrencia ".$_REQUEST['pai']." não pode possuir subchamados pois não está aberta no sistema!'); window.close();</script>";
+			//$subCallMsg = "<font color='red'>A ocorrencia ".$_REQUEST['pai']." n?o pode possuir subchamados pois n?o est? aberta no sistema!</font>";
+			print "<script>mensagem('A ocorrencia ".$_REQUEST['pai']." nao pode possuir subchamados pois nao esta aberta no sistema!'); window.close();</script>";
 			exit;
 		}
 
 	} else $subCallMsg = "";
 
 
-print "<BR><B>".TRANS('OCO_TTL_OPENCALL','Abertura de Ocorrências').":&nbsp;".$subCallMsg."</B><BR>";
+print "<BR><B>".TRANS('OCO_TTL_OPENCALL','Abertura de Ocorr?ncias').":&nbsp;".$subCallMsg."</B><BR>";
 print "<FORM name='form1' method='POST' action='".$_SERVER['PHP_SELF']."'  ENCTYPE='multipart/form-data'  onSubmit=\"return valida()\">";
 	print "<input type='hidden' name='MAX_FILE_SIZE' value='".$row_config['conf_upld_size']."' />";
 print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
@@ -128,12 +151,14 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 		print "<TR>";
 
-		if ($rowconf['conf_scr_area'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
-			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA','Área Responsável').":</TD>";
+		//if ($rowconf['conf_scr_area'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_area']) || empty($rowconf)) {
+			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</TD>";
         		print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">";
 			print "<SELECT class='select' name='sistema' id='idArea' size='1' onChange=\" "; //onChange=\"Habilitar();
 
-			if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			//if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			if ((!empty($rowconf) && $rowconf['conf_scr_prob']) || empty($rowconf)) {
 				//print "fillSelectFromArray(this.form.problema, ((this.selectedIndex == -1) ? null : team[this.selectedIndex-1])); ";
 				print "ajaxFunction('Problema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');";
 				print "ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');";
@@ -142,7 +167,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
             		$query = "SELECT * from sistemas where sis_status NOT in (0) and sis_atende = 1 order by sistema"; //NOT in (0) = INATIVO
 			$resultado = mysql_query($query);
-            		print "<option value=-1 selected>".TRANS('OCO_SEL_AREA','-  Selecione a Área -')."</option>";
+            		print "<option value=-1 selected>".TRANS('OCO_SEL_AREA')."</option>";
 
 			if (isset($_POST['sistema'])) {
 				$sistema= $_POST['sistema'];
@@ -158,11 +183,12 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			print "</td>";
 		} else  {
 			$sistema = $rowconf['conf_opentoarea'];  //$sistema = -1;
-			//print "<input type='hidden' name='sistema' id='idArea' value='".$sistema."'>";
+			print "<input type='hidden' name='sistema' id='idArea' value='".$sistema."'>";
 		}
 
 
-		if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_prob'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_prob']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_PROB','Problema').":";
 
 			print "</TD>";
@@ -193,7 +219,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 		print "<TR>";
 
-		if ($rowconf['conf_scr_desc'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_desc'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_desc']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR." valign='top'>".TRANS('OCO_FIELD_DESC').":</TD>";
 			print "<TD colspan='3' align='left' bgcolor=".BODY_COLOR.">";
 
@@ -209,11 +236,11 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 			?>
 			<script type="text/javascript">
-				var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+				var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'descricao' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = '<?print $descricao;?>';
+					oFCKeditor.Value = '<?php print $descricao;?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					//oFCKeditor.ToolbarSet = 'Default';
 					oFCKeditor.Width = '570px';
@@ -221,15 +248,19 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 					oFCKeditor.Create() ;
 				}
 			</script>
-			<?
+			<?php 
 
 			print "</td>";
 
-		} else $descricao = TRANS('OCO_NO_DESC','Sem descrição');
+		} else {
+			$descricao = TRANS('OCO_NO_DESC');
+			print "<input type='hidden' name='descricao' value='".$descricao."'>";
+		}
 		print "</tr>";
 
 		print "<TR>";
-		if ($rowconf['conf_scr_unit'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_unit'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_unit']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_UNIT','Unidade').":</TD>";
             		print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">";
 			print "<SELECT class='select' name='instituicao' id='idUnidade' size='1' >"; //onChange=\"Habilitar();\"
@@ -255,12 +286,17 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
             		print "</SELECT>";
 			print "</td>";
-		} else $instituicao = -1;
+		} else {
+			$instituicao = -1;
+			print "<input type='hidden' name='instituicao' value='-1'>";
+		}
 
-		if ($rowconf['conf_scr_tag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_tag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_tag']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">";
 			print "".TRANS('OCO_FIELD_TAG','Etiqueta')."";
-			if ($rowconf['conf_scr_chktag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			//if ($rowconf['conf_scr_chktag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			if ((!empty($rowconf) && $rowconf['conf_scr_chktag']) || empty($rowconf)) {
 				print "</font></a></b>";
 			}
 			print "&nbsp;".TRANS('OCO_FIELD_OF_EQUIP','do equipamento').":</TD>";
@@ -275,20 +311,26 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
             		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='equipamento' id='idEtiqueta' value='".$invTag."' >";//onChange=\"Habilitar();\"
 
-			if ($rowconf['conf_scr_chktag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
-				print "<a class='likebutton' onClick=\"checa_etiqueta()\" title='".TRANS('CONS_CONFIG_EQUIP')."'><font color='#5E515B'>".TRANS('OCO_FIELD_CONFIG','Configuração')."</font></a>";
+			//if ($rowconf['conf_scr_chktag'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			if ((!empty($rowconf) && $rowconf['conf_scr_chktag']) || empty($rowconf)) {
+				print "<a class='likebutton' onClick=\"checa_etiqueta()\" title='".TRANS('CONS_CONFIG_EQUIP')."'><font color='#5E515B'>".TRANS('OCO_FIELD_CONFIG','Configura??o')."</font></a>";
 			}
-			if ($rowconf['conf_scr_chkhist'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
-				//print "<a class='likebutton' onClick=\"checa_etiqueta()\" title='Consulta a configuração do equipamento!'><font color='#5E515B'>Configuração</font></a>";
-				print "<a class='likebutton' onClick=\"checa_chamados()\" title='".TRANS('CONS_CALL_EQUIP')."'><font color='#5E515B'>".TRANS('OCO_FIELD_HIST','Histórico')."</font></a>";
+			//if ($rowconf['conf_scr_chkhist'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			if ((!empty($rowconf) && $rowconf['conf_scr_chkhist']) || empty($rowconf)) {
+				//print "<a class='likebutton' onClick=\"checa_etiqueta()\" title='Consulta a configura??o do equipamento!'><font color='#5E515B'>Configura??o</font></a>";
+				print "<a class='likebutton' onClick=\"checa_chamados()\" title='".TRANS('CONS_CALL_EQUIP')."'><font color='#5E515B'>".TRANS('OCO_FIELD_HIST','Hist?rico')."</font></a>";
 			}
 			print "</TD>";
-		} else $equipamento = null;
+		} else {
+			$equipamento = null;
+			print "<input type='hidden' name='equipamento' value=".NULL.">";
+		}
 
 		print "</tr>";
 
         	print "<TR>";
-		if ($rowconf['conf_scr_contact'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_contact'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_contact']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_CONTACT','Contato').":</TD>";
 
 			if (isset($_GET['contato'])) {
@@ -305,8 +347,10 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			$exec = mysql_query($qry);
 			$r_user = mysql_fetch_array($exec);
 			$contato = $r_user['nome'];
+			print "<input type='hidden' name='contato' value='".$contato."'>";
 		}
-		if ($rowconf['conf_scr_fone'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_fone'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_fone']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_PHONE','Ramal').":</TD>";
 
 			if (isset($_GET['telefone'])) {
@@ -317,14 +361,19 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				$telefone = $_POST['telefone'];
 			}
 	            	print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><INPUT type='text' class='text2' name='telefone' id='idTelefone' value='".$telefone."' ></TD>";//onChange=\"Habilitar();\"
-        	} else $telefone = null;
+        	} else {
+        		$telefone = null;
+        		print "<input type='hidden' name='telefone' value=".NULL.">";
+        	}
 		print "</TR>";
 
 		print "<TR>";
 
-		if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_local']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_LOCAL','Local').": ";
-				if ($rowconf['conf_scr_btloadlocal'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				//if ($rowconf['conf_scr_btloadlocal'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				if ((!empty($rowconf) && $rowconf['conf_scr_btloadlocal']) || empty($rowconf)) {
  					//print "<input type='submit' class='btPadrao' id='idBtCarrega' title='".TRANS('LOAD_EQUIP_LOCAL')."'onClick=\"LOAD=1;\"".
  						//"style=\"{align:center; valign:middle; width:19px; height:19px; background-image: url('../../includes/icons/kmenu-hack.png'); background-repeat:no-repeat;}\" value='' name='carrega'>";
 
@@ -352,28 +401,38 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				print "<div id='idDivSelLocal'>";
 				print "</div>";
 
-				if ($rowconf['conf_scr_searchbylocal'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				//if ($rowconf['conf_scr_searchbylocal'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				if ((!empty($rowconf) && $rowconf['conf_scr_searchbylocal']) || empty($rowconf)) {
 					print "<a onClick=\"checa_por_local()\"><img title='".TRANS('CONS_EQUIP_LOCAL')."' width='15' height='15' src='".$imgsPath."consulta.gif' border='0'></a>";
 				}
 			print "</td>";
 
 
-		} else $local = -1;
+		} else {
+			$local = -1;
+			print "<input type='hidden' name='local' value='-1'>";
+		}
 
-		if ($rowconf['conf_scr_operator'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_operator'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_operator']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_OPERATOR','Operador').":</TD>";
 			print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><input class='disable' value='".$_SESSION['s_usuario']."' readonly></TD>";
-		} else $operador = $s_usuario;
+		} else {
+			$operador = $_SESSION['s_usuario'];
+			print "<input type='hidden' name='operador' value='".$operador."'>";
+		}
         	print "</TR>";
 
 
         	print "<TR>";
 
-		if ($rowconf['conf_scr_date'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_date'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_date']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_OPEN','Data de abertura').":</TD>";
                 	print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><input name='data_abertura' class='disable' value='".date("d/m/Y H:i:s")."' readonly></TD>";//datab($hoje)
 		}
-		if ($rowconf['conf_scr_status'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_status'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_status']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_STATUS','Status').":</TD>";
                 	print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">".TRANS('OCO_WAITING_STATUS','Aguardando atendimento')."</TD>";
 		}
@@ -381,12 +440,14 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
         	print "<TR>";
 
-		if ($rowconf['conf_scr_upload'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_upload'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_upload']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_ATTACH_FILE','Anexar arquivo').":</TD>";
 			print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><INPUT type='file' class='text' name='img' id='idImg'></TD>";
 		}
 
-		if ($rowconf['conf_scr_replicate'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_replicate'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_replicate']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_REPLICATE','Replicar este chamado mais')."</TD>";
 		print "<TD  bgcolor=".BODY_COLOR."><INPUT type='text' class='mini' name='replicar' id='idReplicar' value='0' maxlength='2'>&nbsp;".TRANS('TIMES','vezes').".</TD> ";
 		} else $replicar = 0;
@@ -394,11 +455,13 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
         	print "</TR>";
 
 		print "<tr>";
-		if ($rowconf['conf_scr_schedule'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_schedule'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_schedule']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_SCHEDULE').": <input type='checkbox' value='ok' name='chk_squedule' onChange=\"checarSchedule();\"></TD>";
                 	print "<TD width='30%' align='left' bgcolor=".BODY_COLOR."><input type='text' name='date_schedule' id='idDate_schedule' class='text' value='".formatDate(date("Y-m-d H:i:s"))."' disabled></TD>";
 		}
-		if ($rowconf['conf_scr_foward'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_foward'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_foward']) || empty($rowconf)) {
 			print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_FOWARD').":</TD>";
                 	print "<TD width='30%' align='left' bgcolor=".BODY_COLOR.">";
 
@@ -417,11 +480,12 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		print "</tr>";
 
 		print "<tr>";
-		if ($rowconf['conf_scr_mail'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		//if ($rowconf['conf_scr_mail'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+		if ((!empty($rowconf) && $rowconf['conf_scr_mail']) || empty($rowconf)) {
 			print "<td bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SEND_MAIL_TO','Enviar e-mail para').":</td>".
 				"<td colspan='2'><input type='checkbox' value='ok' name='mailAR' checked>".TRANS('OCO_FIELD_AREA','')."&nbsp;&nbsp;".
 								"<input type='checkbox' value='ok' name='mailOP' disabled title='".TRANS('HNT_SENDMAIL_OPERATOR_SEL_CALL')."'>".TRANS('OCO_FIELD_OPERATOR')."&nbsp;&nbsp;".
-								"<input type='checkbox' value='ok' name='mailUS' disabled>".TRANS('OCO_FIELD_USER','Usuário')."</td>";
+								"<input type='checkbox' value='ok' name='mailUS' disabled>".TRANS('OCO_FIELD_USER','Usu?rio')."</td>";
 		}
 		print "</tr>";
 
@@ -443,6 +507,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			print "<input type='hidden' name='data_gravada' value='".date("Y-m-d H:i:s")."'>";
 
 
+		
+		
 		print "<TD colspan='2' align='center' width='50%' bgcolor='".BODY_COLOR."'><input type='submit' id='idSubmit' class='button' value='".TRANS('BT_OK','OK', 0)."' name='OK' onClick=\"LOAD=0;\">";
 		print "</TD>";
 
@@ -457,7 +523,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			$sis_idB = mysql_query($queryB);
 			$rowSis = mysql_fetch_array($sis_idB);
 
-			if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			//if ($rowconf['conf_scr_local'] || !isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+			if ((!empty($rowconf) && $rowconf['conf_scr_local']) || empty($rowconf)) {
 				$queryC = "SELECT local from localizacao where loc_id = ".$_POST['local']."";
 				$loc_idC = mysql_query($queryC);
 				$setor = mysql_result($loc_idC,0);
@@ -509,6 +576,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 						$schedule = 1;
 						$date_schedule = FDate($_POST['date_schedule']);
 						$oStatus = $row_config['conf_schedule_status'];
+						$first_queued = false;
 					} else {
 						$schedule = 0;
 						$date_schedule = date("Y-m-d H:i:s");
@@ -518,6 +586,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 							$operator = $_POST['foward'];
 						} else
 							$oStatus = 1; //Aguardando atendimento
+						
+						$first_queued = true;//date("Y-m-d H:i:s");
 					}
 
 					//dump($_POST,'POSTS'); exit;
@@ -529,7 +599,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 					$query = "";
 					$query = "INSERT INTO ocorrencias (problema, descricao, instituicao, equipamento, sistema, contato, telefone, local, operador, ".
-						"data_abertura, data_fechamento, status, data_atendimento, aberto_por, oco_scheduled, oco_real_open_date ) values ".
+						"data_abertura, data_fechamento, status, data_atendimento, aberto_por, oco_scheduled, oco_real_open_date, date_first_queued )".
+						" values ".
 						//"(".$problema.",  ";
 						"(".$catProb.",  ";
 
@@ -539,15 +610,26 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 						$query.= " '".noHtml($descricao)."',";
 					}
 
-					$query.="".$_POST['instituicao'].",'".$_POST['equipamento']."','".$sistema."',".
+					if (!$schedule){
+						$query.="".$_POST['instituicao'].",'".$_POST['equipamento']."','".$sistema."',".
 						"'".noHtml($_POST['contato'])."','".$_POST['telefone']."',".$_POST['local'].",".$operator.",".
-						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."')";
+						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."')";
+					} else {
+						$query.="".$_POST['instituicao'].",'".$_POST['equipamento']."','".$sistema."',".
+						"'".noHtml($_POST['contato'])."','".$_POST['telefone']."',".$_POST['local'].",".$operator.",".
+						" '".$date_schedule."',NULL,".$oStatus.",NULL,".$_SESSION['s_uid'].",".$schedule.", '".date("Y-m-d H:i:s")."', NULL)";					
+					}
 
 					$resultado = mysql_query($query) or die (TRANS('ERR_QUERY'));
 
 					$numero = mysql_insert_id();
+					$globalID = random();
+					
+					//GERA ID GLOBAL PARA ACESSO Ã€ OCORRÃŠNCIA
+					$qryGlobal = "INSERT INTO global_tickets (gt_ticket, gt_id) values (".$numero.", ".$globalID.")";
+					$execGlobal = mysql_query($qryGlobal) or die($qryGlobal);
 
-					//INSERÇÃO PARA ARMAZENAR O TEMPO DO CHAMADO EM CADA STATUS
+					//INSERSAO PARA ARMAZENAR O TEMPO DO CHAMADO EM CADA STATUS
 					$sql = " insert into tempo_status (ts_ocorrencia, ts_status, ts_tempo, ts_data) values (".$numero.", ".$oStatus.", 0, '".date("Y-m-d H:i:s")."')  ";
 					$exec_sql = mysql_query($sql);
 					if ($exec_sql == 0) $error = " erro na tabela TEMPO_STATUS ";
@@ -556,7 +638,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			}
 
 			if ($resultado == 0) {
-				$aviso.= "ERRO na inclusão dos dados.".$query;
+				$aviso.= "ERRO na inclusao dos dados.".$query;
 			} else {
 				//$numero = mysql_insert_id();
 
@@ -572,7 +654,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 
 				if ($gravaImg) {
-					//INSERÇÃO DA IMAGEM NO BANCO
+					//INSERSAO DO ARQUIVO NO BANCO
 					$fileinput=$_FILES['img']['tmp_name'];
 					$tamanho = getimagesize($fileinput);
 					$tamanho2 = filesize($fileinput);
@@ -592,7 +674,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 						echo "".TRANS('MSG_NOT_IMAGE_SELECT')."";
 						exit;
 					}*/
-					$exec = mysql_query($SQL); //or die ("NÃO FOI POSSÍVEL GRAVAR O ARQUIVO NO BANCO DE DADOS! ");
+					$exec = mysql_query($SQL); //or die ("N?O FOI POSS?VEL GRAVAR O ARQUIVO NO BANCO DE DADOS! ");
 					if ($exec == 0) $aviso.= TRANS('MSG_ATTACH_IMAGE')."<br>";
 
 				}
@@ -604,6 +686,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 				$VARS = array();
 				$VARS['%numero%'] = $rowfull['numero'];
+				$VARS['%linkglobal%'] = "<a href='".$row_config['conf_ocomon_site']."/ocomon/geral/mostra_consulta.php?numero=".$numero."&id=".$globalID."'>".$row_config['conf_ocomon_site']."</a>";
 				$VARS['%usuario%'] = $rowfull['contato'];
 				$VARS['%contato%'] = $rowfull['contato'];
 				$VARS['%descricao%'] = $rowfull['descricao'];
@@ -623,8 +706,10 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				$execconfmail = mysql_query($qryconfmail) or die (TRANS('ERR_QUERY'));
 				$rowconfmail = mysql_fetch_array($execconfmail);
 
-
-				if (isset($_POST['mailAR']) || isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				//((!empty($rowconf) && $rowconf['conf_scr_status']) || empty($rowconf))
+				//if (isset($_POST['mailAR']) || isIn($_SESSION['s_area'],$rowconf['conf_custom_areas'])) {
+				if (isset($_POST['mailAR']) || (!empty($rowconf) && !$rowconf['conf_scr_mail'])) {
+				
 					$event = 'abertura-para-area';
 					$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
 					$execmsg = mysql_query($qrymsg) or die(TRANS('ERR_QUERY'));
@@ -649,8 +734,8 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				}
 
 
-				$aviso.= "".TRANS('MSG_SUCCESS_OPENCALL','Ocorrência registrada com sucesso!')."!&nbsp;".
-							"".TRANS('OCO_FIELD_NUMBER','Número').":&nbsp;<font color=red>".$numero."</font><BR><br>".
+				$aviso.= "".TRANS('MSG_SUCCESS_OPENCALL','Ocorrencia registrada com sucesso!')."!&nbsp;".
+							"".TRANS('OCO_FIELD_NUMBER').":&nbsp;<font color=red>".$numero."</font><BR><br>".
 							"<a href='atender.php?numero=".$numero."'>".TRANS('OCO_ACT_ASWER','Atender')."</a><br><br>".
 							"<a href='encaminhar.php?numero=".$numero."'>".TRANS('OCO_ACT_EDIT_REDIR','Encaminhar/Editar')."</a><br><br>".
 							"<a href='encerramento.php?numero=".$numero."'>".TRANS('OCO_ACT_CLOSE','Encerrar')."</a><br><br>";
@@ -676,7 +761,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				$qrymail = "SELECT * FROM usuarios WHERE user_id = ".$_SESSION['s_uid']."";
 				$execmail = mysql_query($qrymail) or die(TRANS('ERR_QUERY'));
 				$rowmail = mysql_fetch_array($execmail);
-				//ENVIA E-MAIL PARA O PRÓPRIO USUÁRIO QUE ABRIU O CHAMADO
+				//ENVIA E-MAIL PARA O PR?PRIO USU?RIO QUE ABRIU O CHAMADO
 
 				//$flag = mail_user($rowmail['email'],$rowconf['sis_email'],$rowmail['nome'],$numero,OCOMON_SITE);
 				$event = 'abertura-para-usuario';
@@ -684,11 +769,15 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				$execmsg = mysql_query($qrymsg) or die(TRANS('ERR_QUERY'));
 				$rowmsg = mysql_fetch_array($execmsg);
 
-				//ENVIA E-MAIL PARA O PRÓPRIO USUÁRIO QUE ABRIU O CHAMADO
+				//ENVIA E-MAIL PARA O PR?PRIO USU?RIO QUE ABRIU O CHAMADO
 				//send_mail($event, $rowSis['sis_email'], $rowconfmail, $rowmsg, $VARS);
 				send_mail($event, $rowmail['email'], $rowconfmail, $rowmsg, $VARS);
 
-				$mensagem = str_replace("%numero%",$numero,$rowconf['conf_scr_msg']);
+				if (!empty($rowconf['conf_scr_msg'])){
+					$mensagem = str_replace("%numero%",$numero,$rowconf['conf_scr_msg']);
+				} else 
+					$mensagem = str_replace("%numero%",$numero,$rowconf_global['conf_scr_msg']);
+				
 				print "<script>mensagem('".$mensagem."'); redirect('abertura_user.php');</script>";
 			}
 		}
@@ -706,7 +795,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		if (!LOAD) {
 			//var ok = false;
 
-			var operador = <?print $rowlogado['sis_atende']?>;
+			var operador = <?php print $rowlogado['sis_atende']?>;
 			var unit = document.getElementById('idUnidade');
 			var tag = document.getElementById('idEtiqueta');
 
@@ -715,30 +804,30 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			var descricao = document.getElementById('idDescricao');
 			var contato = document.getElementById('idContato');
 
-			//var carreg = '<?//print $carrega?>';
+			//var carreg = '<?php //print $carrega?>';
 
 			if (ok) {
 				if (sel_area != null){
-					var ok = validaForm('idArea','COMBO','Área',1);
+					var ok = validaForm('idArea','COMBO','<?php print TRANS('OCO_FIELD_AREA')?>',1);
 				} //else ok = true;
 			}
 
 			if (ok) {
 				if (sel_problema != null){
-					var ok = validaForm('idProblema','COMBO','Problema',1);
+					var ok = validaForm('idProblema','COMBO','<?php print TRANS('OCO_FIELD_PROB')?>',1);
 				} //else ok = true;
 			}
 
 			if (ok) {
 				if (descricao != null){
-					var ok = validaForm('idDescricao','','Descrição',1);
+					var ok = validaForm('idDescricao','','<?php print TRANS('OCO_FIELD_DESC')?>',1);
 				} //else ok = true;
 			}
 
 			if (ok) {
 				if (unit != null){
 					if (operador == 0){
-						var ok = validaForm('idUnidade','COMBO','Unidade',1);
+						var ok = validaForm('idUnidade','COMBO','<?php print TRANS('OCO_FIELD_UNIT')?>',1);
 					} else ok = true;
 				} else ok = true;
 			}
@@ -746,16 +835,16 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 			if (ok) {
 				if (tag != null){
 					if (operador == 1){
-						var ok = validaForm('idEtiqueta','INTEIRO','Etiqueta',0);
+						var ok = validaForm('idEtiqueta','INTEIRO','<?php print TRANS('OCO_FIELD_TAG')?>',0);
 					} else {
-						var ok = validaForm('idEtiqueta','INTEIRO','Etiqueta',1);
+						var ok = validaForm('idEtiqueta','INTEIRO','<?php print TRANS('OCO_FIELD_TAG')?>',1);
 					}
 				} else ok = true;
 			}
 
 			if (ok) {
 				if (contato != null){
-					var ok = validaForm('idContato','','Contato',1);
+					var ok = validaForm('idContato','','<?php print TRANS('OCO_FIELD_CONTACT')?>',1);
 				} else ok = true;
 			}
 
@@ -764,7 +853,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				//if (carreg){
 				if (fone != null){
 					//var ok = validaForm('idTelefone','INTEIRO','ramal',1);
-					var ok = validaForm('idTelefone','FONE','ramal',1);
+					var ok = validaForm('idTelefone','FONE','<?php print TRANS('OCO_FIELD_PHONE')?>',1);
 				} else ok = true;
 				//}
 			}
@@ -773,20 +862,20 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				//if (carreg){
 				if (local != null){
 					//var ok = validaForm('idTelefone','INTEIRO','ramal',1);
-					var ok = validaForm('idLocal','COMBO','Local',1);
+					var ok = validaForm('idLocal','COMBO','<?php print TRANS('OCO_FIELD_LOCAL')?>',1);
 				} else ok = true;
 				//}
 			}
 			if (ok){
 				var replicate = document.getElementById('idReplicar');
 				if (replicate != null){
-					var ok = validaForm('idReplicar','INTEIROFULL','replicar',0);
+					var ok = validaForm('idReplicar','INTEIROFULL','<?php print TRANS('OCO_FIELD_REPLICATE')?>',0);
 				} else ok = true;
 			}
 			if (ok){
 				var schedule = document.getElementById('idDate_schedule');
 				if (schedule != null){
-					var ok = validaForm('idDate_schedule','DATAHORA','Agendar',0);
+					var ok = validaForm('idDate_schedule','DATAHORA','<?php print TRANS('OCO_FIELD_SCHEDULE')?>',0);
 				} else ok = true;
 			}
 		}
@@ -806,7 +895,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		var inv = document.getElementById('idEtiqueta');
 		if (inst != null && inv != null){
 			if (inst.value=='null' || !inv.value){
-				var msg = '<?print TRANS('MSG_UNIT_TAG');?>!'
+				var msg = '<?php print TRANS('MSG_UNIT_TAG');?>!'
 				window.alert(msg);
 			} else
 			popup_alerta('../../invmon/geral/mostra_consulta_inv.php?comp_inst='+inst.value+'&comp_inv='+inv.value+'&popup='+true);
@@ -820,7 +909,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		var inv = document.getElementById('idEtiqueta');
 		if (inst != null && inv != null){
 			if (inst.value=='null' || !inv.value){
-				window.alert('Os campos Unidade e etiqueta devem ser preenchidos!');
+				window.alert('<?php print TRANS('FILL_UNIT_TAG');?>');
 			} else
 			popup_alerta('../../invmon/geral/ocorrencias.php?comp_inst='+inst.value+'&comp_inv='+inv.value+'&popup='+true);
 		}
@@ -832,7 +921,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		var local = document.getElementById('idLocal');
 		if (local != null) {
 			if (local.value==-1){
-				window.alert('O local deve ser preenchido!');
+				window.alert('<?php print TRANS('FILL_LOCATION');?>');
 			} else
 				popup_alerta('../../invmon/geral/mostra_consulta_comp.php?comp_local='+local.value+'&popup='+true);
 		}
@@ -945,7 +1034,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 //-->
 </script>
-<?
+<?php 
 print "</TABLE>";
 
 print "</FORM>";

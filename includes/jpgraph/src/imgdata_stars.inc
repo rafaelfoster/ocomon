@@ -1,4 +1,4 @@
-<?php
+<?php 
 //=======================================================================
 // File:	IMGDATA_STARS.INC
 // Description:	Base64 encoded images for stars

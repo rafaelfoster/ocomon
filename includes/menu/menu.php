@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 
 	
@@ -29,18 +29,18 @@ function menu_usuario_admin() //admin
 			$myWwwPath = '../includes/menu/phplm320/';
 			?>
 			
-			<link rel="stylesheet" href="<?php print $myWwwPath; ?>invmon-layersmenu-demo.css" type="text/css"></link>
-			<link rel="stylesheet" href="<?php print $myWwwPath; ?>invmon-layersmenu-gtk2.css" type="text/css"></link>
-			<link rel="shortcut icon" href="<?php print $myWwwPath; ?>LOGOS/shortcut_icon_phplm.png"></link>
+			<link rel="stylesheet" href="<?php  print $myWwwPath; ?>invmon-layersmenu-demo.css" type="text/css"></link>
+			<link rel="stylesheet" href="<?php  print $myWwwPath; ?>invmon-layersmenu-gtk2.css" type="text/css"></link>
+			<link rel="shortcut icon" href="<?php  print $myWwwPath; ?>LOGOS/shortcut_icon_phplm.png"></link>
 			<script language="JavaScript" type="text/javascript">
 			<!--
-			<?php require_once $myDirPath . 'libjs/layersmenu-browser_detection.js'; ?>
+			<?php  require_once $myDirPath . 'libjs/layersmenu-browser_detection.js'; ?>
 			// -->
 			</script>
-			<script language="JavaScript" type="text/javascript" src="<?php print $myWwwPath; ?>libjs/layersmenu-library.js"></script>
-			<script language="JavaScript" type="text/javascript" src="<?php print $myWwwPath; ?>libjs/layersmenu.js"></script>
+			<script language="JavaScript" type="text/javascript" src="<?php  print $myWwwPath; ?>libjs/layersmenu-library.js"></script>
+			<script language="JavaScript" type="text/javascript" src="<?php  print $myWwwPath; ?>libjs/layersmenu.js"></script>
 			
-			<?php
+			<?php 
 			require_once $myDirPath . 'lib/PHPLIB.php';
 			require_once $myDirPath . 'lib/layersmenu-common.inc.php';
 			require_once $myDirPath . 'lib/layersmenu.inc.php';

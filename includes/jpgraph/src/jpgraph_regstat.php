@@ -1,4 +1,4 @@
-<?php 
+<?php  
 /*=======================================================================
 // File:	JPGRAPH_REGSTAT.PHP
 // Description: Regression and statistical analysis helper classes

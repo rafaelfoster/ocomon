@@ -18,14 +18,14 @@
 <title>Complete Demo of the PHP Layers Menu System</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layerstreemenu-cookies.js"></script>
 
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/layersmenu.inc.php';
@@ -89,10 +89,10 @@ $mid->printHeader();
 </head>
 <body>
 
-<?php $mid->printMenu('hormenu1'); ?>
+<?php  $mid->printMenu('hormenu1'); ?>
 
 <div class="normalbox">
-<div class="h1">Complete Demo of the PHP Layers Menu System (<?php print basename(__FILE__); ?>)</div>
+<div class="h1">Complete Demo of the PHP Layers Menu System (<?php  print basename(__FILE__); ?>)</div>
 </div>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -105,14 +105,14 @@ A vertical menu...
 </div>
 </div>
 <center>
-<?php $mid->printMenu('vermenu1'); ?>
+<?php  $mid->printMenu('vermenu1'); ?>
 </center>
 
 <div class="normalbox">
 <div class="normal">
 Tree Menu version
 </div>
-<?php
+<?php 
 require_once 'lib/treemenu.inc.php';
 $treemid = new TreeMenu();
 $treemid->setMenuStructureFile('layersmenu-vertical-1.txt');
@@ -129,7 +129,7 @@ print $treemid->newTreeMenu('treemenu1');
 <div class="normal">
 PHP Tree - No JavaScript
 </div>
-<?php
+<?php 
 require_once 'lib/phptreemenu.inc.php';
 $phptreemid = new PHPTreeMenu();
 $phptreemid->setMenuStructureFile('layersmenu-vertical-1.txt');
@@ -149,7 +149,7 @@ Plain - No JavaScript
 </div>
 </div>
 <center>
-<?php
+<?php 
 require_once 'lib/plainmenu.inc.php';
 $plainmid = new PlainMenu();
 $plainmid->setMenuStructureFile('layersmenu-vertical-1.txt');
@@ -167,14 +167,14 @@ Another vertical menu...
 </div>
 </div>
 <center>
-<?php $mid->printMenu('vermenu2'); ?>
+<?php  $mid->printMenu('vermenu2'); ?>
 </center>
 
 <div class="normalbox">
 <div class="normal">
 Tree Menu version
 </div>
-<?php
+<?php 
 $treemid->setMenuStructureString($menustring);
 $treemid->parseStructureForMenu('treemenu2');
 $treemid->setTreeMenuTheme('');
@@ -186,7 +186,7 @@ print $treemid->newTreeMenu('treemenu2');
 <div class="normal">
 PHP Tree - No JavaScript
 </div>
-<?php
+<?php 
 $phptreemid->setMenuStructureString($menustring);
 $phptreemid->parseStructureForMenu('treemenu2');
 $phptreemid->setPHPTreeMenuTheme('');
@@ -218,12 +218,12 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <div class="normal" align="center">
 Another horizontal menu... and its <a href="layersmenu-horizontal-2.txt" target="TheMenuStructureFile">Menu Structure File</a>
 <div style="height: 2px"></div>
-<?php $mid->printMenu('hormenu2'); ?>
+<?php  $mid->printMenu('hormenu2'); ?>
 </div>
 
 <div class="normal" align="center">
 Horizontal Plain version - No JavaScript
-<?php
+<?php 
 $hpmid = new PlainMenu();
 $hpmid->setMenuStructureFile('layersmenu-horizontal-2.txt');
 $hpmid->setIconsize(16, 16);
@@ -236,7 +236,7 @@ print $hpmid->newHorizontalPlainMenu('phormenu');
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 
@@ -244,7 +244,7 @@ print $hpmid->newHorizontalPlainMenu('phormenu');
 </tr>
 </table>
 
-<?php
+<?php 
 $mid->printFooter();
 ?>
 

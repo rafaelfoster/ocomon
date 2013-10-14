@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -560,7 +560,7 @@
 -->
 </script>
 <SCRIPT LANGUAGE="JavaScript">cp.writeDiv()</SCRIPT>
-<?
+<?php 
 print "</body>";
 print "</html>";
 

@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_LINE.PHP
 // Description:	Line plot extension for JpGraph

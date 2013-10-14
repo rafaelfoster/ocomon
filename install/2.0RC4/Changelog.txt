@@ -1,0 +1,51 @@
+
+
+Visibilidade dos assentamentos:
+
+Durante a edição de uma ocorrência é possível definir um assentamento como PRIVADO ou não. Assentamentos privados não são visíveis pelo usuário final (Para os casos onde o usuário final tenha acesso às informações da ocorrência). É possível alterar qualquer assentamento como privado ou não a qualquer momento através da tela de edição das ocorrências.
+
+
+Customizações da tela de abertura de chamado:
+
+É possível criar diversos perfis de telas de abertura de chamado. Um perfil de tela de abertura nada mais é do que um conjunto de definições sobre quais campos serão visíveis na tela de abertura e para qual área de atendimento serão direcionados os chamados abertos por seus usuários quando o campo "Área de atendimento" não fizer parte dos campos visíveis do perfil relacionado.
+
+Para a criação e edição de um perfil basta acessar o menu Admin->Configurações->Perfis de tela de abertura
+Na tela citada não é possível associar as áreas de atendimento a cada perfil, para isso, é necessário acessar o menu de administração de áreas de atendimento em: Admin->Ocorrências->Áreas
+
+Um perfil pode ser associado a diversas áreas de atendimento. Áreas de atendimento que não forem associadas à um perfil específico terão a tela de abertura completa, com todos os campos disponíveis.
+
+Criação de mais de uma área de nível "Somente Abertura": Para cadastrar áreas de nível "Somente Abertura" para acessar o menu de cadastro de Áreas de atendimento em Admin->Ocorrências->Áreas e clicar na opção "Novo Registro". É necessário desmarcar a opção "Atende Chamados". Caso queira que a tela de abertura para essa nova área seja customizada, basta associar a um perfil criado.
+IMPORTANTE: Após a criação da nova área, é necessário permitir seu acesso ao módulo de ocorrências. Para isso acesse o menu Admin->Permissões e inclua o acesso para a área criada.
+
+
+Definição do idioma por usuário:
+
+Cada usuário pode definir qual será o idioma(dentre os disponíveis) das telas a que tem acesso no sistema. Para isso, basta acessar o menu Home->Idioma.
+
+
+URL Global para acesso às ocorrências pelo usuário de nível "Somente abertura":
+Por definição, o usuário de nível "Somente abertura" só tem acesso às informações das ocorrências abertas por ele mesmo no sistema. Através da URL global é possível permitir o acesso, para usuário somente abertura, a qualquer ocorrência no sistema. Uma URL global é gerada automaticamente para cada nova ocorrência aberta no sistema e é visível à área técnica na tela de detalhes da ocorrência. Para ocorrências existentes antes da implementação dessa função, basta que o operador clique no link "Gerar link global" (na tela de detalhes da ocorrência) para que o link seja gerado.
+
+Para que o usuário "Somente abertura" consiga ter acesso à ocorrência através da URL global, é necessário que o mesmo esteja logado no sistema.
+
+
+Adição de informações às ocorrências pelo usuário final: O usuário final poderá adicionar comentários às ocorrências que ele tiver acesso. Para isso, basta que ele acesso os detalhes da ocorrência, clicar no botão "Inserir comentário" e adicionar a informação desejada. Após isso é necessário clicar no botão "Cadastrar".
+
+
+
+IMPORTANTE!!
+
+Após a atualização da versão do OcoMon, será necessário refazer a customização de campos para tela de abertura (caso exista), criando pelo menos um perfil de tela de abertura (Admin->Configurações->Perfis de tela de abertura), pois a customização atual (caso exista) será perdida.
+
+
+OUTRAS:
+
+- Utilização de tags completas ao invés das short_open_tags;
+- Relatório de garantias alterado: agora é possível visualizar a listagem completa dos equipamentos, inclusive os que já possuem garantia expirada, e por um período futuro de até 5 anos.
+- pequenos ajustes de navegação;
+- atualização do arquivo de idioma Inglês;
+
+- Correção da mensagem de "Wrong path to the language file" quando estoura o tempo de sessão.
+- Resolvida o problema do cálculo do tempo de resposta e solução para chamados reagendados diversas vezes na edição. Agora o tempo adotado como base para o cálculo é a data em que o chamado entrou na fila de atendimento pela primeira vez.
+
+- Inclusão de mais um esquema de cores: "Black Edition", contribuição do meu colega Rodrigo Zgierski.

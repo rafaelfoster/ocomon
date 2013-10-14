@@ -1,4 +1,4 @@
-<? /*                        Copyright 2005 Flávio Ribeiro
+<?php  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -49,7 +49,8 @@
 		$destaca1 = ""; $destaca2 = "";
 		//$destaca1 = "<u>"; $destaca2 = "</u>";
 		//$destaca1 = "<font color=green>"; $destaca2 = "</font>";
-
+		if (!isset($_SESSION['s_language']))  $_SESSION['s_language']= "en.php";
+		
 		if (is_file ("../../includes/languages/".$_SESSION['s_language'].""))
 			include ("../../includes/languages/".$_SESSION['s_language'].""); else
 		if (is_file ("../languages/".$_SESSION['s_language'].""))
@@ -977,20 +978,20 @@ function send_mail($event, $e_destino,$mailConf, $msgConf, $envVars){
 	$mail->AltBody = nl2br(transvars($msgConf['msg_altbody'],$envVars));
 
 		## TO USE ONLY FOR DEVELOPERS WHEN DEBUGING
-/*		dump ($mailConf['mail_issmtp'],'IsSMTP');
-		dump ($mail->Host,'Host');
-		dump ($mail->SMTPAuth,'SMTPAuth');
-		dump ($mail->Username,'Username');
-		dump ($mail->Password,'Password');
-		dump ($mail->From,'From');
-		dump ($mailConf['mail_ishtml'],'IsHTML');
-		dump ($mail->FromName,'FromName');
-		dump ($e_destino,'AddAddress');
-		dump ($msgConf['msg_replyto'],'AddReplyTo');
-		dump ($mail->Subject,'Subject');
-		dump ($mail->Body,'Body');
-		dump ($mail->AltBody,'AltBody');
-		exit;*/
+// 		dump ($mailConf['mail_issmtp'],'IsSMTP');
+// 		dump ($mail->Host,'Host');
+// 		dump ($mail->SMTPAuth,'SMTPAuth');
+// 		dump ($mail->Username,'Username');
+// 		dump ($mail->Password,'Password');
+// 		dump ($mail->From,'From');
+// 		dump ($mailConf['mail_ishtml'],'IsHTML');
+// 		dump ($mail->FromName,'FromName');
+// 		dump ($e_destino,'AddAddress');
+// 		dump ($msgConf['msg_replyto'],'AddReplyTo');
+// 		dump ($mail->Subject,'Subject');
+// 		dump ($mail->Body,'Body');
+// 		dump ($mail->AltBody,'AltBody');
+// 		exit;
 
 	if(!$mail->Send())
 	{

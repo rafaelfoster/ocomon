@@ -1,4 +1,4 @@
-<?
+<?php 
     print "<html><head><title>Dependências de Ocorrências</title>";
 
 	print "<style type=\"text/css\"><!--";

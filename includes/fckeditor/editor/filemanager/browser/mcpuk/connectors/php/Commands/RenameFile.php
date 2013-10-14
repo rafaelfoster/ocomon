@@ -1,4 +1,4 @@
-<?php 
+<?php  
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -60,20 +60,20 @@ class RenameFile {
 		}
 		
 		header ("content-type: text/xml");
-		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<?php xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		?>
-<Connector command="RenameFile" resourceType="<?php echo $this->type; ?>">
-	<CurrentFolder path="<?php echo $this->raw_cwd; ?>" url="<?php echo $this->actual_cwd; ?>" />
-	<?php
+<Connector command="RenameFile" resourceType="<?php  echo $this->type; ?>">
+	<CurrentFolder path="<?php  echo $this->raw_cwd; ?>" url="<?php  echo $this->actual_cwd; ?>" />
+	<?php 
 		if ($result1&&$result2) {
 			$err_no=0;
 		} else {
 			$err_no=502;
 		}
 	?>
-	<Error number="<?php echo "".$err_no; ?>" />
+	<Error number="<?php  echo "".$err_no; ?>" />
 </Connector>
-		<?php
+		<?php 
 	}
 	
 	function nameValid($fname) {

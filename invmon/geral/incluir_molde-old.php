@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -41,17 +41,17 @@
 
 print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 ?>
-<TABLE border="0" colspace="3" width="100%" bgcolor=<?print BODY_COLOR?>>
+<TABLE border="0" colspace="3" width="100%" bgcolor=<?php print BODY_COLOR?>>
        
-		<tr> <td colspan="4"></td> <b> <?print $TRANS["dados_gerais"];?>:</b></td></tr>
+		<tr> <td colspan="4"></td> <b> <?php print $TRANS["dados_gerais"];?>:</b></td></tr>
 
 		<tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo obrigatório - Defina o tipo de equipamento desse modelo"><?print $TRANS["cx_tipo"]?>:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo obrigatório - Defina o tipo de equipamento desse modelo"><?php print $TRANS["cx_tipo"]?>:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
                  <SELECT class='select' name='comp_tipo_equip' size=1 > <!--onchange='document.form1.submit()' -->
                 
 				
-				<?
+				<?php 
 					
 					print "<option value=-1 selected>".$TRANS["cmb_selec_equip"].": </option>";
                 $query = "SELECT * from tipo_equip  order by tipo_nome";
@@ -61,19 +61,19 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
                 </SELECT>
                 </TD>
 
-				<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo obrigatório - Selecione o nome do fabricante do equipamento"><?print $TRANS["cx_fab"]?>:*</a> </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_fab' size=1>";
+				<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo obrigatório - Selecione o nome do fabricante do equipamento"><?php print $TRANS["cx_fab"]?>:*</a> </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_fab' size=1>";
                 
 							
 				print "<option value=-1>".$TRANS["cmb_selec_fab"].": </option>";
@@ -84,15 +84,15 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);
+                       <option value="<?php print mysql_result($resultado,$i,0);
 					   echo "\"";
 					   if (mysql_result($resultado,$i,0)==$row['fab_cod']) {
 					     echo "selected";  
 					   }
 					   ?>>
-                                         <?print mysql_result($resultado,$i,1);?>
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -104,17 +104,17 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		
 		<TR>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo obrigatório - Preencha com o número da etiqueta que foi colada ao equipamento"><?print $TRANS["cx_etiqueta"]?>:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_inv"  value="<?$comp_inv?>" disabled></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo obrigatório - Preencha com o número da etiqueta que foi colada ao equipamento"><?php print $TRANS["cx_etiqueta"]?>:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_inv"  value="<?php $comp_inv?>" disabled></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_sn"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_sn" disabled></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_sn"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_sn" disabled></TD>
        </TR>
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo obrigatório - Selecione o modelo do equipamento que está cadastrando"><?print $TRANS["cx_modelo"]?>*:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_marca' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo obrigatório - Selecione o modelo do equipamento que está cadastrando"><?php print $TRANS["cx_modelo"]?>*:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_marca' size=1>";
 
 
                 print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -125,10 +125,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -136,9 +136,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 				</td>						
 					
 			
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione o setor onde este equipamento está localizado"><?print $TRANS["cx_local"]?>:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_local' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione o setor onde este equipamento está localizado"><?php print $TRANS["cx_local"]?>:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_local' size=1 disabled>";
                 print "<option value=-1 selected>".$TRANS["cmb_selec_local"]."</option>";
                 $query = "SELECT * from localizacao  order by local";
                 $resultado = mysql_query($query);
@@ -147,10 +147,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -158,9 +158,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 </TD>			
 		</tr>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione a situação do equipamento"><?print $TRANS["cx_situacao"]?>:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_situac' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione a situação do equipamento"><?php print $TRANS["cx_situacao"]?>:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_situac' size=1 disabled>";
 
 
                 print "<option value=-1 selected>".$TRANS["cmb_selec_situacao"]."</option>";
@@ -171,10 +171,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
@@ -190,7 +190,7 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 	<TR>
 		<td colspan="4"></td>
     </TR>		
-	<tr> <td colspan="3"><b><?print $TRANS["dados_config"];?>:</b></td><td class='line'><input type="button" class="button" value="<?print $TRANS["bt_componente"]?>" Onclick="return popup_alerta('incluir_item.php?popup=true')"></td></tr>
+	<tr> <td colspan="3"><b><?php print $TRANS["dados_config"];?>:</b></td><td class='line'><input type="button" class="button" value="<?php print $TRANS["bt_componente"]?>" Onclick="return popup_alerta('incluir_item.php?popup=true')"></td></tr>
 	<TR>
 		<td colspan="4"></td>
     </TR>		
@@ -200,12 +200,12 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
    <!--  --------------------------------------------------------------------------------------- --> 
    
         <tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_nome"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="comp_nome" maxlength="15" size="15"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_nome"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="comp_nome" maxlength="15" size="15"></TD>
          
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_mb"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select'  name='comp_mb' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_mb"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select'  name='comp_mb' size=1>";
                 
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
 				$query = "select * from modelos_itens where mdit_tipo = 10 order by mdit_fabricante, mdit_desc";
@@ -225,9 +225,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		 </tr>
 	   
 	    <tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_proc"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_proc' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_proc"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_proc' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -246,9 +246,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 </TD>
 
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_memo"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_memo' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_memo"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_memo' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -267,9 +267,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 			</tr>
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_video"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_video' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_video"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_video' size=1>";
                 
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
 				$query = "select * from modelos_itens where mdit_tipo = 2 order by mdit_fabricante, mdit_desc";
@@ -285,9 +285,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 				</SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_som"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_som' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_som"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_som' size=1>";
                 
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
 				$query = "select * from modelos_itens where mdit_tipo = 4 order by mdit_fabricante, mdit_desc";
@@ -305,9 +305,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		</tr>
         
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_rede"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_rede' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_rede"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_rede' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -325,9 +325,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 </TD>
 
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_modem"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_modem' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_modem"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_modem' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -347,9 +347,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_hd"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_modelohd' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_hd"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_modelohd' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -366,9 +366,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 				</SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_grav"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_grav' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_grav"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_grav' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -387,9 +387,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
         </tr>
 		
 		<TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_cdrom"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_cdrom' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_cdrom"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_cdrom' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -408,9 +408,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_dvd"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_dvd' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_dvd"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_dvd' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_modelo"]."</option>";
@@ -433,7 +433,7 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		<td colspan="4"></td>
     </TR>		
 	<tr> 
-		<td colspan="4"><b><?print $TRANS["dados_extra"];?>:</b></td>
+		<td colspan="4"><b><?php print $TRANS["dados_extra"];?>:</b></td>
 	</tr>
 	
 	<TR>
@@ -442,9 +442,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 	
 	
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_impressora"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_tipo_imp' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_impressora"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_tipo_imp' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_imp"].": </option>";
@@ -455,10 +455,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 print "<option value=-1 selected>".$TRANS["cmb_selec_imp"].": </option>";
@@ -469,9 +469,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
         
 
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_monitor"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_polegada' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_monitor"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_polegada' size=1>";
                 
 				
 				print "<option value =-1 selected>".$TRANS["cmb_selec_monitor"].": </option>";
@@ -482,10 +482,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 print "<option value =-1 selected>".$TRANS["cmb_selec_monitor"].": </option>";
@@ -496,9 +496,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
               </tr>
 			  <tr>  
 				
-				<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_scanner"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_resolucao' size=1>";
+				<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_scanner"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_resolucao' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_scanner"].": </option>";
@@ -509,10 +509,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 print "<option value=-1 selected>".$TRANS["cmb_selec_scanner"].": </option>";
@@ -526,7 +526,7 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 	<TR>
 		<td colspan="4"></td>
     </TR>		
-	<tr> <td colspan="4"><b> <?print $TRANS["dados_contab"];?>:</b></td></tr>
+	<tr> <td colspan="4"><b> <?php print $TRANS["dados_contab"];?>:</b></td></tr>
 	<TR>
 		<td colspan="4"></td>
     </TR>		
@@ -535,9 +535,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione a Unidade proprietária desse equipamento"><?print $TRANS["cx_inst"]?>:</a></b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_inst' size=1>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><a title="Campo Obrigatório - Selecione a Unidade proprietária desse equipamento"><?php print $TRANS["cx_inst"]?>:</a></b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_inst' size=1>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_inst"]." </option>";
@@ -548,10 +548,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 
@@ -559,9 +559,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 </SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_cc"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_ccusto' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_cc"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_ccusto' size=1 disabled>";
 				
 				print "<option value = -1 selected>".$TRANS["cmb_selec_cc"]." </option>";
                 $query = "SELECT * from planejamento.CCUSTO where ano='2003' order by descricao";
@@ -571,10 +571,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,3)."......:".mysql_result($resultado,$i,4);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,3)."......:".mysql_result($resultado,$i,4);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 
@@ -587,9 +587,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_fornecedor"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_fornecedor' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_fornecedor"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_fornecedor' size=1 disabled>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_fornecedor"]."</option>";
@@ -600,27 +600,27 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 ?>
                 </SELECT>
                 </TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_nf"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_nf" disabled></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_nf"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_nf" disabled></TD>
    	</tr>
 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_valor"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_valor" disabled></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_valor"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_valor" disabled></TD>
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_data_compra"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_data_compra" disabled></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_data_compra"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_data_compra" disabled></TD>
         </tr>
 
 		
@@ -631,9 +631,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_tipo_garantia"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_tipo_garant' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_tipo_garantia"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_tipo_garant' size=1 disabled>";
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_tipo"]."</option>";
                 $query = "SELECT * from tipo_garantia  order by tipo_garant_nome";
@@ -643,10 +643,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1);?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1);?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 print "<option value=-1>".$TRANS["cmb_selec_tipo"]."</option>";
@@ -657,9 +657,9 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 
 
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_tempo_garantia"]?>: </b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-                <?print "<SELECT class='select' name='comp_garant_meses' size=1 disabled>";
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_tempo_garantia"]?>: </b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+                <?php print "<SELECT class='select' name='comp_garant_meses' size=1 disabled>";
                 
 				
 				print "<option value=-1 selected>".$TRANS["cmb_selec_tempo"]."</option>";
@@ -670,10 +670,10 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
                 while ($i < $linhas)
                 {
                        ?>
-                       <option value="<?print mysql_result($resultado,$i,0);?>">
-                                         <?print mysql_result($resultado,$i,1).' meses';?>
+                       <option value="<?php print mysql_result($resultado,$i,0);?>">
+                                         <?php print mysql_result($resultado,$i,1).' meses';?>
                        </option>
-                       <?
+                       <?php 
                        $i++;
                 }
                 print "<option value=-1>".$TRANS["cmb_selec_tempo"]."</option>";
@@ -690,24 +690,24 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 
 		
 		<tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_coment"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text"name="comp_coment" maxlength="200" size="100"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_coment"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text"name="comp_coment" maxlength="200" size="100"></TD>
         </TR>
 
 
 
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>><b><?print $TRANS["cx_data_cadastro"]?>:</b></TD>
-                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>><?print datab($hoje);?></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>><b><?php print $TRANS["cx_data_cadastro"]?>:</b></TD>
+                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print datab($hoje);?></TD>
         </TR>
 
 			
 
         <TR>
-                <TD colspan="2"  align="right" bgcolor=<?print BODY_COLOR?>><input type="submit"  value="<?print $TRANS["bt_cadastrar"]?>" name="ok" title="Cadastrar as informações fornecidas." disabled >
+                <TD colspan="2"  align="right" bgcolor=<?php print BODY_COLOR?>><input type="submit"  value="<?php print $TRANS["bt_cadastrar"]?>" name="ok" title="Cadastrar as informações fornecidas." disabled >
                       <!--  <input type="hidden" name="rodou" value="sim"> -->
                 </TD>
-                <TD colspan="2" align="right" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="<?print $TRANS["bt_cancelar"]?>" onClick="javascript:history.back()"></TD>
+                <TD colspan="2" align="right" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="<?php print $TRANS["bt_cancelar"]?>" onClick="javascript:history.back()"></TD>
         </TR>
 
 </TABLE>
@@ -763,7 +763,7 @@ print "<FORM name='form1' method='POST' action='$PHP_SELF'>";
 		
 		
 		
-		<?
+		<?php 
 
                 if ($ok=="Cadastrar")             
                 {

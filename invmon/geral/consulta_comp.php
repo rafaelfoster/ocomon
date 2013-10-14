@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -80,10 +80,10 @@
 			}
 		}
 
-	desabilitaLinks(<?print $_SESSION['s_invmon'];?>);
+	desabilitaLinks(<?php print $_SESSION['s_invmon'];?>);
 		//-->
 	</SCRIPT>
-	<?
+	<?php 
 
 	print "<form method='post' name='form1' action='mostra_consulta_comp.php'>";
 

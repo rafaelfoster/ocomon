@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -117,8 +117,8 @@
 
 					//print "<TR class='".$trClass."'>";
 					print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
-
-						print "<td class='line'><a onClick=\"ajaxFunction('idDivDetails', 'mostra_consulta.php', 'idLoad', 'numero=idNumero".$j."','INDIV=idINDIV');\">".$row['numero']."</a>".$imgSub."</TD>";
+						//$j++;
+						print "<td class='line'><a onClick=\"exibeEscondeImg('idTr".$j."'); exibeEscondeImg('idDivDetails".$j."'); ajaxFunction('idDivDetails".$j."', 'mostra_consulta.php', 'idLoad', 'numero=idNumero".$j."','INDIV=idINDIV');\">".$row['numero']."</a>".$imgSub."</TD>";
 						print "<input type='hidden' name='numeroAjax".$j."' id='idNumero".$j."' value='".$row['numero']."'>";
 						print "<input type='hidden' name='INDIV' id='idINDIV' value='INDIV'>";
 
@@ -129,11 +129,11 @@
 						print "<td class='line'>".datab($row['data_abertura'])."</TD>";
 						print "<td class='line'>".$row['chamado_status']."</TD>";
 					print "</tr>";
+					print "<tr><td colspan='6'  id='idTr".$j."' style='{display:none;}'><div id='idDivDetails".$j."' style='{display:none;}'></div></td></tr>";
 					$j++;
 				}
 
-
-			print "<tr><td colspan='6'><div id='idDivDetails'></div></td></tr>";
+				//print "<tr><td colspan='6'><div id='idDivDetails".$j."' style='{display:none;}'></div></td></tr>";
 
 			}
 			print "</TABLE>";
@@ -153,7 +153,7 @@
 		}
 	-->
 	</script>
-	<?
+	<?php 
 	print "</body>";
 	print "</html>";
 	?>

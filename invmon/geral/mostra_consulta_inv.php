@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -29,9 +29,10 @@
 	print "<body>";
 	$auth = new auth;
 
-/*	if (isset($_GET['popup'])) {
+	if (isset($_GET['INDIV'])) {
 		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
-	} else*/
+
+	} else
 		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
 	if ($_SESSION['s_invmon']!=1) {
@@ -452,7 +453,7 @@
 				print "</div></td></tr>";
 
 				print "<TR><TD colspan='4' align='left' bgcolor= ".TD_COLOR.">&nbsp</TD></TR>";
-				print "<tr><td colspan='4'><img src='tesoura.png'> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</td></tr>";
+				//print "<tr><td colspan='4'><img src='tesoura.png'> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</td></tr>";
 
 				print "<TR><TD colspan='4'></TD><TD colspan='4'></TD></TR>";
 				print "</table>";
@@ -487,10 +488,10 @@
 		}
 	}
 
-	desabilitaLinks(<?print $_SESSION['s_invmon'];?>);
+	desabilitaLinks(<?php print $_SESSION['s_invmon'];?>);
 //-->
 </script>
-<?
+<?php 
 	print "</body>";
 	print "</html>";
 ?>

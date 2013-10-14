@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -27,7 +27,7 @@
 <HTML>
 <BODY>
 
-<?
+<?php 
 
         $query = "SELECT * FROM ocorrencias WHERE (";
 
@@ -81,13 +81,13 @@
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Período de:</TD>
-                <TD width="20%" align="left"><?print datab($data_inicial);?> a <?print datab($data_final);?></TD>
+                <TD width="20%" align="left"><?php print datab($data_inicial);?> a <?php print datab($data_final);?></TD>
                 <TD width="40%" align="left">Número total de ocorrências no período:</TD>
-                <TD width="20%" align="left"><?print $linhas_total;?></TD>
+                <TD width="20%" align="left"><?php print $linhas_total;?></TD>
         </TABLE>
         </TR>
 
-        <?
+        <?php 
         $j = 0;
         while ($j < $linhas_total)
         {
@@ -98,13 +98,13 @@
                 ?>
                 <TR>
                 <TABLE border="0"  align="center" width="100%">
-                        <TD width="20%" align="left"><?print $equip;?>:</TD>
-                        <TD width="30%" align="left"><?print $linhas_equip;?></TD>
+                        <TD width="20%" align="left"><?php print $equip;?>:</TD>
+                        <TD width="30%" align="left"><?php print $linhas_equip;?></TD>
                         <TD width="20%" align="left">Percentual:</TD>
-                        <TD width="30%" align="left"><?print round(($linhas_equip*100)/$linhas_total);?>%</TD>
+                        <TD width="30%" align="left"><?php print round(($linhas_equip*100)/$linhas_total);?>%</TD>
                 </TABLE>
                 </TR>
-                <?
+                <?php 
                 $j++;
         }
          ?>

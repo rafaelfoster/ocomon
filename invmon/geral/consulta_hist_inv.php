@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -36,14 +36,14 @@
 <!--
 
 	function valida(){
-		var ok = validaForm('idComp_inv','INTEIRO','<?print TRANS('OCO_FIELD_TAG');?>',1);
+		var ok = validaForm('idComp_inv','INTEIRO','<?php print TRANS('OCO_FIELD_TAG');?>',1);
 		return ok;
 	}
 
 //-->
 </script>
 
-<?
+<?php 
 	print "<br><B>".TRANS('SUBTTL_CONS_HIST_TAG').":</B><BR><br>";
 
 	print "<FORM name='consulta' method='POST' action='mostra_historico.php' onSubmit='return valida()'>";

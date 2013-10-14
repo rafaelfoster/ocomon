@@ -14,7 +14,7 @@
 <title>The PHP Layers Menu System</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layerstreemenu-cookies.js"></script>
@@ -23,7 +23,7 @@
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with two JavaScript Tree Menus</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with two JavaScript Tree Menus</b>
 </div>
 </div>
 
@@ -34,7 +34,7 @@
 <div class="normal">
 A JS Tree Menu
 </div>
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/treemenu.inc.php';
@@ -57,7 +57,7 @@ print $mid->newTreeMenu('treemenu1');
 <div class="normal">
 Another JS Tree Menu
 </div>
-<?php
+<?php 
 $mid->setMenuStructureFile('layersmenu-vertical-2.txt');
 $mid->parseStructureForMenu('treemenu2');
 $mid->setTreeMenuTheme('kde_');
@@ -83,7 +83,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>

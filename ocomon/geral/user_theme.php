@@ -1,4 +1,4 @@
-<? /*                        Copyright 2005 Flávio Ribeiro
+<?php  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -128,13 +128,13 @@
 <!--
 	function valida(){
 
-		var ok = validaForm('idNomeTema','COMBO','<?print TRANS('MSG_NAME_THEME'); ?>',1);
+		var ok = validaForm('idNomeTema','COMBO','<?php print TRANS('MSG_NAME_THEME'); ?>',1);
 
 		return ok;
 	}
 -->
 </script>
-	<?
+	<?php 
 
 	print "</body>";
 	print "</html>";

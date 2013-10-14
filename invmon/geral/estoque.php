@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -1067,16 +1067,16 @@
 <script type="text/javascript">
 <!--
 	function valida(){
-		var ok = validaForm('idTipo','COMBO','<?print TRANS('COL_TYPE');?>',1);
-		if (ok) var ok = validaForm('idDesc','COMBO','<?print TRANS('COL_MODEL');?>',1);
-		if (ok) var ok = validaForm('idLocal','COMBO','<?print TRANS('OCO_LOCAL');?>',1);
-		if (ok) var ok = validaForm('idValue','MOEDASIMP','<?print TRANS('COL_VALUE');?>',0);
+		var ok = validaForm('idTipo','COMBO','<?php print TRANS('COL_TYPE');?>',1);
+		if (ok) var ok = validaForm('idDesc','COMBO','<?php print TRANS('COL_MODEL');?>',1);
+		if (ok) var ok = validaForm('idLocal','COMBO','<?php print TRANS('OCO_LOCAL');?>',1);
+		if (ok) var ok = validaForm('idValue','MOEDASIMP','<?php print TRANS('COL_VALUE');?>',0);
 
 		return ok;
 	}
 
 	team = new Array(
-	<?
+	<?php 
 	$conta = 0;
 	$conta_sub = 0;
 
@@ -1145,7 +1145,7 @@
 	}
 //-->
 </script>
-<?
+<?php 
 
 print "</body>";
 print "</html>";

@@ -12,7 +12,7 @@
 
 <div class="normalbox">
 <div class="normal" align="center">
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/plainmenu.inc.php';
@@ -28,7 +28,7 @@ print $hpmid->newHorizontalPlainMenu('phormenu');
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with a Horizontal Plain Menu</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with a Horizontal Plain Menu</b>
 <div style="height: 5px"></div>
 <a href="http://phplayersmenu.sourceforge.net/"><img border="0"
 src="LOGOS/powered_by_phplm.png" alt="Powered by PHP Layers Menu"
@@ -43,7 +43,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 

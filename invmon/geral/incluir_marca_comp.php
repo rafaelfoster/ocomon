@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -37,19 +37,19 @@
 <B>Inclusão de modelos de equipamentos:</B>
 <BR>
 
-<FORM method="POST" action='<?PHP_SELF?>'  ENCTYPE="multipart/form-data">
-<TABLE border="0"  align="left" width="40%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action='<?php _SELF?>'  ENCTYPE="multipart/form-data">
+<TABLE border="0"  align="left" width="40%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Modelo:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class='text' name="marc_nome"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Modelo:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class='text' name="marc_nome"></TD>
         </TR>
 
         <tr>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Tipo de equipamento:</TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Tipo de equipamento:</TD>
 
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><select class='select' name="tipo">
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><select class='select' name="tipo">
 				<option value=-1>Selecione o tipo</option>
-				<?
+				<?php 
 					$sql="select * from tipo_equip order by tipo_nome";
 					$commit = mysql_query($sql);
 	                $linhas = mysql_numrows($commit);
@@ -76,13 +76,13 @@
 
         <TR>
 
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit"  value="  Ok  " name="ok">
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit"  value="  Ok  " name="ok">
                         <input type="hidden" name="rodou" value="sim">
                 </TD>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset"  value="<?print $caption;?>" name="cancelar" onClick="javascript:<?print $fecha;?>;"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset"  value="<?php print $caption;?>" name="cancelar" onClick="javascript:<?php print $fecha;?>;"></TD>
         </TR>
 
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $erro="não";

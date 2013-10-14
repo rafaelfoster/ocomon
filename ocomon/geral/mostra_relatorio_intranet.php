@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -25,13 +25,13 @@
 ?>
 
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>OcoMon - Módulo de Ocorrências</b></TD>";
                         echo menu_usuario();
@@ -49,7 +49,7 @@
 <B>Relatório para a Intranet do LaSalle</B>
 <BR>
 
- <?
+ <?php 
 print"<B>Período de $data_inicial a $data_final</B><br>";
 
 
@@ -181,8 +181,8 @@ print"<B>Período de $data_inicial a $data_final</B><br>";
 
                 while ($resposta = mysql_fetch_array($operador)) {
                         ?>
-                        <TD bgcolor=<?print $cor1;?> align=right><?print $resposta["login"];?></TD>
-                        <?
+                        <TD bgcolor=<?php print $cor1;?> align=right><?php print $resposta["login"];?></TD>
+                        <?php 
                 }
                 print "<TD bgcolor=$cor1 align=right>Total diário</TD>";
 
@@ -321,8 +321,8 @@ print"<B>Período de $data_inicial a $data_final</B><br>";
 						$operador = mysql_query($sql);
 		                while ($resposta = mysql_fetch_array($operador)) {
 		                        ?>
-		                        <TD bgcolor=<?print $cor1;?> align=right><?print $resposta["login"];?></TD>
-		                        <?
+		                        <TD bgcolor=<?php print $cor1;?> align=right><?php print $resposta["login"];?></TD>
+		                        <?php 
 		                }
 						
 						$data_i = strtotime($data_i);

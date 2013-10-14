@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_ERROR.PHP
 // Description:	Error plot extension for JpGraph

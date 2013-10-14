@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -31,7 +31,7 @@
 
 	print "<HTML>";
 	print "<head>";
-	?><script language="javascript"> var cp = new ColorPicker(); // DIV style</script><?
+	?><script language="javascript"> var cp = new ColorPicker(); // DIV style</script><?php 
 	print "</head>";
 	print "<BODY bgcolor=".BODY_COLOR." onClick=\"setBGColor('idDestaca'); setBGColor('idMarca'); setBGColor('idLin_par'); ".
 				"setBGColor('idLin_impar'); setBGColor('idBody');  setBGColor('idTD'); setBorderWidth('idBorda'); ".
@@ -249,7 +249,7 @@
 						print " style=\"{background-image:'url(".$IMG.")'; }\">";
 					} else
 						print " style=\"{background-color:".$row['tm_color_topo'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].topo,'pickTopo');return false;\" name='pickTopo' id='pickTopo' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].topo,'pickTopo');return false;\" name='pickTopo' id='pickTopo' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultHeader('idTopo', 'main_bar.png');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -260,7 +260,7 @@
 				"<input type='text'  class='mini2' name='fonteTopo' id='idFonteTopo' ".
 					"value='".$row['tm_color_topo_font']."' ";
 					print " style=\"{background-color:".$row['tm_color_topo_font'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteTopo,'pickFontTopo');return false;\" name='pickFontTopo' id='pickFontTopo' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteTopo,'pickFontTopo');return false;\" name='pickFontTopo' id='pickFontTopo' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFonteTopo','#FFFFFF');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -275,7 +275,7 @@
 						print "style=\"{background-image: 'url(\"../../includes/css/aqua.png\")'; }\">";
 					} else
 						print "style=\"{background-color:".$row['tm_color_barra'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].barra,'pickBarra');return false;\" name='pickBarra' id='pickBarra' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].barra,'pickBarra');return false;\" name='pickBarra' id='pickBarra' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultHeader('idBarra', 'aqua.png');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -289,7 +289,7 @@
 						print "style=\"{background-image: 'url(\"../../MENU_IMG.png\")'; }\">";
 					} else
 						print "style=\"{background-color:".$row['tm_color_menu'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].menu,'pickMenu');return false;\" name='pickMenu' id='pickMenu' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].menu,'pickMenu');return false;\" name='pickMenu' id='pickMenu' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultHeader('idMenu', 'MENU_IMG.png');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -300,7 +300,7 @@
 				"<input type='text'  class='mini2' name='fonteNormal' id='idFonteNormal' ".
 					"value='".$row['tm_color_barra_font']."' ";
 					print "style=\"{background-color:".$row['tm_color_barra_font'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteNormal,'pickFonteNormal');return false;\" name='pickFonteNormal' id='pickFonteNormal' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteNormal,'pickFonteNormal');return false;\" name='pickFonteNormal' id='pickFonteNormal' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFonteNormal','#675E66');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -312,7 +312,7 @@
 				"<input type='text'  class='mini2' name='fonteHover' id='idFonteHover' ".
 					"value='".$row['tm_color_barra_hover']."' ";
 					print "style=\"{background-color:".$row['tm_color_barra_hover'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteHover,'pickFonteHover');return false;\" name='pickFonteHover' id='pickFonteHover' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteHover,'pickFonteHover');return false;\" name='pickFonteHover' id='pickFonteHover' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFonteHover','#FFFFFF');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -323,7 +323,7 @@
 				"<input type='text'  class='mini2' name='fonteDestaque' id='idFonteDestaque' ".
 					"value='".$row['tm_barra_fonte_destaque']."' ";
 					print "style=\"{background-color:".$row['tm_barra_fonte_destaque'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteDestaque,'pickFonteDestaque');return false;\" name='pickFonteDestaque' id='pickFonteDestaque' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].fonteDestaque,'pickFonteDestaque');return false;\" name='pickFonteDestaque' id='pickFonteDestaque' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFonteDestaque','#FFFFFF');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -334,7 +334,7 @@
 				"<input type='text'  class='mini2' name='fundoDestaque' id='idFundoDestaque' ".
 					"value='".$row['tm_barra_fundo_destaque']."' ";
 					print "style=\"{background-color:".$row['tm_barra_fundo_destaque'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].fundoDestaque,'pickFundoDestaque');return false;\" name='pickFundoDestaque' id='pickFundoDestaque' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].fundoDestaque,'pickFundoDestaque');return false;\" name='pickFundoDestaque' id='pickFundoDestaque' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFundoDestaque','#666666');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -346,7 +346,7 @@
 				"<input type='text'  class='mini2' name='cor_lin_par' id='idLin_par' ".
 					"value='".$row['tm_color_lin_par']."' ".
 					"style=\"{background-color:".$row['tm_color_lin_par'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_lin_par,'pick3');return false;\" name='pick3' id='pick3' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_lin_par,'pick3');return false;\" name='pick3' id='pick3' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idLin_par','#E3E1E1');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -355,7 +355,7 @@
 				"<input type='text'  class='mini2' name='cor_lin_impar' id='idLin_impar' ".
 					"value='".$row['tm_color_lin_impar']."' ".
 					"style=\"{background-color:".$row['tm_color_lin_impar'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_lin_impar,'pick4');return false;\" name='pic4' id='pick4' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_lin_impar,'pick4');return false;\" name='pic4' id='pick4' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idLin_impar','#F6F6F6');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -365,7 +365,7 @@
 				"<input type='text'  class='mini2' name='cor_destaca' id='idDestaca' ".
 					"value='".$row['tm_color_destaca']."' ".
 					"style=\"{background-color:".$row['tm_color_destaca'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_destaca,'pick');return false;\" name='pick' id='pick' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_destaca,'pick');return false;\" name='pick' id='pick' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idDestaca','#CCCCCC');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -375,7 +375,7 @@
 				"<input type='text'  class='mini2' name='cor_marca' id='idMarca' ".
 					"value='".$row['tm_color_marca']."' ".
 					"style=\"{background-color:".$row['tm_color_marca'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_marca,'pick2');return false;\" name='pic2' id='pick2' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_marca,'pick2');return false;\" name='pic2' id='pick2' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idMarca','#FFFFCC');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -385,7 +385,7 @@
 				"<input type='text'  class='mini2' name='cor_body' id='idBody' ".
 					"value='".$row['tm_color_body']."' ".
 					"style=\"{background-color:".$row['tm_color_body'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_body,'pick5');return false;\" name='pick5' id='pick5' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_body,'pick5');return false;\" name='pick5' id='pick5' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idBody','#F6F6F6');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -394,7 +394,7 @@
 				"<input type='text'  class='mini2' name='cor_tab' id='idTab' ".
 					"value='".$row['tm_color_tab']."' ".
 					"style=\"{background-color:".$row['tm_color_tab'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_tab,'pick6');return false;\" name='pic6' id='pick6' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_tab,'pick6');return false;\" name='pic6' id='pick6' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idTab','#DBDBDB');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -403,7 +403,7 @@
 				"<input type='text'  class='mini2' name='cor_td' id='idTD' ".
 					"value='".$row['tm_color_td']."' ".
 					"style=\"{background-color:".$row['tm_color_td'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].cor_td,'pick7');return false;\" name='pick7' id='pick7' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].cor_td,'pick7');return false;\" name='pick7' id='pick7' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idTD','#DBDBDB');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a></td>".
@@ -419,7 +419,7 @@
 				"<input type='text'  class='mini2' name='borda_color' id='idBordaColor' ".
 					"value='".$row['tm_borda_color']."' ".
 					"style=\"{background-color:".$row['tm_borda_color'].";}\">".
-					"<a href='#' onClick=\"cp.select(document.forms[0].borda_color,'pickBC');return false;\" name='pickBC' id='pickBC' title='Edita cor atual'>".
+					"<a href='#' onClick=\"cp.select(document.forms[0].borda_color,'pickBC');return false;\" name='pickBC' id='pickBC' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idBordaColor','#F6F6F6');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -433,7 +433,7 @@
 						print "style=\"{background-image: 'url(\"../../includes/css/header_bar.gif\")'; }\">";
 					} else
 						print "style=\"{background-color:".$row['tm_tr_header'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].tr_header,'pickTH');return false;\" name='pickTH' id='pickTH' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].tr_header,'pickTH');return false;\" name='pickTH' id='pickTH' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultHeader('idTrHeader', 'header_bar.gif');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -444,7 +444,7 @@
 				"<input type='text'  class='mini2' name='font_tr_header' id='idFontTrHeader' ".
 					"value='".$row['tm_color_font_tr_header']."' ";
 					print "style=\"{background-color:".$row['tm_color_font_tr_header'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].font_tr_header,'pickFTH');return false;\" name='pickFTH' id='pickFTH' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].font_tr_header,'pickFTH');return false;\" name='pickFTH' id='pickFTH' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idFontTrHeader', '#000000');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -455,7 +455,7 @@
 				"<input type='text'  class='mini2' name='tm_color_borda_header_centro' id='idHeaderCentro' ".
 					"value='".$row['tm_color_borda_header_centro']."' ";
 					print "style=\"{background-color:".$row['tm_color_borda_header_centro'].";}\">";
-					print "<a href='#' onClick=\"cp.select(document.forms[0].tm_color_borda_header_centro,'pickHC');return false;\" name='pickHC' id='pickHC' title='Edita cor atual'>".
+					print "<a href='#' onClick=\"cp.select(document.forms[0].tm_color_borda_header_centro,'pickHC');return false;\" name='pickHC' id='pickHC' title='".TRANS('EDIT_CURRENT_COLOR')."'>".
 					"<img src='".ICONS_PATH."edit.png' width='16' height='16' border='0'></a>".
 					"&nbsp;&nbsp;<a onClick=\"loadDefaultValue('idHeaderCentro', '#999999');\" title='".TRANS('HNT_LOAD_DEFAULT_COLOR')."'>".
 					"<img src='".ICONS_PATH."rebuild.png' width='16' height='16' border='0'></a>".
@@ -628,7 +628,7 @@
 -->
 </script>
 <SCRIPT LANGUAGE="JavaScript">cp.writeDiv()</SCRIPT>
-<?
+<?php 
 print "</body>";
 print "</html>";
 

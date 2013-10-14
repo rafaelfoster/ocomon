@@ -1,4 +1,4 @@
-<?session_start();
+<?php session_start();
 /*ARQUIVO DE ESTILOS DO OCOMON*/
 
 	require_once ('../../includes/config.inc.php');

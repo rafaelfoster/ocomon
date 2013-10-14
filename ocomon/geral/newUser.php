@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -18,6 +18,9 @@
          along with Foobar; if not, write to the Free Software
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
+	session_start();
+	//session_destroy();
+	if (!isset($_SESSION['s_language']))  $_SESSION['s_language']= "en.php";
 
 	include ("../../includes/classes/conecta.class.php");
 	//include ("../../includes/classes/auth.class.php");
@@ -26,7 +29,7 @@
 	include ("../../includes/javascript/funcoes.js");
 
 	include ("../../includes/config.inc.php");
-	include ("../../includes/languages/".LANGUAGE."");
+	//include ("../../includes/languages/".LANGUAGE."");
 	include ("../../includes/queries/queries.php");
 
 	print "<link rel='stylesheet' type='text/css' href='../../includes/css/estilos.css.php'>";
@@ -39,55 +42,56 @@
 	$conec = new conexao;
 	$conec->conecta('MYSQL');
 	$qry = $QRY["useropencall"];
-	$exec = mysql_query($qry) or die('Erro na busca das informações de configuração!');
+	$exec = mysql_query($qry) or die(TRANS('MSG_ERR_RESCUE_DATA').'!');
 	$rowconf = mysql_fetch_array($exec);
 
 	if (!$rowconf['conf_user_opencall']) {
-		print "<script>mensagem('A abertura de chamados pelo usuário final não está habilitada');".
+		print "<script>mensagem('".TRANS('MSG_DISABLED_END_USER_TICKET','',0)."');".
 				"window.close();</script>";
 		exit;
 	}
 
 	$qry_config = "SELECT * FROM config ";
-	$exec_config = mysql_query($qry_config) or die ("ERRO AO TENTAR ACESSAR A TABELA CONFIG! CERTIFIQUE-SE DE QUE A TABELA EXISTE!");;
+	$exec_config = mysql_query($qry_config) or die (TRANS('ERR_TABLE_CONFIG'));
 	$row_config = mysql_fetch_array($exec_config);
 
-
+	$_SESSION['s_language'] = $row_config['conf_language'];
 
 		print  "<TABLE  STYLE='{border-bottom:  solid #999999; }' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
 				"<TR>".
-					"<TD nowrap width='100%'><b>OcoMon - Módulo de Ocorrências</b></td>";
+					"<TD nowrap width='100%'><b>".TRANS('MENU_TTL_MOD_OCCO')."</b></td>";
 		print "</TR>".
 			"</TABLE>";
 
 	if (!isset($_POST['submit'])) {
-		print "<B>Cadastro de Usuário:<br><br>";
+		print "<B>".TRANS('CADASTRE_USERS').":<br><br>";
 		print "<form name='incluir' method='post' action='".$_SERVER['PHP_SELF']."' onSubmit='return valida()'>";
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' width='50%'>";
 		print "<tr>";
-		print "<td class='line'>Login</td><td class='line'><input type='text' class='text' name='login' id='idLogin'></td>";
+		print "<td class='line'>".TRANS('COL_LOGIN')."</td><td class='line'><input type='text' class='text' name='login' id='idLogin'></td>";
 		print "</tr>";
 		print "<tr>";
-		print "<td class='line'>Nome Completo</td><td class='line'><input type='text' class='text' name='nome' id='idNome'></td>";
+		print "<td class='line'>".TRANS('FULL_NAME')."</td><td class='line'><input type='text' class='text' name='nome' id='idNome'></td>";
 		print "</tr>";
 		print "<tr>";
-		print "<td class='line'>E-mail</td><td class='line'><input type='text' class='text' name='email' id='idEmail'></td>";
+		print "<td class='line'>".TRANS('COL_EMAIL')."</td><td class='line'><input type='text' class='text' name='email' id='idEmail'></td>";
 		print "</tr>";
 		print "<tr>";
-		print "<td class='line'>Senha</td><td class='line'><input type='password' class='text' name='senha' id='idSenha'></td>";
+		print "<td class='line'>".TRANS('COL_PASS')."</td><td class='line'><input type='password' class='text' name='senha' id='idSenha'></td>";
 		print "</tr>";
 		print "<tr>";
-		print "<td class='line'>Repita a senha</td><td class='line'><input type='password' class='text' name='senha2' id='idSenha2'></td>";
+		print "<td class='line'>".TRANS('RETYPE_PASS')."</td><td class='line'><input type='password' class='text' name='senha2' id='idSenha2'></td>";
 		print "</tr>";
 
 
 
-		print "<tr><td class='line'><input type='submit' class='button' name='submit' value='Cadastrar'></td>";
+		print "<tr><td class='line'><input type='submit' class='button' name='submit' value='".TRANS('BT_CAD')."'></td>";
 
-		print "<td class='line'><input type='button' class='button'  name='fecha' value='Fechar' onClick=\"javascript:window.close()\"></td></tr>";
+		print "<td class='line'><input type='button' class='button'  name='fecha' value='".TRANS('LINK_CLOSE')."' onClick=\"javascript:window.close()\"></td></tr>";
 
 		print "</table>";
 		print "</form>";
+		
 
 	} else
 
@@ -99,7 +103,7 @@
 		$regs = mysql_num_rows($exec);
 		$row = mysql_fetch_array ($exec);
 		if ($regs > 0) {
-			$msg = "Login \"".$_POST['login']."\" já existe no sistema, por favor escolha outro login!";
+			$msg = "[".$_POST['login']."] ".TRANS('USERNAME_ALREADY_EXISTS')."";
 		} else {
 
 			//$passwd = md5($_POST['senha']);
@@ -107,23 +111,23 @@
 			$query= "INSERT INTO utmp_usuarios (utmp_cod,utmp_login, utmp_nome, utmp_email, utmp_passwd, utmp_rand) values ".
 					"('','".noHtml($_POST['login'])."','".noHtml($_POST['nome'])."','".$_POST['email']."', md5('".$_POST['senha']."'),'".$random."')";
 
-			$exec = mysql_query($query) or die ('ERRO NA TENTATIVA DE CRIAR USUÁRIO TEMPORÁRIO. SUA SOLICITAÇÃO NÃO FOI PROCESSADA!');
+			$exec = mysql_query($query) or die (TRANS('ERROR_TEMP_USER'));
 
-			$msg = "Sua solicitação foi efetuada com sucesso! Aguarde o e-mail de confirmação.";
+			$msg = TRANS('AUTO_CADASTRE_SUCCESS');
 
 			$VARS = array();
 			$VARS['%login%'] = $_POST['login'];
 			$VARS['%usuario%'] = $_POST['nome'];
 			$VARS['%site%'] = "<a href='".$row_config['conf_ocomon_site']."'>".$row_config['conf_ocomon_site']."</a>";
-			$VARS['%linkconfirma%'] = "<a href='".$row_config['conf_ocomon_site']."/ocomon/geral/confirma.php?rand=".$random."'>Clique aqui para confirmar sua incrição</a>";
+			$VARS['%linkconfirma%'] = "<a href='".$row_config['conf_ocomon_site']."/ocomon/geral/confirma.php?rand=".$random."'>".TRANS('MSG_LINK_CONFIRM_SUBSCRIBE')."</a>";//".TRANS('MSG_LINK_CONFIRM_SUBSCRIBE')."
 
 			$qryconf = "SELECT * FROM mailconfig";
-			$execconf = mysql_query($qryconf) or die ('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE ENVIO DE E-MAIL!');
+			$execconf = mysql_query($qryconf) or die (TRANS('MSG_ERR_RESCUE_SEND_EMAIL').'!');
 			$rowconf = mysql_fetch_array($execconf);
 
 			$event = 'cadastro-usuario';
 			$qrymsg = "SELECT * FROM msgconfig WHERE msg_event like ('".$event."')";
-			$execmsg = mysql_query($qrymsg) or die('ERRO NO MSGCONFIG');
+			$execmsg = mysql_query($qrymsg) or die(TRANS('MSG_ERR_MSCONFIG'));
 			$rowmsg = mysql_fetch_array($execmsg);
 
 
@@ -142,7 +146,7 @@ print "</body>";
 		var obj = document.getElementById('idSenha');
 		var obj2 = document.getElementById('idSenha2');
 		if (obj.value != obj2.value) {
-			alert('As senhas digitadas não conferem!');
+			alert('<?php print TRANS('PASS_DONT_MATCH');?>');
 			return false;
 		} else
 			return true;
@@ -151,18 +155,18 @@ print "</body>";
 	function valida(){
 
 
-		var ok = validaForm('idLogin','ALFANUM','Login',1);
-		if (ok) var ok = validaForm('idNome','','Nome Completo',1);
-		if (ok) var ok = validaForm('idEmail','EMAIL','E-mail',1);
-		if (ok) var ok = validaForm('idSenha','','Senha',1);
-		if (ok) var ok = validaForm('idSenha2','','Senha',1);
+		var ok = validaForm('idLogin','ALFANUM','<?php print TRANS('COL_LOGIN');?>',1);
+		if (ok) var ok = validaForm('idNome','','<?php print TRANS('FULL_NAME');?>',1);
+		if (ok) var ok = validaForm('idEmail','EMAIL','<?php print TRANS('COL_EMAIL');?>',1);
+		if (ok) var ok = validaForm('idSenha','','<?php print TRANS('COL_PASS');?>',1);
+		if (ok) var ok = validaForm('idSenha2','','<?php print TRANS('COL_PASS');?>',1);
 		if (ok) var ok = compPass();
 
 		return ok;
 	}
 -->
 </script>
-<?
+<?php 
 print "</html>";
 
 ?>

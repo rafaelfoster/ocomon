@@ -1,4 +1,4 @@
-<?
+<?php 
 $menuInvmon =
 ".|Iniciar|abertura.php|Tela inicial do Sistema\n".
 ".|Cadastrar/n".

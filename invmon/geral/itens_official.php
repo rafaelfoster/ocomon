@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -239,10 +239,10 @@
 				<script language="javascript">
 				<!--
 					mensagem('Esse componente já está cadastrado no sistema!');
-					redirect('itens.php?tipo=<?print $_POST['item_tipo'];?>');
+					redirect('itens.php?tipo=<?php print $_POST['item_tipo'];?>');
 				//-->
 				</script>
-				<?
+				<?php 
 			} else {
 
 				$qry = "INSERT INTO modelos_itens (mdit_fabricante, mdit_desc, mdit_desc_capacidade,mdit_sufixo, mdit_tipo )".
@@ -285,7 +285,7 @@
 				history.back();
 			//-->
 			</script>
-			<?
+			<?php 
 		}
 	}
 
@@ -307,7 +307,7 @@ print "</body>";
 	}
 -->
 </script>
-<?
+<?php 
 print "</html>";
 
 ?>

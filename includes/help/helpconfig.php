@@ -1,4 +1,4 @@
-<?
+<?php 
     print "<html><head><title>Configuração de abertura de chamados</title>"; 
     
 			print "<style type=\"text/css\"><!--";

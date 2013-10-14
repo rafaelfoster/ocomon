@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -29,29 +29,29 @@
 	$auth->testa_user($s_usuario,$s_nivel,$s_nivel_desc,4);
 ?>
 <BR>
-<B><?print $TRANS["head_inc_doc"]?>:</B>
+<B><?php print $TRANS["head_inc_doc"]?>:</B>
 <BR>
 
-<FORM method="POST" action="<?PHP_SELF?>" onSubmit="return valida()">
-<TABLE border="0"  align="left" width="50%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action="<?php _SELF?>" onSubmit="return valida()">
+<TABLE border="0"  align="left" width="50%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-                <TD width="30%" align="left" bgcolor=<?print TD_COLOR?>><?print $TRANS["cx_doc"]?>:</TD>
-                <TD width="70%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="mat_nome" id="idMaterial"></TD>
+                <TD width="30%" align="left" bgcolor=<?php print TD_COLOR?>><?php print $TRANS["cx_doc"]?>:</TD>
+                <TD width="70%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="mat_nome" id="idMaterial"></TD>
         </TR>
 		<tr>	  
-		  <TD width="30%" align="left" bgcolor=<?print TD_COLOR?>><?print $TRANS["cx_qtd"]?>:</TD>
-                <TD width="70%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="mat_qtd" id="idQtd"></TD>
+		  <TD width="30%" align="left" bgcolor=<?php print TD_COLOR?>><?php print $TRANS["cx_qtd"]?>:</TD>
+                <TD width="70%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="mat_qtd" id="idQtd"></TD>
         </TR>
         <TR>
-                <TD width="30%" align="left" bgcolor=<?print TD_COLOR?>><?print $TRANS["cx_caixa"]?>:</TD>
-                <TD width="70%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="mat_caixa" id="idCaixa"></TD>
+                <TD width="30%" align="left" bgcolor=<?php print TD_COLOR?>><?php print $TRANS["cx_caixa"]?>:</TD>
+                <TD width="70%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="mat_caixa" id="idCaixa"></TD>
         </TR>
 		
-	<?// TRADUZIR//?>	
+	<?php // TRADUZIR//?>	
 		<tr>
-                	<TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Associado ao modelo:</TD>
-	                <TD width="30%" align="left" bgcolor=<?print BODY_COLOR?>>
-						<?
+                	<TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Associado ao modelo:</TD>
+	                <TD width="30%" align="left" bgcolor=<?php print BODY_COLOR?>>
+						<?php 
 							print "<SELECT name='modelo' class='text' size=1 id='idModelo'>";
 	        		        print "<option value= '-1'>Selecione o modelo</option>";
 			
@@ -70,19 +70,19 @@
 		
 		
 		<tr>
-                <TD width="30%" align="left" bgcolor=<?print TD_COLOR?>><?print $TRANS["cx_coment"]?>:</TD>
-                <TD width="70%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" class="text" name="mat_obs" id="idObs"></TD>
+                <TD width="30%" align="left" bgcolor=<?php print TD_COLOR?>><?php print $TRANS["cx_coment"]?>:</TD>
+                <TD width="70%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" class="text" name="mat_obs" id="idObs"></TD>
         </TR>
 
         <TR>
                 <BR>
-                <TD align="right" width="20%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="<?print $TRANS["bt_cadastrar"]?>" name="ok">
+                <TD align="right" width="20%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="<?php print $TRANS["bt_cadastrar"]?>" name="ok">
                         <input type="hidden" name="rodou" value="sim">
                 </TD>
-                <TD align="center" width="80%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="<?print $TRANS["bt_cancelar"]?>" onClick="javascript:redirect('abertura.php')"></TD>
+                <TD align="center" width="80%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="<?php print $TRANS["bt_cancelar"]?>" onClick="javascript:redirect('abertura.php')"></TD>
         </TR>
 
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $erro="não";
@@ -132,11 +132,11 @@
                 ?>
 						<script language="javascript">
 						<!--
-							mensagem('<?print $aviso;?>');
+							mensagem('<?php print $aviso;?>');
 							history.back();
 						//-->
 						</script>
-				<?				
+				<?php 				
 				
 				
 				}

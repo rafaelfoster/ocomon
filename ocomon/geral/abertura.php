@@ -1,4 +1,4 @@
-<?session_start();
+<?php session_start();
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -59,7 +59,7 @@
 		window.setInterval("redirect('abertura.php')",120000);
 	</script>
 
-	<?
+	<?php 
 	print "</head>";
 	$auth = new auth;
 	if (isset($_GET['popup'])) {
@@ -185,34 +185,34 @@
 		if ($linhas>=1) {
 			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS AGENDADOS
 
-// 			if (!isset($_SESSION['ICON_CHAVE2'])) {
-// 				$_SESSION['ICON_CHAVE2']="open.png";
-// 			}
 
-// 			if (!isset($_SESSION['CHAVE2'])) {
-// 				$_SESSION['CHAVE2'] = "{display:none}";
-// 			} else
-// 			if (isset($_GET['CHAVE2'])) {
-// 				if ($_GET['CHAVE2'] == "") {
-// 					$_SESSION['CHAVE2'] = "{display:none}";
-// 					$_SESSION['ICON_CHAVE2']="open.png";
-// 				} else {
-// 					$_SESSION['CHAVE2'] = "";
-// 					$_SESSION['ICON_CHAVE2']="close.png";
-// 				}
-// 			}
+			if (!isset($_SESSION['CHAVE2'])) {
+				$_SESSION['CHAVE2'] = "{display:none}";
+				$_SESSION['ICON_CHAVE2']="open.png";
+			} else
+			if (isset($_GET['CHAVE2'])) {
+				if ($_GET['CHAVE2'] == "") {
+					$_SESSION['CHAVE2'] = "{display:none}";
+					$_SESSION['ICON_CHAVE2']="open.png";
+				} else {
+					$_SESSION['CHAVE2'] = "";
+					$_SESSION['ICON_CHAVE2']="close.png";
+				}
+			}
 
-// 			print "<tr><TD><IMG ID='imgAgendados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE2']."' width='9' height='9' ".
-// 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Agendados') ; redirect('".$_SERVER['PHP_SELF']."?".
-// 				"CHAVE2=".$_SESSION['CHAVE2']."')\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
-// 				"".TRANS('OCO_SCHEDULED')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</b></td></tr>";
+  			if (!isset($_SESSION['ICON_CHAVE2'])) {
+  				$_SESSION['ICON_CHAVE2']="open.png";
+  			}
+
 
 			print "<tr><TD><IMG ID='imgAgendados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE2']."' width='9' height='9' ".
 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Agendados') ; ajaxFunction('idDivSessionAgendados', 'updateCollapseSession.php', 'idLoad', 'CHAVE2=idChave2');".
 				"\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
 				"".TRANS('OCO_SCHEDULED')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</b></td></tr>";
 
-			print "<input type='hidden' name='chave2' id='idChave2' value='".$_SESSION['CHAVE2']."'>";
+			if (isset($_SESSION['CHAVE2'])){
+				print "<input type='hidden' name='chave2' id='idChave2' value='".$_SESSION['CHAVE2']."'>";
+			}
 			print "<div id='idDivSessionAgendados' style='{display:none;}'></div>";
 
 
@@ -221,7 +221,11 @@
 		}
 
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr><td colspan='4'><div id='Agendados' style='".$_SESSION['CHAVE2']."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
+		$style_chave2 = "";
+		if (isset($_SESSION['CHAVE2'])){
+			$style_chave2 = $_SESSION['CHAVE2'];
+		}
+		print "<tr><td colspan='4'><div id='Agendados' style='".$style_chave2."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 		print "<TABLE class='header_centro'  border-top: thin solid #999999;}' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
 		print "<TR class='header'>";
@@ -318,8 +322,17 @@
 		if ($rowAT['data_abertura'] <= date("Y-m-d H:i:s")){
 			$error = "";
 
-			$qryUpdSchedule = "UPDATE ocorrencias SET oco_scheduled=0, `status`=1 WHERE numero = ".$rowAT['numero']."";
-			$execUpdSchedule = mysql_query($qryUpdSchedule) or die ($qryUpdSchedule);
+			if (!isset($rowAT['date_first_queued']) ){ //OR empty($rowAT['date_first_queued'])
+				
+				$qryUpdSchedule = "UPDATE ocorrencias SET oco_scheduled=0, `status`=1, date_first_queued='".$rowAT['data_abertura']."' WHERE numero = ".$rowAT['numero']."";
+			
+			} else {
+				//$qryUpdSchedule = "UPDATE ocorrencias SET oco_scheduled=0, `status`=1, date_first_queued='".$rowAT['data_abertura']."' WHERE numero = ".$rowAT['numero']."";
+				$qryUpdSchedule = "UPDATE ocorrencias SET oco_scheduled=0, `status`=1 WHERE numero = ".$rowAT['numero']."";
+			}
+			
+			$execUpdSchedule = mysql_query($qryUpdSchedule) or die ($qryUpdSchedule);			
+
 
 			$qryConfig = "SELECT * FROM config";
 			$execConfig = mysql_query($qryConfig);
@@ -419,13 +432,13 @@
 		if ($linhas>1) {
 			//VARIÁVEIS DE SESSÃO PARA O COLLAPSE DOS CHAMADOS VINCULADOS AO OPERADOR LOGADO
 
-// 			if (!isset($_SESSION['ICON_CHAVE'])) {
-// 				$_SESSION['ICON_CHAVE']="close.png";
-// 			}
+ 			if (!isset($_SESSION['ICON_CHAVE'])) {
+ 				$_SESSION['ICON_CHAVE']="close.png";
+ 			}
 //
-// 			if (!isset($_SESSION['CHAVE'])) {
-// 				$_SESSION['CHAVE'] = "";
-// 			} else
+ 			if (!isset($_SESSION['CHAVE'])) {
+ 				$_SESSION['CHAVE'] = "";
+ 			} //else
 // 			if (isset($_GET['CHAVE'])) {
 // 				if ($_GET['CHAVE'] == "{display:none}") {
 // 					$_SESSION['CHAVE'] = "";
@@ -455,8 +468,13 @@
 		}
 		//print "<TD  class='line' >";
 
+		
+		$style_chave = "";
+		if (isset($_SESSION['CHAVE'])){
+			$style_chave = $_SESSION['CHAVE'];
+		}		
 		print "<tr><td colspan='4'></td></tr>";
-		print "<tr><td colspan='4'><div id='Vinculados' style='".$_SESSION['CHAVE']."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
+		print "<tr><td colspan='4'><div id='Vinculados' style='".$style_chave."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 		print "<TABLE class='header_centro'  border-top: thin solid #999999;}' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
 		print "<TR class='header'>";

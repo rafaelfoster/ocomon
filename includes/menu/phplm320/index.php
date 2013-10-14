@@ -4,37 +4,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
 <link rel="stylesheet" href="layersmenu-demo.css" type="text/css"></link>
-<?php
+<?php 
 require_once 'lib/layersmenu-browser_detection.php';
 if ($menuType == 'DOM') {
 ?>
 <link rel="stylesheet" href="layersmenu-index.css" type="text/css"></link>
-<?php
+<?php 
 } else {
 ?>
 <link rel="stylesheet" href="layersmenu-old.css" type="text/css"></link>
-<?php
+<?php 
 }
 ?>
 <link rel="shortcut icon" href="LOGOS/shortcut_icon_phplm.png"></link>
 <title>The PHP Layers Menu System</title>
-<?php
+<?php 
 if ($menuType != 'PLAIN') {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php
+<?php 
 	require_once 'libjs/layersmenu-browser_detection.js';
 ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
-<?php
+<?php 
 }
 ?>
 
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 
@@ -73,7 +73,7 @@ if ($menuType == 'DOM' || $menuType == 'OLD') {
 </head>
 <body>
 
-<?php
+<?php 
 if ($menuType == 'DOM' || $menuType == 'OLD') {
 	$mid->printMenu('homemenu');
 } else {
@@ -81,18 +81,18 @@ if ($menuType == 'DOM' || $menuType == 'OLD') {
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td valign="top">
-<?php
+<?php 
 	print $mid->newPlainMenu('homemenu');
 ?>
 </td>
 <td valign="top">
-<?php
+<?php 
 }
 ?>
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 
@@ -109,7 +109,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 </div>
 </div>
 
-<?php
+<?php 
 if ($menuType == 'DOM' || $menuType == 'OLD') {
 	$mid->printFooter();
 } else {
@@ -117,7 +117,7 @@ if ($menuType == 'DOM' || $menuType == 'OLD') {
 </td>
 </tr>
 </table>
-<?php
+<?php 
 }
 ?>
 

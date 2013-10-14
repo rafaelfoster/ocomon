@@ -1,4 +1,4 @@
-<?session_start();
+<?php session_start();
 	require_once ('../../includes/config.inc.php');
 
 	if (is_file("../includes/classes/conecta.class.php"))

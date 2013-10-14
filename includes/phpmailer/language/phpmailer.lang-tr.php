@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * PHPMailer dil dosyasý.
  * Türkçe Versiyonu

@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -338,7 +338,7 @@
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 			?>
 			<script type="text/javascript">
-				var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+				var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'problema' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
@@ -350,7 +350,7 @@
 				}
 			</script>
 
-			<?
+			<?php 
 
 			print "</TD>";
 		print "</TR>";
@@ -364,7 +364,7 @@
 			}
 			?>
 			<script type="text/javascript">
-				var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+				var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'solucao' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
@@ -375,7 +375,7 @@
 					oFCKeditor.Create() ;
 				}
 			</script>
-			<?
+			<?php 
 
 			print "</TD>";
 		print "</TR>";
@@ -651,7 +651,7 @@
 	}
 
 </script>
-<?
+<?php 
 
 print "</TABLE>";
 print "</FORM>";

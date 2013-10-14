@@ -1,4 +1,4 @@
-<?
+<?php 
 print "<html><head><title>Configuração do sistema</title>";
 
 	print "<style type=\"text/css\"><!--";

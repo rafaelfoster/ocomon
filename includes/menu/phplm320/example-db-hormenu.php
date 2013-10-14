@@ -11,13 +11,13 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
+<?php  require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'PEAR.php';
 require_once 'DB.php';
@@ -118,13 +118,13 @@ $mid->printHeader();
 </head>
 <body>
 
-<?php
+<?php 
 $mid->printMenu('hormenu1');
 ?>
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a DB-based example with a Horizontal Layers Menu</b>
+<b><?php  print basename(__FILE__); ?> - a DB-based example with a Horizontal Layers Menu</b>
 <div style="height: 10px"></div>
 <a href="http://phplayersmenu.sourceforge.net/"><img border="0"
 src="LOGOS/powered_by_phplm.png" alt="Powered by PHP Layers Menu"
@@ -139,11 +139,11 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 
-<?php
+<?php 
 $mid->printFooter();
 ?>
 

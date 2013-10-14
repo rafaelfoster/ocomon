@@ -1,4 +1,4 @@
-<?session_start();
+<?php session_start();
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -319,18 +319,18 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 			?>
 			<script type="text/javascript">
-				var bar = '<?print $_SESSION['s_formatBarOco'];?>'
+				var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'descricao' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = '<?print $descricao;?>';
+					oFCKeditor.Value = '<?php print $descricao;?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					oFCKeditor.Width = '570px';
 					oFCKeditor.Height = '100px';
 					oFCKeditor.Create() ;
 				}
 			</script>
-			<?
+			<?php 
 
 			print "</td>";
 
@@ -821,10 +821,10 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		var ok = true;
 		if (!LOAD) {
 			var ok = false;
-			var operador = <?print $rowlogado['sis_atende']?>;
+			var operador = <?php print $rowlogado['sis_atende']?>;
 			var unit = document.getElementById('idUnidade');
 			var tag = document.getElementById('idEtiqueta');
-			//var carreg = '<?//print $carrega?>';
+			//var carreg = '<?php //print $carrega?>';
 			if (unit != null){
 				if (operador == 0){
 					var ok = validaForm('idUnidade','COMBO','Unidade',1);
@@ -868,7 +868,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 	team = new Array(
 
-	<?
+	<?php 
 	$conta = 0;
 	$conta_sub = 0;
 
@@ -959,7 +959,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 		var inv = document.getElementById('idEtiqueta');
 		if (inst != null && inv != null){
 			if (inst.value=='null' || !inv.value){
-				var msg = '<?print TRANS('MSG_UNIT_TAG');?>!'
+				var msg = '<?php print TRANS('MSG_UNIT_TAG');?>!'
 				window.alert(msg);
 			} else
 			popup_alerta('../../invmon/geral/mostra_consulta_inv.php?comp_inst='+inst.value+'&comp_inv='+inv.value+'&popup='+true);
@@ -1094,7 +1094,7 @@ print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>"
 
 //-->
 </script>
-<?
+<?php 
 print "</TABLE>";
 
 print "</FORM>";

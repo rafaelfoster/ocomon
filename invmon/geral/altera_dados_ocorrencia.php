@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -29,9 +29,9 @@ $hoje = date("Y-m-d H:i:s");
 ?>
 
 <html>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
-<?
+<?php 
         if ($s_usuario!="admin")
         {
                 echo "<META HTTP-EQUIV=REFRESH   CONTENT=\"0;
@@ -39,10 +39,10 @@ $hoje = date("Y-m-d H:i:s");
         }
 ?>
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>InvMon - Controle de Inventário  -  Usuário: <font color=red>$s_usuario</font></b></TD>";
                         echo menu_usuario();
@@ -59,67 +59,67 @@ $hoje = date("Y-m-d H:i:s");
 <B>Alterar Registro</B>
 <BR>
 
-<FORM method="POST" action=<?PHP_SELF?>>
-<TABLE border="1"  align="center" width="100%" bgcolor=<?print BODY_COLOR?>>
+<FORM method="POST" action=<?php _SELF?>>
+<TABLE border="1"  align="center" width="100%" bgcolor=<?php print BODY_COLOR?>>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Código:</TD>
-                 <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,0);?></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Código:</TD>
+                 <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,0);?></TD>
         </TABLE>
         </TR>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Material:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mat_nome" value="<?print mysql_result($resultado,0,1);?>" maxlength="100" size="100"></TD>
-
-        </TABLE>
-        </TR>
-        <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Quantidade:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mat_qtd" value="<?print mysql_result($resultado,0,2);?>" maxlength="100" size="100"></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Material:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mat_nome" value="<?php print mysql_result($resultado,0,1);?>" maxlength="100" size="100"></TD>
 
         </TABLE>
         </TR>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Caixa:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mat_caixa" value="<?print mysql_result($resultado,0,3);?>" maxlength="100" size="100"></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Quantidade:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mat_qtd" value="<?php print mysql_result($resultado,0,2);?>" maxlength="100" size="100"></TD>
 
         </TABLE>
         </TR>
         <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Data:</TD>
-                 <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><?print mysql_result($resultado,0,4);?></TD>
-        </TABLE>
-        </TR>
-        <TR>
-        <TABLE border="1"  align="center" width="100%" bgcolor=<?print TD_COLOR?>>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Obs:</TD>
-                <TD width="80%" align="left" bgcolor=<?print BODY_COLOR?>><INPUT type="text" name="mat_obs" value="<?print mysql_result($resultado,0,5);?>" maxlength="100" size="100"></TD>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Caixa:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mat_caixa" value="<?php print mysql_result($resultado,0,3);?>" maxlength="100" size="100"></TD>
 
         </TABLE>
         </TR>
+        <TR>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Data:</TD>
+                 <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><?php print mysql_result($resultado,0,4);?></TD>
+        </TABLE>
+        </TR>
+        <TR>
+        <TABLE border="1"  align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Obs:</TD>
+                <TD width="80%" align="left" bgcolor=<?php print BODY_COLOR?>><INPUT type="text" name="mat_obs" value="<?php print mysql_result($resultado,0,5);?>" maxlength="100" size="100"></TD>
+
+        </TABLE>
+        </TR>
 
 
 
         <TR>
-        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
                 <BR>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><input type="submit" value="  Ok  " name="Liberar">
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><input type="submit" value="  Ok  " name="Liberar">
                         <input type="hidden" name="rodou" value="sim">
                 </TD>
-                <TD align="center" width="50%" bgcolor=<?print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
+                <TD align="center" width="50%" bgcolor=<?php print BODY_COLOR?>><INPUT type="reset" value="Cancelar" name="cancelar"></TD>
         </TABLE>
         </TR>
-        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?print TD_COLOR?>>
+        <TABLE  border="0" cellpadding="0" cellspacing="0" align="center" width="100%" bgcolor=<?php print TD_COLOR?>>
         <TR>
-                <TD align="center" width="100%" bgcolor=<?print BODY_COLOR?>><a href=abertura.php>Voltar</a></TD>
+                <TD align="center" width="100%" bgcolor=<?php print BODY_COLOR?>><a href=abertura.php>Voltar</a></TD>
         </TR>
         </TABLE>
 
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $erro = "não";

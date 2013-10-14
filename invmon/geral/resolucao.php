@@ -1,4 +1,4 @@
-<?
+<?php 
 
 # Inlcuir comentários e informações sobre o sistema
 #
@@ -17,13 +17,13 @@
 ?>
 
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>InvMon - controle de inventário  -  Usuário: <font color=red>$s_usuario</font></b></TD>";
                         if ($s_nivel==1)
@@ -43,7 +43,7 @@
         <BR>
         <B>Cadastro de resolução de Scanners:</B>
         <BR>
-<?
+<?php 
 
 
         print "<TD align=right bgcolor=$cor1><a href=incluir_resolucao.php>Incluir Resolução</a></TD><BR>";
@@ -85,13 +85,13 @@
                 $j++;
                 ?>
                 <TR>
-                <TD bgcolor=<?print $color;?>><a href=mostra_consulta.php?=emBreve<?print mysql_result($resultado,$i,0);?>><?print mysql_result($resultado,$i,0);?></a></TD>
-                <td bgcolor=<?print $color;?>><? print mysql_result($resultado,$i,1);?></td>
-                <TD bgcolor=<?print $color;?>><a href=altera_dados_resolucao.php?resol_cod=<?print mysql_result($resultado,$i,0);?>>Alterar</a></TD>
-                <TD bgcolor=<?print $color;?>><a href=exclui_dados_resolucao.php?resol_cod=<?print mysql_result($resultado,$i,0);?>>Excluir</a></TD>
+                <TD bgcolor=<?php print $color;?>><a href=mostra_consulta.php?=emBreve<?php print mysql_result($resultado,$i,0);?>><?php print mysql_result($resultado,$i,0);?></a></TD>
+                <td bgcolor=<?php print $color;?>><?php  print mysql_result($resultado,$i,1);?></td>
+                <TD bgcolor=<?php print $color;?>><a href=altera_dados_resolucao.php?resol_cod=<?php print mysql_result($resultado,$i,0);?>>Alterar</a></TD>
+                <TD bgcolor=<?php print $color;?>><a href=exclui_dados_resolucao.php?resol_cod=<?php print mysql_result($resultado,$i,0);?>>Excluir</a></TD>
 
 
-                <?
+                <?php 
                   /*      $problemas = mysql_result($resultado,$i,1);
                         $query = "SELECT * FROM problemas WHERE prob_id='$problemas'";
                         $resultado3 = mysql_query($query);   */

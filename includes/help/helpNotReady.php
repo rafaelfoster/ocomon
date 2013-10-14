@@ -1,4 +1,4 @@
-<?
+<?php 
 print "<html><head><title>Help do Sistema Ocomon</title>";
 
 	print "<style type=\"text/css\"><!--";

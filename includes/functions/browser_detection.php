@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
 Script Name: Lightweight PHP Browser Detector
 Author: Harald Hope, Website: http://TechPatterns.com/

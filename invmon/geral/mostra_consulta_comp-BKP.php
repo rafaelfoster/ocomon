@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -1985,7 +1985,7 @@
 	<SCRIPT LANGUAGE="JAVASCRIPT">
 	<!--
 
-		desabilitaLinks(<?print $_SESSION['s_invmon'];?>);
+		desabilitaLinks(<?php print $_SESSION['s_invmon'];?>);
 
 		function checar() {
 			var checado = false;
@@ -2051,7 +2051,7 @@
 		}
 		//-->
 		</SCRIPT>
-		<?
+		<?php 
 print "</body>";
 print "</html>";
 ?>

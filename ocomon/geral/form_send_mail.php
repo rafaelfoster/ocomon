@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -178,7 +178,7 @@
 					oFCKeditor.Create() ;
 
 				</script>
-				<?*/
+				<?php */
 
 				print "</td></tr>";
 
@@ -344,14 +344,14 @@
 			if (!LOAD) {
 				var ok = false;
 				if (document.form1.field_to_editable.value != ''){
-					var ok = validaForm('idFieldTo','','<?print TRANS('MAIL_FIELD_TO')?>',0);
-					if (ok ) var ok = validaForm('idFieldToEdit','MULTIEMAIL','<?print TRANS('MAIL_FIELD_TO_EDITABLE')?>',0);
+					var ok = validaForm('idFieldTo','','<?php print TRANS('MAIL_FIELD_TO')?>',0);
+					if (ok ) var ok = validaForm('idFieldToEdit','MULTIEMAIL','<?php print TRANS('MAIL_FIELD_TO_EDITABLE')?>',0);
 				} else {
-					var ok = validaForm('idFieldTo','','<?print TRANS('MAIL_FIELD_TO')?>',1);
+					var ok = validaForm('idFieldTo','','<?php print TRANS('MAIL_FIELD_TO')?>',1);
 				}
 
-				if (ok) var ok = validaForm('idFieldSubject','','<?print TRANS('MAIL_FIELD_SUBJECT')?>',1);
-				if (ok) var ok = validaForm('idFieldBody','','<?print TRANS('MAIL_FIELD_BODY')?>',1);
+				if (ok) var ok = validaForm('idFieldSubject','','<?php print TRANS('MAIL_FIELD_SUBJECT')?>',1);
+				if (ok) var ok = validaForm('idFieldBody','','<?php print TRANS('MAIL_FIELD_BODY')?>',1);
 			}
 
 			return ok;
@@ -489,7 +489,7 @@
 
 	//-->
 	</script>
-	<?
+	<?php 
 
 print "</BODY>";
 print "</HTML>";

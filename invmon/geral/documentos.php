@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -296,8 +296,8 @@
 <script type="text/javascript">
 <!--
 	function valida(){
-		var ok = validaForm('idModelo','','<?print TRANS('FIELD_NAME_MODEL');?>',1);
-		if (ok) var ok = validaForm('idTipo','COMBO','<?print TRANS('FIELD_TYPE_EQUIP');?>',1);
+		var ok = validaForm('idModelo','','<?php print TRANS('FIELD_NAME_MODEL');?>',1);
+		if (ok) var ok = validaForm('idTipo','COMBO','<?php print TRANS('FIELD_TYPE_EQUIP');?>',1);
 
 		return ok;
 	}
@@ -306,7 +306,7 @@
 </script>
 
 
-<?
+<?php 
 print "</body>";
 print "</html>";
 ?>

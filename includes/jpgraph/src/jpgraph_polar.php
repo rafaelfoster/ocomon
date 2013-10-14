@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_POLAR.PHP
 // Description:	Polar plot extension for JpGraph

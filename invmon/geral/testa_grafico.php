@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // $Id: testa_grafico.php,v 1.1.1.1 2005/09/21 19:18:54 flavio_ribeiro Exp $
 include ("../jpgraph/src/jpgraph.php");

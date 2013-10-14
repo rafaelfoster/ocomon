@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File:	JPGRAPH_GRADIENT.PHP
 // Description:	Create a color gradient

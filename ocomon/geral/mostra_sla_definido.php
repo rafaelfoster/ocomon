@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -31,7 +31,7 @@
 		return false
 	}
 </script>
-<?
+<?php 
 
 print "<HTML><head><title>SLA Definido</title></head>";
 print "<BODY bgcolor='".BODY_COLOR."'>";
@@ -51,10 +51,10 @@ print "<BODY bgcolor='".BODY_COLOR."'>";
 	$exec_sql = mysql_query($sql) or die ('ERRO: <br>'.$sql);
 	$row=mysql_fetch_array($exec_sql);
 
-	print "<br><b>SLAs para a ocorrência <font color='red'>".$_GET['numero']."</font>:</b><br>";
+	print "<br><b>".TRANS('SLA_TO_TICKET')." <font color='red'>".$_GET['numero']."</font>:</b><br>";
 	print "<table cellspacing='0' border='1' cellpadding='1' align='left' width='100%'>";
-		print "<tr><td width='20%'><b>Setor:</b></td><td width='30%'>".NVL($row['LOCAL'])."</td><td width='20%'><b>Problema:</b></td><td width='30%'>".NVL($row['problema'])."</td></tr>";
-		print "<tr><td width='20%'><b>SLA de Resposta:</b></td><td width='30%'>".NVL($row['resposta'])."</td><td width='20%'><b>SLA de Solução:</b></td><td width='30%'>".NVL($row['solucao'])."</td></tr>";
+		print "<tr><td width='20%'><b>".TRANS('FIELD_SECTOR').":</b></td><td width='30%'>".NVL($row['LOCAL'])."</td><td width='20%'><b>".TRANS('OCO_PROB').":</b></td><td width='30%'>".NVL($row['problema'])."</td></tr>";
+		print "<tr><td width='20%'><b>".TRANS('RESPONSE_SLA').":</b></td><td width='30%'>".NVL($row['resposta'])."</td><td width='20%'><b>".TRANS('SOLVE_SLA').":</b></td><td width='30%'>".NVL($row['solucao'])."</td></tr>";
 	print "</table>";
 
 print "</body>";

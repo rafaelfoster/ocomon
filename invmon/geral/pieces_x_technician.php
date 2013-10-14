@@ -1,4 +1,4 @@
-<?php
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -60,8 +60,8 @@
 				<script language="JavaScript">
 
 					function valida(){
-						var ok = validaForm('idD_ini','DATA-','<?print TRANS('OCO_FIELD_DATE_BEGIN');?>',0);
-						if (ok) var ok = validaForm('idD_fim','DATA-','<?print TRANS('OCO_FIELD_DATE_FINISH');?>',0);
+						var ok = validaForm('idD_ini','DATA-','<?php print TRANS('OCO_FIELD_DATE_BEGIN');?>',0);
+						if (ok) var ok = validaForm('idD_fim','DATA-','<?php print TRANS('OCO_FIELD_DATE_FINISH');?>',0);
 						
 						if (ok) newTarget();
 						
@@ -80,7 +80,7 @@
 						}
 					}					
 				</script>
-		<?
+		<?php 
 	//if $ok!=Pesquisar
 	} else
 	if (isset($_POST['ok'])) {
@@ -255,7 +255,7 @@
 			-->
 			</script>
 
-		<?
+		<?php 
 
 	print "</BODY>";
 	print "</html>";

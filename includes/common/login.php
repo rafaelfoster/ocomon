@@ -1,4 +1,4 @@
-<?/*                        Copyright 2005 Flávio Ribeiro
+<?php /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
 
@@ -53,6 +53,7 @@
 			$s_area = $row['AREA'];
 			$s_uid = $row['user_id'];
 			$s_area_admin =  $row['user_admin'];
+			$s_screen = $row['sis_screen'];
 
 			/*VERIFICA EM QUAIS ÁREAS O USUÁRIO ESTÁ CADASTRADO*/
 			$qryUa = "SELECT * FROM usuarios_areas where uarea_uid=".$s_uid.""; //and uarea_sid=".$s_area."
@@ -78,6 +79,11 @@
 				if($s_permissoes[$i] == 2) $s_invmon = 1;
 			}
 
+			$sqlPrefs = "SELECT * FROM uprefs WHERE upref_uid = ".$s_uid."";
+			$execPrefs = mysql_query($sqlPrefs);
+			$rowPref = mysql_fetch_array($execPrefs);			
+			
+			
 			$sqlFormatBar = "SELECT * FROM config";
 			$execFormatBar = mysql_query($sqlFormatBar) or die ('NÃO FOI POSSÍVEL ACESSAR A TABELA DE CONFIGURAÇÕES DO SISTEMA!');
 			$rowFormatBar = mysql_fetch_array($execFormatBar);
@@ -106,12 +112,18 @@
 			$_SESSION['s_area_admin'] = $s_area_admin;
 			$_SESSION['s_ocomon'] = $s_ocomon;
 			$_SESSION['s_invmon'] = $s_invmon;
+			$_SESSION['s_allow_change_theme'] = $rowFormatBar['conf_allow_change_theme'];
+			$_SESSION['s_screen'] = $s_screen;			
 
 
 			$_SESSION['s_formatBarOco'] = $formatBarOco;
 			$_SESSION['s_formatBarMural'] = $formatBarMural;
 
-			$_SESSION['s_language'] = $rowFormatBar['conf_language'];
+			if (!empty($rowPref['upref_lang'])){
+				$_SESSION['s_language'] = $rowPref['upref_lang'];			
+			} else {
+				$_SESSION['s_language'] = $rowFormatBar['conf_language'];
+			}
 
 			$_SESSION['s_date_format'] = $rowFormatBar['conf_date_format'];
 
@@ -122,6 +134,8 @@
 			$_SESSION['s_allow_reopen'] = $rowFormatBar['conf_allow_reopen'];
 
 			$_SESSION['s_allow_date_edit'] = $rowFormatBar['conf_allow_date_edit'];
+			
+			$_SESSION['s_ocomon_site'] = $rowFormatBar['conf_ocomon_site'];
 
 			$sqlStyles = "SELECT * FROM temas t, uthemes u  WHERE u.uth_uid = ".$_SESSION['s_uid']." and t.tm_id = u.uth_thid";
 			$execStyles = mysql_query($sqlStyles) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DO TEMA!<BR>'.$sqlStyles);
@@ -171,6 +185,7 @@
 			$s_area = $row['AREA'];
 			$s_uid = $row['user_id'];
 			$s_area_admin =  $row['user_admin'];
+			$s_screen = $row['sis_screen'];
 
 
 			/*VERIFICA EM QUAIS ÁREAS O USUÁRIO ESTÁ CADASTRADO*/
@@ -198,6 +213,12 @@
 				if($s_permissoes[$i] == 2) $s_invmon = 1;
 			}
 
+			
+			$sqlPrefs = "SELECT * FROM uprefs WHERE upref_uid = ".$s_uid."";
+			$execPrefs = mysql_query($sqlPrefs);
+			$rowPref = mysql_fetch_array($execPrefs);
+			
+			
 			$sqlFormatBar = "SELECT * FROM config"; //INFO FROM GENERAL CONF
 			$execFormatBar = mysql_query($sqlFormatBar) or die ('NÃO FOI POSSÍVEL ACESSAR A TABELA DE CONFIGURAÇÕES DO SISTEMA!');
 			$rowFormatBar = mysql_fetch_array($execFormatBar);
@@ -225,11 +246,17 @@
 			$_SESSION['s_ocomon'] = $s_ocomon;
 			$_SESSION['s_invmon'] = $s_invmon;
 			$_SESSION['s_allow_change_theme'] = $rowFormatBar['conf_allow_change_theme'];
+			$_SESSION['s_screen'] = $s_screen;
+			
 
 			$_SESSION['s_formatBarOco'] = $formatBarOco;
 			$_SESSION['s_formatBarMural'] = $formatBarMural;
 
-			$_SESSION['s_language'] = $rowFormatBar['conf_language'];
+			if (!empty($rowPref['upref_lang'])){
+				$_SESSION['s_language'] = $rowPref['upref_lang'];			
+			} else {
+				$_SESSION['s_language'] = $rowFormatBar['conf_language'];
+			}
 
 			$_SESSION['s_date_format'] = $rowFormatBar['conf_date_format'];
 
@@ -240,6 +267,8 @@
 			$_SESSION['s_allow_reopen'] = $rowFormatBar['conf_allow_reopen'];
 
 			$_SESSION['s_allow_date_edit'] = $rowFormatBar['conf_allow_date_edit'];
+			
+			$_SESSION['s_ocomon_site'] = $rowFormatBar['conf_ocomon_site'];
 
 			$sqlStyles = "SELECT * FROM temas t, uthemes u  WHERE u.uth_uid = ".$_SESSION['s_uid']." and t.tm_id = u.uth_thid";
 			$execStyles = mysql_query($sqlStyles) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DO TEMA!<BR>'.$sqlStyles);

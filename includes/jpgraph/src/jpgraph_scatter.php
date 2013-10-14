@@ -1,4 +1,4 @@
-<?php 
+<?php  
 /*=======================================================================
 // File:	JPGRAPH_SCATTER.PHP
 // Description: Scatter (and impuls) plot extension for JpGraph

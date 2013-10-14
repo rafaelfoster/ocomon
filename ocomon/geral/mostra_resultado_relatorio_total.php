@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -27,7 +27,7 @@
 <HTML>
 <BODY>
 
-<?
+<?php 
 
          if ($rodou == "sim")
          {
@@ -186,34 +186,34 @@
                         <TR>
                                 <TABLE border="0"  align="center" width="100%">
                                         <TD width="20%" align="left">Número:</TD>
-                                        <TD width="80%" align="left"><?print mysql_result($resultado,$j,0);?></TD>
+                                        <TD width="80%" align="left"><?php print mysql_result($resultado,$j,0);?></TD>
                                 </TABLE>
                         </TR>
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                         <TD width="20%" align="left">Problema:</TD>
-                        <?
+                        <?php 
                                 $problemas = mysql_result($resultado,$j,1);
                                 $query = "SELECT * FROM problemas WHERE prob_id=$problemas";
                                 $resultado3 = mysql_query($query);
                         ?>
-                        <TD width="30%" align="left"><?print mysql_result($resultado3,0,1);?></TD>
+                        <TD width="30%" align="left"><?php print mysql_result($resultado3,0,1);?></TD>
                         <TD width="20%" align="left">Sistema:</TD>
-                        <?
+                        <?php 
                                 $sistemas = mysql_result($resultado,$j,4);
                                 $query = "SELECT * FROM sistemas WHERE sis_id=$sistemas";
                                 $resultado3 = mysql_query($query);
                         ?>
-                        <TD width="30%" align="left"><?print mysql_result($resultado3,0,1);?></TD>
+                        <TD width="30%" align="left"><?php print mysql_result($resultado3,0,1);?></TD>
                         </TABLE>
                         </TR>
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                                 <TD width="20%" align="left" valign="top">Descrição:</TD>
-                                <TD width="80%" align="left"><?print nl2br(mysql_result($resultado,$j,2));?></TD>
+                                <TD width="80%" align="left"><?php print nl2br(mysql_result($resultado,$j,2));?></TD>
                         </TABLE>
                         </TR>
-                        <?
+                        <?php 
                                 if ($linhas2!=0)
                                 {
                                         $i=0;
@@ -222,15 +222,15 @@
                                                 ?>
                                                 <TR>
                                                 <TABLE border="0"  align="center" width="100%">
-                                                        <TD width="20%" align="left" valign="top">Assentamento <?print $i+1;?> de <?print $linhas2;?>:</TD>
-                                                        <TD width="40%" align="left" valign="top"><?print nl2br(mysql_result($resultado2,$i,2));?></TD>
+                                                        <TD width="20%" align="left" valign="top">Assentamento <?php print $i+1;?> de <?php print $linhas2;?>:</TD>
+                                                        <TD width="40%" align="left" valign="top"><?php print nl2br(mysql_result($resultado2,$i,2));?></TD>
                                                         <TD width="5%" align="left" valign="top">Data:</TD>
-                                                        <TD width="15%" align="left" valign="top"><?print datab(mysql_result($resultado2,$i,3));?></TD>
+                                                        <TD width="15%" align="left" valign="top"><?php print datab(mysql_result($resultado2,$i,3));?></TD>
                                                         <TD width="10%" align="left" valign="top">Responsável:</TD>
-                                                        <TD width="10%" align="left" valign="top"><?print mysql_result($resultado2,$i,4);?></TD>
+                                                        <TD width="10%" align="left" valign="top"><?php print mysql_result($resultado2,$i,4);?></TD>
                                                 </TABLE>
                                                 </TR>
-                                                <?
+                                                <?php 
                                                 $i++;
                                         }
                                 }
@@ -238,41 +238,41 @@
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                                 <TD width="20%" align="left">Equipamento:</TD>
-                                <TD width="80%" align="left"><?print mysql_result($resultado,$j,3);?></TD>
+                                <TD width="80%" align="left"><?php print mysql_result($resultado,$j,3);?></TD>
                         </TABLE>
                         </TR>
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                                 <TD width="20%" align="left">Contato:</TD>
-                                <TD width="30%" align="left"><?print mysql_result($resultado,$j,5);?></TD>
+                                <TD width="30%" align="left"><?php print mysql_result($resultado,$j,5);?></TD>
                                 <TD width="20%" align="left">Ramal:</TD>
-                                <TD width="30%" align="left"><?print mysql_result($resultado,$j,6);?></TD>
+                                <TD width="30%" align="left"><?php print mysql_result($resultado,$j,6);?></TD>
                         </TABLE>
                         </TR>
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                                 <TD width="20%" align="left">Local:</TD>
-                                <?
+                                <?php 
                                         $local = mysql_result($resultado,$j,7);
                                         $query = "SELECT * FROM localizacao WHERE loc_id='$local'";
                                         $resultado3 = mysql_query($query);
                                 ?>
-                                <TD width="30%" align="left"><?print mysql_result($resultado3,0,1);?></TD>
+                                <TD width="30%" align="left"><?php print mysql_result($resultado3,0,1);?></TD>
                                 <TD width="20%" align="left">Operador:</TD>
-                                <TD width="30%" align="left"><?print mysql_result($resultado,$j,8);?></TD>
+                                <TD width="30%" align="left"><?php print mysql_result($resultado,$j,8);?></TD>
                         </TABLE>
                         </TR>
                         <TR>
                         <TABLE border="0"  align="center" width="100%">
                                 <TD width="20%" align="left">Data de abertura:</TD>
-                                <TD width="30%" align="left"><?print datab(mysql_result($resultado,$j,9));?></TD>
+                                <TD width="30%" align="left"><?php print datab(mysql_result($resultado,$j,9));?></TD>
                                 <TD width="20%" align="left">Status:</TD>
-                                <TD width="30%" align="left"><?print mysql_result($resultado,$j,11);?></TD>
+                                <TD width="30%" align="left"><?php print mysql_result($resultado,$j,11);?></TD>
                         </TABLE>
                         </TR>
                         </TABLE>
                         <HR>
-                        <?
+                        <?php 
                 }
                 $j++;
                 //###############################################################################

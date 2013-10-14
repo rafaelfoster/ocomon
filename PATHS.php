@@ -1,4 +1,4 @@
-<?	
+<?php 	
 	$ocoDirPath = 'ocomon/geral/';
 	$invDirPath = 'invmon/geral/';
 	$admDirPath = 'admin/geral/';

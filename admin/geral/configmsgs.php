@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -107,13 +107,13 @@
 		<script type="text/javascript">
   			var oFCKeditor = new FCKeditor( 'body' ) ;
   			oFCKeditor.BasePath = '../../includes/fckeditor/';
-			oFCKeditor.Value = '<?print $row['msg_body'];?>';
+			oFCKeditor.Value = '<?php print $row['msg_body'];?>';
 			oFCKeditor.ToolbarSet = 'ocomon';
 			oFCKeditor.Width = '400px';
 			oFCKeditor.Height = '100px';
 			oFCKeditor.Create() ;
 		</script>
-		<?
+		<?php 
 		print "</td></tr>";
 		print "<tr><td>".TRANS('OPT_ALTERNATE_MSG','Msg Alternativa')."</td><td><textarea name='altbody' class='textarea2'>".$row['msg_altbody']."</textarea></td></tr>";
 

@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -40,17 +40,17 @@
 <B>Alterar dados do modelo de equipamento</B>
 <BR>
 
-<FORM method="POST" action='<?$PHP_SELF?>' ENCTYPE="multipart/form-data">
+<FORM method="POST" action='<?php $PHP_SELF?>' ENCTYPE="multipart/form-data">
 <TABLE border="0"  align="center" width="100%">
         <TR>
-                <TD width="20%" align="left" bgcolor=<?print TD_COLOR?>>Modelo:</TD>
-                <TD width="80%" align="left"><INPUT type="text" class='text' name="marc_nome" value="<?print mysql_result($resultado,0,1);?>"></TD>
+                <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?>>Modelo:</TD>
+                <TD width="80%" align="left"><INPUT type="text" class='text' name="marc_nome" value="<?php print mysql_result($resultado,0,1);?>"></TD>
         </TR>
         
         <TR>
-                <TD width="20%" align="left" valign="top"  bgcolor=<?print TD_COLOR?>>Tipo de equipamento:</TD>
+                <TD width="20%" align="left" valign="top"  bgcolor=<?php print TD_COLOR?>>Tipo de equipamento:</TD>
                 <TD width="80%" align="left"><select name="tipo" class='select'>
-        <?
+        <?php 
 			$atual = mysql_result($resultado,0,2);
 			$sql = "select * from tipo_equip where tipo_cod=$atual";
 			$commit = mysql_query($sql);
@@ -101,12 +101,12 @@
 		<TR>
                 <TD align="center" width="20%"><input type="submit" value="  Ok  " name="ok">
                         <input type="hidden" name="rodou" value="sim">
-                         <input type="hidden" name="cont" value=<?print $cont;?>
+                         <input type="hidden" name="cont" value=<?php print $cont;?>
                 </TD>
                 <TD align="center" width="80%"><INPUT type="reset" value="Cancelar" name="cancelar" onClick="javascript:window.close();"></TD>
         </TR>
 
-        <?
+        <?php 
                 if ($rodou == "sim")
                 {
                         $erro = "não";

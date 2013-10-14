@@ -1,4 +1,4 @@
-<?
+<?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -105,13 +105,13 @@
 <!--		<script type="text/javascript">
   			var oFCKeditor = new FCKeditor( 'msg_html' ) ;
   			oFCKeditor.BasePath = '../../includes/fckeditor/';
-			oFCKeditor.Value = '<?//print $row['tpl_msg_html'];?>';
+			oFCKeditor.Value = '<?php //print $row['tpl_msg_html'];?>';
 			oFCKeditor.ToolbarSet = 'ocomon';
 			oFCKeditor.Width = '400px';
 			oFCKeditor.Height = '100px';
 			oFCKeditor.Create() ;
 		</script>-->
-		<?
+		<?php 
 		//print "</td></tr>";
 		//print "<tr><td>".TRANS('OPT_ALTERNATE_MSG')."</td><td><textarea name='msg_text' class='textarea2'>".$row['tpl_msg_text']."</textarea></td></tr>";
 		print "<tr><td>".TRANS('OPT_MSG')."</td><td><textarea name='msg_text' class='textarea2' id='idText'>".$row['tpl_msg_text']."</textarea></td></tr>";
@@ -141,7 +141,7 @@
 			oFCKeditor.Height = '100px';
 			oFCKeditor.Create() ;*/
 		</script>
-		<?
+		<?php 
 		//print "</td></tr>";
 		//print "<tr><td>".TRANS('OPT_ALTERNATE_MSG','Msg Alternativa')."</td><td><textarea name='msg_text' class='textarea2'></textarea></td></tr>";
 		print "<tr><td>".TRANS('OPT_MSG','Msg Alternativa')."</td><td><textarea name='msg_text' class='textarea2' id='idText'></textarea></td></tr>";
@@ -202,15 +202,15 @@
 		function valida(){
 			var ok = false;
 
-			var ok = validaForm('idSigla','','<?print TRANS('TPL_SIGLA')?>',1);
-			if (ok) var ok = validaForm('idTplDesc','','<?print TRANS('TPL_SUBJECT')?>',1);
-			if (ok) var ok = validaForm('idText','','<?print TRANS('OPT_MSG')?>',1);
+			var ok = validaForm('idSigla','','<?php print TRANS('TPL_SIGLA')?>',1);
+			if (ok) var ok = validaForm('idTplDesc','','<?php print TRANS('TPL_SUBJECT')?>',1);
+			if (ok) var ok = validaForm('idText','','<?php print TRANS('OPT_MSG')?>',1);
 
 			return ok;
 		}
 	//-->
 	</script>
-	<?
+	<?php 
 
 
 

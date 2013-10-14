@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*=======================================================================
 // File: 	JPGRAPH_CANVAS.PHP
 // Description:	Canvas drawing extension for JpGraph

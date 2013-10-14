@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -24,13 +24,13 @@
 ?>
 
 <HTML>
-<BODY bgcolor=<?print BODY_COLOR?>>
+<BODY bgcolor=<?php print BODY_COLOR?>>
 
 <TABLE  bgcolor="black" cellspacing="1" border="1" cellpadding="1" align="center" width="100%">
-        <TD bgcolor=<?print TD_COLOR?>>
-                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?print TD_COLOR?>>
+        <TD bgcolor=<?php print TD_COLOR?>>
+                <TABLE  cellspacing="0" border="0" cellpadding="0" bgcolor=<?php print TD_COLOR?>>
                         <TR>
-                        <?
+                        <?php 
                         $cor1 = TD_COLOR;
                         print  "<TD bgcolor=$cor1 nowrap><b>OcoMon - Módulo de Ocorrências</b></TD>";
                         echo menu_usuario();
@@ -48,7 +48,7 @@
 <B>Consulta de Soluções</B>
 <BR>
 
-<?
+<?php 
 
 		
 		$problema = str_replace(" ","%",trim($problema));
@@ -99,11 +99,11 @@
                                 //echo "<META HTTP-EQUIV=REFRESH CONTENT=\"0;URL=mensagem.php\">";
 								?>
 								<script>
-								window.alert('<?print $aviso;?>');
+								window.alert('<?php print $aviso;?>');
 								history.back();
 								</script>
 								
-								<?
+								<?php 
                         }
 
                 $cor=TD_COLOR;
@@ -121,27 +121,27 @@
                 ?>
                 <TABLE border="1" style="{border-collapse:collapse;} align="center" width="100%">
                        <tr> 
-						<TD align="left" bgcolor=<?print TD_COLOR?>>Número:</TD>
-                        <TD align='left'><? print "<a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a>"?></TD>
+						<TD align="left" bgcolor=<?php print TD_COLOR?>>Número:</TD>
+                        <TD align='left'><?php  print "<a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a>"?></TD>
                         <TD align="left">Data:</TD>
-                        <TD align="left"><?print datab($row['data']);?></TD>
+                        <TD align="left"><?php print datab($row['data']);?></TD>
                         <TD align="left">Operador:</TD>
-                        <TD align="left"><?print $row['nome'];?></TD>
+                        <TD align="left"><?php print $row['nome'];?></TD>
                 </TR>
                 <TR>
-                        <TD width="20%" align="left" bgcolor=<?print TD_COLOR?> valign="top">Problema:</TD>
-                        <TD colspan='5' width="80%" align="left"><?print nl2br($row['problema']);?></TD>
+                        <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?> valign="top">Problema:</TD>
+                        <TD colspan='5' width="80%" align="left"><?php print nl2br($row['problema']);?></TD>
                 </TR>
 
                 <TR>
-                        <TD width="20%" align="left" bgcolor=<?print TD_COLOR?> valign="top">Solução:</TD>
-                        <TD colspan='5' width="80%" align="left"><?print nl2br($row['solucao']);?></TD>
+                        <TD width="20%" align="left" bgcolor=<?php print TD_COLOR?> valign="top">Solução:</TD>
+                        <TD colspan='5' width="80%" align="left"><?php print nl2br($row['solucao']);?></TD>
                 </TR>
 
                 <HR>
 
                 </TABLE>
-        <?
+        <?php 
      
         }//while
 	//print $query;

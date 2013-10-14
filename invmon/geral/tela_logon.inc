@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 print "<HTML><HEAD><TITLE>-=[InvMon - Monitor de Inventário]=-</TITLE></HEAD>";
 

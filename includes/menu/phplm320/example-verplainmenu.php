@@ -12,7 +12,7 @@
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b><?php print basename(__FILE__); ?> - a file-based example with a (Vertical) Plain Menu</b>
+<b><?php  print basename(__FILE__); ?> - a file-based example with a (Vertical) Plain Menu</b>
 </div>
 </div>
 
@@ -20,7 +20,7 @@
 <tr>
 <td width="20%" valign="top">
 <div style="height: 3px"></div>
-<?php
+<?php 
 require_once 'lib/PHPLIB.php';
 require_once 'lib/layersmenu-common.inc.php';
 require_once 'lib/plainmenu.inc.php';
@@ -50,7 +50,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php require_once 'README.ihtml'; ?>
+<?php  require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>

@@ -1,4 +1,4 @@
-<?
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
   
          This file is part of OCOMON.
@@ -27,7 +27,7 @@
 <HTML>
 <BODY>
 
-<?
+<?php 
 
         $query = "SELECT * FROM ocorrencias WHERE (";
 
@@ -88,54 +88,54 @@
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências de:</TD>
-                <TD width="20%" align="left"><?print $numero_inicial;?> a <?print $numero_final;?></TD>
+                <TD width="20%" align="left"><?php print $numero_inicial;?> a <?php print $numero_final;?></TD>
                 <TD width="40%" align="left">Número total de ocorrências:</TD>
-                <TD width="20%" align="left"><?print $linhas_total;?></TD>
+                <TD width="20%" align="left"><?php print $linhas_total;?></TD>
         </TABLE>
         </TR>
 
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências abertas:</TD>
-                <TD width="30%" align="left"><?print $linhas_abertas;?></TD>
+                <TD width="30%" align="left"><?php print $linhas_abertas;?></TD>
                 <TD width="20%" align="left">Percentual:</TD>
-                <TD width="30%" align="left"><?print round(($linhas_abertas*100)/$linhas_total);?>%</TD>
+                <TD width="30%" align="left"><?php print round(($linhas_abertas*100)/$linhas_total);?>%</TD>
         </TABLE>
         </TR>
 
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências encerradas:</TD>
-                <TD width="30%" align="left"><?print $linhas_encerradas;?></TD>
+                <TD width="30%" align="left"><?php print $linhas_encerradas;?></TD>
                 <TD width="20%" align="left">Percentual:</TD>
-                <TD width="30%" align="left"><?print round(($linhas_encerradas*100)/$linhas_total);?>%</TD>
+                <TD width="30%" align="left"><?php print round(($linhas_encerradas*100)/$linhas_total);?>%</TD>
         </TABLE>
         </TR>
 
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências aguardando atendimento:</TD>
-                <TD width="30%" align="left"><?print $linhas_aguardando;?></TD>
+                <TD width="30%" align="left"><?php print $linhas_aguardando;?></TD>
                 <TD width="20%" align="left">Percentual:</TD>
-                <TD width="30%" align="left"><?print round(($linhas_aguardando*100)/$linhas_total);?>%</TD>
+                <TD width="30%" align="left"><?php print round(($linhas_aguardando*100)/$linhas_total);?>%</TD>
         </TABLE>
         </TR>
 
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências em atendimento:</TD>
-                <TD width="30%" align="left"><?print $linhas_atendimento;?></TD>
+                <TD width="30%" align="left"><?php print $linhas_atendimento;?></TD>
                 <TD width="20%" align="left">Percentual:</TD>
-                <TD width="30%" align="left"><?print round(($linhas_atendimento*100)/$linhas_total);?>%</TD>
+                <TD width="30%" align="left"><?php print round(($linhas_atendimento*100)/$linhas_total);?>%</TD>
         </TABLE>
         </TR>
 
         <TR>
         <TABLE border="0"  align="center" width="100%">
                 <TD width="20%" align="left">Ocorrências em estudo:</TD>
-                <TD width="30%" align="left"><?print $linhas_estudo;?></TD>
+                <TD width="30%" align="left"><?php print $linhas_estudo;?></TD>
                 <TD width="20%" align="left">Percentual:</TD>
-                <TD width="30%" align="left"><?print round(($linhas_estudo*100)/$linhas_total);?>%</TD>
+                <TD width="30%" align="left"><?php print round(($linhas_estudo*100)/$linhas_total);?>%</TD>
         </TABLE>
         </TR>
 

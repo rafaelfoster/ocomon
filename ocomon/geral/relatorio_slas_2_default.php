@@ -1,4 +1,4 @@
-<?php
+<?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -764,7 +764,7 @@
 <script type='text/javascript'>
 <!--
 	team = new Array(
-		<?
+		<?php 
 		$sql="select * from sistemas where sis_status NOT in (0) order by sistema";//Somente as áreas ativas
 		$sql_result=mysql_query($sql);
 		echo mysql_error();
