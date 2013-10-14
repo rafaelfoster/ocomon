@@ -143,11 +143,11 @@ $TRANS["cx_caixa"] = "Arquivado na caixa";
 $TRANS["cx_tipo_item"] = "Tipo";
 $TRANS["cx_desc"] = "Descrição";
 $TRANS["cx_reitoria"] = "Reitoria";
-$TRANS["cx_login"] = "Login";
+$TRANS["cx_login"] = "Entrar";
 $TRANS["cx_nome_usuario"] = "Nome";
 $TRANS["cx_data_inclusao"] = "Data de inclusão";
 $TRANS["cx_email"] = "E-mail";
-$TRANS["cx_login"] = "Login";
+$TRANS["cx_login"] = "Entrar";
 $TRANS["cx_area"] = "Area";
 $TRANS["cx_categoria"] = "Categoria";
 $TRANS["cx_senha"] = "Senha";
@@ -1958,7 +1958,41 @@ $TRANS['LINK_UPDATE_TICKETS_PRIOR'] = "Clique aqui para atualizar todos os chama
 $TRANS['DEFAULT_PRIOR_NOT_DEFINED'] = "Antes de atualizar os chamados já existentes é necessário definir qual será a prioridade padrão para os novos chamados do sistema!";
 $TRANS['OPT_FIELD_PRIOR'] = "Campo: PRIORIDADE";
 
+$TRANS['MNL_CONF_AREAS'] = "Áreas - Configuração";
+$TRANS['AREAS_QUE_PODEM_ABRIR_CHAMADOS']="Recebe chamados das seguintes áreas";
+$TRANS['CHECK_ALL'] = "Marca todos";
+$TRANS['CHECK_NONE'] = "Desmarca todos";
 
+$TRANS['COL_ALIMENTA_BANCO_SOLUCAO']="Alimenta banco de soluções";
+
+$TRANS['COL_JUSTIFICATION']="Justificativa";
+$TRANS['TXT_JUSTIFICATION']="Justificativa para o estouro do SLA";
+$TRANS['ALERT_TOO_SHORT_JUSTIFICATION'] = "Justificativa muito curta!";
+$TRANS['OPT_JUSTIFICATION_SLA_OUT']="JUSTIFICAR CHAMADOS COM TEMPO DE SOLUÇÃO ÀCIMA DO SLA";
+$TRANS['OPT_DESC_SLA_OUT']="JUSTIFICATIVA OBRIGATÓRIA";
+$TRANS['COL_REMAIN_TIME']="Tempo Restante";
+$TRANS['HNT_REMAIN_TIME_IN_SLA']="Tempo restante dentro do SLA";
+
+$TRANS['ADM_SCRIPTS']="Administração de Scripts de atendimento";
+
+$TRANS['COL_SCRIPT_NAME']="Abreviatura";
+$TRANS['COL_SCRIPT_ENDUSER']="Visível ao usuário-final?";
+$TRANS['COL_SCRIPT']="Script";
+$TRANS['TTL_RECORD_INFO']="Informações do registro";
+$TRANS['LINKED_PROBLEM']="Tipo de problema associado";
+$TRANS['TTL_PROB_SCRIP_CLUE']="Dicas para solução de problemas do tipo:";
+$TRANS['MNL_SCRIPTS']="Scripts";
+$TRANS['TIPS']="DICAS PARA SOLUCIONAR PROBLEMAS DESSE TIPO";
+$TRANS['CADASTRE_SCRIPT']="CADASTRO DE SCRIPT";
+$TRANS['SEL_LINE_SCRIPT']="Selecione o registro que deseja visualizar";
+$TRANS['HNT_SCRIPT_PROB']="Dica para solucionar esse tipo de problema";
+
+$TRANS['MSG_NOT_EXCLUDED_PROBLEM']="Não foi possível excluir o vínculo com o problema selecionado";
+$TRANS['MSG_NOT_EXCLUDED_LINKS']=" Porém não foi possível excluir os vínculos na tabela prob_x_script! Esse processo deverá ser feito manualmente.";
+$TRANS['LINK_TO_PROBLEM']="Associar a um/outro tipo de problema";
+
+$TRANS['OPT_QTD_MAX_ANEXOS'] = "NÚMERO MÁXIMO DE ANEXOS POR VEZ";
+$TRANS['ATTACH_ANOTHER'] = "Anexar outro";
 
 
 

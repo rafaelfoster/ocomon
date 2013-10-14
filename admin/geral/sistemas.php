@@ -252,7 +252,9 @@
 			}
 			else
 			{
-					$aviso = TRANS('OK_DEL');
+				$queryDelete = "DELETE FROM areaXarea_abrechamado WHERE area = '".$_GET['cod']."' OR area_abrechamado = '".$_GET['cod']."'";
+				$resultadoDelete = mysql_query($queryDelete) or die(TRANS('ERR_DEL').'<br>'.mysql_error());					
+				$aviso = TRANS('OK_DEL');
 			}
 			
 			$qryAreas = "SELECT * FROM sistemas where sis_atende = 0";

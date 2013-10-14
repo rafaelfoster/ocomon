@@ -24,6 +24,9 @@
 	include ("./includes/languages/".LANGUAGE."");
 	require_once("./includes/functions/funcoes.inc");
 
+	$OPERADOR_AREA = false;
+	if(isset($_SESSION['s_area_admin']) && $_SESSION['s_area_admin'] == '1' && $_SESSION['s_nivel'] != '1')
+		$OPERADOR_AREA = true;
 
 	print "<style type='text/css'>";
 	?>
@@ -100,12 +103,14 @@
 ..|".TRANS('MNL_CONF_APARENCIA')."|".$admDirPath."aparencia.php|||centro
 .|".TRANS('MNL_OCORRENCIAS')."
 ..|".TRANS('MNL_AREAS')."|".$admDirPath."sistemas.php|||centro
+..|".TRANS('MNL_CONF_AREAS')."|".$admDirPath."sistemas_conf_abertura.php|||centro
 ..|".TRANS('MNL_PROBLEMAS')."|".$admDirPath."problemas.php|||centro
 ..|".TRANS('MNL_STATUS')."|".$admDirPath."status.php|||centro
 ..|".TRANS('MNL_PRIORIDADES')."|".$admDirPath."prioridades.php|||centro
 ..|".TRANS('MNL_PRIORIDADES_ATEND')."|".$admDirPath."prioridades_atendimento.php|||centro
 ..|".TRANS('MNL_FERIADOS')."|".$admDirPath."feriados.php||".$iconsPath."feriado.png|centro
 ..|".TRANS('MNL_SOLUCOES')."|".$admDirPath."tipo_solucoes.php|||centro
+..|".TRANS('MNL_SCRIPTS')."|".$admDirPath."scripts.php|||centro
 ..|".TRANS('MNL_OCORRENCIAS')."|".$ocoDirPath."ocorrencias.php|||centro
 ..|".TRANS('MNL_MAIL_TEMPLATES')."|".$admDirPath."mail_templates.php|||centro
 ..|".TRANS('MNL_DIST_LISTS')."|".$admDirPath."mail_distribution_lists.php|||centro
@@ -122,6 +127,14 @@
 .|".TRANS('MNL_UNIDADES')."|".$admDirPath."unidades.php|||centro
 .|".TRANS('MNL_CC')."|".$admDirPath."ccustos.php|||centro
 .|".TRANS('MNL_PERMISSOES')."|".$admDirPath."permissoes.php||".$iconsPath."permissao.png|centro";
+
+
+if($OPERADOR_AREA){
+	$menuAdmin =".|".TRANS('MNL_OCORRENCIAS')."
+..|".TRANS('MNL_PROBLEMAS')."|".$admDirPath."problemas.php|||centro
+..|".TRANS('MNL_SCRIPTS')."|".$admDirPath."scripts.php|||centro
+.|".TRANS('MNL_USUARIOS')."|".$admDirPath."usuarios.php||".$iconsPath."kdmconfig.png|centro";
+}
 //.|".TRANS('MNL_SENHA']."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
 
 /*

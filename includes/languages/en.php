@@ -1998,4 +1998,42 @@ $TRANS['MSG_UPDATE_PRIOR_OK'] = "All old tickets were updated to the default que
 $TRANS['LINK_UPDATE_TICKETS_PRIOR'] = "Click here to update all old tickets to the default queue prioritie you defined";
 $TRANS['DEFAULT_PRIOR_NOT_DEFINED'] = "Before update the tickets it's necessary to define the default queue prioritie!";
 $TRANS['OPT_FIELD_PRIOR'] = "field: PRIORITY";
+
+$TRANS['MNL_CONF_AREAS'] = "Areas - Configuration";
+$TRANS['AREAS_QUE_PODEM_ABRIR_CHAMADOS']="Get tickets from the following areas";
+$TRANS['CHECK_ALL'] = "Check all";
+$TRANS['CHECK_NONE'] = "Uncheck all";
+
+$TRANS['COL_ALIMENTA_BANCO_SOLUCAO']="RECORD IN SOLUTION BASE";
+
+$TRANS['COL_JUSTIFICATION']="Justification";
+$TRANS['TXT_JUSTIFICATION']="Justification for the Over SLA";
+$TRANS['ALERT_TOO_SHORT_JUSTIFICATION'] = "Too short justification!";
+$TRANS['OPT_JUSTIFICATION_SLA_OUT']="JUSTIFICATE TICKETS THAT HAVE SOLUTION TIME OVER THE SLA";
+$TRANS['OPT_DESC_SLA_OUT']="JUSTIFICATION IS MANDATORY";
+$TRANS['COL_REMAIN_TIME']="Remain time";
+$TRANS['HNT_REMAIN_TIME_IN_SLA']="Remain time in SLA";	
+
+
+$TRANS['ADM_SCRIPTS']="Management of scripts";
+
+$TRANS['COL_SCRIPT_NAME']="Short name";
+$TRANS['COL_SCRIPT_ENDUSER']="Visible to the enduser?";
+$TRANS['COL_SCRIPT']="Script";
+$TRANS['TTL_RECORD_INFO']="Record's information";
+$TRANS['LINKED_PROBLEM']="Linked Problem type";
+$TRANS['TTL_PROB_SCRIP_CLUE']="Tips to solve problems of the type:";
+$TRANS['MNL_SCRIPTS']="Scripts";
+$TRANS['TIPS']="TIP TO SOLVE PROBLEMS LIKE THIS";
+$TRANS['CADASTRE_SCRIPT']="CADASTRE OF SCRIPTS";
+$TRANS['SEL_LINE_SCRIPT']="Select the line you want to view";
+$TRANS['HNT_SCRIPT_PROB']="Tip to solve this kind of problem";
+
+$TRANS['MSG_NOT_EXCLUDED_PROBLEM']="It was not possible to exclude the link to the selected problem";
+$TRANS['MSG_NOT_EXCLUDED_LINKS']=" However it was not possible to exclude the links in the table prob_x_script! This process must be done manually.";
+$TRANS['LINK_TO_PROBLEM']=" Link to a/other type of problem";
+	
+$TRANS['OPT_QTD_MAX_ANEXOS'] = "MAX NUMBER OF ATTACHMENTS BY TURN";
+$TRANS['ATTACH_ANOTHER'] = "Attach another";	
+
 ?>

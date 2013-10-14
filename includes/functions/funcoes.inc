@@ -513,7 +513,7 @@ function converte_datacomhora($dataform)//pega a data do formato aaaa-mm-dd +hor
 
 ################################################################################
 
-function date_diff($data1, $data2)
+function date_difference($data1, $data2)
 {
 
 	if ($data1>$data2) {

@@ -74,7 +74,7 @@
 		print "<div class='bubble_bottom'></div>";
 	print "</div>";
 
-	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+
 
 
 	$dt = new dateOpers; //Criado o objeto $dt
@@ -93,8 +93,6 @@
 	if ($_SESSION['s_uareas']) {
 		$uareas.=",".$_SESSION['s_uareas'];
 	}
-
-
 
 	$query = "SELECT a.*, u.*, ar.* from usuarios u, avisos a left join sistemas ar on a.area = ar.sis_id where (a.area in (".$uareas.") or a.area=-1) and a.origem=u.user_id and upper(a.status) = 'ALTA'";
 	$resultado = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
@@ -301,7 +299,7 @@
 
 		$data = $rowAT['data_abertura'];
 
-		$diff = date_diff($data,date("Y-m-d H:i:s"));
+		$diff = date_difference($data,date("Y-m-d H:i:s"));
 		$sep = explode ("dias",$diff);
 
 		if ($sep[0]>5) { //Se a programação for maior do que 5 dias, o tempo é mostrado em dias para não ficar muito pesado.
@@ -553,7 +551,7 @@
 
 		$data = $rowAT['data_abertura'];
 
-		$diff = date_diff($data,date("Y-m-d H:i:s"));
+		$diff = date_difference($data,date("Y-m-d H:i:s"));
 		$sep = explode ("dias",$diff);
 		if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 			$diff = $sep[0]." dias";
@@ -837,7 +835,7 @@
         //print "</TD>";
 
         print "<TD  class='line' >";
-        print "<TABLE class='header_centro'  STYLE='{border-top: thin solid #999999;}' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
+        print "<TABLE class='header_centro' STYLE='{border-top: thin solid #999999;}' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
 
 
 	//FILA DE CHAMADOS
@@ -901,7 +899,11 @@
 			$linkImg = "<a onClick=\"javascript:popup_wide('listFiles.php?COD=".$row['numero']."')\"><img src='../../includes/icons/attach2.png'></a>";
 		} else $linkImg = "";
 
+		
+		
+		
 		print "<TD  class='line'  ".$valign."><b><a href='mostra_consulta.php?numero=".$row['numero']."'>".$row['numero']."</a></b>".$imgSub."<br>".($row['area']==''?'&nbsp;':$row['area'])."</td>";
+		
 		print "<TD  class='line'  ".$valign.">".$linkImg."&nbsp;".($row['problema']==''?'&nbsp;':$row['problema'])."</td>";
 		print "<TD  class='line'  ".$valign."><b>".$row['contato']."</b><br>".$row['telefone']."</td>";
 
@@ -931,7 +933,7 @@
 		$data = $row['data_abertura']; //data de abertura do chamado
             	$dataAtendimento = $row['data_atendimento']; //data da primeira resposta ao chamado
 
-		$diff = date_diff($data,date("Y-m-d H:i:s"));
+		$diff = date_difference($data,date("Y-m-d H:i:s"));
 		$sep = explode ("dias",$diff);
 		if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 			$imgSlaR = 'checked.png';
@@ -989,6 +991,7 @@
 		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
 
 		echo "</TR>";
+		
             	$i++;
         }//while
 

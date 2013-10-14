@@ -106,7 +106,7 @@
 		print " <input type='hidden' name='cod' value='".$_GET['cod']."'></td>";
 		print "</tr>";
 
-		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_ALTER')."r'></td>";
+		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_ALTER')."'></td>";
 		print "<td class='line'><input type='reset' name='reset'  class='button' value='".TRANS('BT_CANCEL')."' onclick=\"javascript:history.back()\"></td></tr>";
 
 		print "</table>";

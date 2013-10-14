@@ -176,13 +176,16 @@
 				print "<TEXTAREA class='textarea' name='aviso2' id='idAviso'>".$row['avisos']."</textarea>";
 			} else
 				print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
+			
+			$texto1 = str_replace("\r","\n",$row['avisos']);
+			$texto1 = str_replace("\n","",$texto1);
 			?>
 			<script type="text/javascript">
 				var bar = '<?php print $_SESSION['s_formatBarMural'];?>'
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'aviso2' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = '<?php print $row['avisos'];?>';
+					oFCKeditor.Value = '<?php print $texto1;?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					oFCKeditor.Width = '570px';
 					oFCKeditor.Height = '100px';
@@ -251,6 +254,8 @@
 		$query = "INSERT INTO avisos (avisos, data, origem, status, area) values (";
 		if ($_SESSION['s_formatBarMural']) {
 			$query.= " '".$_POST['aviso2']."',";
+			//$query.= " '".str_replace("\r\n","",$_POST['aviso2'])."',";
+			
 		} else {
 			$query.= " '".noHtml($_POST['aviso2'])."',";
 		}
@@ -266,6 +271,7 @@
 		$query = "UPDATE avisos SET avisos=";
 		if ($_SESSION['s_formatBarMural']) {
 			$query.= " '".$_POST['aviso2']."',";
+			//$query.= " '".str_replace("\r\n","",$_POST['aviso2'])."',";
 		} else {
 			$query.= " '".noHtml($_POST['aviso2'])."',";
 		}

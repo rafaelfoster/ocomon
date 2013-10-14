@@ -183,7 +183,7 @@
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td class='line'>";
-		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."r' name='ok' onClick=\"submitForm();\">";//onclick='ok=sim'
+		print "					<input type='submit' class='button' value='".TRANS('BT_SEARCH')."' name='ok' onClick=\"submitForm();\">";//onclick='ok=sim'
 		print "	            </TD>";
 		print "	            <td class='line'>";
 		print "					<INPUT type='reset' class='button' value='".TRANS('BT_CLEAR')."' name='cancelar'>";

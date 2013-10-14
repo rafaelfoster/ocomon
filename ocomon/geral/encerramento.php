@@ -30,7 +30,8 @@
     	$hoje2 = date("d/m/Y");
 
 
-	print "<HTML><BODY bgcolor='".BODY_COLOR."' onLoad=\"ajaxFunction('Problema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');\">";
+	print "<HTML><BODY bgcolor='".BODY_COLOR."' ".
+		"onLoad=\"ajaxFunction('Problema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea', 'area_habilitada=idAreaHabilitada'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divSla', 'sla_standalone.php', 'idLoad', 'numero=idSlaNumero', 'popup=idSlaNumero', 'SCHEDULED=idScheduled'); ajaxFunction('divInformacaoProblema', 'showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');\">";
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
@@ -136,17 +137,31 @@
 		print "<FORM method='POST' action='".$_SERVER['PHP_SELF']."' name='form1' onSubmit='return valida()'>";
 		print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 		
+		Print "<tr>";
+			print "<td colspan='7'>";
+				print "<div id='divSla'>";
+					
+					
+				print "</div>";
+            		print "</TD>";		
+		Print "</tr>";			
+		
+		print "<input type='hidden' name='slaNumero' id='idSlaNumero' value='".$_REQUEST['numero']."'>";
+		print "<input type='hidden' name='SCHEDULED' id='idScheduled' value='".$rowABS['oco_scheduled']."'>";
+		
 		$getPriorityDesc = "SELECT * FROM prior_atend WHERE pr_cod = '".$rowABS['oco_prior']."'";
 		$execGetPrior = mysql_query($getPriorityDesc);
 		$rowGet = mysql_fetch_array($execGetPrior);
-		print "<TR>";
-			print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
-			print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";
-		print "</TR>";		
+// 		print "<TR>";
+// 			print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+// 			print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";
+// 		print "</TR>";		
 		
 		print "<TR>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
-			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['numero']."<td class='line'>";
+			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".$rowABS['numero']."' disabled></td>";
+			print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_PRIORITY').":</TD>";
+			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";			
 		print "</TR>";
 		print "<TR>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').": ";
@@ -195,8 +210,9 @@
 
 
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
-			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'>".$rowABS['area']."</TD>";
+			print "<TD colspan='3' width='30%' align='left' bgcolor='".BODY_COLOR."'><input class='disable' value='".$rowABS['area']."' disabled></TD>";
 			print "<input type='hidden' name='fieldArea' id='idArea' value='".$rowABS['area_cod']."'></TD>";
+			print "<input type='hidden' name='areaHabilitada' id='idAreaHabilitada' value='sim'>";
 		print "</TR>";
 
 
@@ -205,11 +221,10 @@
 		print "<tr><td colspan='6' ><div id='divProblema'>"; //style='{display:none}'  //<td colspan='6' >
 			//print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
 			//print "<input type='hidden' name='problema' id='idProb' value='".$rowABS['problema']."'>";
-
-
 			//print "</table>";
 			print "</div></td></tr>";  //</td>
-
+		
+		print "<tr><td colspan='6' ><div id='divInformacaoProblema'></div></td></tr>";	
 
 
 ################################################################
@@ -312,8 +327,22 @@
 			//print "</div>";
 		}
 
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		print "<TR ID='linha_assentamento'>";
+			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('FIELD_NESTING').":</TD>";
+			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
+				print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".
+					"".TRANS('TXTAREA_OCCO_DIRECT_MODIFY')." ".$_SESSION['s_usuario']."</textarea>";
+			print "</TD>";
+		print "</tr>";
+		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------		
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//print "<TR>";
+		print "<input type='hidden' value='' name='alimenta_banco' id='alimenta_banco'>";
+		print "<TR ID='linha_desc_solucao'>";
+		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 
-		print "<TR>";
+		//print "<TR>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_SCRIPT_SOLUTION').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 
@@ -336,7 +365,10 @@
 		print "</tr>";
 
 
-		print "<TR>";
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//print "<TR>";
+		print "<TR ID='linha_problema'>";
+		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				//print "<TEXTAREA class='textarea' id='idProblema' name='problema'>Descrição técnica do problema</textarea>";
@@ -351,7 +383,7 @@
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'problema' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = 'Descrição técnica do problema';
+					oFCKeditor.Value = '<?php print TRANS('TXT_DESC_TEC_PROB');?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					oFCKeditor.Width = '570px';
 					oFCKeditor.Height = '100px';
@@ -363,7 +395,11 @@
 
 			print "</TD>";
 		print "</TR>";
-		print "<TR>";
+		
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//print "<TR>";
+		print "<TR ID='linha_solucao'>";
+		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_TIT_SOLUTION').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 				//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Solução para este problema</textarea>";
@@ -377,7 +413,7 @@
 				if (bar ==1) {
 					var oFCKeditor = new FCKeditor( 'solucao' ) ;
 					oFCKeditor.BasePath = '../../includes/fckeditor/';
-					oFCKeditor.Value = 'Solução para este problema';
+					oFCKeditor.Value = '<?php print TRANS('TXT_SOLUTION_PROB');?>';
 					oFCKeditor.ToolbarSet = 'ocomon';
 					oFCKeditor.Width = '570px';
 					oFCKeditor.Height = '100px';
@@ -389,6 +425,47 @@
 			print "</TD>";
 		print "</TR>";
 
+		//SE TIVER QUE JUSTIFICAR O ESTOURO DO SLA
+		$descricaoMinima = strlen(TRANS('TXT_JUSTIFICATION'))+5;
+		if ($row_config['conf_desc_sla_out']){
+			$qryTmp = "SELECT * FROM sla_out WHERE out_numero = ".$_REQUEST['numero']." ";
+			$execTmp = mysql_query($qryTmp) OR die(mysql_error());					
+			$rowOut = mysql_fetch_array($execTmp);
+			
+			if($rowOut['out_sla']==1){//CHAMADO ESTOUROU
+				
+				//$descricaoMinima = strlen(TRANS('TXT_JUSTIFICATION'))+5;
+				print "<TR>";
+					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_JUSTIFICATION').":</TD>";
+					print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
+						//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Solução para este problema</textarea>";
+		
+					if (!$_SESSION['s_formatBarOco']) {
+						print "<TEXTAREA class='textarea' name='justificativa' id='idJustificativa'>".TRANS('TXT_JUSTIFICATION')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
+					}
+					?>
+					<script type="text/javascript">
+						var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
+						if (bar ==1) {
+							var oFCKeditor = new FCKeditor( 'justificativa' ) ;
+							oFCKeditor.BasePath = '../../includes/fckeditor/';
+							oFCKeditor.Value = '<?php print TRANS('TXT_JUSTIFICATION');?>';
+							oFCKeditor.ToolbarSet = 'ocomon';
+							oFCKeditor.Width = '570px';
+							oFCKeditor.Height = '100px';
+							oFCKeditor.Create() ;
+						}
+					</script>
+					<?php 
+		
+					print "</TD>";
+				print "</TR>";			
+			
+			}
+		}
+
+
+		//-----------------------------------------
 			$qrymail = "SELECT u.*, a.*,o.* from usuarios u, sistemas a, ocorrencias o where ".
 						//"u.AREA = a.sis_id and o.aberto_por = u.user_id and o.numero = ".$_GET['numero']."";
 						"u.AREA = a.sis_id and o.aberto_por = u.user_id and o.numero = ".$_REQUEST['numero']."";
@@ -444,35 +521,67 @@
 
 		//$data = datam($hoje2);
 		$responsavel = $_SESSION['s_uid'];
-
-		$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].",";
-		if ($_SESSION['s_formatBarOco']) {
-			$query.= " '".$_POST['problema']."',";
-		} else {
-			$query.= " '".noHtml($_POST['problema'])."',";
+		
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//So insere a solucao no banco se o tipo do problema permitir alimentar o banco de solucoes
+		if(isset($_POST['alimenta_banco']) && $_POST['alimenta_banco']=="SIM"){
+		//--------------------------------------------------------------- FIM ALTERACAO ---------------------------------------------------------------		
+		
+		
+			$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].",";
+			if ($_SESSION['s_formatBarOco']) {
+				$query.= " '".$_POST['problema']."',";
+				$query.= " '".$assentamentoProb."',";
+			} else {
+				$query.= " '".noHtml($_POST['problema'])."',";
+			}
+			$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")"; //VER 25/05/2007
+			$resultado = mysql_query($query) or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
+	
+			$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].", ";
+	
+			if ($_SESSION['s_formatBarOco']) {
+				$query.= " '".$_POST['solucao']."',";
+			} else {
+				$query.= " '".noHtml($_POST['solucao'])."',";
+			}
+			$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
+			$resultado = mysql_query($query)or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
+	
+			$query1 = "INSERT INTO solucoes (numero, problema, solucao, data, responsavel) values (".$_POST['numero'].", ";
+	
+			if ($_SESSION['s_formatBarOco']) {
+				$query1.= " '".$_POST['problema']."','".$_POST['solucao']."',";
+			} else {
+				$query1.= " '".noHtml($_POST['problema'])."','".noHtml($_POST['solucao'])."',";
+			}
+			$query1.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
+			$resultado1 = mysql_query($query1)or die (TRANS('MSG_ERR_INSERT_SOLUTION').$query1);
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		}else{
+			$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].",'".$_POST['assentamento']."',";
+			$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
+			$resultado = mysql_query($query) or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
+			$resultado = $resultado1 = $resultado2 = 1;
 		}
-		$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")"; //VER 25/05/2007
-		$resultado = mysql_query($query) or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
-
-		$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].", ";
-
-		if ($_SESSION['s_formatBarOco']) {
-			$query.= " '".$_POST['solucao']."',";
-		} else {
-			$query.= " '".noHtml($_POST['solucao'])."',";
+		//--------------------------------------------------------------- FIM ALTERACAO ---------------------------------------------------------------		//---------------------------------------------
+		
+		//JUSTIFICATIVA PARA O ESTOURO DO SLA
+		if(isset($_POST['justificativa']) && $row_config['conf_desc_sla_out']){
+			$queryJust = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel, tipo_assentamento) values (".$_POST['numero'].", ";
+	
+			if ($_SESSION['s_formatBarOco']) {
+				$queryJust.= " '".$_POST['justificativa']."',";
+			} else {
+				$queryJust.= " '".noHtml($_POST['justificativa'])."',";
+			}
+			$queryJust.=" '".date('Y-m-d H:i:s')."', ".$responsavel.", 3)";
+			$execJust = mysql_query($queryJust)or die (TRANS('MSG_ERR_INSERT_NESTING').$queryJust);	
 		}
-		$query.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
-		$resultado = mysql_query($query)or die (TRANS('MSG_ERR_INSERT_NESTING').$query);
-
-		$query1 = "INSERT INTO solucoes (numero, problema, solucao, data, responsavel) values (".$_POST['numero'].", ";
-
-		if ($_SESSION['s_formatBarOco']) {
-			$query1.= " '".$_POST['problema']."','".$_POST['solucao']."',";
-		} else {
-			$query1.= " '".noHtml($_POST['problema'])."','".noHtml($_POST['solucao'])."',";
-		}
-		$query1.=" '".date('Y-m-d H:i:s')."', ".$responsavel.")";
-		$resultado1 = mysql_query($query1)or die (TRANS('MSG_ERR_INSERT_SOLUTION').$query1);
+		//REMOVE O NÚMERO DO CHAMADO DA TABELA DE CHECAGEM DO SLAS			
+		$qryClear = "DELETE FROM sla_out WHERE out_numero = ".$_POST['numero']."";
+		$execClear = mysql_query($qryClear);		
+		//----------------------------------------------
 
 		$status = 4; //encerrado
 		if ($atendimento==null) {
@@ -617,6 +726,21 @@
 		if (ok) var ok = validaForm('idData_fechamento','DATAHORA','Data',1);
 		if (ok) var ok = validaForm('idDesc','','Descrição técnica',1);
 		if (ok) var ok = validaForm('idSolucao','','Solução',1);
+		
+		if (ok) {
+			var justification = document.getElementById('idJustificativa');
+			if (justification != null){
+				if (ok) var ok = validaForm('idJustificativa','','Justificativa',1);
+				if (ok) {
+					if(justification.value.length <= <?php print $descricaoMinima;?>) {
+						alert('<?php print TRANS('ALERT_TOO_SHORT_JUSTIFICATION');?>');
+						ok = false;
+						document.form1.justificativa.focus();
+					}
+				}
+			}
+		}		
+		
 
 		return ok;
 	}
@@ -661,6 +785,42 @@
 
 </script>
 <?php 
+
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//So exibe os campos "solucao" e "problema" se o tipo do problema permitir alimentar o banco de solucoes
+		//Isso é feito via javascript suprimindo o TR da página
+		$query_problema_banco_solucao = "SELECT * FROM problemas order by problema";
+		$exec_problema_banco_solucao = mysql_query($query_problema_banco_solucao);
+		mysql_data_seek($exec_problema_banco_solucao, 0);
+		?>
+		<script>
+			var alimentaSolucao = new Array();
+			alimentaSolucao[alimentaSolucao.length] = 0;
+			<?php while($row=mysql_fetch_array($exec_problema_banco_solucao)){ ?>
+				alimentaSolucao[<?php print $row['prob_id'] ?>] = <?php print $row['prob_alimenta_banco_solucao'] ?>;
+			<?php } ?>
+			function habilitarBancoSolucao(){
+				var indice = document.getElementById('idProblema').value;
+				if(alimentaSolucao[indice] == 1){
+					document.getElementById('linha_assentamento').style.display = 'none';
+					document.getElementById('linha_desc_solucao').style.display = '';				
+					document.getElementById('linha_problema').style.display = '';
+					document.getElementById('linha_solucao').style.display = '';
+					document.getElementById('alimenta_banco').value = 'SIM';
+				}else{
+					document.getElementById('linha_assentamento').style.display = '';
+					document.getElementById('linha_desc_solucao').style.display = 'none';
+					document.getElementById('linha_problema').style.display = 'none';
+					document.getElementById('linha_solucao').style.display = 'none';
+					document.getElementById('alimenta_banco').value = '';
+				}
+			}
+			habilitarBancoSolucao();
+		</script>
+		<?php
+		//--------------------------------------------------------------- FIM ALTERACAO ---------------------------------------------------------------
+
+
 
 print "</TABLE>";
 print "</FORM>";

@@ -725,6 +725,23 @@ function validaForm(id,tipo,campo,obrigatorio){
 	}
 
 
+	function check_all(valor){
+		
+		with(document)
+		{
+			var d;
+			d=document.getElementsByTagName("input");
+			
+			for(i=0;i<d.length;i++)
+			{
+				if(d[i].type=="checkbox")
+				{
+					d[i].checked=valor;
+				}
+			}
+		}
+	}
+
 
 //-->
 </script>

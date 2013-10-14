@@ -134,7 +134,7 @@
 				$diff2R = $dtR->diff["hValido"];
 				$segundosR = $dtR->diff["sValido"]; //segundos válidos
 
-				$diff = date_diff($row['data_abertura'],$hoje);
+				$diff = date_difference($row['data_abertura'],$hoje);
 				$sep = explode ("dias",$diff);
 				if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 					$diff = $sep[0]." dias";
@@ -211,8 +211,8 @@
 			print "<TD ".$valign."><b>".$row['local']."</b><br>".$texto."</TD>";
 			print "<TD ".$valign.">".$row['data_abertura']."</TD>";
 			print "<TD ".$valign."><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['stat']."</font></a></TD>";
-			print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('imgs/sla_popup.php?sla=r')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></TD>";
-			print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('imgs/sla_popup.php?sla=s')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></TD>";
+			print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></TD>";
+			print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></TD>";
 			print "</TR>";
 		} //while
 		print "</TABLE>";

@@ -125,7 +125,16 @@
 				print "</tr>";
 				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
-
+				print "<tr><td colspan='2'><b>".TRANS('OPT_JUSTIFICATION_SLA_OUT')."</b></td></tr>";
+				print "<tr><td>".TRANS('OPT_DESC_SLA_OUT')."</td>";
+					if ($row['conf_desc_sla_out']) {
+						$desc_sla_out = " checked ";
+					} else {
+						$desc_sla_out = "";
+					}
+					print "<td><input type='checkbox' name='desc_sla_out' ".$desc_sla_out." disabled></td></tr>";
+				
+				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
 				print "<tr><td colspan='2'><b>".TRANS('OPT_REOPEN')."</b></td></tr>";
 				print "<tr><td>".TRANS('OPT_ALLOW_REOPEN')."</td>";
@@ -134,7 +143,7 @@
 					} else {
 						$allow = "";
 					}
-					print "<td><input type='checkbox' name='allowReopen' ".$allow." disabled</td></tr>";
+					print "<td><input type='checkbox' name='allowReopen' ".$allow." disabled></td></tr>";
 
 
 				print "<tr><td colspan='2'>&nbsp;</td></tr>";
@@ -166,6 +175,7 @@
 				print "<tr><td>".TRANS('OPT_MAXSIZE')."</td><td>".$row['conf_upld_size']."&nbsp;bytes (".$emKbytes." kbytes)</td></tr>";
 				print "<tr><td>".TRANS('OPT_MAXWIDTH')."</td><td>".$row['conf_upld_width']."px</td></tr>";
 				print "<tr><td>".TRANS('OPT_MAXHEIGHT')."</td><td>".$row['conf_upld_height']."px</td></tr>";
+				print "<tr><td>".TRANS('OPT_QTD_MAX_ANEXOS')."</td><td>".$row['conf_qtd_max_anexos']."</td></tr>";
 				print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
 				print "<tr><td colspan='2'><b>".TRANS('OPT_BARRA')."</b></td></tr>";
@@ -334,6 +344,21 @@
 
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
+
+		print "<tr><td colspan='2'><b>".TRANS('OPT_JUSTIFICATION_SLA_OUT')."</b></td></tr>";
+		print "<tr><td>".TRANS('OPT_DESC_SLA_OUT')."</td>";
+			if ($row['conf_desc_sla_out']) {
+				$desc_sla_out = " checked ";
+			} else {
+				$desc_sla_out = "";
+			}
+			print "<td><input type='checkbox' name='desc_sla_out' ".$desc_sla_out."></td></tr>";
+		
+		print "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+
+
+
 		print "<tr><td colspan='2'><b>".TRANS('OPT_REOPEN')."</b></td></tr>";
 		print "<tr><td>".TRANS('OPT_ALLOW_REOPEN')."</td>";
 			if ($row['conf_allow_reopen']) {
@@ -341,7 +366,7 @@
 			} else {
 				$allow = "";
 			}
-			print "<td><input type='checkbox' name='allowReopen' ".$allow."</td></tr>";
+			print "<td><input type='checkbox' name='allowReopen' ".$allow."></td></tr>";
 
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 
@@ -379,6 +404,9 @@
 		print "<tr><td>".TRANS('OPT_MAXHEIGHT')."</td>";//.transbool($row['conf_user_opencall'])."</td></tr>";
 		print "<td><input type='text' class='text' id='idHeight' name='height' value='".$row['conf_upld_height']."'</td></tr>";
 
+		print "<tr><td>".TRANS('OPT_QTD_MAX_ANEXOS')."</td>";//.transbool($row['conf_user_opencall'])."</td></tr>";
+		print "<td><input type='text' class='text' id='idMaxAnexos' name='conf_qtd_max_anexos' value='".$row['conf_qtd_max_anexos']."'</td></tr>";
+		
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
 		print "<tr><td colspan='2'><b>".TRANS('OPT_BARRA')."</b></td></tr>";
 
@@ -487,6 +515,14 @@
 			$_SESSION['s_allow_reopen'] = 0;
 		}
 
+		if (isset($_POST['desc_sla_out'])){
+			$desc_sla_out = 1;
+			//$_SESSION['s_allow_reopen'] =1;
+		} else {
+			$desc_sla_out = 0;
+			//$_SESSION['s_allow_reopen'] = 0;
+		}
+
 
 		if (isset($_POST['allowDateEdit'])){
 			$allowDateEdit = 1;
@@ -525,7 +561,9 @@
 				"conf_allow_date_edit = '".$allowDateEdit."', ".
 				"conf_schedule_status = '".$_POST['schedule_status']."', ".
 				"conf_schedule_status_2 = '".$_POST['schedule_status_2']."', ".
-				"conf_foward_when_open = '".$_POST['foward']."' ".
+				"conf_foward_when_open = '".$_POST['foward']."', ".
+				"conf_desc_sla_out = '".$desc_sla_out."', ".
+				"conf_qtd_max_anexos = '".$_POST['conf_qtd_max_anexos']."' ".
 				" ";
 
 		//print $qry;
@@ -553,6 +591,7 @@
 		if (ok) var ok =  validaForm('idCat2','QUALQUER','CATEGORIA 2',1);
 		if (ok) var ok =  validaForm('idCat3','QUALQUER','CATEGORIA 3',1);
 		if (ok) var ok =  validaForm('idDaysBF','INTEIROFULL','Dias de antecedência',1);
+		if (ok) var ok = validaForm('idMaxAnexos','INTEIRO','ANEXOS NA ABERTURA',1);
 
 		return ok;
 	}

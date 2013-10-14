@@ -1,6 +1,6 @@
 #
-# OcoMon - versão 2.0RC5
-# Data: Junho de 2009
+# OcoMon - versão 2.0RC6
+# Data: Setembro de 2009
 # Autor: Flávio Ribeiro (flaviorib@gmail.com)
 #
 # Linceça: GPL
@@ -13,6 +13,9 @@ ATENÇÃO:
 Se você deseja instalar o OcoMon por conta própria, é necessário que saiba o que é um servidor WEB e conheça o processo genérico de instalação de sistemas WEB. Além disso, é necessário ter conhecimento mínimo em MySQL (processo de criação de banco e importação de tabelas bem como criação de usuários e permissões de acesso) e PHP.
 
 Caso não tenha os requisitos citados, recomendo que encarregue a tarefa de instalação do OcoMon a outra pessoa que atenda os mesmos.
+
+
+LEIA ESSE ARQUIVO ATÉ O FINAL!!!!!!!
 
 
 REQUISITOS:
@@ -34,42 +37,31 @@ Notas importantes:
     * Para o upload de imagens é necessário que essa propriedade esteja habilitada no arquivo de configurações do PHP (php.ini);
     * Para o envio de e-mails o Ocomon pode utilizar um SMTP especificado por você. Caso você desabilite a opção de SMTP os e-mails
     		serão enviados utilizando a função "mail" do PHP e o arquivo php.ini deve estar configurado corretamente para funcionar de
-    		maneira adequada.
+    		maneira adequada. Consulte a documentação do PHP para entender como esse processo funciona.
 
 INSTALAÇÃO
 ==========
 
 Primeira instalação:
 
-Descompactar o arquivo do OcoMon para o seu web server (/usr/local/apache2/htdocs/ usualmente no FreeBSD ou var/www/html, em sistemas Linux com Apache).
+Descompactar o pacote do OcoMon para o seu web server (o caminho do diretório público do web server varia de acordo com cada configuração, cheque essa informação junto ao administrador do seu web server).
 As permissões dos arquivos podem ser as default do seu servidor, apenas o diretório /includes/logs deve ter permissão de escrita
 para todos os usuários, pois é o diretório onde são gravados alguns arquivos de log do sistema.
 
-Criar um novo banco de dados no MySQL e nomeá-lo: 'ocomon' (ou qualquer ou nome sugestivo). É recomendável a criação de um usuário
-específico, no banco de dados, para manipulação da base do Ocomon.
+Importar o script de criação do banco e tabelas do OcoMon:
+Para a criação de toda a base do OcoMon, você precisa importar um único arquivo de instruções SQL:
+o arquivo é: DB_OCOMON_2.0RC6_FULL.SQL (em ocomon/install/2.0RC6/).
 
-Ex:
-GRANT USAGE ON * . * TO 'ocomon_user'@'localhost' IDENTIFIED BY 'senha' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 ;
-GRANT SELECT , INSERT , UPDATE , DELETE ON `base_ocomon` . * TO 'ocomon_user'@'localhost';
-
-Dentro do diretório do MYSQL no seu servidor digite:
-mysql -u USERNAME -p create database ocomon
-
-Para a criação das tabelas, você precisa apenas rodar um único arquivo SQL para popular a base do sistema:
-o arquivo é: DB_OCOMON_2.0RC5_FULL.SQL (em ocomon/install/2.0RC5/). Importante: defina o conjunto de caracteres do arquivo como UTF8 na importação.
-
-Você pode executar o script acima através do próprio mysql (seguindo o mesmo procedimento citado abaixo) ou através de algum
+Você pode executar o script à cima através do próprio mysql (seguindo o procedimento citado abaixo) ou através de algum
 gerenciador gráfico como o phpMyAdmin por exemplo.
 
-Você também pode rodar o script citado da seguinte forma:
+Para importar o Script diretamente pelo MySQL (linha de comando) faça da seguinte forma:
 Dentro do diretório do MYSQL no seu servidor digite:
-mysql -uUSERNAME -p DATABASENAME < DB_OCOMON_2.0RC5_FULL.SQL (considerando que o script está dentro do diretório do mysql)
+mysql -u root -p < /caminho/para/o/arquivo/DB_OCOMON_2.0RC6_FULL.SQL (o sistema irá solicitar a senha do usuário root do MySQL)
 
-Onde:
-	USERNAME=nome do usuário "root" do MySQL
-	DATABASENAME=nome do banco de dados criado para receber os dados do Ocomon (se você escolher um nome
-		     diferente de "ocomon", não esqueça de alterar no arquivo includes/config.inc.php
-	Você deverá digitar a senha de root para iniciar a execução dos scripts.
+Ao importar o arquivo de intruções SQL será criado um banco com o nome "ocomon_rc6". Também será criado um usuário "ocomon" no banco de dados com a senha padrão "senha_ocomon_mysql". É recomendável alterar essa senha no MySQL após a instalação do sistema.
+
+Caso queira que a base tenha outro nome (ao invés de "ocomon_rc6"), edite diretamente no arquivo "DB_OCOMON_2.0RC6_FULL.SQL" (3 entradas no início do arquivo) antes de realizar a importação do mesmo e não esqueça de alterar no arquivo includes/config.inc.php também (dentro do pacote do OcoMon).
 
 
 Após a instalação, é recomendável a exclusão da pasta "install" dentro de ocomon/install;
@@ -80,6 +72,7 @@ ATUALIZAÇÃO:
 
 Caso esteja atualizando apartir de uma versão anterior, basta sobrescrever os scripts da pasta do OcoMon pelos scripts da nova versão e importar para o MySQL o arquivo de atualização correspondente à sua versão atual. Os arquivos de atualização obedecem a seguinte nomenclatura: UPDATE-FROM{versão-anterior}-TO-{versao-final}.SQL
 
+	Dependendo da sua versão atual, após a atualização pode ser necessário realizar alguns ajustes de configuração em função da incorporação de novas funcionalidades:
 
 	DEFINIÇÃO DE PRIORIDADES DE ATENDIMENTO
 	========================================
@@ -89,12 +82,18 @@ Caso esteja atualizando apartir de uma versão anterior, basta sobrescrever os s
 	4 - Caso não deseje que o campo "Prioridade" apareça na tela de abertura de chamados do usuário-final, será necessário configurar esse comportamento no menu Admin -> Perfis de tela de abertura;
 
 
-CONFIGURAÇÃO
-============
+	DEFINIÇÃO DE QUE ÁREAS DE ATENDIMENTO PODEM ABRIR CHAMADOS ENTRE SI
+	===================================================================
+	Menu Admin->Ocorrências->Áreas - Configuração: Para garantir o funcionamento do sistema da forma como ocorria antes da atualização clique no botão "Marca todos" e aplique a alteração. Entenda melhor a configuração dessa funcionalidade acessando o manual do sistema.
+
+
+CONFIGURAÇÃO GERAL DO SISTEMA
+==============================
 
 Todas as configurações necessárias deverão ser feitas no arquivo config.inc.php e no menu Admin->Configurações.
 você não conseguirá utilizar o OCOMON até ter configurado o arquivo config.inc.php. Para isso é necessário criar uma cópia do arquivo
-config.inc.php-dist e renomeá-lo para config.inc.php. Quanto à sua configuração, o arquivo é auto-explicativo. :)
+config.inc.php-dist e renomeá-lo para config.inc.php. Esse arquivo é responsável pela conexão com o banco de dados e sua configuração é auto-explicativa. :)
+
 
 Iniciando o uso do OCOMON:
 
@@ -149,7 +148,7 @@ Toda a documentação do OcoMon está disponível no site do projeto:
 
 - Site do projeto: http://ocomonphp.sourceforge.net/
 
-- Manual/wiki: http://ocomonphp.wiki.sourceforge.net/manual
+- Manual/wiki: http://sourceforge.net/apps/mediawiki/ocomonphp/index.php?title=Main_Page
 
 - Fórum: http://softwarelivre.unilasalle.edu.br/ocomon_forum
 

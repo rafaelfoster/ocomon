@@ -26,9 +26,12 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
+	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+
 	if (!isset($_POST['ok'])) { //&& $_POST['ok'] != 'Pesquisar')
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
+		print "<body onLoad=\"ajaxFunction('divOperator', 'showOperators.php', 'idLoad', 'area_cod=idArea');\" ";
 		print "	<BR><BR>";
 		print "	<B><center>:::".TRANS('TLT_INDICE_STATUS_CALL').":::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida()\" >"; //onSubmit=\"return valida()\"
@@ -37,9 +40,11 @@
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_AREA').":</td>";
 
 
-		print "					<td><Select name='area' class='select' size=1 onChange=\"fillSelectFromArray(this.form.operador, ((this.selectedIndex == -1) ? null : team[this.selectedIndex-1]));\">";
+		print "					<td>";
+		
+					print "<Select name='area' class='select' size=1 id='idArea' onChange=\"ajaxFunction('divOperator', 'showOperators.php', 'idLoad', 'area_cod=idArea');\">";
 		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
-										$query="select * from sistemas where sis_status not in (0) order by sistema";
+										$query="select * from sistemas where sis_status not in (0) and sis_atende = 1 order by sistema";
 										$resultado=mysql_query($query);
 										$linhas = mysql_num_rows($resultado);
 										while($row=mysql_fetch_array($resultado))
@@ -54,20 +59,13 @@
 
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('MNS_OPERADOR').":</td>";
-		print "					<td><Select name='operador' class='select' size='1'>";
-		print "							<OPTION value=-1 selected>".TRANS('OPT_ALL_2')."</OPTION>";
-										$query="select * from usuarios order by nome";
-										$resultado=mysql_query($query);
-										$linhas = mysql_num_rows($resultado);
-										while($row=mysql_fetch_array($resultado))
-										{
-											//$sis_id=$row['user_id'];
-											//$sis_name=$row['nome'];
-											print "<option value=".$row['user_id'].">".$row['nome']."</option>";
-										} // while
-		print "		 				</Select>";
-		//	print "						<input type='checkbox' name='opTodos'>Todos";
-		print "					 </td>";
+		
+						print "<TD>";
+							print "<div id='divOperator'>";
+								print "<input type='hidden' name='foward' id='idFoward' value='-1'>";
+							print "</div>";
+						print "</TD>";
+
 		print "				</tr>";
 
 
@@ -80,8 +78,6 @@
 										$linhas = mysql_num_rows($resultado);
 										while($row=mysql_fetch_array($resultado))
 										{
-											//$sis_id=$row['user_id'];
-											//$sis_name=$row['nome'];
 											print "<option value=".$row['loc_id'].">".$row['local']."</option>";
 										} // while
 		print "		 				</Select>";
@@ -91,7 +87,6 @@
 
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-		//print "					<td ><INPUT type='text' name='d_ini' class='data' id='idD_ini'><a href=\"javascript:cal1.popup();\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
 		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
 		print "				</tr>";
 		print "				<tr>";
@@ -113,7 +108,6 @@
 		print "		<TABLE align='center'>";
 		print "			<tr>";
 		print "	            <td>";
-		//print"					<input type='hidden' name='sis_name' value='$sis_name' ";
 		print "					<input type='submit'  class='button' value='".TRANS('BT_SEARCH')."' name='ok' >";//onClick=\"submitForm();\"
 		print "	            </TD>";
 		print "	            <td>";
@@ -179,12 +173,12 @@
 				"WHERE o.status=4 and s.sis_id=o.sistema and p.prob_id = o.problema  and o.local =l.loc_id and ".
 					"o.operador=u.user_id";
 
+		if (isset($_POST['foward'])) {
+			if (!empty($_POST['foward']) && $_POST['foward'] != -1)
+				$query.= " AND o.operador=".$_POST['foward']." ";
 
-		if (isset($_POST['operador'])) {
-			if (!empty($_POST['operador']) && $_POST['operador'] != -1)
-				$query.= " AND o.operador=".$_POST['operador']." ";
-
-		}
+		}		
+		
 		if (isset($_POST['local'])) {
 			if (!empty($_POST['local']) && $_POST['local'] != -1)
 				$query.= " AND o.local=".$_POST['local']." ";
@@ -239,8 +233,8 @@
 								$criterio.="ÁREA: ".$row_area['sistema']."";
 							}
 
-						if (!empty($_POST['operador']) and ($_POST['operador'] !=-1)){
-				                        $sqlOp = "Select * from usuarios where user_id = ".$_POST['operador']."";
+						if (!empty($_POST['foward']) and ($_POST['foward'] !=-1)){
+				                        $sqlOp = "Select * from usuarios where user_id = ".$_POST['foward']."";
 							$execOp= mysql_query($sqlOp);
 							$rowOp = mysql_fetch_array($execOp);
 							$criterio.= "- Operador: ".$rowOp['nome'];
@@ -535,7 +529,7 @@
 										$c_slaSR_yellow++;
 										$chamadosSyellow[]= $row['numero'];
 								} else {
-									$imgSlaS = 'sla3.png';
+									$imgSlaSR = 'sla3.png';
 									$c_slaSR_red++;
 									$chamadosSred[]= $row['numero'];
 								}
@@ -777,120 +771,51 @@
 ?>
 <script type='text/javascript'>
 <!--
-	team = new Array(
-		<?php 
-		$sql="select * from sistemas where sis_status NOT in (0) order by sistema";//Somente as áreas ativas
-		$sql_result=mysql_query($sql);
-		echo mysql_error();
 
-		$conta = 0;
-		$conta_sub = 0;
+	function popup(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'popup','dependent=yes,width=400,height=200,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+100, window.parent.screenY+100);
+		return false
+	}
 
-		$num=mysql_numrows($sql_result);
-		while ($row_A=mysql_fetch_array($sql_result)){
-		$conta=$conta+1;
-			$cod_item=$row_A["sis_id"];
-				echo "new Array(\n";
-				$sub_sql="select * from usuarios u left join sistemas s on u.AREA = s.sis_id where u.AREA=".$cod_item." or u.AREA is null order by u.nome";
-				$sub_result=mysql_query($sub_sql);
-				$num_sub=mysql_numrows($sub_result);
-				if ($num_sub>=1){
-					echo "new Array(\"-->Todos<--\", -1),\n";
-					while ($rowx=mysql_fetch_array($sub_result)){
-						$codigo_sub=$rowx["user_id"];
-						$sub_nome=$rowx["nome"];
-					$conta_sub=$conta_sub+1;
-						if ($conta_sub==$num_sub){
-							echo "new Array(\"$sub_nome\", $codigo_sub)\n";
-							$conta_sub="";
-						}else{
-							echo "new Array(\"$sub_nome\", $codigo_sub),\n";
-						}
-					}
-				}else{
-					echo "new Array(\"Qualquer\", -1)\n";
-				}
-			if ($num>$conta){
-				echo "),\n";
-			}
+	function popup_alerta(pagina)	{ //Exibe uma janela popUP
+		x = window.open(pagina,'_blank','dependent=yes,width=700,height=470,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
+		return false
+	}
+
+	function checar() {
+		var checado = false;
+		if (document.form1.novaJanela.checked){
+		checado = true;
+		} else {
+			checado = false;
 		}
-		echo ")\n";
-		echo ");\n";
-		?>
+		return checado;
+	}
 
-		function fillSelectFromArray(selectCtrl, itemArray, goodPrompt, badPrompt, defaultItem) {
-			var i, j;
-			var prompt;
-			// empty existing items
-			for (i = selectCtrl.options.length; i >= 0; i--) {
-				selectCtrl.options[i] = null;
-			}
-			prompt = (itemArray != null) ? goodPrompt : badPrompt;
-			if (prompt == null) {
-				j = 0;
-			}
-			else {
-				selectCtrl.options[0] = new Option(prompt);
-				j = 1;
-			}
-			if (itemArray != null) {
-				// add new items
-				for (i = 0; i < itemArray.length; i++) {
-					selectCtrl.options[j] = new Option(itemArray[i][0]);
-					if (itemArray[i][1] != null) {
-						selectCtrl.options[j].value = itemArray[i][1];
-					}
-					j++;
-				}
-				// select first item (prompt) for sub list
-				selectCtrl.options[0].selected = true;
-			}
+	//window.setInterval("checar()",1000);
+
+
+	function valida(){
+		var ok = validaForm('idD_ini','DATA-','Data Inicial',1);
+		if (ok) var ok = validaForm('idD_fim','DATA-','Data Final',1);
+
+		if (ok) submitForm();
+
+		return ok;
+	}
+
+	function submitForm()
+	{
+		if (checar() == true) {
+			document.form1.target = "_blank";
+			document.form1.submit();
+		} else {
+			document.form1.target = "";
+			document.form1.submit();
 		}
-
-		function popup(pagina)	{ //Exibe uma janela popUP
-			x = window.open(pagina,'popup','dependent=yes,width=400,height=200,scrollbars=yes,statusbar=no,resizable=yes');
-			x.moveTo(window.parent.screenX+100, window.parent.screenY+100);
-			return false
-		}
-
-		function popup_alerta(pagina)	{ //Exibe uma janela popUP
-                	x = window.open(pagina,'_blank','dependent=yes,width=700,height=470,scrollbars=yes,statusbar=no,resizable=yes');
-	                x.moveTo(window.parent.screenX+50, window.parent.screenY+50);
-                	return false
-             	}
-
-		function checar() {
-			var checado = false;
-			if (document.form1.novaJanela.checked){
-		      	checado = true;
-			} else {
-				checado = false;
-			}
-			return checado;
-		}
-
-		//window.setInterval("checar()",1000);
-
-
-		function valida(){
-			var ok = validaForm('idD_ini','DATA-','Data Inicial',1);
-			if (ok) var ok = validaForm('idD_fim','DATA-','Data Final',1);
-
-			if (ok) submitForm();
-
-			return ok;
-		}
-
-		function submitForm()
-		{
-			if (checar() == true) {
-				document.form1.target = "_blank";
-				document.form1.submit();
-			} else {
-				document.form1.target = "";
-				document.form1.submit();
-			}
-		}
-	-->
+	}
+-->
 </script>
 

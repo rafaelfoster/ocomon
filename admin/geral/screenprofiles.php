@@ -78,7 +78,7 @@
 
 		if (mysql_numrows($resultado) == 0)
 		{
-			echo mensagem(TRANS('ALERT_CONFIG_EMPTY'));
+			echo mensagem(TRANS('MSG_NO_RECORDS'));
 		}
 		else
 		{

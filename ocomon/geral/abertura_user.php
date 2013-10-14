@@ -204,7 +204,8 @@
 
 			$data = $rowAT['data_abertura'];
 
-			$diff = date_diff($data,$hoje);
+			//$diff = date_diff($data,$hoje);
+			$diff = date_difference($data,$hoje);
 			$sep = explode ("dias",$diff);
 			if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 				$diff = $sep[0]." dias";
@@ -242,8 +243,8 @@
 			} else
 				$imgSlaS = 'checked.png';
 
-			print "<TD class='line'  $valign align='center'><a onClick=\"javascript:popup('sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
-			print "<TD  class='line' $valign align='center'><a onClick=\"javascript:popup('sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
+			print "<TD class='line'  $valign align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
+			print "<TD  class='line' $valign align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
 
 			print "</TR>";
 			$i++;

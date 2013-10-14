@@ -312,6 +312,18 @@ print ".select, .text, .select2, .text2, input.text
 }"; //#F1F1F1
 
 
+print ".textarea_desc
+{
+	height:60px;
+	background-color:".$formFieldColor.";
+	font-family: tahoma;
+	font-size:11px;
+	width:200px;
+	color: black;
+	border: 1px solid #a4a4a4;
+}"; //#F1F1F1
+
+
 print ".select_sol
 {
 	height:20px;
@@ -323,8 +335,8 @@ print ".select_sol
 	border: 1px solid #a4a4a4;
 }";
 
-print ".select:focus, .text:focus, .select2:focus, .text2:focus, input.text:focus, .text3:focus, .textarea:focus, ".
-	".textarea2:focus, .mini:focus, .mini2:focus, .data:focus, .logon:focus, .help:focus, .select_sol:focus
+print ".select:focus, .text:focus, .select2:focus, .text2:focus, input.text:focus, .text3:focus, .textarea:focus, .textarea-script:focus, ".
+	".textarea2:focus, .mini:focus, .mini2:focus, .data:focus, .logon:focus, .help:focus, .select_sol:focus, .textarea_desc:focus 
 {
 	background-color:white;
 }";
@@ -401,6 +413,8 @@ print "td.bordaprint
 }";
 //#F7F7F7
 print ".textarea {height:100px; background-color:".$formFieldColor."; font-family: Arial,Sans-Serif; font-size:12px; width:570px; border: 1px solid #a4a4a4;}";
+
+print ".textarea-script {height:400px; background-color:".$formFieldColor."; font-family: Arial,Sans-Serif; font-size:12px; width:570px; border: 1px solid #a4a4a4;}";
 
 print ".textarea2 {height:100px; background-color:".$formFieldColor."; font-family: Arial,Sans-Serif; font-size:12px; width:400px; border: 1px solid #a4a4a4;}";
 

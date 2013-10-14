@@ -2,22 +2,22 @@
 
 // arquivo: config.inc.php
 
-// configurar de acordo com as suas necessidades - PHP4
+// configurar de acordo com as suas necessidades
 
 // Configurações vitais
 
 //Usuario do banco
-define ( "SQL_USER", "ocomon"); //NOME DO USUÁRIO PARA ACESSAR A BASE DO OCOMON
+define ( "SQL_USER", "ocomon"); //NOME DO USUÁRIO PARA ACESSAR A BASE DO OCOMON - ESSE USUÁRIO É CRIADO AUTOMATICAMENTE NA INSTALACAO DO SISTEMA!!
 
 //Senha do banco
-define ( "SQL_PASSWD", "");//AQUI DEVE SER COLOCADA A SENHA DO BASE DO OCOMON
+define ( "SQL_PASSWD", "senha_ocomon_mysql");//ESSA SENHA É A SENHA PADRAO CRIADA NA INSTALACAO DO SISTEMA. É RECOMENDÁVEL A ALTERACAO DA MESMA NO MYSQL.
 //Servidor do banco
 define ( "SQL_SERVER", "localhost"); //SE O BANCO DE DADOS ESTIVER EM UM SERVIDOR DIFERENTE DO SERVIDOR WEB DEVE-SE ALTERAR O VALOR "localhost"
 //Nome do banco
-define ( "SQL_DB", "ocomon");//NOME DO BANCO DE DADOS. PADRÃO: OCOMON
+define ( "SQL_DB", "ocomon_rc6");//NOME DO BANCO DE DADOS. O PADRÃO DESSA VERSÃO É: ocomon_rc6
 
 
-define ( "DB_CCUSTO","ocomon"); //Base de dados onde são buscados os Centros de Custos, o padrão: ocomon.
+define ( "DB_CCUSTO","ocomon_rc6"); //Base de dados onde são buscados os Centros de Custos, o padrão dessa versão é: ocomon_rc6.
 define ( "TB_CCUSTO","CCUSTO"); //Tabela de CEntro de custos dentro da base de dados - padrão: CCUSTO
 define ( "CCUSTO_ID","codigo");//Chave primária da tabela de centros de custo
 define ( "CCUSTO_DESC","descricao"); //Campo referente à descrição do Centro de Custo

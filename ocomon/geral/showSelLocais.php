@@ -48,6 +48,9 @@
 						print "<option value='".$rowi['loc_id']."'";
 							//if ($rowi['loc_id'] == $invLoc) print " selected";
 							if (isset($rowDesc) && $rowDesc['comp_local'] == $rowi['loc_id']) print " selected";
+							//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+							else if (isset($_REQUEST['invLoc']) && $rowi['loc_id'] == $_REQUEST['invLoc']) print " selected"; 
+							//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 							//if ($rowi['loc_id'] == $rowDesc['comp_local']) print " selected";
 						print ">".$rowi['local']." - ".$rowi['predio']."</option>";
 					}

@@ -19,8 +19,8 @@
   */
 
 is_file( "./includes/config.inc.php" )
-	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='README.TXT'>README.TXT</a> para obter as principais informações sobre a instalação do OCOMON!".
-		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.TXT'>README.TXT</a>to get the main informations about the Ocomon Installation!" );
+	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='LEIAME.txt'>LEIAME.TXT</a> para obter as principais informações sobre a instalação do OCOMON!".
+		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.txt'>README.TXT</a>to get the main informations about the Ocomon Installation!" );
 
 	session_start();
 	//session_destroy();
@@ -156,8 +156,17 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 			//$home = "home=true";
 		} else
 			print "<td width='7%' STYLE='{border-right: thin solid #C7C8C6; color:#C7C8C6}'>&nbsp;".TRANS('MNS_INVENTARIO')."&nbsp;</td>";
-		if ($_SESSION['s_nivel']==1) {
-			print "<td id='ADMIN' width='5%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('ADMIN')\" onMouseOut=\"libera('ADMIN')\" onclick=\"loadIframe('menu.php?sis=a','menu','','','1','ADMIN')\">&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</a></td>";
+// 		if ($_SESSION['s_nivel']==1) {
+// 			print "<td id='ADMIN' width='5%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('ADMIN')\" onMouseOut=\"libera('ADMIN')\" onclick=\"loadIframe('menu.php?sis=a','menu','','','1','ADMIN')\">&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</a></td>";
+// 			if ($sis=="") $sis="sis=a";
+// 			if ($sisPath=="") $sisPath="";
+// 			if ($sistem=="") $sistem = "menu.php";
+// 			if ($marca=="")$marca = "ADMIN";
+// 			//$home = "home=true";
+// 		} 
+		
+		if ($_SESSION['s_nivel']==1 || (isset($_SESSION['s_area_admin']) && $_SESSION['s_area_admin'] == '1')) {
+			print "<td id='ADMIN' width='5%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('ADMIN')\" onMouseOut=\"libera('ADMIN')\" onclick=\"loadIframe('menu.php?sis=a','menu','','','2','ADMIN')\">&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</a></td>";
 			if ($sis=="") $sis="sis=a";
 			if ($sisPath=="") $sisPath="";
 			if ($sistem=="") $sistem = "menu.php";
@@ -207,7 +216,7 @@ if ($_SESSION['s_logado']){
 		} else {
 			$typedUser = "";
 		}
-		print "<tr><td >".TRANS('MNS_USUARIO').":</td><td ><input type='text' class='help' name='login' value='".$typedUser."' id='idLogin' tabindex='1'></td><td rowspan='2'><input type='submit' class='blogin' value='login' tabindex='3'></td></tr>". //class='help'
+		print "<tr><td >".TRANS('MNS_USUARIO').":</td><td ><input type='text' class='help' name='login' value='".$typedUser."' id='idLogin' tabindex='1'></td><td rowspan='2'><input type='submit' class='blogin' value='".TRANS('cx_login')."' tabindex='3'></td></tr>". //class='help'
 			"<tr><td >".TRANS('MNS_SENHA').":</td><td ><input type='password' class='help' name='password'  id='idSenha' tabindex='2'></td></tr>"; //class='blogin'
 
 			print "<tr><td colspan='3'>&nbsp;</td></tr>";
@@ -297,7 +306,7 @@ var GLArray = new Array();
 
 		var obj = document.getElementById(id);
 		if (obj!=null) {
-			obj.style.height = screen.availHeight - 270;
+			obj.style.height = screen.availHeight - 300;
 			marca('<?php print $marca;?>');
 		} else {
 			document.logar.login.focus();

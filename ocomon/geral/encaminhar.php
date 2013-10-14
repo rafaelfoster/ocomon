@@ -26,7 +26,7 @@
 	//print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 
 	print "<html>";
-	print "<body onLoad=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); checarSchedule(''); \">";
+	print "<body onLoad=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea', 'area_habilitada=idAreaHabilitada'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); checarSchedule(''); ajaxFunction('divInformacaoProblema', 'showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); \">";
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
@@ -137,9 +137,12 @@
 
                 	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_AREA').":</TD>";
 	                print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-				print "<SELECT class='select' name='sistema' id='idArea' onChange=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');\">";
+				print "<SELECT class='select' name='sistema' id='idArea' onChange=\"ajaxFunction('divSelProblema', 'showSelProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea', 'area_habilitada=idAreaHabilitada'); ajaxFunction('divProblema', 'showProbs.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea'); \">"; //ajaxFunction('divInformacaoProblema', 'showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea');
 	        		        print "<option value= '-1'>".TRANS('OCO_SEL_AREA')."</option>";
-	                		$query = "SELECT * from sistemas order by sistema";
+	                		//$query = "SELECT * from sistemas order by sistema";
+	                		$query = "SELECT s.* from sistemas s, areaXarea_abrechamado a WHERE s.sis_status NOT IN (0) ".
+	                			"AND s.sis_atende = 1 AND s.sis_id = a.area AND a.area_abrechamado IN (".$_SESSION['s_uareas'].") ".
+	                			"GROUP BY sistema ORDER BY sistema";
 			                $exec_sis = mysql_query($query);
 			                while ($row_sis = mysql_fetch_array($exec_sis))
                				{
@@ -151,6 +154,7 @@
             		    		}
 				print "</select>";
 				print "</TD>";
+				print "<input type='hidden' name='areaHabilitada' id='idAreaHabilitada' value='sim'>";
 
 
 
@@ -173,8 +177,9 @@
 
 			print "</div></td></tr>";
 
+			print "<tr><td colspan='6' ><div id='divInformacaoProblema'></div></td></tr>";	
 			print "<div id='idLoad' class='loading'><img src='../../includes/imgs/loading.gif'></div>";
-#################################################3
+#################################################
 
 
 
@@ -187,13 +192,16 @@
 					print "<TEXTAREA class='textarea' name='descricao' id='idDescricao'>".$row['descricao']."</textarea>";//nl2br()
 				} else
 					print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
+				
+				$texto1 = str_replace("\r","\n",$row['descricao']);
+				$texto1 = str_replace("\n","",$texto1);				
 				?>
 				<script type="text/javascript">
 					var bar = '<?php print $_SESSION['s_formatBarOco'];?>'
 					if (bar ==1) {
 						var oFCKeditor = new FCKeditor( 'descricao' ) ;
 						oFCKeditor.BasePath = '../../includes/fckeditor/';
-						oFCKeditor.Value =  '<?php print $row['descricao'];?>';
+						oFCKeditor.Value =  '<?php print $texto1;?>';
 						oFCKeditor.ToolbarSet = 'ocomon';
 						oFCKeditor.Width = '570px';
 						oFCKeditor.Height = '100px';
@@ -402,11 +410,34 @@
 
 
 
-
+			/* ----------------- INICIO ALTERACAO ----------------- */
 			print "<tr>";
-				print "<TD width='20%' align='left' bgcolor=".TD_COLOR.">".TRANS('FIELD_ATTACH_IMAGE').":</TD>";
-				print "<TD colspan='5' align='left' bgcolor=".BODY_COLOR."><INPUT type='file' class='text' name='img' id='idImg'></TD>"; //class='text'
+			print "<td colspan='4'>";
+			if ((!empty($rowconf) && $rowconf['conf_scr_upload']) || empty($rowconf)) {
+				for($i=1;$i<=$row_config['conf_qtd_max_anexos']; $i++){
+					$estilo = 'width: 100%; margin: 0; height: 20px; margin-bottom: 2px;';
+					if($i > 1)
+						$estilo .= " display: none;";
+					print "<div id='tr_anexo_$i' style='{ $estilo }'>";					
+					//print "<tr id='tr_anexo_$i' $estilo>";
+						print "<div style='{width: 20%; height: 100%; background-color: ".TD_COLOR."; float: left; margin: 0;}'>".TRANS('OCO_FIELD_ATTACH_FILE','Anexar arquivo').":</div>";
+						print "<div style='{width: 70%; background-color: ".BODY_COLOR."; float: left; margin-left: 2px;}'>";
+						print "		<INPUT type='file' class='text' name='anexo_$i' id='id_anexo_$i' />";
+						if($i != $row_config['conf_qtd_max_anexos']){
+							print "		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+							print "<a id='link_adic_$i'
+										onclick=\"
+										javascript:document.getElementById('tr_anexo_".($i+1)."').style.display='block';
+										document.getElementById('link_adic_".($i)."').style.display='none';
+									\">&nbsp;&nbsp;".TRANS('ATTACH_ANOTHER')."</a>";
+						}
+						print "</div>";
+					print "</div>";
+				}
+			}
+			print "</td>";
 			print "</tr>";
+			/* ----------------- FIM ALTERACAO ----------------- */
 
 
 			$qrymail = "SELECT u.*, a.*,o.* from usuarios u, sistemas a, ocorrencias o where ".
@@ -606,25 +637,29 @@
 
 
 
+			/* ----------------- INICIO ALTERACAO ----------------- */
 			$gravaImg = false;
-			if (isset($_FILES['img']) and $_FILES['img']['name']!="") {
-				$qryConf = "SELECT * FROM config";
-				$execConf = mysql_query($qryConf) or die (TRANS('MSG_ERR_NOT_ACCESS_INFO_CONFIG'));
-				$rowConf = mysql_fetch_array($execConf);
-				$arrayConf = array();
-				$arrayConf = montaArray($execConf,$rowConf);
-				$upld = upload('img',$arrayConf, $row_config['conf_upld_file_types']);
-
-				if ($upld =="OK") {
-					$gravaImg = true;
-				} else {
-					$upld.="<br><a align='center' <a onClick=\"javascript:history.back();\"><img src='".ICONS_PATH."/back.png' width='16px' height='16px'>&nbsp;".TRANS('TXT_RETURN')."</a>"; //onClick=\"exibeEscondeImg('idAlerta');\"
-					print "</table>";
-					print "<div class='alerta' id='idAlerta'><table bgcolor='#999999'><tr><td colspan='2' bgcolor='yellow'>".$upld."</td></tr></table></div>";
-					//print "<script>javascript:history.back();</script>";
-					exit;
+			$qryConf = "SELECT * FROM config";
+			$execConf = mysql_query($qryConf) or die (TRANS('ERR_QUERY').", A TABELA CONF FOI CRIADA?");
+			$rowConf = mysql_fetch_array($execConf);
+			$arrayConf = array();
+			$arrayConf = montaArray($execConf,$rowConf);
+			for($i=1;$i<=$row_config['conf_qtd_max_anexos']; $i++){
+				$nomeAnexo = 'anexo_'.$i;
+				if (isset($_FILES[$nomeAnexo]) and $_FILES[$nomeAnexo]['name']!="") {
+					$upld = upload($nomeAnexo,$arrayConf,$rowConf['conf_upld_file_types']);
+					if ($upld =="OK") {
+						$gravaImg[$i] = true;
+					} else {
+						$gravaImg[$i] = false;
+						$upld.="<br><a align='center' onClick=\"exibeEscondeImg('idAlerta');\"><img src='".ICONS_PATH."/stop.png' width='16px' height='16px'>&nbsp;".TRANS('LINK_CLOSE','Fechar')."</a>";
+						print "</table>";
+						print "<div class='alerta' id='idAlerta'><table bgcolor='#999999'><tr><td colspan='2' bgcolor='yellow'>".$upld."</td></tr></table></div>";
+						exit;
+					}
 				}
 			}
+			/* ----------------- FIM ALTERACAO ----------------- */
 
 			//Exclui os anexos marcados			
 			if (isset($_POST['cont'])) {
@@ -689,31 +724,36 @@
 			
 			
 
-			if ($gravaImg) {
-				//INSERÇÃO DO ARQUIVO NO BANCO
-				$fileinput=$_FILES['img']['tmp_name'];
+			/* ----------------- INICIO ALTERACAO ----------------- */
+			for($i=1;$i<=$row_config['conf_qtd_max_anexos']; $i++){
+				if ($gravaImg[$i]) {
+					$nomeAnexo = 'anexo_'.$i;
+					//INSERSAO DO ARQUIVO NO BANCO
+					$fileinput=$_FILES[$nomeAnexo]['tmp_name'];
+					$tamanho = getimagesize($fileinput);
+					$tamanho2 = filesize($fileinput);
 
-				$tamanho = getimagesize($fileinput);
-				$tamanho2 = filesize($fileinput);
-
-				if(chop($fileinput)!=""){
-					// $fileinput should point to a temp file on the server
-					// which contains the uploaded image. so we will prepare
-					// the file for upload with addslashes and form an sql
-					// statement to do the load into the database.
-					$image = addslashes(fread(fopen($fileinput,"r"), 1000000));
-					$SQL = "Insert Into imagens (img_nome, img_oco, img_tipo, img_bin, img_largura, img_altura, img_size) values ".
-							"('".noSpace($_FILES['img']['name'])."',".$_POST['numero'].", '".$_FILES['img']['type']."', ".
-							"'".$image."', '".$tamanho[0]."', '".$tamanho[1]."', '".$tamanho2."')";
-					// now we can delete the temp file
-					unlink($fileinput);
-				} /*else {
-					echo "NENHUMA IMAGEM FOI SELECIONADA!";
-					exit;
-				}*/
-				$exec = mysql_query($SQL);// or die ("NÃO FOI POSSÍVEL GRAVAR O ARQUIVO NO BANCO DE DADOS! ".$SQL);
-				if ($exec == 0) $aviso.= "".TRANS('MSG_ERR_NOT_ATTACH_FILE')."<br>";
+					if(chop($fileinput)!=""){
+						// $fileinput should point to a temp file on the server
+						// which contains the uploaded image. so we will prepare
+						// the file for upload with addslashes and form an sql
+						// statement to do the load into the database.
+						$image = addslashes(fread(fopen($fileinput,"r"), 1000000));
+						$SQL = "Insert Into imagens (img_nome, img_oco, img_tipo, img_bin, img_largura, img_altura, img_size) values ".
+								"('".noSpace($_FILES[$nomeAnexo]['name'])."',".$_POST['numero'].", '".$_FILES[$nomeAnexo]['type']."', ".
+								"'".$image."', '".$tamanho[0]."', '".$tamanho[1]."', '".$tamanho2."')";
+						// now we can delete the temp file
+						unlink($fileinput);
+					} /*else {
+						echo "".TRANS('MSG_NOT_IMAGE_SELECT')."";
+						exit;
+					}*/
+					$exec = mysql_query($SQL); //or die ("N?O FOI POSS?VEL GRAVAR O ARQUIVO NO BANCO DE DADOS! ");
+					if ($exec == 0) 
+						$aviso.= TRANS('MSG_ATTACH_IMAGE')."<br>";	
+				}
 			}
+			/* ----------------- FIM ALTERACAO ----------------- */
 
 			$sqlMailLogado = "select * from usuarios where login = '".$_SESSION['s_usuario']."'";
 			$execMailLogado = mysql_query($sqlMailLogado) or die(TRANS('MSG_ERR_RESCUE_INFO_USER'));
@@ -801,17 +841,23 @@
 				$catProb = $_POST['radio_prob'];
 			}
 
+			if ($_SESSION['s_formatBarOco']){
+				$description = $_POST['descricao'];
+			} else {
+				$description = noHtml($_POST['descricao']);
+			}
+
 			if ($_POST['antes'] != $depois) //Status alterado!!   $_POST['antes']: status anterior
 			{   //$status!=1 and
 				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta'])) ) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".$description."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}  else
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb." , instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".$description."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			} else
@@ -819,11 +865,11 @@
 				if (($_POST['data_atend']=="") and ($depois!=4) and (isset($_POST['resposta']) )) //para verificar se já foi setada a data do inicio do atendimento. //Se eu incluir um assentamento seto a data de atendimento
 				{
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", data_fechamento=NULL, status=".$depois.", data_atendimento='".date('Y-m-d H:i:s')."', ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".$description."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				} else {
 					$query = "UPDATE ocorrencias SET operador=".$_POST['operador'].", problema = ".$catProb.", instituicao='".$_POST['institui']."', equipamento = '".$_POST['etiq']."', sistema = '".$_POST['sistema']."', local=".$_POST['local'].", status=".$depois.", ".
-								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".noHtml($_POST['descricao'])."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
+								"data_abertura = '".$data_agendamento."', oco_real_open_date='".$realOpenDate."', oco_scheduled=".$agendado.", descricao='".$description."', contato='".noHtml($_POST['contato'])."', telefone='".$_POST['ramal']."', oco_prior='".$_POST['prioridade']."' WHERE numero=".$_POST['numero']."";
 					$resultado4 = mysql_query($query);
 				}
 			}

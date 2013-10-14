@@ -27,12 +27,20 @@
 
 	$hoje = date("d-m-Y H:i:s");
 	$hoje2 = date("d/m/Y");
+	
+	$OPERADOR_AREA = false;
+	if(isset($_SESSION['s_area_admin']) && $_SESSION['s_area_admin'] == '1' && $_SESSION['s_nivel'] != '1')
+		$OPERADOR_AREA = true;	
 
 	print "<HTML>";
 	print "<BODY bgcolor=".BODY_COLOR.">";
 
 	$auth = new auth;
-	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],1);
+	if($OPERADOR_AREA)
+		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
+	else
+		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],1);	
+	
 
 	$PAGE = new paging("PRINCIPAL");
 	$PAGE->setRegPerPage($_SESSION['s_page_size']);
@@ -44,18 +52,54 @@
 
 	$query = "SELECT u.*, n.*,s.* from usuarios u left join sistemas as s on u.AREA = s.sis_id ".
 					"left join nivel as n on n.nivel_cod =u.nivel ";
+
+	$WHERE = false;
+	if ($OPERADOR_AREA){
+		$query.=" WHERE s.sis_id = ".$_SESSION['s_area']." ";
+		$WHERE = true;
+	}
+
+
         if (isset($_GET['login'])) {
-			$query.=" WHERE u.user_id = ".$_GET['login']."";
+			!$WHERE?$query.=" WHERE u.user_id = ".$_GET['login']."":$query.=" AND u.user_id = ".$_GET['login']."";
+			$WHERE = true;
+		
 		} else
 		if (isset($_GET['nivel'])) {
-			$query.= "WHERE n.nivel_cod = ".$_GET['nivel']."";
+			!$WHERE?$query.=" WHERE n.nivel_cod = ".$_GET['nivel']."":$query.=" AND n.nivel_cod = ".$_GET['nivel']."";
+			$WHERE = true;
+		
 		} else
-		if (isset($_POST['search'])) {
-			$query.= " WHERE (lower(u.login) like lower(('%".noHtml($_POST['search'])."%'))) OR ".
-						"(lower(u.nome) like lower(('%".noHtml($_POST['search'])."%')))  ";
+		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+		//if (isset($_POST['search'])) {
+		//	$query.= " WHERE (lower(u.login) like lower(('%".noHtml($_POST['search'])."%'))) OR ".
+		//				"(lower(u.nome) like lower(('%".noHtml($_POST['search'])."%')))  ";
+		//}
+		{
+			if(isset($_POST['id_sistema']))
+				$_SESSION['id_sistema_filtro'] = $_POST['id_sistema'];
+			
+			if($OPERADOR_AREA){
+				$_SESSION['id_sistema_filtro']=$_SESSION['s_area'];
+				if(isset($_POST['id_sistema'])) // && $_POST['id_sistema']==2)//2 - USUARIOS
+					$_SESSION['id_sistema_filtro'] = $_POST['id_sistema'];
+			}				
+
+			if (isset($_POST['search']) || isset($_SESSION['id_sistema_filtro'])) {
+				!$WHERE?$query.=" WHERE u.login IS NOT NULL":$query.=" AND u.login IS NOT NULL";	
+				$WHERE = true;			
+
+				if (isset($_SESSION['id_sistema_filtro']) && $_SESSION['id_sistema_filtro'] != '-1')
+					$query.= " AND u.area = ".$_SESSION['id_sistema_filtro'];
+				if (isset($_POST['search']))
+					$query.= " AND ((lower(u.login) like lower(('%".noHtml($_POST['search'])."%'))) OR ".
+						"(lower(u.nome) like lower(('%".noHtml($_POST['search'])."%'))))  ";
+			}
 		}
+		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
+		
 		$query.=" ORDER BY u.nome";
-		$resultado = mysql_query($query);
+		$resultado = mysql_query($query) or die($query."<br>".mysql_error());
 		$registros = mysql_num_rows($resultado);
 
 		if (isset($_GET['LIMIT']))
@@ -93,7 +137,23 @@
 		print "</tr>";
 
 		print "<tr>".//<td>".TRANS('FIELD_SEARCH')."</td>".
-				"<td colspan='4'><input type='text' class='text' name='search' id='idSearch' value='".$search."'>&nbsp;".
+				"<td colspan='7'>
+				<input type='text' class='text' name='search' id='idSearch' value='".$search."'>&nbsp;";
+				//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+				$qryarea = "SELECT sis_id, sistema FROM sistemas ORDER BY sistema";
+				if($OPERADOR_AREA)
+					$qryarea = "SELECT sis_id, sistema FROM sistemas WHERE sis_id = ".$_SESSION['s_area']." ";//OR sis_id = 2 -  2 - USUARIOS
+				$execarea = mysql_query($qryarea);
+				print "<SELECT class='select' name='id_sistema' size='1'>";
+					print "<option value='-1'>".TRANS('OCO_SEL_AREA')."</option>";
+					while ($rowArea=mysql_fetch_array($execarea)){
+						$isSelecionado = "";
+						if ($rowArea['sis_id'] == $_SESSION['id_sistema_filtro'])
+							$isSelecionado = " selected";
+						print "<option value='".$rowArea['sis_id']."' ".$isSelecionado.">".$rowArea['sistema']."</option>";
+					}
+				print "</SELECT>&nbsp;".
+				//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 				"<input type='submit' name='BT_SEARCH' class='button' value='".TRANS('BT_FILTER')."'>".
 			"</td></tr>";
 		//print "<BR>";
@@ -167,7 +227,12 @@
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
 		print "<SELECT class='select' name='categoria' id='idCategoria'>";
 			print "<option value=-1 selected>".TRANS('SEL_LEVEL')."</option>";
-			$query = "SELECT * from nivel order by nivel_nome";
+			
+			if($OPERADOR_AREA) {
+				$query = "SELECT * from nivel WHERE nivel_cod = ".$_SESSION['s_nivel']." order by nivel_nome ";
+			} else			
+				$query = "SELECT * from nivel order by nivel_nome";
+			
 			$resultado = mysql_query($query);
 			$registros = mysql_num_rows($resultado);
 			$i=0;
@@ -200,7 +265,11 @@
 			print "<TD colspan='3' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='area' size=1 id='idArea'>";
 			print "<option value=-1 selected>".TRANS('SEL_WORK_AREA').":</option>";
-			$query = "SELECT * from sistemas where sis_status not in (0) order by sistema";
+			
+			if ($OPERADOR_AREA){
+				$query = "SELECT * from sistemas WHERE sis_status not in (0) AND sis_id = ".$_SESSION['s_area']." order by sistema ";
+			} else
+				$query = "SELECT * from sistemas where sis_status not in (0) order by sistema";
 			$resultado = mysql_query($query);
 			$registros = mysql_num_rows($resultado);
 			while ($rowarea = mysql_fetch_array($resultado)) {
@@ -246,7 +315,11 @@
 
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_LEVEL').":</TD>";
 
-			$qrynivel = "SELECT * FROM nivel order by nivel_nome";
+			if ($OPERADOR_AREA) //se for administrador da área poderá apenas alterar o nível para desabilitado
+				$qrynivel = "SELECT * from nivel WHERE nivel_cod IN (".$_SESSION['s_nivel'].", 5) order by nivel_nome "; else
+				$qrynivel = "SELECT * FROM nivel order by nivel_nome";
+			
+			
 			$execnivel = mysql_query($qrynivel);
 
 			print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
@@ -284,7 +357,12 @@
 		print "</TR>";
 		print "<tr>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_PRIMARY_AREA').":</TD>";
-			$qryarea = "SELECT * FROM sistemas WHERE sis_status not in (0)";
+			
+			if ($OPERADOR_AREA){
+				$qryarea = "SELECT * from sistemas WHERE sis_status not in (0) AND sis_id = ".$_SESSION['s_area']." order by sistema ";
+			} else
+				$qryarea = "SELECT * from sistemas where sis_status not in (0) order by sistema";			
+			//$qryarea = "SELECT * FROM sistemas WHERE sis_status not in (0)";
 			$execarea = mysql_query($qryarea);
 			print "<TD colspan='3' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select' name='area' id='idArea'>";
@@ -347,6 +425,10 @@
 
 	if ((isset($_GET['action']) && $_GET['action']=="stat") && empty($_POST['submit'])){
 
+		if ($OPERADOR_AREA){
+			$qryStat = "SELECT count(*) quantidade, n.nivel_nome nivel, n.nivel_cod nivel_cod, a.* FROM usuarios u, nivel n, sistemas a
+					WHERE u.nivel = n.nivel_cod and u.AREA = a.sis_id AND u.AREA = ".$_SESSION['s_area']." GROUP by nivel ORDER BY quantidade desc, nome";
+		} else
 		$qryStat = "SELECT count(*) quantidade, n.nivel_nome nivel, n.nivel_cod nivel_cod FROM usuarios u, nivel n
 					WHERE u.nivel = n.nivel_cod GROUP by nivel ORDER BY quantidade desc, nome";
 
@@ -366,27 +448,28 @@
 		print "</table>";
 
 
-
-		$qryTmp = "SELECT * FROM utmp_usuarios ORDER BY utmp_nome, utmp_cod";
-		$execTmp = mysql_query($qryTmp);
-		$registrosTmp = mysql_num_rows($execTmp);
-		if ($registrosTmp > 0) {
-			print "<br><BR><center><b/>".TRANS('TTL_WAITING_CONFIRMATION')."</center><br>";
-			print "<table class='centro' cellspacing='0' border='1' align='center'>";
-			print "<tr bgcolor='".$background."'><td class='line'>".TRANS('COL_NAME')."</td><td class='line'>".TRANS('COL_LOGIN')."</td><td class='line'>".TRANS('COL_EMAIL')."</td><td class='line'>".TRANS('COL_CONFIRM')."</td><td class='line'>".TRANS('COL_DEL')."</td></tr>";
-			while ($rowtmp = mysql_fetch_array($execTmp)) {
-				print "<tr><td class='line'>".$rowtmp['utmp_nome']."</a></td><td class='line'>".$rowtmp['utmp_login']."</td><td class='line'>".$rowtmp['utmp_email']."</td>";
-				print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('ENSURE_CONFIRM')." ".$rowtmp['utmp_nome']."?','usuarios.php','action=addtmp&cod=".$rowtmp['utmp_cod']."');\"><img height='16' width='16' src='".ICONS_PATH."ok.png' title='".TRANS('HNT_CONFIRM')."'></TD>";
-				print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('ENSURE_DEL')." ".$rowtmp['utmp_nome']."?','usuarios.php','action=deltmp&cod=".$rowtmp['utmp_cod']."');\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></TD>";
-				print "</tr>";
-			}
-
-			print "<tr><td colspan='2'><b>".TRANS('TOTAL')."</b></td><td colspan='3'><b>".$registrosTmp." ".TRANS('RECORDS')."</b></td></tr>";
-			print "</table>";
-
-		} else
-			print TRANS('MSG_NO_PENDENCES');
-
+		if (!$OPERADOR_AREA){
+	
+			$qryTmp = "SELECT * FROM utmp_usuarios ORDER BY utmp_nome, utmp_cod";
+			$execTmp = mysql_query($qryTmp);
+			$registrosTmp = mysql_num_rows($execTmp);
+			if ($registrosTmp > 0) {
+				print "<br><BR><center><b/>".TRANS('TTL_WAITING_CONFIRMATION')."</center><br>";
+				print "<table class='centro' cellspacing='0' border='1' align='center'>";
+				print "<tr bgcolor='".$background."'><td class='line'>".TRANS('COL_NAME')."</td><td class='line'>".TRANS('COL_LOGIN')."</td><td class='line'>".TRANS('COL_EMAIL')."</td><td class='line'>".TRANS('COL_CONFIRM')."</td><td class='line'>".TRANS('COL_DEL')."</td></tr>";
+				while ($rowtmp = mysql_fetch_array($execTmp)) {
+					print "<tr><td class='line'>".$rowtmp['utmp_nome']."</a></td><td class='line'>".$rowtmp['utmp_login']."</td><td class='line'>".$rowtmp['utmp_email']."</td>";
+					print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('ENSURE_CONFIRM')." ".$rowtmp['utmp_nome']."?','usuarios.php','action=addtmp&cod=".$rowtmp['utmp_cod']."');\"><img height='16' width='16' src='".ICONS_PATH."ok.png' title='".TRANS('HNT_CONFIRM')."'></TD>";
+					print "<td class='line'><a onClick=\"javascript:confirmaAcao('".TRANS('ENSURE_DEL')." ".$rowtmp['utmp_nome']."?','usuarios.php','action=deltmp&cod=".$rowtmp['utmp_cod']."');\"><img height='16' width='16' src='".ICONS_PATH."drop.png' title='".TRANS('HNT_DEL')."'></TD>";
+					print "</tr>";
+				}
+	
+				print "<tr><td colspan='2'><b>".TRANS('TOTAL')."</b></td><td colspan='3'><b>".$registrosTmp." ".TRANS('RECORDS')."</b></td></tr>";
+				print "</table>";
+	
+			} else
+				print TRANS('MSG_NO_PENDENCES');
+		}
 
 	} else
 

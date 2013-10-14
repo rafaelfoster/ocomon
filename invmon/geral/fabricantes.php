@@ -190,7 +190,7 @@
 		print "<TD align='left' width='20%' bgcolor='".BODY_COLOR."'><input type='submit' class='button' value='".TRANS('BT_ALTER')."' name='submit'>";
 		print "<input type='hidden' name='cod' value='".$_GET['cod']."'>";
 			print "</TD>";
-		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."r' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
+		print "<TD align='left' width='80%' bgcolor='".BODY_COLOR."'><INPUT type='reset' class='button' value='".TRANS('BT_CANCEL')."' name='cancelar' onClick=\"javascript:".$fecha."\"></TD>";
 
 		print "</TR>";
 

@@ -67,7 +67,8 @@
 
 
 				$query .=" ORDER  BY s.sistema, p.problema";
-
+				
+				//print $query;
 				$resultado = mysql_query($query) or die(TRANS('ERR_QUERY'));
 				$registros = mysql_num_rows($resultado);
 
@@ -97,9 +98,12 @@
 							$trClass = "lin_impar";
 						}
 						$j++;
-						print "<tr class=".$trClass." id='linhax".$j."' onMouseOver=\"destaca('linhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhax".$j."','".$_SESSION['s_colorMarca']."');\">";
+						print "<tr class=".$trClass." id='linhaxx".$j."' onMouseOver=\"destaca('linhaxx".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linhaxx".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linhaxx".$j."','".$_SESSION['s_colorMarca']."');\">";
 
-						print "<td class='line'><input type='radio' id='idRadioProb' name='radio_prob' value='".$row['prob_id']."'";
+						//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+						//print "<td class='line'><input type='radio' id='idRadioProb' name='radio_prob' value='".$row['prob_id']."'";
+						print "<td class='line'><input type='radio' id='idRadioProb".$row['prob_id']."' name='radio_prob' value='".$row['prob_id']."'";
+						//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 
 
 							if (isset($_GET['radio_prob']) && $_GET['radio_prob'] == $row['prob_id']) print " checked"; else
@@ -107,7 +111,12 @@
 
 							//if (isset($_POST['radio_prob']) && $_POST['radio_prob'] == $row['prob_id']) print " checked"; else
 							//if (isset($_POST['prob']) && $_POST['prob'] == $row['prob_id']) print " checked";
-
+						//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
+						if (isset($_GET['pathAdmin'])) //se o script estiver sendo chamado da path do módulo de administração
+							print " onClick=\"ajaxFunction('divInformacaoProblema', '../../ocomon/geral/showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea' , 'radio_prob=idRadioProb".$row['prob_id']."');\"";
+						else	
+							print " onClick=\"ajaxFunction('divInformacaoProblema', 'showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea' , 'radio_prob=idRadioProb".$row['prob_id']."');\"";
+						//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 						print ">".$row['problema']."</td>";
 
 						print "<td class='line'>".NVL($row['slas_desc'])."</td>";

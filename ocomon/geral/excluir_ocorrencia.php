@@ -36,23 +36,41 @@ print "<BODY>";
 	if (isset($_GET['numero']) && $_SESSION['s_nivel'] ==1) {
 
 		$query = "DELETE FROM ocorrencias WHERE numero=".$_GET['numero']."";
-		$resultado = mysql_query($query) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query);
+		$resultado = mysql_query($query) or die (TRANS('ERR_DEL').'!<BR>'.$query);
 
 		//$qryAssent = "SELECT * FROM assentamentos WHERE numero = ".$_GET['numero']."";
 		$query2 = "DELETE FROM assentamentos WHERE ocorrencia = ".$_GET['numero']."";
-		$resultado2 = mysql_query($query2) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query2);
+		$resultado2 = mysql_query($query2) or die (TRANS('ERR_DEL').'!<BR>'.$query2);
 
 		$query3 = "DELETE FROM tempo_status WHERE ts_ocorrencia = ".$_GET['numero']."";
-		$resultado3 = mysql_query($query3) or die ('ERRO NA TENTATIVA DE EXCLUIR O REGISTRO!<BR>'.$query3);
+		$resultado3 = mysql_query($query3) or die (TRANS('ERR_DEL').'!<BR>'.$query3);
+
+		$query4 = "DELETE FROM doc_time WHERE doc_oco = ".$_GET['numero']."";
+		$resultado4 = mysql_query($query4) or die (TRANS('ERR_DEL').'!<BR>'.$query4);
+		
+		$query5 = "DELETE FROM global_tickets WHERE gt_ticket = ".$_GET['numero']."";
+		$resultado5 = mysql_query($query5) or die (TRANS('ERR_DEL').'!<BR>'.$query5);
+		
+		$query6 = "DELETE FROM lock_oco WHERE lck_oco = ".$_GET['numero']."";
+		$resultado6 = mysql_query($query6) or die (TRANS('ERR_DEL').'!<BR>'.$query6);
+		
+		$query7 = "DELETE FROM ocodeps WHERE dep_pai = ".$_GET['numero']." OR dep_filho = ".$_GET['numero']."";
+		$resultado7 = mysql_query($query7) or die (TRANS('ERR_DEL').'!<BR>'.$query7);
+		
+		$query8 = "DELETE FROM solucoes WHERE numero = ".$_GET['numero']."";
+		$resultado8 = mysql_query($query8) or die (TRANS('ERR_DEL').'!<BR>'.$query8);
+		
+		$query9 = "DELETE FROM imagens WHERE img_oco = ".$_GET['numero']."";
+		$resultado9 = mysql_query($query9) or die (TRANS('ERR_DEL').'!<BR>'.$query9);
 
 
 		if (($resultado == 0) || ($resultado2==0) || ($resultado3==0))
 		{
-			$aviso = "Um erro ocorreu ao tentar excluir a ocorrência do sistema.";
+			$aviso = TRANS('ERR_DEL');
 		}
 		else
 		{
-			$aviso = "OK. Ocorrência excluida com sucesso.";
+			$aviso = TRANS('OK_DEL');
 		}
 
 		print "<script>mensagem('".$aviso."'); redirect('ocorrencias.php');</script>";

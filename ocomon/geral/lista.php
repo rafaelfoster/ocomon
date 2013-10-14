@@ -450,7 +450,7 @@ session_start();
 		$data = $row['data_abertura']; //data de abertura do chamado
             	$dataAtendimento = $row['data_atendimento']; //data da primeira resposta ao chamado
 
-		$diff = date_diff($data,date("Y-m-d H:i:s"));
+		$diff = date_difference($data,date("Y-m-d H:i:s"));
 		$sep = explode ("dias",$diff);
 		if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 			$imgSlaR = 'checked.png';

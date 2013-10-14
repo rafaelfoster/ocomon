@@ -103,11 +103,14 @@
 		print "<tr><td>".TRANS('OPT_SUBJECT','Assunto')."</td><td><input type='text' class='text' name='subject' value='".$row['msg_subject']."'></td></tr>";
 		//print "<tr><td>Msg HTML</td><td><textarea name='body' class='textarea2'>".$row['msg_body']."</textarea></td></tr>";
 		print "<tr><td>".TRANS('OPT_HTML_MSG','Msg HTML')."</td><td>";
+		
+		$texto1 = str_replace("\r","\n",$row['msg_body']);
+		$texto1 = str_replace("\n","",$texto1);
 		?>
 		<script type="text/javascript">
   			var oFCKeditor = new FCKeditor( 'body' ) ;
   			oFCKeditor.BasePath = '../../includes/fckeditor/';
-			oFCKeditor.Value = '<?php print $row['msg_body'];?>';
+			oFCKeditor.Value = '<?php print $texto1;?>';
 			oFCKeditor.ToolbarSet = 'ocomon';
 			oFCKeditor.Width = '400px';
 			oFCKeditor.Height = '100px';

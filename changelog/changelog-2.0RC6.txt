@@ -1,0 +1,79 @@
+
+FUNCIONALIDADES:
+
+Menu Admin->Usuários: criação de um filtro por área para facilitar a busca de usuários cadastrados; O novo filtro faz a junção com o filtro textual que já existia.
+
+Menu Admin->Ocorrências->Problemas: criação de um Filtro por área na tela de administração de tipos de problemas; O novo filtro faz a junção com o filtro textual que já existia.
+
+Menu Admin->Ocorrências->Áreas - Configuração: agora é possível definir entre as áreas quais podem abrir chamados entre si, ou seja, é possível definir para cada área de atendimento, quais as demais áreas podem lhe abrir chamados.
+
+	Ex: A área de suporte nível 1 só pode abrir chamados para si mesma e para a área de suporte nível 2. A área de usuários "somente-abertura" só pode abrir chamados para a área de suporte nível 1.
+
+Abertura de chamados: ao encaminhar chamados na abertura, só ficarão visíveis os operadores da área selecionada;
+
+Anexar arquivos: agora é possível adicionar mais de um arquivo por vez na abertura e edição dos chamados. A quantidade limite é definida no menu de administração. Por padrão são permitidos até 5 arquivos por vez.
+
+Status do SLA on-line - Agora é possível visualizar o indicador atualizado(em função das dependências do chamado) do SLA de cada chamado mesmo com este ainda em aberto no sistema (antes o SLA só era atualizado no relatório de SLAs o qual apenas retorna os chamados já concluídos no sistema). Essa informação ficará visível na tela de detalhes e na tela de encerramento das ocorrências. Caso o chamado esteja em status de agendamento o indicador não será exibido.
+
+Menu Admin->Configurações->Configurações gerais: criada a opção: "JUSTIFICAR CHAMADOS COM TEMPO DE SOLUÇÃO ÀCIMA DO SLA". Se esta opção estiver marcada, ao encerrar um chamado com o tempo de solução à cima do estipulado para o tipo de problema do mesmo, o sistema exibirá um novo campo textual para a justificativa sobre o "estouro" do chamado.
+
+Menu Admin->Ocorrências->Problemas: foram criados mais dois campos para os tipos de problemas, são eles:
+	- Checkbox "Alimenta banco de soluções": se esta caixa não estiver marcada, chamados classificados com o tipo de problema em questão não exibirão as áreas de texto para descrição técnica e solução do chamado na tela de encerramento. Em vez disso, será apenas exibida apenas uma área para assentamento. Dessa forma, tipos de problemas que não são relavantes para a base de conhecimento não serão gravados nessa base.
+	
+	- Descrição: serve para uma descrição textual mais detalhada sobre o tipo de problema em questão. Essa informação será exibida complementarmente já na tela de abertura e edição de chamados. A ideia é ajudar na classificação mais adequada para o tipo de problema de cada chamado no sistema.
+
+Menu Admin->Ocorrências->Scripts: agora é possível criar scripts (descrições textuais, dicas, procedimentos, tutoriais, etc..) e associá-los a tipos de problemas. Esses scripts ficarão acessíveis já na tela de abertura de chamados (também na tela de detalhes, edição e encerramento dos chamados).
+Campos:
+	Abreviatura: apenas um identificador textual, como uma SIGLA, para o script.
+	
+	Visível para o usuário-final?: esse campo indica se o script será visível para o usuário-final na tela de abertura de chamados (caso o campo "tipo de problema" esteja habilitado para o usuário);
+	
+	Descrição: uma descrição breve sobre do que se trata o script.
+	
+	Script: é o próprio conteúdo do script. A barra de formatação disponibiliza mais recursos para a confecção de materiais mais ricos. (como inserção de tabelas e imagens* por exemplo).
+	
+	Associar a um tipo de problema: é possível associar o script criado a um ou mais tipos de problemas. Dessa forma, o script ficará acessível para os chamados classificados com o respectivo tipo de problema. Para associar a mais de um tipo de problema, basta acessar o script e clicar em editar.
+	
+
+Operadores Admin: agora operadores que sejam administradores de suas áreas de atendimento (checkbox "Área admin" na tela de administração de usuários) possuem acesso a funções específicas no menu Admin. Dessa forma, não é necessário ser administrador do sistema para realizar ações administrativas relacionadas a sua própria área de atendimento. As funções acessíveis são:
+	- menu Admin->Ocorrências->Problemas: gerenciamento de tipos de problemas da sua área de atendimento;
+	- menu Admin->Ocorrências->Scripts: gerenciamento de scripts de atendimento para tipos de problemas de sua área de atendimento;
+	- menu Admin->Usuários: gerenciamento dos usuários da sua área de atendimento;
+
+
+
+OUTROS:
+
+- Atualização da classe FCKEditor (responsável pela barra de formatação utilizada em alguns casos);
+
+- Resolução do problema com a barra de formatação. Em alguns casos, na edição de um registro já gravado a barra não era carregada e o registro não era exibido.
+
+- Alteração do nome da função interna date_diff() pra evitar o conflito com a versão 5.3 do PHP (quem possui uma função com o mesmo nome);
+
+- Para instalações, agora o script SQL, que antes apenas importava as tabelas para um banco já existente (que devia ser criado antes), já cria o banco de dados e define o charset do mesmo. O usuário para acesso ao banco também já é criado automaticamente, facilitando ainda mais o processo de instalação do sistema.
+
+- Limpeza de "lixo" (registros desnecessários em tabelas relacionadas) que ficava no banco nas eventuais exclusões de ocorrências;
+
+- Correção do link para a legenda dos SLAs em diversos scripts que apontavam o caminho errado.
+
+- Correções de bugs menores;
+-------------------------
+
+
+AJUSTES AINDA NECESSÁRIOS
+
+
+
+- Avaliar a mudança da função ereg_replace() utilizada no phpLayersMenu em função da mesma estar em desuso a partir do PHP 5.3 (E_DEPRECATED)
+
+- Atualização do arquivo de idioma espanhol da colômbia
+
+
+
+FCKEditor:
+*Para permitir o upload de imagens nos scripts:
+/includes/fckeditor/editor/filemanager/connectors/php/config.php:
+- habilitar a diretiva $Config['Enabled']
+- Definir o caminho do diretório onde serão armazenadas as imagens no webserver na diretiva $Config['UserFilesPath']
+- Dar permissão de escrita ao apache para o diretório das imagens;
+

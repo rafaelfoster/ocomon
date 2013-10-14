@@ -20,15 +20,19 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
-	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
-	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
+	//print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
+	//$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
 
 	$auth = new auth;
-	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
+	if (isset($_GET['popup'])){
+		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
+	} else
+		$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	if (!isset($_POST['ok'])) { //&& $_POST['ok'] != 'Pesquisar')
+	if (!isset($_POST['ok']) && !isset($_GET['numero'])) { //&& $_POST['ok'] != 'Pesquisar')
 		print "<html>";
 		print "<head><script language=\"JavaScript\" src=\"../../includes/javascript/calendar.js\"></script></head>";
+		print "<body>";
 		print "	<BR><BR>";
 		print "	<B><center>:::".TRANS('TLT_INDICE_STATUS_CALL').":::</center></B><BR><BR>";
 		print "		<FORM action='".$_SERVER['PHP_SELF']."' method='post' name='form1' onSubmit=\"return valida()\" >"; //onSubmit=\"return valida()\"
@@ -57,13 +61,22 @@
 		print "</form>";
 		print "</BODY>";
 		print "</html>";
-	}//if !isset($_POST['ok'])
+	} else { //if $ok==Pesquisar
 
-	else { //if $ok==Pesquisar
 
+		$newicon = false;
+		$icon = ICONS_PATH.'sla.png';
+		if(isset($_GET['SCHEDULED']) && $_GET['SCHEDULED']==1) { //SE O CHAMADO ESTIVER AGENDADO NAO SERAO EXIBIDAS AS INFORMACOES
+			$newicon = true;
+			//oco_scheduled=1
+			//<img height='16' width='16' src='".ICONS_PATH."sla.png' title='".TRANS('HNT_REMAIN_TIME')."'>
+			//exit;
+		}
 
 		print "<html><body class='relatorio'>";
 
+		$numero = $_REQUEST['numero'];
+		
 		//PARAMETRIZAR ESSES VALORES
 
 		//SLA 1 é menor do que o SLA 2 - VERDE
@@ -101,31 +114,40 @@
 		$execUpdoco = mysql_query($qryUpdOco);
 
 
+		
+		$clausula = "p.prob_id = o.problema";
+		if (isset($_GET['new_prob']) && $_GET['new_prob']!=-1){
+			$clausula = "p.prob_id = ".$_GET['new_prob']." ";
+		}
+		
 		$query = "";
 
     		$query = "SELECT o.numero, o.data_abertura, o.data_atendimento, o.data_fechamento, o.sistema as cod_area, o.date_first_queued, ".
-					"s.sistema as area, 	p.problema as problema, sl.slas_desc as sla, sl.slas_tempo as tempo , l.*, pr.*, ".
+					"o.`status` as status, o.oco_scheduled, ".
+					"st.stat_painel as painel, ".
+					"s.sistema as area, p.problema as problema, sl.slas_desc as sla, sl.slas_tempo as tempo , l.*, pr.*, ".
 					"res.slas_tempo as resposta, res.slas_desc as resposta_desc, u.nome as operador ".
 				"FROM localizacao as l left join prioridades as pr on pr.prior_cod = l.loc_prior left join sla_solucao as res on ".
 					"res.slas_cod = pr.prior_sla, problemas as p left join sla_solucao as sl on p.prob_sla = sl.slas_cod, ".
-					"ocorrencias as o, sistemas as s, usuarios as u ".
-				"WHERE  s.sis_id=o.sistema and p.prob_id = o.problema  and o.local =l.loc_id and ".
-					"o.operador=u.user_id"; //o.status=4 and
+					"ocorrencias as o, sistemas as s, usuarios as u, `status` as st ".
+				"WHERE  s.sis_id=o.sistema and ".$clausula." and o.local =l.loc_id and ".
+					"o.operador=u.user_id and o.`status` = st.stat_id"; //o.status=4 and
 
-		$query.= " AND o.numero = ".$_POST['numero']."";
+		$query.= " AND o.numero = ".$numero."";
 
+		$resultado = mysql_query($query);
+		//$resultado2 = mysql_query($query); 
+		//$rowPainel = mysql_fetch_array($resultado2);
+		$linhas = mysql_num_rows($resultado);  
 
-		//$query .= " AND o.data_fechamento >= '".$d_ini_completa."' and o.data_fechamento <= '".$d_fim_completa."' and ".
-				//"o.data_atendimento is not null order by o.data_abertura";
-		$resultado = mysql_query($query);       // print "<b>Query--></b> $query<br><br>";
-		$linhas = mysql_num_rows($resultado);  //print "Linhas: $linhas";
-
-		//print $query."<br>";
 
 		if($linhas==0) {
 
 			print "<script>window.alert('".TRANS('MSG_NO_REGISTER_PERIOD')."'); history.back();</script>";
-		} else  { //if($linhas==0)
+		} else  
+		
+		//if($rowPainel['painel']!=3) //SÓ REALIZARÁ OS CÁLCULOS PARA CHAMADOS EM ABERTO NO SISTEMA;
+		{ //if($linhas==0)
 			$campos=array();
 
 
@@ -134,25 +156,24 @@
 			{
 				case -1:
 					$criterio = "<br>";
-
-					//echo "<br><br>";
 					$background = '#C7D0D9';
-					print "<p class='titulo'>".TRANS('TLT_REP_SLAS_INDICES')."".$criterio."</p>";
-				print "<table class='centro' cellspacing='0' border='1' >";
+				print "<table class='centro' cellspacing='0' border='0' width='90%'>";
 
-				print "<tr bgcolor='".$background."'><td ><B>".TRANS('OCO_FIELD_NUMBER')."</td>
-					<td ><b><a title='tempo de resposta'>".TRANS('COL_TIT_TEMP_VAL_RESP')."</a></td>
-					<td ><b><a title='tempo de solução'>".TRANS('COL_TIT_TEMP_VAL_SOL')."</a></td></B>
-					<td ><b><a title='tempo definido para resposta para cada setor'>".TRANS('COL_TIT_SLA_RESP')."</a></td></B>
-					<td ><b><a title='tempo definido para solução para cada problema'>".TRANS('COL_TIT_SLA_SOL')."</a></td></B>
-					<td ><b><a title='indicador de resposta'>".TRANS('COL_TIT_REPLY')."</a></td></B>
-					<td ><b><a title='indicador de solução'>".TRANS('COL_TIT_SOLUTION')."</a></td></B>
-					<td ><b><a title='indicador de solução a partir da primeira resposta'>".TRANS('COL_SOL_RESP')."</a></td></B>
-					<td ><b><a title='tempo em que o chamado esteve pendente no usuário'>".TRANS('COL_USER_DEPEN')."</a></td></B>
-					<td ><b><a title='tempo em que o chamado esteve pendente por algum serviço de terceiros'>".TRANS('COL_DEPEN_THIRD')."</a></td></B>
-					<td ><b><a title='tempo em equipamento de backup ou alterado após encerramento'>".TRANS('COL_IT_ARRE_DEPEN')."</a></td></B>
-					<td ><b><a title='Tempo de solução menos o tempo em pendência do usuário'>".TRANS('COL_RECALC_SOLUTION')."</a></td></B>
-					<td ><b><a title='indicador atualizado descontando a pendência do usuário'>".TRANS('COL_POINTER_UPDATE')."</a></td></B>
+				print "<tr bgcolor='".TD_COLOR."'>".
+					//"<td class='line'><B>".TRANS('OCO_FIELD_NUMBER')."</td>".
+					"<td class='line'><b><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></td>";
+					print "<td class='line'><b><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC')."</a></td></B>";
+					print "<td class='line'><b><a title='tempo definido para resposta para cada setor'>".TRANS('COL_TIT_SLA_RESP')."</a></td></B>
+					<td class='line'><b><a title='tempo definido para solução para cada problema'>".TRANS('COL_TIT_SLA_SOL')."</a></td></B>
+					<td class='line'><b><a title='indicador de resposta'>".TRANS('COL_TIT_REPLY')."</a></td></B>
+					<td class='line'><b><a title='indicador de solução'>".TRANS('COL_TIT_SOLUTION')."</a></td></B>
+					<td class='line'><b><a title='indicador de solução a partir da primeira resposta'>".TRANS('COL_SOL_RESP')."</a></td></B>
+					<td class='line'><b><a title='tempo em que o chamado esteve pendente no usuário'>".TRANS('COL_USER_DEPEN')."</a></td></B>
+					<td class='line'><b><a title='tempo em que o chamado esteve pendente por algum serviço de terceiros'>".TRANS('COL_DEPEN_THIRD')."</a></td></B>
+					<td class='line'><b><a title='tempo em equipamento de backup ou alterado após encerramento'>".TRANS('COL_IT_ARRE_DEPEN')."</a></td></B>
+					<td class='line'><b><a title='Tempo de solução menos o tempo em pendência do usuário'>".TRANS('COL_RECALC_SOLUTION')."</a></td></B>
+					<td class='line'><b><a title='indicador atualizado descontando a pendência do usuário'>".TRANS('COL_POINTER_UPDATE')."</a></td></B>
+					<td class='line'><b><a title='".TRANS('HNT_REMAIN_TIME_IN_SLA')."'>".TRANS('COL_REMAIN_TIME')."</a></td></B>
 					</tr>";
 
 				//INICIALIZANDO CONTADORES!!
@@ -198,13 +219,16 @@
 					// if (array_key_exists($row['cod_area'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
 						// $area = $row['cod_area']; //Recebe o valor da área de atendimento do chamado
 					// } else $area = 1; //Carga horária default definida no arquivo config.inc.php
+										
+					
 					$areaReal=$row['cod_area'];
 					$area = "";
 					$area=testaArea($row['cod_area'],$row['cod_area'],$H_horarios);
 
 					#TRABALHA SOBRE O TEMPO DE RESPOSTA
 					$data_atendimento = date("Y-m-d H:i:s");
-					if (isset($row['data_atendimento'])) $data_atendimento = $row['data_atendimento'];
+					if (isset($row['data_atendimento'])) $data_atendimento = $row['data_atendimento']; else
+					if(!isset($row['data_atendimento']) && isset($row['data_fechamento']) ) $data_atendimento = $row['data_fechamento'];
 					
 					
 					if (isset($row['date_first_queued'])){
@@ -224,7 +248,8 @@
 					}
 					
 					$data_final = date("Y-m-d H:i:s");
-					if (isset($row['data_fechamento'])) $data_final = $row['data_fechamento'];
+					if (isset($row['data_fechamento'])) $data_final = $row['data_fechamento']; else
+					if (!isset($row['data_fechamento']) && $row['painel'] == 3 ) $data_final = $row['data_abertura'];
 					
 					$dtS->setData2($data_final);
 					$dtS->tempo_valido($dtS->data1,$dtS->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
@@ -235,6 +260,33 @@
 					$dtM->setData2($data_final);
 					$dtM->tempo_valido($dtM->data1,$dtM->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
 
+					//-----------------------------------------------------------------------------------
+					##TRATANDO O CONTADOR DE TEMPO EM CADA STATUS PARA OS CASOS ONDE O CHAMADO AINDA ESTIVER EM ABERTO
+						$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$row['numero']." and ts_status = ".$row['status']." ";
+						$exec_sql = mysql_query($sql_ts_anterior);
+	
+						if ($exec_sql == 0) $error= " erro 1";
+	
+						$achou = mysql_num_rows($exec_sql);
+						if ($achou >0){ //esse status já esteve setado em outro momento
+							$row_ts = mysql_fetch_array($exec_sql);
+	
+							$dtSt = new dateOpers;
+							$dtSt->setData1($row_ts['ts_data']);
+							$dtSt->setData2(date("Y-m-d H:i:s"));
+							$dtSt->tempo_valido($dtSt->data1,$dtSt->data2,$H_horarios[$area][0],$H_horarios[$area][1],$H_horarios[$area][2],$H_horarios[$area][3],"H");
+							$segundosNovos = $dtSt->diff["sValido"]; //segundos válidos
+							
+// 							$sql_upd = "SELECT (ts_tempo+".$segundosNovos.") as ts_tempo , '".date("Y-m-d H:i:s")."' as ts_data FROM tempo_status WHERE ts_ocorrencia = ".$row['numero']." and
+// 									ts_status = ".$row['status']." ";							
+// 							$exec_upd = mysql_query($sql_upd);
+// 							$row_openStat = mysql_fetch_array($exec_upd);
+	
+						}					
+					
+					
+					//-----------------------------------------------------------------------------------
+					
 					$sql_status = "SELECT sum(T.ts_tempo) as segundos, sec_to_time(sum(T.ts_tempo)) as tempo, ".
 									"T.ts_status as codStat, A.sistema as area, CAT.stc_desc as dependencia, CAT.stc_cod as cod_dependencia ".
 								"FROM ocorrencias as O, tempo_status as T, `status` as S, sistemas as A, status_categ as CAT ".
@@ -244,11 +296,11 @@
 								"GROUP BY A.sis_id,CAT.stc_desc ".
 								"ORDER BY CAT.stc_cod";
 					$exec_sql_status = mysql_query($sql_status);
-					//print $sql_status."<br>";
 					//PARA CHECAR O SLA DO PROBLEMA -  TEMPO DE SOLUÇÃO
 					$t_segundos_total = $dtS->diff["sValido"];
 
 					if ($row['tempo'] !=""){
+						
 						if ($t_segundos_total <= ($row['tempo']*60))  { //transformando em segundos
 							//$corSLA = $corSla1;
 							$imgSlaS = 'sla1.png';
@@ -343,15 +395,22 @@
 					$total_sol_valido+=$dtS->diff["sValido"];
 
 					//Linhas de dados do relatório
-					//print "<tr id='linha".$cont."' onMouseOver=\"destaca('linha".$cont."', '".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('linha".$cont."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('linha".$cont."', '".$_SESSION['s_colorMarca']."');\">";
 					print "<tr id='linha".$cont."'  onMouseDown=\"marca('linha".$cont."', '".$_SESSION['s_colorMarca']."');\">";
 
-					print "<td ><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a></td>
-						<td ><font color='".$corR."'>".$dtR->tValido."</font></td>
-						<td ><font color='".$corR."'>".$dtS->tValido."</font></td>
-						<td >".$row['resposta_desc']."</font></td>
-						<td >".$row['sla']."</font></td>
-						<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></td>
+					//print "<td><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a></td>";
+						print "<td><font color='".$corR."'>".$dtR->tValido."</font></td>";
+						print "<td><font color='".$corR."'>".$dtS->tValido."</font></td>";
+						print "<td>".$row['resposta_desc']."</font></td>
+						<td >".$row['sla']."</font></td>";
+						
+						if ($newicon){//CHAMADOS AGENDADOS
+							$imgSlaR = $icon;
+							$imgSlaS = $icon;
+							$imgSlaM = $icon;
+						}
+						
+						
+						print "<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaR."'></a></td>
 						<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></td>
 						<td align='center'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaM."'></a></td>";
 
@@ -359,39 +418,41 @@
 					$dependTerc = 0;
 					$dependNone = 0;
 					while ($row_status = mysql_fetch_array($exec_sql_status)){
-						//print $row_status['dependencia'].": ".$row_status['tempo']." | ";
 						if ($row_status['cod_dependencia'] == 1) {//dependente ao usuário
 							$dependUser+= $row_status['segundos'];
+							$row_status['codStat']== $row['status']? $dependUser+=$segundosNovos:''; //Atualiza o tempo para o status atual caso esteja em aberto
 						} else
 						if ($row_status['cod_dependencia'] == 3 ){ //dependente de terceiros
 							$dependTerc+=$row_status['segundos'];
+							$row_status['codStat']== $row['status']? $dependTerc+=$segundosNovos:'';
 						} else
 						if ($row_status['cod_dependencia'] == 4 ){ //dependente de terceiros
 							$dependNone+=$row_status['segundos'];
+							$row_status['codStat']== $row['status']? $dependNone+=$segundosNovos:'';
 						}
 					}
 					//print "</td>";
-					print "<td >";//coluna do tempo vinculado ao usuário
+					print "<td>";//coluna do tempo vinculado ao usuário
 					if ($dependUser != 0)
 						$dependUser = $dtS->secToHour($dependUser); else
 						$dependUser = "-";
 					print $dependUser;
 					print "</td>";
-					print "<td >";//coluna do tempo vinculado a terceiros
+					print "<td>";//coluna do tempo vinculado a terceiros
 					if ($dependTerc != 0)
 						$dependTerc = $dtS->secToHour($dependTerc); else
 						$dependTerc = "-";
 					print $dependTerc;
 					print "</td>";
 
-					print "<td >";//coluna do tempo independente (encerrados - em backup..)
+					print "<td>";//coluna do tempo independente (encerrados - em backup..)
 					if ($dependNone != 0)
 						$dependNone = $dtS->secToHour($dependNone); else
 						$dependNone = "-";
 					print $dependNone;
 					print "</td>";
 
-					print "<td >";//Solução recalculada
+					print "<td>";//Solução recalculada
 					$solucTotal = $dtS->diff["sValido"];
 					//$solucRecalc = $dtS->secToHour($solucTotal);
 					$solucRecalc = $solucTotal;
@@ -413,20 +474,27 @@
 
 					$solucRecalc = $dtS->secToHour($solucRecalc);
 
-					print $solucRecalc; //Novo tempo de solução - recalculado tirando as dependências ao usuário ou status independentes
+					//print $solucRecalc; //Novo tempo de solução - recalculado tirando as dependências ao usuário ou status independentes
+					!$newicon?print $solucRecalc:print "-";//Se o chamado estiver agendado nao eh exibido o indicador
 
+
+					$tempo_restante = '-';
 					if ($row['tempo'] !=""){
 						if ($dtS->hourToSec($solucRecalc) <= ($row['tempo']*60))  { //transformando em segundos
 								$imgSlaSR = 'sla1.png';
 								$c_slaSR_blue++;
 								$chamadosSgreen[]= $row['numero'];
+						
+							$tempo_restante = $row['tempo']*60 - $dtS->hourToSec($solucRecalc);
+							$tempo_restante = $dtS->secToHour($tempo_restante);
+						
 						}
 						else if ($dtS->hourToSec($solucRecalc) <= ( ($row['tempo']*60) + (($row['tempo']*60) *$percLimit/100)) ){ //mais 20%
 								$imgSlaSR = 'sla2.png';
 								$c_slaSR_yellow++;
 								$chamadosSyellow[]= $row['numero'];
 						} else {
-							$imgSlaS = 'sla3.png';
+							$imgSlaSR = 'sla3.png';
 							$c_slaSR_red++;
 							$chamadosSred[]= $row['numero'];
 						}
@@ -435,28 +503,42 @@
 						$c_slaSR_checked++;
 					}
 					print "</td>";
-					print "<td ><img height='14' width='14' src='../../includes/imgs/".$imgSlaSR."'></td>";
-
+					
+					if ($newicon){//CHAMADOS AGENDADOS
+						$imgSlaSR = $icon;
+					}
+					
+					print "<td><img height='14' width='14' src='../../includes/imgs/".$imgSlaSR."'></td>";
+					print "<td>".$tempo_restante."</td>";
 					print "</tr>";
 					$cont++;
+					
+					if ($row['painel']!= 3 ){//CHAMADOS JÁ CONCLUIDOS NO SISTEMA
+						//VERIFICA SE O CHAMADO CONSTA NA TABELA DE CHECAGEM DE SLAS ESTOURADOS
+						$qryTmp = "SELECT * FROM sla_out WHERE out_numero = ".$row['numero']." ";
+						$execTmp = mysql_query($qryTmp) OR die(mysql_error());					
+						if ($c_slaSR_red > 0){//SLA ESTOUROU
+							$OUT = 1;
+						} else {
+							$OUT = 0;
+						
+						}
+						if(mysql_num_rows($execTmp)) {
+							$qryUpdate = "UPDATE sla_out SET out_sla=".$OUT." WHERE out_numero = ".$row['numero']."";
+							$execUpdate = mysql_query($qryUpdate) OR die(mysql_error());
+						} else {
+							$qryInsert = "INSERT INTO sla_out (out_numero, out_sla) values (".$row['numero'].", ".$OUT.") ";
+							$execInsert = mysql_query($qryInsert) OR die(mysql_error()."<BR>".$qryInsert);
+						}						
+					}
 				}//while chamados
 
-				$media_resposta_geral = $dtR->secToHour(floor($total_res_segundos/$linhas));
-
-				$media_solucao_geral = $dtS->secToHour(floor($total_sol_segundos/$linhas));
-				$media_resposta_valida = $dtR->secToHour(floor($total_res_valido/$linhas));
-				$media_solucao_valida = $dtS->secToHour(floor($total_sol_valido/$linhas));
-
-				//print "<tr><td colspan=5><b>".TRANS('COL_AVERAGE')."</td><td ><b>".$media_resposta_valida."</td><td ><B>".$media_solucao_valida."</td></tr>";
 
 			} // switch
 		} //if($linhas==0)
-/*	else 	{
-		$aviso = "".TRANS('MSG_DATE_FINISH_UNDERAGE_DATE_BEGIN')."";
-		print "<script>mensagem('".$aviso."'); history.back();</script>";
-	}*/
-	//}//if ((empty($d_ini)) and (empty($d_fim)))
 
+	
+		
 	print "</body></html>";
 }//if $ok==Pesquisar
 
