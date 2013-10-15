@@ -1,5 +1,5 @@
 <?php 
- /*                        Copyright 2005 Flávio Ribeiro
+ /*                        Copyright 2005 Flï¿½vio Ribeiro
 
          This file is part of OCOMON.
 
@@ -371,7 +371,7 @@
 		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
-				//print "<TEXTAREA class='textarea' id='idProblema' name='problema'>Descrição técnica do problema</textarea>";
+				//print "<TEXTAREA class='textarea' id='idProblema' name='problema'>Descriï¿½ï¿½o tï¿½cnica do problema</textarea>";
 
 			if (!$_SESSION['s_formatBarOco']) {
 				print "<TEXTAREA class='textarea' name='problema' id='idDesc'>".TRANS('TXT_DESC_TEC_PROB')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
@@ -402,7 +402,7 @@
 		//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_TIT_SOLUTION').":</TD>";
 			print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
-				//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Solução para este problema</textarea>";
+				//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Soluï¿½ï¿½o para este problema</textarea>";
 
 			if (!$_SESSION['s_formatBarOco']) {
 				print "<TEXTAREA class='textarea' name='solucao' id='idSolucao'>".TRANS('TXT_SOLUTION_PROB')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
@@ -438,7 +438,7 @@
 				print "<TR>";
 					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_JUSTIFICATION').":</TD>";
 					print "<TD colspan='5' width='80%' align='left' bgcolor='".BODY_COLOR."'>";
-						//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Solução para este problema</textarea>";
+						//print "<TEXTAREA class='textarea' id='idSolucao' name='solucao'>Soluï¿½ï¿½o para este problema</textarea>";
 		
 					if (!$_SESSION['s_formatBarOco']) {
 						print "<TEXTAREA class='textarea' name='justificativa' id='idJustificativa'>".TRANS('TXT_JUSTIFICATION')."</textarea>"; //oFCKeditor.Value = print noHtml($descricao);
@@ -531,7 +531,7 @@
 			$query = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel) values (".$_POST['numero'].",";
 			if ($_SESSION['s_formatBarOco']) {
 				$query.= " '".$_POST['problema']."',";
-				$query.= " '".$assentamentoProb."',";
+				//$query.= " '".$assentamentoProb."',";
 			} else {
 				$query.= " '".noHtml($_POST['problema'])."',";
 			}
@@ -578,7 +578,7 @@
 			$queryJust.=" '".date('Y-m-d H:i:s')."', ".$responsavel.", 3)";
 			$execJust = mysql_query($queryJust)or die (TRANS('MSG_ERR_INSERT_NESTING').$queryJust);	
 		}
-		//REMOVE O NÚMERO DO CHAMADO DA TABELA DE CHECAGEM DO SLAS			
+		//REMOVE O Nï¿½MERO DO CHAMADO DA TABELA DE CHECAGEM DO SLAS			
 		$qryClear = "DELETE FROM sla_out WHERE out_numero = ".$_POST['numero']."";
 		$execClear = mysql_query($qryClear);		
 		//----------------------------------------------
@@ -621,19 +621,19 @@
 
 			##ROTINAS PARA GRAVAR O TEMPO DO CHAMADO EM CADA STATUS
 			if ($status != $rowABS['status_cod']) { //O status foi alterado
-				##TRATANDO O STATUS ANTERIOR (atual) -antes da mudança
-				//Verifica se o status 'atual' já foi gravado na tabela 'tempo_status' , em caso positivo, atualizo o tempo, senão devo gravar ele pela primeira vez.
+				##TRATANDO O STATUS ANTERIOR (atual) -antes da mudanï¿½a
+				//Verifica se o status 'atual' jï¿½ foi gravado na tabela 'tempo_status' , em caso positivo, atualizo o tempo, senï¿½o devo gravar ele pela primeira vez.
 				$sql_ts_anterior = "select * from tempo_status where ts_ocorrencia = ".$rowABS['numero']." and ts_status = ".$rowABS['status_cod']." ";
 				$exec_sql = mysql_query($sql_ts_anterior);
 
 				if ($exec_sql == 0) $error= " erro 1".$sql_ts_anterior;
 
 				$achou = mysql_num_rows($exec_sql);
-				if ($achou >0){ //esse status já esteve setado em outro momento
+				if ($achou >0){ //esse status jï¿½ esteve setado em outro momento
 					$row_ts = mysql_fetch_array($exec_sql);
-					// if (array_key_exists($rowABS['sistema'],$H_horarios)){  //verifica se o código da área possui carga horária definida no arquivo config.inc.php
-						// $areaT = $rowABS['sistema']; //Recebe o valor da área de atendimento do chamado
-					// } else $areaT = 1; //Carga horária default definida no arquivo config.inc.php
+					// if (array_key_exists($rowABS['sistema'],$H_horarios)){  //verifica se o cï¿½digo da ï¿½rea possui carga horï¿½ria definida no arquivo config.inc.php
+						// $areaT = $rowABS['sistema']; //Recebe o valor da ï¿½rea de atendimento do chamado
+					// } else $areaT = 1; //Carga horï¿½ria default definida no arquivo config.inc.php
 					$areaT = "";
 					$areaT=testaArea($areaT,$rowABS['area_cod'],$H_horarios);
 
@@ -641,7 +641,7 @@
 					$dt->setData1($row_ts['ts_data']);
 					$dt->setData2(date('Y-m-d H:i:s'));
 					$dt->tempo_valido($dt->data1,$dt->data2,$H_horarios[$areaT][0],$H_horarios[$areaT][1],$H_horarios[$areaT][2],$H_horarios[$areaT][3],"H");
-					$segundos = $dt->diff["sValido"]; //segundos válidos
+					$segundos = $dt->diff["sValido"]; //segundos vï¿½lidos
 
 					$sql_upd = "update tempo_status set ts_tempo = (ts_tempo+".$segundos.") , ts_data ='".date('Y-m-d H:i:s')."' where ts_ocorrencia = ".$rowABS['numero']." and
 							ts_status = ".$rowABS['status_cod']." ";
@@ -724,8 +724,8 @@
 		if (ok) var ok = validaForm('idContato','','Contato',1);
 		if (ok) var ok = validaForm('idLocal','COMBO','Local',1);
 		if (ok) var ok = validaForm('idData_fechamento','DATAHORA','Data',1);
-		if (ok) var ok = validaForm('idDesc','','Descrição técnica',1);
-		if (ok) var ok = validaForm('idSolucao','','Solução',1);
+		if (ok) var ok = validaForm('idDesc','','Descriï¿½ï¿½o tï¿½cnica',1);
+		if (ok) var ok = validaForm('idSolucao','','Soluï¿½ï¿½o',1);
 		
 		if (ok) {
 			var justification = document.getElementById('idJustificativa');
@@ -788,7 +788,7 @@
 
 		//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
 		//So exibe os campos "solucao" e "problema" se o tipo do problema permitir alimentar o banco de solucoes
-		//Isso é feito via javascript suprimindo o TR da página
+		//Isso ï¿½ feito via javascript suprimindo o TR da pï¿½gina
 		$query_problema_banco_solucao = "SELECT * FROM problemas order by problema";
 		$exec_problema_banco_solucao = mysql_query($query_problema_banco_solucao);
 		mysql_data_seek($exec_problema_banco_solucao, 0);
