@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>jQuery UI Example Page</title>
+		<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+		<link type="text/css" href="countdown/jquery.countdown.css" rel="stylesheet"/> 
+		<script type="text/javascript" src="countdown/jquery.countdown.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<!--		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script> -->
+		<script type="text/javascript">
+			var auto_refresh = setInterval(
+			function ()
+			{
+				$('#load_tweets').load('record_count.php').fadeIn("slow");
+			}, 1000); // refresh every 10000 milliseconds
+		
+		
+		</script>
+			
+		
+		<body>
+		
+			<div id="load_tweets"> <p> OK </p> </div>
+		
+		</body>
+
+		</head>
+	</html>

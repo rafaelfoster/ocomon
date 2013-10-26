@@ -18,6 +18,8 @@
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */session_start();
 
+error_reporting(0);
+
 	include ("PATHS.php");
 	//include ("".$includesPath."var_sessao.php");
 	require_once("./includes/config.inc.php");
@@ -159,16 +161,19 @@ if($OPERADOR_AREA){
 
 
 // ADICIONADO PARA USUARIO SOMENTE CONSULTAS E ABERTURA DE OCORRENCIA
-	$menuTheme = ".|".TRANS('MNL_THEME')."|".$ocoDirPath."user_theme.php|".TRANS('MNL_THEME_HNT')."|".$iconsPath."colors.png|centro";
-	$menuSenha = ".|".TRANS('MNL_SENHA')."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
-	$menuLang = ".|".TRANS('MNL_LANG')."|".$ocoDirPath."user_lang.php||".$iconsPath."brasil-flag-icon.png|centro";
-	//.|".TRANS('MNL_INICIO']."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_INICIO_HNT']."|".$iconsPath."gohome.png|centro
-	$menuSimples =".|||||
+//	$menuTheme = ".|".TRANS('MNL_THEME')."|".$ocoDirPath."user_theme.php|".TRANS('MNL_THEME_HNT')."|".$iconsPath."colors.png|centro";
+//	$menuSenha = ".|".TRANS('MNL_SENHA')."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
+//	$menuLang = ".|".TRANS('MNL_LANG')."|".$ocoDirPath."user_lang.php||".$iconsPath."brasil-flag-icon.png|centro";
+//	.|".TRANS('MNL_INICIO']."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_INICIO_HNT']."|".$iconsPath."gohome.png|centro
+//	$menuSimples =".|||||
+
+$menuSimples =".|".TRANS('MNL_INICIO')."|".$ocoDirPath."abertura.php|".TRANS('MNL_INICIO_HNT')."|".$iconsPath."gohome.png|centro
 .|".TRANS('MNL_ABRIR')."|".$ocoDirPath."incluir.php|".TRANS('MNL_ABRIR_HNT')."|".$iconsPath."fone.png|centro
 .|".TRANS('MNL_MEUS')."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_MEUS_HNT')."|".$iconsPath."search.png|centro
-".$menuTheme."
-".$menuSenha."
-".$menuLang."";
+//".$menuTheme."
+//".$menuSenha."
+//".$menuLang."
+";
 //.|".TRANS('MNL_SENHA']."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro
 
 	$mid->setMenuStructureString($menuSimples);
@@ -177,18 +182,16 @@ if($OPERADOR_AREA){
 
 	$menuHome =".|".TRANS('MNL_INICIO')."|home.php|".TRANS('MNL_INICIO_HNT')."|".$iconsPath."gohome.png|centro
 .|".TRANS('MNL_MEUS')."|".$ocoDirPath."abertura_user.php?action=listall|".TRANS('MNL_MEUS_HNT')."|".$iconsPath."search.png|centro
-".$menuTheme."
-".$menuSenha."
-".$menuLang."";
+.|".TRANS('MNL_THEME')."|".$ocoDirPath."user_theme.php|".TRANS('MNL_THEME_HNT')."|".$iconsPath."colors.png|centro
+.|".TRANS('MNL_SENHA')."|".$invDirPath."altera_senha.php||".$iconsPath."password.png|centro";
+//".$menuTheme."
+//".$menuSenha."
+//".$menuLang."
 
 	$mid->setMenuStructureString($menuHome);
 	$mid->parseStructureForMenu('treemenu5');
 
-
-
 // FIM DA INCLUSAO	PARA USUARIO SOMENTE CONSULTAS E ABERTURA DE OCORRENCIA
-
-
 
 print "<html>";
 print "<title>OcoMon</title>";

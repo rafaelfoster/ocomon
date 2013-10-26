@@ -17,7 +17,7 @@
          along with Foobar; if not, write to the Free Software
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */session_start();
-
+  
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
@@ -34,7 +34,7 @@
 	print "<br><B>".TRANS('TLT_CONS_OCOR').":</B><BR>";
 
 	print "<FORM method='POST'  name='form1' action='mostra_resultado_consulta.php' onSubmit='return valida()'>";
-	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
+	print "<TABLE border='0' id='table_constageral' align='center' width='100%' bgcolor='".BODY_COLOR."'>";
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_NUM_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='numero_inicial' id='idNumeroInicial'></TD>";
@@ -46,7 +46,7 @@
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
                		print "<SELECT class='select' name='problema' size=1>";
                 		print "<option value=-1 selected>".TRANS('OCO_SEL_PROB')."</option>";
-                		$query = "SELECT * from problemas order by problema";
+                		$query = "SELECT * from problemas GROUP BY problema order by problema";
                 		$resultado = mysql_query($query);
 				while ($row = mysql_fetch_array($resultado))
 				{
@@ -138,12 +138,12 @@
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-                	print "<INPUT type=text class='data' name='data_inicial' id='idDataInicial'  ><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
+                	print "<INPUT type=text class='data' name='data_inicial' id='idDataInicial'  ><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">";
+//                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_FINISH').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-                	print "<INPUT type=text class='data' name='data_final' id='idDataFinal'  ><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
+                	print "<INPUT type=text class='data' name='data_final' id='idDataFinal'  ><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">";
+//                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
 
 	print "</tr>";
 	print "<tr>";

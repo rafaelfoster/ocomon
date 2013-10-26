@@ -1,5 +1,5 @@
-<?php 
- /*                        Copyright 2005 Flávio Ribeiro
+<?php
+ /*                        Copyright 2005 Flavio Ribeiro
 
          This file is part of OCOMON.
 
@@ -16,7 +16,9 @@
          You should have received a copy of the GNU General Public License
          along with Foobar; if not, write to the Free Software
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/session_start();
+*/
+
+session_start();
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
@@ -46,7 +48,8 @@ print "<head>";
 		return false
      	}
 </script>
-<?php 
+
+<?php
 print "</head>";
 print "<BODY>";
 
@@ -199,21 +202,22 @@ print "<BODY>";
 
 		print "</table>";
 
-		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%' >" ;
-
+		print "<table border='1' id='tabela_consultgeral' class='tablesorter' cellpadding='5' cellspacing='1' align='center' width='100%' >";
+		print "<thead>" ;
 		if (isset($_POST['saida']) && $_POST['saida'] == 1) {
 
-			$valign = " valign='top' ";
-			print "<TR class='header'>";
-			print "<TD ".$valign.">".TRANS('OCO_FIELD_NUMBER')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_FIELD_PROB')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_FIELD_OPERATOR')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_FIELD_LOCAL')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_DATE_THIS')." ".$_POST['tipo_data']."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_FIELD_STATUS')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_RESPONSE')."</TD>";
-			print "<TD ".$valign.">".TRANS('OCO_SOLUC')."</TD>";
+			$valign = " valign='top center' ";
+			print "<TR>";
+			print "<TH ".$valign." width='5%'> No.</TH>";
+			print "<TH ".$valign.">".TRANS('OCO_FIELD_PROB')."</TH>";
+			print "<TH ".$valign.">".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_FIELD_OPERATOR')."</TH>";
+			print "<TH ".$valign.">".TRANS('OCO_FIELD_LOCAL')."</TH>";
+			print "<TH ".$valign.">".TRANS('OCO_DATE_THIS')." ".$_POST['tipo_data']."</TH>";
+			print "<TH ".$valign.">".TRANS('OCO_FIELD_STATUS')."</TH>";
+			print "<TH ".$valign." width='5%'>".TRANS('OCO_RESPONSE')."<br></TH>";
+			print "<TH ".$valign." width='5%'>".TRANS('OCO_SOLUC')."</TH>";
 			print "</TR>";
+			print "</thead>";
 
 			$i=0;
 			$j=2;
@@ -334,18 +338,19 @@ print "<BODY>";
 				} else
 					$imgSub = "";
 
-				print "<TD ".$valign."><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a>".$imgSub."</TD>";
-				print "<TD ".$valign.">".$row['problema']."</TD>";
-				print "<TD ".$valign."><b>".$row['contato']."</b><br>".$row['nome']."</TD>";
-				print "<TD ".$valign."><b>".$row['setor']."</b><br>".$texto."</TD>";
+				print "<TD class='line' align='center'><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."')\"><font color='blue'>".$row['numero']."</font></a>".$imgSub."</TD>";
+				print "<TD class='line'".$valign.">".$row['problema']."</TD>";
+				print "<TD class='line'".$valign."><b>".$row['contato']."</b><br>".$row['nome']."</TD>";
+				print "<TD class='line'".$valign."><b>".$row['setor']."</b><br>".$texto."</TD>";
 				if ($_POST['tipo_data'] == "abertura")
-					print "<TD ".$valign.">".$row['data_abertura']."</TD>"; else
-					print "<TD ".$valign.">".$row['data_fechamento']."</TD>";
+					print "<TD class='line'".$valign.">".$row['data_abertura']."</TD>"; else
+					print "<TD class='line'".$valign.">".$row['data_fechamento']."</TD>";
 
-				print "<TD ".$valign."><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\">".$row['chamado_status']."</a></TD>";
-				print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='../../includes/imgs/imgs/".$imgSlaR."'></a></TD>";
-				print "<TD ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></TD>";
+				print "<TD class='line'".$valign."><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\">".$row['chamado_status']."</a></TD>";
+				print "<TD class='line'".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='../../includes/imgs/imgs/".$imgSlaR."'></a></TD>";
+				print "<TD class='line'".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='../../includes/imgs/".$imgSlaS."'></a></TD>";
 				print "</TR>";
+
 
 			} //while
 
@@ -353,7 +358,7 @@ print "<BODY>";
 		else
 		if (isset($_POST['saida']) && $_POST['saida'] == 2) { //Show detailed output
 			while ($row = mysql_fetch_array($resultado)) {
-				print "<tr><td><b>TRANS('OCO_FIELD_NUMBER');:</b></td><td>".$row['numero']."</td><td><b>".TRANS('OCO_AREA').":</b></td><td>".$row['area']."</td><td><b>".TRANS('OCO_FIELD_PROB').":</b></td><td>".$row['problema']."</td></tr>";
+				print "<tr><td align='center'<b>TRANS('OCO_FIELD_NUMBER');:</b></td><td>".$row['numero']."</td><td><b>".TRANS('OCO_AREA').":</b></td><td>".$row['area']."</td><td><b>".TRANS('OCO_FIELD_PROB').":</b></td><td>".$row['problema']."</td></tr>";
 				print "<tr><td><b>".TRANS('OCO_DESC').":</b></td><td colspan='5'>".nl2br($row['descricao'])."</td></tr>";
 				print "<tr><td><b>".TRANS('OCO_FIELD_UNIT').":</b></td><td>".$row['unidade']."</td><td><b>".TRANS('OCO_FIELD_TAG').":</b></td><td colspan='3'>".$row['etiqueta']."</td></tr>";
 				print "<tr><td><b>".TRANS('OCO_FIELD_LOCAL').":</b></td><td>".$row['setor']."</td><td><b>".TRANS('OCO_FIELD_CONTACT').":</b></td><td>".$row['contato']."</td><td><b>".TRANS('OCO_FIELD_PHONE').":</b></td><td>".$row['telefone']."</td></tr>";
@@ -369,7 +374,7 @@ print "<BODY>";
 				print "<tr><td colspan='6'><hr /></td></tr>";
 			}
 		}
-                print "</TABLE>";
+                print "</tbody></TABLE>";
         }
 print "</body>";
 print "</html>";

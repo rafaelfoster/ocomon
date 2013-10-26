@@ -40,13 +40,13 @@
         print "<TR>";
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_BEGIN').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".
-                		"<INPUT type='text' class='data' name='data_inicial' id='idDataInicial'><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
+                		"<INPUT type='text' class='data' name='data_inicial' id='idDataInicial'><a onclick=\"displayCalendar(document.forms[0].data_inicial,'dd-mm-yyyy',this)\">";
+//                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
 
                 print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_DATE_FINISH').":</TD>";
                 print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>".
-                		"<INPUT type='text' class='data' name='data_final' id='idDataFinal'><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">".
-                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
+                		"<INPUT type='text' class='data' name='data_final' id='idDataFinal'><a onclick=\"displayCalendar(document.forms[0].data_final,'dd-mm-yyyy',this)\">";
+//                		"<img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></TD>";
         print "</TR>";
 
         print "<TR>";

@@ -4,13 +4,6 @@
 
 	var GLArray = new Array();
 
-	function popup(pagina)	{ //Exibe uma janela popUP
-		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=yes,statusbar=no,resizable=no');
-		x.moveTo(10,10);
-
-		return false
-	}
-
 	function popupS(pagina)	{ //Exibe uma janela popUP
 		x = window.open(pagina,'Gráfico','dependent=yes,width=800,height=600,scrollbars=yes,statusbar=no,resizable=no');
 		x.moveTo(10,10);
@@ -308,330 +301,330 @@
 
 				GLArray = new Array();
 				var pos = temp.length;
-				for(i=0; i<pos; i++) {
-					GLArray[i] = temp[i];
-				}
+			for(i=0; i<pos; i++) {
+				GLArray[i] = temp[i];
 			}
-
-			return existe;
 		}
 
-	function loadDefaultValue(id, valor){
-		var obj = document.getElementById(id);
-		obj.value = valor;
-		return false;
+		return existe;
 	}
+
+function loadDefaultValue(id, valor){
+	var obj = document.getElementById(id);
+	obj.value = valor;
+	return false;
+}
 
 
 
 function validaForm(id,tipo,campo,obrigatorio){
-	var regINT = /^[1-9]\d*$/; //expressão para validar numeros inteiros não iniciados com zero
-	var regINTFULL = /^\d*$/; //expressão para validar numeros inteiros quaisquer
-	var regDATA = /^((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2}$/;
-	var regDATA_ = /^((0?[1-9]|[12]\d)\-(0?[1-9]|1[0-2])|30\-(0?[13-9]|1[0-2])|31\-(0?[13578]|1[02]))\-(19|20)?\d{2}$/;
-	var regDATAHORA = /^(((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2})[ ]([0-1]\d|2[0-3])+:[0-5]\d:[0-5]\d$/;
-	var regEMAIL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;
+var regINT = /^[1-9]\d*$/; //expressão para validar numeros inteiros não iniciados com zero
+var regINTFULL = /^\d*$/; //expressão para validar numeros inteiros quaisquer
+var regDATA = /^((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2}$/;
+var regDATA_ = /^((0?[1-9]|[12]\d)\-(0?[1-9]|1[0-2])|30\-(0?[13-9]|1[0-2])|31\-(0?[13578]|1[02]))\-(19|20)?\d{2}$/;
+var regDATAHORA = /^(((0?[1-9]|[12]\d)\/(0?[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0?[13578]|1[02]))\/(19|20)?\d{2})[ ]([0-1]\d|2[0-3])+:[0-5]\d:[0-5]\d$/;
+var regEMAIL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;
 
-	var regMULTIEMAIL = /^([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))(\,\s?([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))+)*$/;
+var regMULTIEMAIL = /^([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))(\,\s?([\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*@(([\w-]+\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\]))+)*$/;
 
-	var regMOEDA = /^\d{1,3}(\.\d{3})*\,\d{2}$/;
-	var regMOEDASIMP = /^\d*\,\d{2}$/;
-	var regETIQUETA = /^[1-9]\d*(\,\d+)*$/; //expressão para validar consultas separadas por vírgula;
-	var regALFA = /^[A-Z]|[a-z]([A-Z]|[a-z])*$/;
-	var regALFANUM = /^([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*\.?([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*$/; //Valores alfanumérias aceitando separação com no máximo um ponto.
-	var regALFAFULL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*$/;
-	//var regFone = /^([\d]*([-]|[\s])?[\d]+)+([,][\s][\d]*([-]|[\s])?[\d]+)*$/;
-	var regFone = /^(([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)+([,][\s]([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)*$/;
-	var regCor = /^([#]([A-F]|[a-f]|[\d]){6,6})|([I][M][G][_][D][E][F][A][U][L][T])$/;
-	//var d = document.cadastro;
+var regMOEDA = /^\d{1,3}(\.\d{3})*\,\d{2}$/;
+var regMOEDASIMP = /^\d*\,\d{2}$/;
+var regETIQUETA = /^[1-9]\d*(\,\d+)*$/; //expressão para validar consultas separadas por vírgula;
+var regALFA = /^[A-Z]|[a-z]([A-Z]|[a-z])*$/;
+var regALFANUM = /^([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*\.?([A-Z]|[a-z]|[0-9])([A-Z]|[a-z]|[0-9])*$/; //Valores alfanumérias aceitando separação com no máximo um ponto.
+var regALFAFULL = /^[\w!#$%&'*+\/=?^`{|}~-]+(\.[\w!#$%&'*+\/=?^`{|}~-]+)*$/;
+//var regFone = /^([\d]*([-]|[\s])?[\d]+)+([,][\s][\d]*([-]|[\s])?[\d]+)*$/;
+var regFone = /^(([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)+([,][\s]([+][\d]{2,2})?([-]|[\s])?[\d]*([-]|[\s])?[\d]+)*$/;
+var regCor = /^([#]([A-F]|[a-f]|[\d]){6,6})|([I][M][G][_][D][E][F][A][U][L][T])$/;
+//var d = document.cadastro;
 
-	var obj = document.getElementById(id);
-	var valor = obj.getAttributeNode('name').value;
+var obj = document.getElementById(id);
+var valor = obj.getAttributeNode('name').value;
 
-	//alert (obj);
+//alert (obj);
 
-	//verificar se está preenchido
+//verificar se está preenchido
 
 
-	if ((obj.value == "")&&(obrigatorio==1)){
-		alert("O campo [" + campo + "] deve ser preenchido!");
+if ((obj.value == "")&&(obrigatorio==1)){
+	alert("O campo [" + campo + "] deve ser preenchido!");
+	obj.focus();
+	return false;
+}
+
+
+
+if ((tipo == "INTEIRO")&&(obj.value != "")) {
+	//validar dados numéricos
+	if (!regINT.test(obj.value)){
+		alert ("O campo "+ campo +" deve conter apenas numeros inteiros não iniciados por ZERO!");
 		obj.focus();
 		return false;
 	}
+} else
 
-
-
-	if ((tipo == "INTEIRO")&&(obj.value != "")) {
-		//validar dados numéricos
-		if (!regINT.test(obj.value)){
-			alert ("O campo "+ campo +" deve conter apenas numeros inteiros não iniciados por ZERO!");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "COMBO")&&(obj.value != "")) {
-		//validar dados numéricos
-		if (!regINT.test(obj.value)){
-			alert ("O campo "+ campo +" deve ser selecionado!");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "INTEIROFULL")&&(obj.value != "")) {
-		//validar dados numéricos
-		if (!regINTFULL.test(obj.value)){
-			alert ("O campo "+ campo +" deve conter apenas numeros inteiros!");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "DATA")&&(obj.value != "")) {
-		//validar data
-		if (!regDATA.test(obj.value)){
-			alert("Formato de data invalido! dd/mm/aaaa");
-			obj.focus();
-			return false;
-			}
-	} else
-
-	if ((tipo == "DATA-")&&(obj.value != "")) {
-		//validar data
-		if (!regDATA_.test(obj.value)){
-			alert("Formato de data invalido! dd-mm-aaaa");
-			obj.focus();
-			return false;
-			}
-	} else
-	if ((tipo == "DATAHORA")&&(obj.value != "")) {
-		//validar data
-		if (!regDATAHORA.test(obj.value)){
-			alert("Formato de data invalido! dd/mm/aaaa HH:mm:ss");
-			obj.focus();
-			return false;
-			}
-	} else
-
-
-	if ((tipo == "EMAIL")&&(obj.value != "")){
-		//validar email(verificao de endereco eletrônico)
-		if (!regEMAIL.test(obj.value)){
-			alert("Formato de e-mail inválido!");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "MULTIEMAIL")&&(obj.value != "")){
-		//validar email(verificao de endereco eletrônico)
-		if (!regMULTIEMAIL.test(obj.value)){
-			alert("Formato de e-mail inválido! \"E-MAIL, E-MAIL\"");
-			obj.focus();
-			return false;
-		}
-	} else
-
-
-	if ((tipo == "MOEDA")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regMOEDA.test(obj.value)){
-			alert("Formato de moeda inválido!");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "MOEDASIMP")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regMOEDASIMP.test(obj.value)){
-			alert("Formato de moeda inválido! XXXXXX,XX");
-			obj.focus();
-			return false;
-		}
-	} else
-
-	if ((tipo == "ETIQUETA")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regETIQUETA.test(obj.value)){
-			alert("o Formato deve ser de valores inteiros não iniciados por Zero e separados por vírgula!");
-			obj.focus();
-			return false;
-		}
-	}	else
-
-	if ((tipo == "ALFA")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regALFA.test(obj.value)){
-			alert("Esse campo só aceita carateres do alfabeto sem espaços!");
-			obj.focus();
-			return false;
-		}
-	}	else
-
-	if ((tipo == "ALFANUM")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regALFANUM.test(obj.value)){
-			alert("Esse campo só aceita valores alfanuméricos sem espaços ou separados por um ponto(no máximo um)!");
-			obj.focus();
-			return false;
-		}
+if ((tipo == "COMBO")&&(obj.value != "")) {
+	//validar dados numéricos
+	if (!regINT.test(obj.value)){
+		alert ("O campo "+ campo +" deve ser selecionado!");
+		obj.focus();
+		return false;
 	}
+} else
 
-	if ((tipo == "ALFAFULL")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regALFAFULL.test(obj.value)){
-			alert("Esse campo só aceita valores alfanuméricos sem espaços!");
-			obj.focus();
-			return false;
-		}
+if ((tipo == "INTEIROFULL")&&(obj.value != "")) {
+	//validar dados numéricos
+	if (!regINTFULL.test(obj.value)){
+		alert ("O campo "+ campo +" deve conter apenas numeros inteiros!");
+		obj.focus();
+		return false;
 	}
+} else
 
-	if ((tipo == "FONE")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regFone.test(obj.value)){
-			alert("Esse campo só aceita valores formatados para telefones (algarismos, traços e espaços) separados por vírgula.");
-			obj.focus();
-			return false;
+if ((tipo == "DATA")&&(obj.value != "")) {
+	//validar data
+	if (!regDATA.test(obj.value)){
+		alert("Formato de data invalido! dd/mm/aaaa");
+		obj.focus();
+		return false;
 		}
-	}
-	if ((tipo == "COR")&&(obj.value != "")){
-		//validar valor monetário
-		if (!regCor.test(obj.value)){
-			alert("Esse campo só aceita valores formatados para cores HTML! Ex: #FFCC99");
-			obj.focus();
-			return false;
+} else
+
+if ((tipo == "DATA-")&&(obj.value != "")) {
+	//validar data
+	if (!regDATA_.test(obj.value)){
+		alert("Formato de data invalido! dd-mm-aaaa");
+		obj.focus();
+		return false;
 		}
+} else
+if ((tipo == "DATAHORA")&&(obj.value != "")) {
+	//validar data
+	if (!regDATAHORA.test(obj.value)){
+		alert("Formato de data invalido! dd/mm/aaaa HH:mm:ss");
+		obj.focus();
+		return false;
+		}
+} else
+
+
+if ((tipo == "EMAIL")&&(obj.value != "")){
+	//validar email(verificao de endereco eletrônico)
+	if (!regEMAIL.test(obj.value)){
+		alert("Formato de e-mail inválido!");
+		obj.focus();
+		return false;
 	}
+} else
+
+if ((tipo == "MULTIEMAIL")&&(obj.value != "")){
+	//validar email(verificao de endereco eletrônico)
+	if (!regMULTIEMAIL.test(obj.value)){
+		alert("Formato de e-mail inválido! \"E-MAIL, E-MAIL\"");
+		obj.focus();
+		return false;
+	}
+} else
 
 
-	return true;
+if ((tipo == "MOEDA")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regMOEDA.test(obj.value)){
+		alert("Formato de moeda inválido!");
+		obj.focus();
+		return false;
+	}
+} else
+
+if ((tipo == "MOEDASIMP")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regMOEDASIMP.test(obj.value)){
+		alert("Formato de moeda inválido! XXXXXX,XX");
+		obj.focus();
+		return false;
+	}
+} else
+
+if ((tipo == "ETIQUETA")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regETIQUETA.test(obj.value)){
+		alert("o Formato deve ser de valores inteiros não iniciados por Zero e separados por vírgula!");
+		obj.focus();
+		return false;
+	}
+}	else
+
+if ((tipo == "ALFA")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regALFA.test(obj.value)){
+		<!-- alert("Esse campo só aceita carateres do alfabeto sem espaços!");   -->
+		obj.focus();
+		return true;
+	}
+}	else
+
+if ((tipo == "ALFANUM")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regALFANUM.test(obj.value)){
+		<!-- alert("Esse campo só aceita valores alfanuméricos sem espaços ou separados por um ponto(no máximo um)!");     -->
+		obj.focus();
+		return false;
+	}
 }
 
-	function exibeEscondeImg(obj) {
-		var item = document.getElementById(obj);
-		if (item.style.display=='none'){
-			item.style.display='';
-		} else {
-			item.style.display='none';
-		}
+if ((tipo == "ALFAFULL")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regALFAFULL.test(obj.value)){
+		<!-- alert("Esse campo só aceita valores alfanuméricos sem espaços!");    -->
+		obj.focus();
+		return true;
 	}
+}
 
-	function exibeEscondeHnt(obj) {
+if ((tipo == "FONE")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regFone.test(obj.value)){
+		alert("Esse campo só aceita valores formatados para telefones (algarismos, traços e espaços) separados por vírgula.");
+		obj.focus();
+		return false;
+	}
+}
+if ((tipo == "COR")&&(obj.value != "")){
+	//validar valor monetário
+	if (!regCor.test(obj.value)){
+		alert("Esse campo só aceita valores formatados para cores HTML! Ex: #FFCC99");
+		obj.focus();
+		return false;
+	}
+}
+
+
+return true;
+}
+
+function exibeEscondeImg(obj) {
+	var item = document.getElementById(obj);
+	if (item.style.display=='none'){
+		item.style.display='';
+	} else {
+		item.style.display='none';
+	}
+}
+
+function exibeEscondeHnt(obj) {
 
 /*		if (document.all) {
-			document.this.x.value=window.event.clientX;
-			document.this.y.value=window.event.clientY;
-		}
-		else if (document.layers) {
-			document.this.x.value=e.pageX;
-			document.this.y.value=e.pageY;
-		}*/
+		document.this.x.value=window.event.clientX;
+		document.this.y.value=window.event.clientY;
+	}
+	else if (document.layers) {
+		document.this.x.value=e.pageX;
+		document.this.y.value=e.pageY;
+	}*/
 
 
-		if (document.all) {
-			var x = window.event.clientX;
-			var y = window.event.clientY;
-		} else if (document.layers) {
-			var x = pageX;
-			var y = pageY;
-		}
-
-		var item = document.getElementById(obj);
-		if (item.style.display=='none'){
-			item.style.display='';
-			item.style.top = y;
-		} else {
-			item.style.display='none';
-		}
+	if (document.all) {
+		var x = window.event.clientX;
+		var y = window.event.clientY;
+	} else if (document.layers) {
+		var x = pageX;
+		var y = pageY;
 	}
 
+	var item = document.getElementById(obj);
+	if (item.style.display=='none'){
+		item.style.display='';
+		item.style.top = y;
+	} else {
+		item.style.display='none';
+	}
+}
 
-	function invertView(id) {
-		var element = document.getElementById(id);
-		var elementImg = document.getElementById('img'+id);
-		var address = '../../includes/icons/';
 
-		if (element.style.display=='none'){
-			element.style.display='';
-			elementImg.src = address+'close.png';
-		} else {
-			element.style.display='none';
-			elementImg.src = address+'open.png';
-		}
+function invertView(id) {
+	var element = document.getElementById(id);
+	var elementImg = document.getElementById('img'+id);
+	var address = '../../includes/icons/';
+
+	if (element.style.display=='none'){
+		element.style.display='';
+		elementImg.src = address+'close.png';
+	} else {
+		element.style.display='none';
+		elementImg.src = address+'open.png';
+	}
+}
+
+
+
+
+function addEvent( id, type, fn ) {
+	var obj = document.getElementById(id);
+
+	if ( obj.attachEvent ) {
+		obj['e'+type+fn] = fn;
+		obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
+		obj.attachEvent( 'on'+type, obj[type+fn] );
+	} else
+		obj.addEventListener( type, fn, false );
+}
+
+function removeEvent( id, type, fn ) {
+	var obj = document.getElementById(id);
+	if ( obj.detachEvent ) {
+		obj.detachEvent( 'on'+type, obj[type+fn] );
+		obj[type+fn] = null;
+	} else
+		obj.removeEventListener( type, fn, false );
+}
+
+
+function Mouse() {
+	var isIE = document.all;
+	var ns6  = document.getElementById && !document.all;
+	var ieTB = (document.compatMode && document.compatMode!="BackCompat")?document.documentElement:document.body;
+	var px = null;
+	var py = null;
+
+
+	this.setEvent = function(e) {
+		px = (ns6)?e.pageX:event.clientX+ieTB.scrollLeft;
+		py = (ns6)?e.pageY:event.clientY+ieTB.scrollTop;
 	}
 
+	this.x = function() { return px; }
 
+	this.y = function() { return py; }
+}
 
+function mouseMoveManager(e) {
+	mouse.setEvent(e);
+	//document.title = "Cursor_x: "+mouse.x()+" | Cursor_y: "+mouse.y();
+}
 
-	function addEvent( id, type, fn ) {
-		var obj = document.getElementById(id);
-
-		if ( obj.attachEvent ) {
-			obj['e'+type+fn] = fn;
-			obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
-			obj.attachEvent( 'on'+type, obj[type+fn] );
-		} else
-			obj.addEventListener( type, fn, false );
-	}
-
-	function removeEvent( id, type, fn ) {
-		var obj = document.getElementById(id);
-		if ( obj.detachEvent ) {
-			obj.detachEvent( 'on'+type, obj[type+fn] );
-			obj[type+fn] = null;
-		} else
-			obj.removeEventListener( type, fn, false );
-	}
-
-
-	function Mouse() {
-		var isIE = document.all;
-		var ns6  = document.getElementById && !document.all;
-		var ieTB = (document.compatMode && document.compatMode!="BackCompat")?document.documentElement:document.body;
-		var px = null;
-		var py = null;
-
-
-		this.setEvent = function(e) {
-			px = (ns6)?e.pageX:event.clientX+ieTB.scrollLeft;
-			py = (ns6)?e.pageY:event.clientY+ieTB.scrollTop;
-		}
-
-		this.x = function() { return px; }
-
-		this.y = function() { return py; }
-	}
-
-	function mouseMoveManager(e) {
-		mouse.setEvent(e);
-		//document.title = "Cursor_x: "+mouse.x()+" | Cursor_y: "+mouse.y();
-	}
-
-	function fecha()
-	{
+function fecha()
+{
 // 		if (history.back){
 // 			return history.back();
 // 		} else
 // 			window.close();
 
-		if (window.opener){
-			return window.close();
-		} else
-			return history.back();
-	}
+	if (window.opener){
+		return window.close();
+	} else
+		return history.back();
+}
 
 
-	function showToolTip(e,text,id1, id2){
-		if(document.all)e = event;
+function showToolTip(e,text,id1, id2){
+	if(document.all)e = event;
 
-		var obj = document.getElementById(id1);
-		var obj2 = document.getElementById(id2);
-		obj2.innerHTML = text;
-		obj.style.display = 'block';
-		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
-		if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0;
+	var obj = document.getElementById(id1);
+	var obj2 = document.getElementById(id2);
+	obj2.innerHTML = text;
+	obj.style.display = 'block';
+	var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+	if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0;
 		var leftPos = e.clientX - 100;
 		if(leftPos<0)leftPos = 0;
 		obj.style.left = leftPos + 'px';

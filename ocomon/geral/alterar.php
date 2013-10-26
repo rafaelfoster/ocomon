@@ -40,7 +40,7 @@
 	print "<TABLE border='0'  align='left' width='40%' bgcolor='".BODY_COLOR."'>";
         print "<TR>";
                 print "<TD  width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER','Número')."".TRANS('NUMBER_PLURAL','(s)').":</TD>";
-                print "<TD  width='80%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='numero' id='idEtiqueta'></TD>";
+                print "<TD  width='80%' align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' name='numero' id='idOcorrencia'></TD>";
 	print "</TR>";
 	print "<TR>";
 		print "<tr><td colspan='2'>&nbsp;</td></tr>";
@@ -58,7 +58,7 @@
 	if (isset($_POST['submit']))
 	{
 
-		print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+		print "<div id='idLoad' class='loading' style='display: none' ><img src='../../includes/imgs/loading.gif'></div>";
 
 		//TESTA A EXPRESSÃO: IMPORTANTE CASO O JAVASCRIPT NÃO ESTEJA HABILITADO!
 		if (!valida(TRANS('OCO_FIELD_TAG'), $_POST['numero'], 'ETIQUETA', 1, $ERRO)) {
@@ -129,7 +129,7 @@
 						print "<td class='line'>".datab($row['data_abertura'])."</TD>";
 						print "<td class='line'>".$row['chamado_status']."</TD>";
 					print "</tr>";
-					print "<tr><td colspan='6'  id='idTr".$j."' style='{display:none;}'><div id='idDivDetails".$j."' style='{display:none;}'></div></td></tr>";
+					print "<tr><td colspan='6'  id='idTr".$j."' style='display:none;'><div id='idDivDetails".$j."' style='display:none;'></div></td></tr>";
 					$j++;
 				}
 
@@ -146,7 +146,7 @@
 	<!--
 		function valida(){
 
-			var ok = validaForm('idEtiqueta','ETIQUETA','Ocorrências',1);
+			var ok = validaForm('idOcorrencia','ETIQUETA','Ocorrências',1);
 			//var ok = validaForm('idEtiqueta','FONE','Ocorrências',1);
 
 			return ok;

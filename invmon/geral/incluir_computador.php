@@ -174,7 +174,7 @@
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'><b>".
 				"<a title='".TRANS('MSG_REQUER_FIELD_SEL_EQUIP_CAD')."'>".TRANS('COL_MODEL')."*:</a></b></TD>";
 		print "<TD width='30%' align='left' bgcolor='".BODY_COLOR."'>";
-			print "<SELECT class='select' name='comp_marca' size='1' id='idModelo' >";
+			print "<SELECT class='select3' name='comp_marca' size='1' id='idModelo' >";
 
 					print "<option value=-1 selected>".TRANS('SEL_MODEL')."</option>";
 
@@ -662,7 +662,7 @@
 			$erro=false;
 
 			$querySN = "SELECT c.* FROM equipamentos as c ".
-						"WHERE c.comp_marca='".$_POST['comp_marca']."' and ".
+						"WHERE c.comp_fab='".$_POST['comp_fab']."' and ".
 							"c.comp_sn='".$_POST['comp_sn']."'";
 			$resultadoSN = mysql_query($querySN);
 			$linhasSN = mysql_numrows($resultadoSN);

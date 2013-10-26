@@ -6,6 +6,7 @@
 	include ("../../includes/classes/auth.class.php");
 	include ("../../includes/classes/dateOpers.class.php");
 	include ("../../includes/functions/funcoes.inc");
+	include ("../../includes/functions/funcoes_jquery.php");
 
 	include ("../../includes/javascript/funcoes.js");
  	include ("../../includes/config.inc.php");

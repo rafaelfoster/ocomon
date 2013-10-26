@@ -136,7 +136,7 @@
 
 		print "<tr><td colspan='2'></td></tr>";
 		print "<tr><td colspan='2'></td></tr>";
-		
+
 		print "<tr><td colspan='2'>".TRANS('OPT_FIELD_MSG','Mensagem ao abrir chamado')."&nbsp;(".TRANS('OPT_ENVIRON_AVAIL','variáveis de ambiente disponíveis: %numero%')."):</td><td>";//.$row['conf_scr_msg']."</td></tr>";
 		print "<tr><td colspan='2'><textarea name='msg' class='textarea'>".$row['conf_scr_msg']."</textarea></td></tr>";
 
@@ -165,7 +165,7 @@
 		$qry = "UPDATE configusercall SET ".
 				"conf_user_opencall= ".$_POST['useropencall'].", ".
 				"conf_ownarea = ".$_POST['ownarea'].", ".
-				"conf_scr_msg = '".noHtml($_POST['msg'])."' WHERE conf_cod = 1 ";
+				"conf_scr_msg = '".noHtml($_POST['msg'])."'WHERE conf_cod = 1 ";
 
 		//print $qry;
 		//exit;

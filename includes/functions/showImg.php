@@ -2,7 +2,7 @@
 session_start();
   	include ("../../includes/config.inc.php");
   	include ("../../includes/classes/conecta.class.php");
-		
+
 	$conec = new conexao;
 	$conec->conecta('MYSQL');
 
@@ -22,9 +22,9 @@ session_start();
 
 	//$query = "SELECT * FROM imagens WHERE img_oco = ".$_GET['file']." and img_cod=".$_GET['cod']."";
 	$query = "SELECT * FROM imagens WHERE  img_cod=".$_GET['cod']."";
-	
+
 	$result = mysql_query($query) or die("ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DA IMAGEM");
-	
+
 	$data = @ mysql_fetch_array($result);
 
 	if (!empty($data["img_bin"])) {

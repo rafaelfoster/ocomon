@@ -122,12 +122,12 @@
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
 		//print "					<td class='line'><INPUT  type='text' class='data' name='d_ini'>  (Exemplo: 20/01/2004)</td>";
-		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'></td>";
 		print "				</tr>";
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
 		//print "					<td class='line'><INPUT type='text'  class='data' name='d_fim'>  (Exemplo: 27/01/2004)</td>";
-		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'></td>";
 		print "				</tr>";
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_DATE_THIS').":</td>";
@@ -170,7 +170,8 @@
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('FIELD_REPORT_TYPE').":</td>";
 		print "					<td class='line'><select  class='select' name='saida' size=1>";
 		print "							<option value=-1 selected>".TRANS('SEL_PRIORITY_NORMAL')."</option>";
-		print "							<option value=1>".TRANS('FIELD_REPORT_ONE_LINE')."</option>";
+		print "							<option value=1> Relatorio com Logo</option>";
+//		print "							<option value=1>".TRANS('FIELD_REPORT_ONE_LINE')."</option>";
 		print "						</select>";
 		print "					</td>";
 		print "				</tr>";
@@ -310,17 +311,17 @@
 		switch($_POST['saida'])
 		{
 			case -1:
-				$cor1=TD_COLOR;
-				print "<BR><BR><B>::: ".TRANS('TLT_REPORT_OCCOR')." :::</B><BR><BR>";
+				$cor1="#339966";
+				print "<div align='center'><BR><BR><B><font size='4'>::: ".TRANS('TLT_REPORT_OCCOR')." :::</font></B><BR><BR></div>";
 				print "<fieldset><legend><FONT FACE=Arial, sans-serif><FONT SIZE=2 STYLE=font-size: 9pt>".$frase."</font></font></legend>";
-	       			print "<table border='0' cellpadding='3' cellspacing='0' align='center'>";
+	       			print "<table border='0 ' cellpadding='3' cellspacing='1' align='center'>";
 				print "<tr>";
-				print "<td bgcolor='".$cor1."' align=left width='12%'> <font size='2'><b>".TRANS('OCO_FIELD_NUMBER')."</b></font></td>";
+				print "<td bgcolor='".$cor1."'  align=left width='5%'> <font size='2'><b>No.</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('OCO_PROB')."</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('COL_SCRIPT_SOLUTION')."</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('OCO_AREA')."</b></font></td>";
-				print "<td bgcolor='".$cor1."' align=left width='12%'> <font size='2'><b>".TRANS('OCO_FIELD_UNIT')."</b></font></td>";
-				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('OCO_LOCAL')."</b></font></td>";
+				print "<td bgcolor='".$cor1."' align=left width='8%'> <font size='2'><b>".TRANS('OCO_FIELD_UNIT')."</b></font></td>";
+				print "<td bgcolor='".$cor1."' align=left width='8%'><font size='2'><b>".TRANS('OCO_LOCAL')."</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'> <font size='2'><b>".TRANS('OCO_FIELD_OPERATOR')."</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('OCO_FIELD_DATE_BEGIN')."</b></font></td>";
 				print "<td bgcolor='".$cor1."' align=left width='12%'><font size='2'><b>".TRANS('OCO_FIELD_DATE_FINISH')."</b></font></td>";
@@ -376,7 +377,7 @@
 				$campos[]="data_fechamento";
 
 				$cabs=array();
-				$cabs[]=TRANS('OCO_FIELD_NUMBER');
+				$cabs[]="No.";
 				$cabs[]=TRANS('OCO_PROB');
 				$cabs[]=TRANS('OCO_FIELD_AREA');
 				$cabs[]=TRANS('OCO_FIELD_UNIT');
@@ -387,7 +388,7 @@
 
 				$hoje=date('d/m/Y H:m');
 
-				gera_relatorio(1,$query_ini,$campos,$cabs,"../../includes/logos/logo_unilasalle.gif","OCOMON", $hoje, "Relatório de Ocorrências");
+				gera_relatorio(1,$query_ini,$campos,$cabs,"../../MAIN_LOGO.png","OCOMON", $hoje, "Relatório de Ocorrências");
 				break;
 		} // switch
 	} //if $ok==Pesquisar
@@ -405,16 +406,16 @@
 			var checado = false;
 			if (document.form1.novaJanela.checked){
 		      	checado = true;
-				//document.form1.target = "_blank";
+				document.form1.target = "_blank";
 
 			} else {
 		      	checado = false;
-				//document.form1.target = "";
+				document.form1.target = "";
 			}
 			return checado;
 		}
 
-		window.setInterval("checar()",1000);
+		window.setInterval("checar()");
 
 		function submitForm()
 		{

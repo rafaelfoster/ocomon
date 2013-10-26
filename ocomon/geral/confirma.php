@@ -33,7 +33,7 @@
 	print "<html><head></head>";
 	print "<body>";
 
-	print  "<TABLE  STYLE='{border-bottom:  solid #999999; }' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
+	print  "<TABLE  STYLE='border-bottom:  solid #999999; ' cellspacing='1' border='0' cellpadding='1' align='center' width='100%'>".//#5E515B
 			"<TR>".
 				"<TD nowrap width='100%'><b>OcoMon - Módulo de Ocorrências</b></td>";
 	print "</TR>".

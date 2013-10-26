@@ -55,11 +55,11 @@
 						<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>
 							<TR>
 								<TD>
-									<div style='{
+									<div style='
 										margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 10px; 
 										padding: 5px; width: 90%; border: 1px solid black; background-color: <?php print $_SESSION['s_colorMarca'] ?>;
 										line-height: 150%;
-										}'>
+										'>
 										<?php print $row_problema['prob_descricao']."&nbsp;".$script.""?>
 									<div>
 								</TD>

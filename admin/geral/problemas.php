@@ -632,8 +632,10 @@
 		{
 			$aviso =  TRANS('OK_EDIT');
 			//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
-			$queryAtualizaOcorrencias = "UPDATE ocorrencias o, problemas p SET o.sistema = p.prob_area WHERE o.problema = p.prob_id AND o.sistema <> p.prob_area";
-			$resultadoAtualizacao = mysql_query($queryAtualizaOcorrencias) or die ('ERRO NA TENTATIVA DE ATUALIZAR OCORRENCIAS!<BR>'.$queryAtualizaOcorrencias);
+			// Comentada pelo Foster 
+			//$queryAtualizaOcorrencias = "UPDATE ocorrencias o, problemas p SET o.sistema = p.prob_area WHERE o.problema = p.prob_id AND o.sistema <> p.prob_area";
+			//$resultadoAtualizacao = mysql_query($queryAtualizaOcorrencias) or die ('ERRO NA TENTATIVA DE ATUALIZAR OCORRENCIAS!<BR>'.$queryAtualizaOcorrencias);
+			// Fim comentário Foster 
 			//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 		}
 

@@ -126,10 +126,10 @@
 		print "<tr>";
 
 		print "<TD align='left' bgcolor='".TD_COLOR."'><b>".TRANS('OCO_FIELD_TAG')."(s):</b></TD>";
-		print "<TD align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_inv'></TD>";
+		print "<TD align='left' bgcolor='".BODY_COLOR."'><INPUT id='comp_inv' type='text' class='text2' name='comp_inv'></TD>";
 
 		print "<TD align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SN').":</b></TD>";
-		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_sn'></TD>";
+		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT id='comp_sn' type='text' class='text2' name='comp_sn'></TD>";
 		print "</tr>";
 
 		print "<tr>";
@@ -184,7 +184,7 @@
 
 		print "<tr>";
 		print "<TD align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_NAME_COMPUTER').":</b></TD>";
-		print "<TD align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_nome'></TD>";
+		print "<TD align='left' bgcolor='".BODY_COLOR."'><INPUT id='comp_nome' type='text' class='text2' name='comp_nome'></TD>";
 
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_MB').":</b></TD>";
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'>";
@@ -409,7 +409,7 @@
 		print "<TR>";
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b><a title='".TRANS('MSG_POSSIBLE_SEL_UNIT_CTRL')."'>".TRANS('OCO_FIELD_UNIT').":</a></b></TD>";
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'>";
-			print "<SELECT class='select' name='comp_inst[]' size='1' multiple='yes'>";
+			print "<SELECT class='select_multi' name='comp_inst[]' multiple='yes' size='1'>";
 			print "<option value=-1 title='".TRANS('MSG_CTRL_SELECT_MULTIPLE')."'>".TRANS('SEL_ALL_CONS')."</option>";
 			$query = "SELECT * from instituicao  order by inst_nome";
 			$resultado = mysql_query($query);
@@ -423,7 +423,7 @@
 
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_CENTER_COST').":</b></TD>";
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'>";
-			print "<SELECT class='select2' name='comp_ccusto' size=1>";
+			print "<SELECT class='select_multi' name='comp_ccusto' size=1>";
 			print "<option value = -1 selected>".TRANS('SEL_ALL_CONS')."</option>";
 			$query = "SELECT * from ".DB_CCUSTO.".".TB_CCUSTO." order by ".CCUSTO_DESC."";
 			$resultado = mysql_query($query);
@@ -459,7 +459,7 @@
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_valor'></TD>";
 
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b>".TRANS('FIELD_DATE_PURCHASE').":</b></TD>";
-		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_data_compra'></TD>";
+		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT id='comp_data_compra' type='text' class='text2' name='comp_data_compra'></TD>";
 
 		print "</tr>";
 
@@ -486,7 +486,7 @@
 		print "<tr>";
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SUBSCRIBE_DATE').":</b>&nbsp;".
 				"<input type='checkbox' name='fromDateRegister'>".TRANS('INV_FROM_DATE_REGISTER','A partir')."</TD>";
-		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text2' name='comp_data'></TD>";
+		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT id='comp_data' type='text' class='text2' name='comp_data'></TD>";
 		print "<TD  align='left' bgcolor='".TD_COLOR."'><b><a title='".TRANS('MSG_SEL_EQUIP_STATUS_GUARANTEE')."'>".TRANS('LINK_GUARANT').":</a></b></TD>";
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'>";
 			print "<SELECT class='select2' name='garantia' size=1>";

@@ -31,17 +31,26 @@
 
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
-
+	echo "<div id='popup_modal'></div>";
 ?>
 <HTML>
 <head>
 <META HTTP-EQUIV='Refresh' CONTENT="120; URL=abertura_user.php?action=listall">
 <script type="text/javascript">
-	function popup(pagina)	{ //Exibe uma janela popUP
-		x = window.open(pagina,'popup','dependent=yes,width=400,height=200,scrollbars=yes,statusbar=no,resizable=yes');
-		x.moveTo(window.parent.screenX+100, window.parent.screenY+100);
-		return false
+	function popup(pagina_modal,tamX,tamY) {
+		$('#popup_modal').dialog({
+			modal: true,
+			open: function ()
+			{
+				$(this).load(pagina_modal);
+			},
+			height: 200,
+			width: 400,
+			title: "Aviso!"
+		});
+
 	}
+
 </script>
 </head>
 <?php 
@@ -91,7 +100,7 @@
 
 			print "<TR class='".$trClass."'>";
 			print "<TD  class='line'>".formatDate($resposta['data'])."</TD>";
-			print "<TD class='line'>".nl2br($resposta['avisos'])."</TD>";
+			print "<TD class='line' align='center'>".nl2br($resposta['avisos'])."</TD>";
 			print "<TD class='line'>".$resposta['login']."</TD>";
 			if (isIn($resposta['sis_id'],$uareas))
 				$area_aviso = $resposta['sistema']; else
@@ -183,7 +192,7 @@
 			} else
 				$imgSub = "";
 
-		print "<TD class='line' ".$valign."><a href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$rowAT['numero']."</a>".$imgSub."</TD>";
+		print "<TD align='center' class='line' ".$valign."><a href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$rowAT['numero']."</a>".$imgSub."</TD>";
 		print "<TD  class='line' ".$valign.">".NVL($rowAT['problema'])."</TD>";
 		print "<TD  class='line' ".$valign."><b>".$rowAT['contato']."</b><br>".$rowAT['telefone']."</TD>";
 		print "<TD  class='line' ".$valign."><b>".$rowAT['setor']."</b><br>";

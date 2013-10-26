@@ -1,3 +1,5 @@
+<meta http-equiv="refresh" content="60">
+
 <?php 
 
  /*                        Copyright 2005 Flávio Ribeiro
@@ -23,7 +25,7 @@
 	//include ("".$includesPath."var_sessao.php");
 	include ("includes/functions/funcoes.inc");
 	include ("includes/javascript/funcoes.js");
-
+	include ("includes/functions/funcoes_jquery.php");
 	include ("includes/queries/queries.php");
 	include ("".$includesPath."config.inc.php");
 	// ("".$includesPath."languages/".LANGUAGE."");
@@ -72,16 +74,16 @@
 	$execAreas = mysql_query($qryAreas) or die(TRANS('MSG_ERR_RESCUE_ALL_OCCO'). $qryAreas);
 	$regAreas = mysql_num_rows($execAreas);
 
-	
-	
-	
+
+
+
 	print "<br>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
 	print "<tr><td colspan='7'><IMG ID='imggeral' SRC='./includes/icons/close.png' width='9' height='9' ".
-			"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('geral')\">&nbsp;<b>".TRANS('THEREARE')." <font color='red'>".$regTotal."</font>".
+			"STYLE=\"cursor: pointer;\" onClick=\"invertView('geral')\">&nbsp;<b>".TRANS('THEREARE')." <font color='red'>".$regTotal."</font>".
 			" ".TRANS('HOME_OPENED_CALLS').".</b></td></tr>";
 
-	print "<tr><td style='{padding-left:5px;}'><div id='geral' >"; //style='{display:none}'
+	print "<tr><td style='padding-left:5px;'><div id='geral' >"; //style='{display:none}'
 
 	$a = 0;
 	$b = 0;
@@ -89,10 +91,10 @@
 
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
 		print "<tr><td colspan='7'><IMG ID='imgocorrencias".$b."' SRC='./includes/icons/close.png' width='9' height='9' ".
-					"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('ocorrencias".$b."')\">&nbsp;<b>".TRANS('THEREARE')." <font color='red'>".$rowAreas['total']."</font>".
+					"STYLE=\"cursor: pointer;\" onClick=\"invertView('ocorrencias".$b."')\">&nbsp;<b>".TRANS('THEREARE')." <font color='red'>".$rowAreas['total']."</font>".
 					" ".TRANS('HOME_OPENED_CALLS_TO_AREA').": <font color='green'>".$rowAreas['area']."</font></b></td></tr>";
 
-		print "<tr><td style='{padding-left:5px;}'><div id='ocorrencias".$b."'>"; //style='{display:none}'
+		print "<tr><td style='padding-left:5px;'><div id='ocorrencias".$b."'>"; //style='{display:none}'
 			//TOTAL DE NÍVEIS DE STATUS
 		$qryStatus = "select count(*) total, o.*, s.* from ocorrencias o left join `status` s on o.status = s.stat_id where ".
 				"o.sistema = ".$rowAreas['area_cod']." and s.stat_painel in (1,2) group by s.status";
@@ -101,11 +103,11 @@
 		print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
 		While ($rowStatus = mysql_fetch_array($execStatus)) {
 			print "<tr><td colspan='7'><IMG ID='imgstatus".$a."' SRC='./includes/icons/open.png' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('status".$a."')\">&nbsp;<b>".TRANS('OCO_FIELD_STATUS').": ".$rowStatus['status']." - ".
+				"STYLE=\"cursor: pointer;\" onClick=\"invertView('status".$a."')\">&nbsp;<b>".TRANS('OCO_FIELD_STATUS').": ".$rowStatus['status']." - ".
 				"".$rowStatus['total']." ocorrências</b><br>";
-			print "<div id='status".$a."' style='{display:none}' >"; //style='{display:none}'
+			print "<div id='status".$a."' style='display:none' >"; //style='{display:none}'
 
-			print "<TABLE border='0' style='{padding-left:10px;}' cellpadding='5' cellspacing='0' align='left' width='100%'>";
+			print "<TABLE border='0' style='padding-left:10px;' cellpadding='5' cellspacing='0' align='left' width='100%'>";
 
 			$qryDetail = $QRY["ocorrencias_full_ini"]." WHERE o.sistema = ".$rowAreas['area_cod']." and s.stat_painel in (1,2) and ".
 					" o.status = ".$rowStatus['stat_id']."";

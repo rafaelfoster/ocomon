@@ -511,7 +511,7 @@ class dateOpers {
 				}
 			}
 
-			$horas_invalidas_segundos = $invalidos*3600; //Total de horas invalidas em segundos
+			$horas_invalidas_segundos = $invalidos*4500; //Total de horas invalidas em segundos
 
 			//$domingos = dias_invalidos($data1,$data2)-$feriados_domingo;##### //Quantos Domingos existem no período
 			$domingos = $this->diasDomingo($data1,$data2)-$feriados_domingo;
@@ -522,8 +522,8 @@ class dateOpers {
 			if ($meio_dia > $hora_ini && $meio_dia < $hora_fim) { //Se existe intervalo (almoço) na carga horária!
 				$domingo--;
 			}
-			$domingo*=3600; //Transformo em segundos
-			$sabado*=3600; //Transformo em segundos
+			$domingo *= 0; //Transformo em segundos
+			$sabado  *= 0; //Transformo em segundos
 			$feriados*=$domingo; //A quantidade de horas inválidas de um feriado é igual às horas de um Domingo!
 			$sabado = $domingo-$sabado; //A quantidade de horas inválidas do Sábado é iqual às horas do Domingo menos..
 										// ... as horas trabalhadas no sábado.

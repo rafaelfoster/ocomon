@@ -31,20 +31,18 @@
 
 	print "<BR><B>".TRANS('MNL_RELATORIOS').":</B><BR>";
 
-        print "<br><table><TR><td class='line'><B>".TRANS('TXT_REPORTS_OPTIONS_1')." <a href='consulta_comp.php'>".TRANS('TLT_HERE')."</a> ".TRANS('TXT_REPORTS_OPTIONS_2')."</B></TD></TR></table>";
+        print "<br><table><TR><td class='line'><B>".TRANS('TXT_REPORTS_OPTIONS_1')." <a class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-all' href='consulta_comp.php'>".TRANS('TLT_HERE')."</a> ".TRANS('TXT_REPORTS_OPTIONS_2')."</B></TD></TR></table>";
         //print "<br><a href=relatorio_geral.php>Relatório geral.</a></br>";
 
         print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
         print "<TR><td class='line'><b>".TRANS('TXT_ESTATISTIC')."</b></TD></TR>";
 
 	print "<TR class='lin_par'>".
-		"<td class='line'><a href='estat_geral.php'>".TRANS('TTL_REP_EST_GENERAL_EQUIP')."</a></TD>".
-		"<td class='line'><a href='hw_alteracoes.php'>".TRANS('SUBTTL_ALTER_HW_PERIOD')."</a></TD>".
+		"<td class='line'  colspan='2'><a href='estat_geral.php'>".TRANS('TTL_REP_EST_GENERAL_EQUIP')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_impar'>".
-		"<td class='line'><a href='estat_topten_modelo.php'>".TRANS('TTL_TOP_TEN')."</a></TD>".
-		"<td class='line'><a href='pieces_x_technician.php'>".TRANS('PIECES_BY_TECHNICIAN')."</a></TD>".
+		"<td class='line' colspan='2'><a href='estat_topten_modelo.php'>".TRANS('TTL_TOP_TEN')."</a></TD>".
 	"</TR>";
 
 	print "<TR class='lin_par'>".
@@ -98,6 +96,14 @@
 
 	print "<TR class='lin_par'>".
 		"<td class='line' colspan='2'><a href='estat_vencimentos.php'>".TRANS('TTL_EXPIRAT_GUARANTEE')."</a></TD>".
+	"</TR>";
+//
+	print "<TR class='lin_par'>".
+		"<td class='line'  colspan='2'><a href='hw_alteracoes.php'>".TRANS('SUBTTL_ALTER_HW_PERIOD')."</a></TD>".
+	"</TR>";
+//
+	print "<TR class='lin_par'>".
+		"<td class='line' colspan='2'><a href='pieces_x_technician.php'>".TRANS('PIECES_BY_TECHNICIAN')."</a></TD>".
 	"</TR>";
 
 print "</table>";

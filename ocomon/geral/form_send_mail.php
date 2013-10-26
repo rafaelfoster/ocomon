@@ -79,7 +79,7 @@
 				"&nbsp;</td><td colspan='3'><textarea class='textarea' name='field_to' id='idFieldTo' readonly>".$field_to."</textarea>".
 				"</td></tr>";
 
-		print "<tr><td colspan='6' ><div id='idMailList' style='{display:none}'>"; //style='{display:none}'
+		print "<tr><td colspan='6' ><div id='idMailList' style='display:none'>"; //style='{display:none}'
 		print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
 
 			$qry_config = "SELECT * FROM config ";

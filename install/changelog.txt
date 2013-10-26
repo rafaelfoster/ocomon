@@ -1,5 +1,36 @@
+** ACOMPANHE AS MUDANCAS EM: https://github.com/rafeta124/ocomon/wiki/Changelog
 
-FUNCIONALIDADES:
+FUNCIONALIDADES (2.1RC1):
+
+Correcao de alguns bugs
+Alteracao de alguns icones
+Compatibilidade com o Google Chrome
+Inclusao do framework JqueryUI
+Autocomplete em quase todos os campos possiveis
+Notificacoes de chamados na area de trabalho (navegador Google Chrome ou Firefox com a extensao Tab Notifier)
+Pesquisa de satisfacao de usuario (referente ao sistema como um todo)
+Link para avaliacao do chamado (apos encerrado e antes de 10 dias do encerramento)
+Acesso para inserir novo Follow-UP diretamente do chamado, nao precisando editar o mesmo.
+Alteração de algumas janelas de PopUP para o #ModalDialog do JqueryUI
+Refresh automatico na pagina de visualizacao dos chamados
+Tabelas dinamicas
+
+
+Menu Ocorrencia -> Abrir chamado: Layout reorganizado;
+		              --> Javascript do Calendario removido (substituido por JqueryUI Datepicker)
+			      --> Autocomplete inserido em campos como: contato, rama, etiqueta
+
+
+Menu Ocorrencia -> Relatorios: Relatorios reorganizados, e adicionados os novos relatorios:
+			   --> Relatorio de Pesquisa de satisfacao com o usuário (sistema)
+			   --> Relatorio de chamados reabertos
+			   --> Relatorio de avaliacao dos chamados
+
+
+
+--------------------------------------------------
+
+FUNCIONALIDADES (2.0RC6):
 
 Menu Admin->Usuários: criação de um filtro por área para facilitar a busca de usuários cadastrados; O novo filtro faz a junção com o filtro textual que já existia.
 

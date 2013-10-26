@@ -1,4 +1,4 @@
-<?php 
+<?php
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -31,36 +31,41 @@
 
 	print "<BR><B>".TRANS('TLT_REPORTS').":</B><BR>";
 
-	print "<TR><td class='line'><B>".TRANS('TLT_REPORTS_SOON')." <a href='consultar.php'>".TRANS('TLT_HERE')."</a> ".TRANS('TLT_REPORTS_SOON_2').".</B></TD></TR>";
+	print "<TR><td class='line'><B>".TRANS('TLT_REPORTS_SOON')." <a href='consultar.php'><input class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-all' type='button' value='".TRANS('TLT_HERE')."'></a> ".TRANS('TLT_REPORTS_SOON_2').".</B></TD></TR>";
 	print "</TD>";
-	print "<td class='line'>";
+
+
+//	print "<td>";
 	print "<TABLE border='0' cellpadding='5' cellspacing='0' align='center' width='100%'>";
-	print "<TR class='header'><td class='line'>".TRANS('COL_REPORT_FOR_PERIOD')."</TD><td class='line'>".TRANS('COL_REPORT_FOR')."...</TD>";
+//	print "<TR class='header'><td class='line'>".TRANS('COL_REPORT_FOR_PERIOD')."</TD><td class='line'>".TRANS('COL_REPORT_FOR')."...</TD>";
+	print "<TR class='header'><td class='line'>".TRANS('COL_REPORT_FOR_PERIOD')."</TD><td class='line'> Relatorios Personalizados </TD>";
+	print "</tr>";
 
 	$color =  BODY_COLOR;
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_problemas_areas.php'>".TRANS('REP_PROB_AREA')."</a></TD></TR>";
+	print "<td class='line' colspan='1'><a href='relatorio_problemas_areas.php'>".TRANS('REP_PROB_AREA')."</a></td>";
+	print "<td class='line' colspan='1'><a href='relatorio_pesquisa_satisfacao.php'>Pesquisa de Satisfacao do usuario </a></TD>";
+//	print "<td class='line' colspan='2'><a href='relatorio_pesquisa_satisfacao.php'>Pesquisa de Satisfacao do usuario </a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_par'>";
-	print "<td class='line' colspan='2'><a href='relatorio_setores_areas.php'>".TRANS('TLT_REPORT_LOCAL_MORE_ATTEN')."</TD>";
+	print "<td class='line' colspan='1'><a href='relatorio_setores_areas.php'>".TRANS('TLT_REPORT_LOCAL_MORE_ATTEN')."</TD>";
+	print "<td class='line' colspan='1'><a href='relatorio_chamados_reabertos.php'> Relatorio de Chamados Reabertos</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
-	print "<td class='line' colspan='2'><a href='relatorio_geral.php'>".TRANS('TLT_REPORT_GENERAL')."</TD>";
+	print "<td class='line' colspan='1'><a href='relatorio_geral.php'>".TRANS('TLT_REPORT_GENERAL')."</TD>";
+	print "<td class='line' colspan='1'><a href='relatorio_chamados_avaliacao.php'> Relatorio de Avaliacao dos Chamados</a></TD>";
 	print "</TR>";
 
-
-
 	print "<tr class='lin_par'>";
-		print "<td class='line' colspan='2'><a href='relatorio_slas_2.php'>".TRANS('TLT_REPORT_SLAS')."</a></TD>";
+	print "<td class='line' colspan='2'><a href='relatorio_slas_2.php'>".TRANS('TLT_REPORT_SLAS')."</a></TD>";
 	print "</TR>";
 
 	print "<TR class='lin_impar'>";
 	print "<td class='line' colspan='2'><a href='chamados_x_etiqueta.php'>".TRANS('TLT_REPORT_CALL_FOR_EQUIP')."</TD>";
 	print "</TR>";
-
 
 	print "<TR class='lin_par'>";
 	print "<td class='line' colspan='2'><a onClick =\"checa_permissao('relatorio_gerencial.php')\">".TRANS('TLT_REP_MANEGER_HELPDESK')."</a></TD>";
@@ -85,6 +90,8 @@
 	print "<TR class='lin_impar'>";
 	print "<td class='line' colspan='2'><a href='relatorio_chamados_categorias.php'>".TRANS('TTL_REP_QTD_CALL_CAT_PROB')."</a></TD>";
 	print "</tr>";
+
+//	print "</table>";
 
 
 print "</BODY>";

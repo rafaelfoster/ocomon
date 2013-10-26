@@ -54,11 +54,11 @@ if (!isset($_POST['ok']))
 	print "				</tr><tr>";
 
 	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+	print "					<td class='line'><INPUT id='idD_ini' name='d_ini' class='data' value='01-".date("m-Y")."'></td>";
 	print "				</tr>";
 	print "				<tr>";
 	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+	print "					<td class='line'><INPUT id='idD_fim' name='d_fim' class='data' value='".date("d-m-Y")."'></td>";
 	print "				</tr>";
 
 	print "				<tr>";
@@ -132,7 +132,7 @@ else //if $ok==Pesquisar
 				{
 					case -1:
 						echo "<br><br>";
-						$background = '#CDE5FF';
+						$background = '#339966';
 						print "<table class='centro' cellspacing='0' border='1' align='center'>";
 						print "<tr><td bgcolor='".$background."' colspan='5' align='center'><b>".TRANS('TLT_REP_TOT_CALL_LABEL')."</b><br>".TRANS('FIELD_PERIOD_2').": ".$d_ini." a ".$d_fim."</td>";
 						print "<tr><td bgcolor='".$background."' width='255'><B>   ".TRANS('COL_AMOUNT')."</td>".

@@ -1,11 +1,11 @@
 /*!40101 SET NAMES utf8 */;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`ocomon_rc6` /*!40100 DEFAULT CHARACTER SET utf8 */;
+-- CREATE DATABASE /*!32312 IF NOT EXISTS*/`ocomon_rc6` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-CREATE USER 'ocomon'@'localhost' IDENTIFIED BY 'senha_ocomon_mysql';
-GRANT SELECT , INSERT , UPDATE , DELETE ON `ocomon_rc6` . * TO 'ocomon'@'localhost';
+-- CREATE USER 'ocomon'@'localhost' IDENTIFIED BY 'senha_ocomon_mysql';
+-- GRANT SELECT , INSERT , UPDATE , DELETE ON `ocomon_rc6` . * TO 'ocomon'@'localhost';
 
-USE `ocomon_rc6`;
+-- USE `ocomon_rc6`;
 
 -- 
 -- Estrutura da tabela `CCUSTO`
@@ -1880,7 +1880,7 @@ CREATE TABLE `config` (
 `conf_upld_size` INT( 10 ) NOT NULL DEFAULT '307200',
 `conf_upld_width` INT( 5 ) NOT NULL DEFAULT '800',
 `conf_upld_height` INT( 5 ) NOT NULL DEFAULT '600'
-) TYPE = MYISAM COMMENT = 'Tabela de configurações diversas do sistema';
+)  COMMENT = 'Tabela de configurações diversas do sistema';
 
 
 INSERT INTO `config` ( `conf_cod` , `conf_sql_user` , `conf_sql_passwd` , `conf_sql_server` , `conf_sql_db` , `conf_db_ccusto` , `conf_tb_ccusto` , `conf_ccusto_id` , `conf_ccusto_desc` , `conf_ccusto_cod` , `conf_ocomon_site` , `conf_inst_terceira` , `conf_log_path` , `conf_logo_path` , `conf_icons_path` , `conf_help_icon` , `conf_help_path` , `conf_language` , `conf_auth_type` , `conf_upld_size` , `conf_upld_width` , `conf_upld_height` )
@@ -1896,7 +1896,7 @@ CREATE TABLE `hw_alter` (
 `hwa_user` INT( 4 ) NOT NULL ,
 PRIMARY KEY ( `hwa_cod` ) ,
 INDEX ( `hwa_inst` , `hwa_inv` , `hwa_item` , `hwa_user` )
-) TYPE = MYISAM COMMENT = 'Tabela para armazenar alteracoes de hw';
+)  COMMENT = 'Tabela para armazenar alteracoes de hw';
 
 ALTER TABLE `hw_alter` ADD `hwa_data` DATETIME NOT NULL ;
 
@@ -1906,7 +1906,7 @@ CREATE TABLE `ocodeps` (
 `dep_filho` INT( 6 ) NOT NULL ,
 PRIMARY KEY ( `dep_pai` ) ,
 INDEX ( `dep_filho` )
-) TYPE = MYISAM COMMENT = 'Tabela para controle de sub-chamados';
+)  COMMENT = 'Tabela para controle de sub-chamados';
 
 ALTER TABLE `ocodeps` DROP PRIMARY KEY;
 ALTER TABLE `ocodeps` ADD INDEX ( `dep_pai` );
@@ -1949,17 +1949,17 @@ ALTER TABLE `problemas` ADD INDEX ( `prob_tipo_3` ) ;
 CREATE TABLE `prob_tipo_1` (
 `probt1_cod` INT( 4 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `probt1_desc` VARCHAR( 30 ) NOT NULL
-) TYPE = MYISAM ;
+)  ;
 
 CREATE TABLE `prob_tipo_2` (
 `probt2_cod` INT( 4 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `probt2_desc` VARCHAR( 30 ) NOT NULL
-) TYPE = MYISAM ;
+)  ;
 
 CREATE TABLE `prob_tipo_3` (
 `probt3_cod` INT( 4 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `probt3_desc` VARCHAR( 30 ) NOT NULL
-) TYPE = MYISAM ;
+)  ;
 
 
 ALTER TABLE `config` ADD `conf_prob_tipo_1` VARCHAR( 30 ) NOT NULL DEFAULT 'Categoria 1',
@@ -1978,7 +1978,7 @@ CREATE TABLE `temas` (
 `tm_color_body` VARCHAR( 10 ) NOT NULL DEFAULT '#F6F6F6',
 `tm_color_td` VARCHAR( 10 ) NOT NULL DEFAULT '#DBDBDB',
 `tm_borda_width` INT( 2 ) NOT NULL DEFAULT '2'
-) TYPE = MYISAM ;
+)  ;
 
 ALTER TABLE `temas` ADD `tm_nome` VARCHAR( 15 ) NOT NULL DEFAULT 'DEFAULT' AFTER `tm_id` ;
 
@@ -2023,7 +2023,7 @@ CHANGE `tm_barra_fonte_destaque` `tm_barra_fonte_destaque` VARCHAR( 7 )  NOT NUL
 
 CREATE TABLE `styles` (
 `tm_id` INT( 2 ) NOT NULL AUTO_INCREMENT PRIMARY KEY
-) TYPE = MYISAM ;
+)  ;
 
 ALTER TABLE `styles` ADD `tm_color_destaca` VARCHAR( 15 ) NOT NULL DEFAULT '#CCCCCC';
 
@@ -2063,7 +2063,7 @@ CREATE TABLE `uthemes` (
 `uth_uid` INT( 4 ) NOT NULL ,
 `uth_thid` INT( 2 ) NOT NULL ,
 INDEX ( `uth_uid` , `uth_thid` )
-) TYPE = MYISAM COMMENT = 'Tabela de Temas por usuario';
+)  COMMENT = 'Tabela de Temas por usuario';
 
 
 ALTER TABLE `config` ADD `conf_allow_change_theme` INT( 1 ) NOT NULL DEFAULT '0';
@@ -2102,7 +2102,7 @@ UNIQUE (
 `contact_login` ,
 `contact_email`
 )
-) TYPE = MYISAM COMMENT = 'Tabela de Contatos';
+)  COMMENT = 'Tabela de Contatos';
 
 
 CREATE TABLE `lock_oco` (
@@ -2113,7 +2113,7 @@ INDEX ( `lck_uid` ) ,
 UNIQUE (
 `lck_oco`
 )
-) TYPE = MYISAM COMMENT = 'Tabela de Lock para chamados em edição';
+)  COMMENT = 'Tabela de Lock para chamados em edição';
 
 ALTER TABLE `materiais` CHANGE `mat_caixa` `mat_caixa` VARCHAR( 30 ) NULL DEFAULT '';
 
@@ -2156,7 +2156,7 @@ CREATE TABLE `equipXpieces` (
 `eqp_piece_id` INT( 6 ) NOT NULL ,
 `eqp_piece_modelo_id` INT( 6 ) NOT NULL ,
 INDEX ( `eqp_equip_inv` , `eqp_equip_inst` , `eqp_piece_id` )
-) TYPE = MYISAM COMMENT = 'Tabela de associacao de equipamentos com componentes';
+)  COMMENT = 'Tabela de associacao de equipamentos com componentes';
 
 
  CREATE TABLE `hist_pieces` (
@@ -2179,7 +2179,7 @@ INDEX ( `hp_piece_id` , `hp_piece_local` , `hp_comp_inv` , `hp_comp_inst` )
 `ew_sent_first_alert` BOOL NOT NULL DEFAULT '0',
 `ew_sent_last_alert` BOOL NOT NULL DEFAULT '0',
 INDEX ( `ew_piece_id` )
-) TYPE = MYISAM COMMENT = 'Tabela de controle para envio de email sobre prazo de garantias';
+)  COMMENT = 'Tabela de controle para envio de email sobre prazo de garantias';
 
 
 ALTER TABLE `config` ADD `conf_days_bf` INT( 3 ) NOT NULL DEFAULT '30',
@@ -2225,7 +2225,7 @@ INSERT INTO `msgconfig` (`msg_cod`, `msg_event`, `msg_fromname`, `msg_replyto`, 
 CREATE TABLE `script_solution` (
 `script_cod` INT( 4 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `script_desc` TEXT NOT NULL
-) TYPE = MYISAM COMMENT = 'Tabela de scripts de solucoes';
+)  COMMENT = 'Tabela de scripts de solucoes';
 
 ALTER TABLE `ocorrencias` ADD `oco_script_sol` INT( 4 ) NULL ;
 
@@ -2238,7 +2238,7 @@ CREATE TABLE `mail_templates` (
 `tpl_desc` TEXT NOT NULL ,
 `tpl_msg_html` TEXT NOT NULL ,
 `tpl_msg_text` TEXT NOT NULL
-) TYPE = MYISAM COMMENT = 'Tabela de templates de e-mails';
+)  COMMENT = 'Tabela de templates de e-mails';
 
 ALTER TABLE `mail_templates` CHANGE `tpl_desc` `tpl_subject` VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 
@@ -2247,7 +2247,7 @@ CREATE TABLE `mail_list` (
 `ml_sigla` VARCHAR( 15 ) NOT NULL ,
 `ml_desc` TEXT NOT NULL ,
 `ml_address` TEXT NOT NULL
-) TYPE = MYISAM COMMENT = 'Tabela de listas de distribuicao';
+)  COMMENT = 'Tabela de listas de distribuicao';
 
 ALTER TABLE `mail_list` CHANGE `ml_address` `ml_addr_to` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 ALTER TABLE `mail_list` ADD `ml_addr_cc` TEXT NULL ;
@@ -2261,7 +2261,7 @@ CREATE TABLE `mail_hist` (
 `mhist_date` DATETIME NOT NULL ,
 `mhist_technician` INT( 4 ) NOT NULL ,
 INDEX ( `mhist_technician` )
-) TYPE = MYISAM COMMENT = 'Tabela de histórico de emails enviados';
+)  COMMENT = 'Tabela de histórico de emails enviados';
 
 ALTER TABLE `mail_hist` ADD `mhist_subject` VARCHAR( 40 ) NOT NULL AFTER `mhist_address` ;
 ALTER TABLE `mail_hist` ADD `mhist_address_cc` TEXT NULL AFTER `mhist_address` ;

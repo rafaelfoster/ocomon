@@ -1,0 +1,628 @@
+body {
+    background-color: #F6F6F6;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+}
+body.menu {
+    background-image: url("../../MENU_IMG.png");
+    background-repeat: no-repeat;
+}
+.frm_menu {
+    background-color: #F6F6F6;
+}
+.frm_centro {
+    background-color: #F6F6F6;
+}
+table {
+    font-family: tahoma;
+    font-size: 11px;
+    line-height: 1em;
+}
+table.topo {
+    background-color: #0C5017;
+    color: #FFFFFF;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.1em;
+    text-align: left;
+    width: 100%;
+}
+font.topo {
+    color: #FFFFFF;
+}
+#geral {
+    position: relative;
+    top: -10px;
+}
+table.barra {
+    background-image: url("./aqua.png");
+    background-repeat: repeat;
+    border-color: white;
+    border-spacing: 0;
+    border-width: 1px;
+    color: #675E66;
+    font-family: tahoma;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.1em;
+    padding: 1px;
+    text-align: center;
+    width: 100%;
+}
+table.menutop {
+    background-color: #C7C8C6;
+    border-color: white;
+    border-spacing: 0;
+    border-width: 1px;
+    color: #5E515B;
+    padding: 1px;
+}
+table.menu {
+    background-color: #C7C8C6;
+    border: 1px none;
+    border-collapse: collapse;
+}
+table.titulo {
+    font-family: Arial,Sans-Serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.2em;
+}
+table.header_centro {
+    border-bottom: medium solid #999999;
+}
+table.header {
+    background-color: black;
+    border: 1px none;
+    border-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0;
+    text-align: left;
+    width: 100%;
+}
+table.menu {
+    background-color: white;
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100%;
+}
+table.corpo {
+    border: 0 none;
+    border-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    text-align: left;
+    width: 100%;
+}
+table.corpo2 {
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    text-align: left;
+    width: 100%;
+}
+table.estat60 {
+    border: 0 none;
+    border-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    text-align: left;
+    width: 60%;
+}
+table.estat80 {
+    border: 0 none;
+    border-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    text-align: left;
+    width: 80%;
+}
+td.barra {
+    padding: 5px;
+}
+td.default {
+    padding: 3px;
+}
+td.wide {
+    padding: 8px;
+}
+td.barraMenu {
+    border-right: thin solid #675E66;
+}
+td.marked {
+    background-color: #666666;
+    color: blue;
+}
+tr.menutop {
+    background-color: #C7C8C6;
+    color: #5E515B;
+}
+tr.header, input.header {
+    background-image: url("./header_bar3.png");
+    background-repeat: repeat;
+    color: #000000;
+    font-weight: bold;
+}
+.msg {
+    background-image: url("./header_bar3.png");
+    background-repeat: repeat;
+    color: #000000;
+    font-weight: bold;
+    padding: 5px;
+}
+tr.padrao {
+    background-color: #ECECDB;
+}
+tr.lin_impar {
+    background-color: #F6F6F6;
+    padding: 5px;
+}
+tr.lin_par {
+    background-color: #EFFFF2;
+    padding: 5px;
+}
+linha_1 {
+    background-color: #F6F6F6;
+    padding: 5px;
+}
+linha_2 {
+    background-color: #EFFFF2;
+    padding: 5px;
+}
+tr.lin_alerta {
+    background-color: #FF0000;
+    color: yellow;
+}
+tr.lin_alerta_par {
+    background-color: #EFFFF2;
+    color: #FF0000;
+    font-style: italic;
+    padding: 5px;
+}
+tr.lin_alerta_impar {
+    background-color: #F6F6F6;
+    color: #FF0000;
+    font-style: italic;
+    padding: 5px;
+}
+td.cborda {
+    height: 20px;
+}
+td.line {
+    border-bottom: 2px solid #F6F6F6;
+}
+a:link {
+    color: #5E515B;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:visited {
+    color: #5E515B;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    color: #5E515B;
+    cursor: pointer;
+}
+a:active {
+    color: #8A4500;
+    cursor: pointer;
+}
+.href {
+    color: #5E515B;
+    cursor: pointer;
+    text-decoration: none;
+}
+.negrito:hover {
+    background-color: #FFE4CA;
+    color: #FFE4CA;
+    font-weight: bold;
+}
+a.barra:link {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.barra:visited {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.barra:hover {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.barra:active {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.menu:link {
+    color: #5E515B;
+    text-decoration: none;
+}
+a.menu:visited {
+    color: #5E515B;
+    text-decoration: none;
+}
+a.menu:hover {
+    color: #5E515B;
+}
+a.menu:active {
+    color: #999999;
+}
+a.no:link {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.no:visited {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.no:hover {
+    color: #5E515B;
+    cursor: pointer;
+    text-decoration: none;
+}
+a.no:active {
+    color: #8A4500;
+    cursor: pointer;
+    text-decoration: none;
+}
+.botao:hover {
+    color: #5E515B;
+}
+.select, .text, .select2, .text2, input.text {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 200px;
+}
+.textarea_desc {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 60px;
+    width: 200px;
+}
+.select_sol {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 570px;
+}
+.select:focus, .text:focus, .select2:focus, .text2:focus, input.text:focus, .text3:focus, .textarea:focus, .textarea-script:focus, .textarea2:focus, .mini:focus, .mini2:focus, .data:focus, .logon:focus, .help:focus, .select_sol:focus, .textarea_desc:focus {
+    background-color: white;
+}
+.checkbox {
+    background-color: white;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+}
+.text3 {
+    background-color: #F7F7F7;
+    border: 1px solid #A4A4A4;
+    font-family: tahoma;
+    font-size: 12px;
+    height: 20px;
+    width: 300px;
+}
+.quadro {
+    border: 1px solid #CCCCCC;
+    height: 13px;
+    width: 13px;
+}
+input.disable, select.disable {
+    background-color: #F3F3F3;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 200px;
+}
+.textareaDisable {
+    background-color: #F3F3F3;
+    border: 1px solid #A4A4A4;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 40px;
+    width: 570px;
+}
+td.disable {
+    background-color: #F3F3F3;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 200px;
+}
+td.borda, tr.borda {
+    background-color: white;
+    border: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 200px;
+}
+td.bordaprint {
+    background-color: white;
+    border-bottom: 1px solid #A4A4A4;
+    color: black;
+    font-family: tahoma;
+    font-size: 11px;
+    height: 20px;
+    width: 200px;
+}
+.textarea {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 100px;
+    width: 570px;
+}
+.textarea-script {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 400px;
+    width: 570px;
+}
+.textarea2 {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 100px;
+    width: 400px;
+}
+.radio {
+    width: 13px;
+}
+.mini {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 20px;
+    width: 30px;
+}
+.mini2 {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 20px;
+    width: 90px;
+}
+.data {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 12px;
+    height: 20px;
+    width: 90px;
+}
+.help {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 11px;
+    height: 15px;
+    width: 80px;
+}
+.logon {
+    background-color: #F6F6F6;
+    border: 1px solid #A4A4A4;
+    font-family: Arial,Sans-Serif;
+    font-size: 11px;
+    height: 18px;
+    width: 80px;
+}
+.logon:hover {
+    border: 1px solid black;
+    color: black;
+}
+.button {
+    background: url("./bg.gif") repeat-x scroll 0 0 #F0F0F0;
+    border: 1px solid #A4A4A4;
+    color: #333333;
+    font-size: 12px;
+    height: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.button:hover {
+    border: 1px solid black;
+    color: black;
+}
+input.blogin {
+    background: url("./bg.gif") repeat-x scroll 0 0 #F0F0F0;
+    border: 1px solid #A4A4A4;
+    color: #333333;
+    font-size: 13px;
+    height: 34px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+input.blogin:hover {
+    border: 1px solid black;
+    color: black;
+}
+.button-disabled {
+    background: url("./bg.gif") repeat-x scroll 0 0 #F0F0F0;
+    border: 1px solid #A4A4A4;
+    color: #D0D0D0;
+    font-size: 12px;
+    height: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.minibutton {
+    background: url("./bg.gif") repeat-x scroll 0 0 #F0F0F0;
+    border: 1px solid #A4A4A4;
+    color: #333333;
+    font-size: 9px;
+    height: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.minibutton:hover {
+    border: 1px solid black;
+    color: black;
+}
+.button_new {
+    background-color: #BDBDBC;
+    color: black;
+    height: 20px;
+}
+.btPadrao {
+    background-color: #ECECDB;
+    color: black;
+    height: 20px;
+}
+table.likebutton {
+    padding-top: 10px;
+}
+a.likebutton, td.likebutton {
+    background: none repeat scroll 0 0 #EFEFEC;
+    border-color: #D9D9D9 #000000 #000000 #D9D9D9;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+a.likebutton {
+    margin-left: 5px;
+    padding: 3px;
+}
+.divAlerta {
+    background-color: #FAD163;
+    color: #000000;
+}
+.relatorio {
+    background-color: white;
+    font-family: Arial,Sans-Serif;
+    font-size: 13px;
+}
+.parag {
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: justify;
+    text-indent: 1cm;
+}
+.parag_header {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+p.titulo {
+    font-family: tahoma;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.HNT {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D9D9D9;
+    padding: 8px;
+    position: absolute;
+    width: 300px;
+}
+.centro {
+    text-align: center;
+}
+#login {
+    height: 10%;
+    left: 40%;
+    position: absolute;
+    top: 176px;
+    width: 15%;
+    z-index: 2;
+}
+#topo {
+    height: 40px;
+    margin: 5px;
+}
+#menu {
+    left: 10px;
+    position: absolute;
+    top: 100px;
+    width: 150px;
+}
+#corpo {
+    margin-left: 170px;
+    margin-right: 0;
+}
+.alerta {
+    left: 30%;
+    position: absolute;
+    top: 30px;
+    width: 50%;
+    z-index: 1;
+}
+.loading {
+    left: 50%;
+    position: absolute;
+    top: 150px;
+    width: 50%;
+    z-index: 1;
+}
+#bubble_tooltip {
+    display: none;
+    position: absolute;
+    width: 300px;
+}
+#bubble_tooltip .bubble_top {
+    background-image: url("../../includes/css/baloom/bubble_top.png");
+    background-repeat: no-repeat;
+    height: 14px;
+}
+#bubble_tooltip .bubble_middle {
+    background-image: url("../../includes/css/baloom/bubble_middle.png");
+    background-position: left bottom;
+    background-repeat: repeat-y;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+#bubble_tooltip .bubble_middle span {
+    font-family: Trebuchet MS,Lucida Sans Unicode,Arial,sans-serif;
+    font-size: 11px;
+    position: relative;
+    top: -8px;
+}
+#bubble_tooltip .bubble_bottom {
+    background-image: url("../../includes/css/baloom/bubble_bottom.png");
+    background-repeat: no-repeat;
+    height: 44px;
+    position: relative;
+    top: -6px;
+}

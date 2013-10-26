@@ -267,7 +267,7 @@
 function cabecalho($logo,$msg1,$msg2,$titulo)
 {
 	return "
-		<table width=80% border=0 cellspacing=1 cellpadding=1 align=center bgcolor=black>
+		<table width=100% border=0 cellspacing=1 cellpadding=1 align=center bgcolor=black>
 		  <tr bgcolor=#FFFFFF>
 		    <td width=30%>
 		      <div align=center><font size=3 face=Arial, sans-serif><img src=./$logo></font></div>
@@ -307,15 +307,15 @@ function testaArea($area,$rowArea,$horarios){
 		function gera_relatorio($tipo,$sql,$campos,$headers,$logo,$msg1,$msg2,$msg3){
 			//Estilo aplicado nos relatórios
 			print "<style type=\"text/css\"><!--";
-			print "table.relatorio_1 {width:80%; margin-left:auto; margin-right: auto; text-align:left;
+			print "table.relatorio_1 {width:100%; margin-left:auto; margin-right: auto; text-align:left;
 					border: 0px; border-spacing:1 ;background-color:white; padding-top:10px;
 					page-break-after: auto;}";
 			print "td.linha {font-family:arial; font-size:12px; line-height:0.8em;}";
-			print "td.linha_par {font-family:arial; font-size:12px; line-height:0.8em; background-color:#EAEAEA}";
-			print "td.linha_impar {font-family:arial; font-size:12px; line-height:0.8em;background-color:#C8C8C8}";
-			print "td.cabs {font-family:arial; font-size:12px; font-weight:bold; background-color: #A3A352;}";
-			print "td.foot {font-family:arial; font-size:12px; font-weight:bold; line-height:0.8em; background-color: #A8A8A8;}";
-			//print "{page-break-after: always;}";
+			print "td.linha_par {font-family:arial; font-size:12px; line-height:0.8em; background-color:ccffcc}";
+			print "td.linha_impar {font-family:arial; font-size:12px; line-height:0.8em;background-color:white}";
+			print "td.cabs {font-family:arial; font-size:12px; font-weight:bold; background-color: #339966; color: white;}";
+			print "td.foot {font-family:arial; font-size:12px; font-weight:bold; line-height:0.8em; background-color: #339966; color: white;}";
+			// print "{page-break-after: always;}";
 			print "--></STYLE>";
 
 			if (count($campos) != count($headers))  {//Verifica se cada campo da tabela possui um header!
@@ -342,7 +342,7 @@ function testaArea($area,$rowArea,$horarios){
 
 
 				if ($tipo==1|| $tipo==0) {//Tipo definido de relatório //
-					print "<TABLE class=\"relatorio_1\" cellpadding=4>";
+					print "<TABLE class='relatorio_1' cellpadding=4>";
 					print "<tr>";
 					for ($i=0; $i<count($headers); $i++){
 						print "<td class=\"cabs\">".$headers[$i]."</td>";
@@ -355,7 +355,7 @@ function testaArea($area,$rowArea,$horarios){
 						} else {
 							$par_impar = "_impar";
 						}//if - else
-						print "<tr>";
+						print "<tbody><tr>";
 						for ($i=0; $i<count($campos); $i++){ //IMPRIME CAMPO A CAMPO
 							print "<td class=\"linha$par_impar\">";
 							$sep = explode(",",$campos[$i]); //Se algum campo passado tem mais de um argumento é separado
@@ -368,7 +368,7 @@ function testaArea($area,$rowArea,$horarios){
 							} //for J//
 							print "</td>";
 						}//for i//
-						print "</tr>";
+						print "</tr></tbody>";
 						$l++;
 					} // while
 						//RODAPÉ
@@ -1127,8 +1127,8 @@ function upload($img_file,$config, $FILE_TYPES="%%IMG%") {
 		// Verifica o mime-type do arquivo para ver se é de imagem.
 		// Caso fosse verificar a extensão do nome de arquivo, o código deveria ser:
 		//
-		// if(!eregi("\.(jpg|jpeg|bmp|gif|png){1}$", $arquivo["name"])) {
-		//      $erro[] = "Arquivo em formato inválido! A imagem deve ser jpg, jpeg, bmp, gif ou png. Envie outro arquivo"; }
+		// if(!eregi("\.(jpg|jpeg|bmp|gif|png|pdf|doc|docx|xls|xlsx){1}$", $arquivo["name"])) {
+		//      $erro[] = "Arquivo em formato inválido! A imagem deve ser jpg, jpeg, bmp, gif o, png, pdf, doc(x) e xls(x). Envie outro arquivo"; }
 		//
 		// Mas, o que ocorre é que alguns usuários mal-intencionados, podem pegar um vírus .exe e simplesmente mudar a extensão
 		// para alguma das imagens e enviar. Então, não adiantaria em nada verificar a extensão do nome do arquivo.

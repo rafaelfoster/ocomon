@@ -18,6 +18,7 @@
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */session_start();
 
+	include ("../../includes/functions/funcoes_jquery.php");
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
@@ -54,11 +55,11 @@ if (!isset($_POST['ok']))
 	print "				</tr>";
 
 	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
+	print "					<td class='line'><INPUT id='idD_ini' name='d_ini' class='data' value='".date("d-m-Y")."'>"; //<a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
 	print "				</tr>";
 	print "				<tr>";
 	print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
+	print "					<td class='line'><INPUT id='idD_fim' name='d_fim' class='data' value='".date("d-m-Y")."'>"; //<a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'></a></td>";
 	print "				</tr>";
 
 	print "				<tr>";
@@ -135,7 +136,7 @@ else //if $ok==Pesquisar
 				{
 					case -1:
 					echo "<br><br>";
-					$background = '#CDE5FF';
+					$background = '#339966';
 					print "<p class='titulo' >".TRANS('TTL_OPERATOR_AREA_ATTEND')."</p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center'>";
 						print "<tr><td bgcolor='".$background."'><B>".TRANS('COL_QTD')."</td>".

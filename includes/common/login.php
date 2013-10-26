@@ -19,7 +19,7 @@
 
   	include ("../../includes/include_geral.inc.php");
   	include ("../../includes/functions/browser_detection.php");
-
+	include ("../../includes/classes/adLDAP.php");
 	$browser = browser_detection('full');
 	$_SESSION['s_browser'] = $browser[0];
 
@@ -27,140 +27,173 @@
 	$conec = new conexao;
 	$conec->conecta('MYSQL');
 
-
 	if (AUTH_TYPE == "LDAP") {
-		$conec->conLDAP(LDAP_HOST, LDAP_DOMAIN, LDAP_DN, LDAP_PASSWORD);
-		$conecSec = new conexao; //Para testar no LDAP Labin
-		$conecSec->conLDAP(LDAP_HOST, LDAP_DOMAIN_SEC, LDAP_DN, LDAP_PASSWORD);
 
-		if ((senha_ldap($_POST['login'],$_POST['password'],'usuarios')=="ok") && ($conec->userLDAP($_POST['login'],$_POST['password']) || $conecSec->userLDAP($_POST['login'],$_POST['password'])))
-		{
-		        $s_usuario=$_POST['login'];
-		        $s_senha=$_POST['password'];
-
-			$queryOK = "SELECT u.*, n.*,s.* FROM usuarios u left join sistemas as s on u.AREA = s.sis_id ".
-							"left join nivel as n on n.nivel_cod =u.nivel WHERE u.login = '".$_POST['login']."'";
-
-			$resultadoOK = mysql_query($queryOK) or die('IMPOSSÍVEL ACESSAR A BASE DE DADOS DE USUÁRIOS: LOGIN.PHP');
-			$row = mysql_fetch_array($resultadoOK);
-			$s_nivel = $row['nivel'];
-
-			if ($s_nivel<4){ //Verifica se não está desabilitado
-				$s_logado=1;
+			try {
+				$adldap = new adLDAP();
+			}
+			catch (adLDAPException $e) {
+				echo $e; exit();
 			}
 
-			$s_nivel_desc = $row['nivel_nome'];
-			$s_area = $row['AREA'];
-			$s_uid = $row['user_id'];
-			$s_area_admin =  $row['user_admin'];
-			$s_screen = $row['sis_screen'];
+			if ($adldap -> authenticate($_POST['login'],$_POST['password']) && ($_POST['login']!=NULL && $_POST['password']!=NULL))
+			{
+			$s_usuario=$_POST['login'];
+			$s_senha=$_POST['password'];
+			$result=$adldap -> user_info($_POST['login']);
+			$U_MAILG=$result[0]["mail"][0];
+			// ************************************************************************************************
 
-			/*VERIFICA EM QUAIS ÁREAS O USUÁRIO ESTÁ CADASTRADO*/
-			$qryUa = "SELECT * FROM usuarios_areas where uarea_uid=".$s_uid.""; //and uarea_sid=".$s_area."
-			$execUa = mysql_query($qryUa) or die('IMPOSSÍVEL ACESSAR A BASE DE USUÁRIOS 02: LOGIN.PHP');
-			$uAreas = "".$s_area.",";
-			while ($rowUa = mysql_fetch_array($execUa)){
-				$uAreas.=$rowUa['uarea_sid'].",";
+			$qry="SELECT * FROM `usuarios` WHERE `login` = '".strtolower($s_usuario)."'";
+			$qry3 = mysql_query($qry) or die('Impossível aceder à base de dados de utilizadores!!!');
+			$rowUSER = mysql_fetch_array($qry3);
+					if ( (strtolower($rowUSER['login'])) != (strtolower($s_usuario)) ){
+
+			$adduser = "INSERT INTO usuarios (login, nome, password, data_inc, data_admis,email, fone, nivel, AREA, user_admin) "."values ('".strtolower($s_usuario)."','".$result[0]["displayname"][0]."','e267cfcd18461ce938067eca67c59f41','".date("Y-m-d")."','".
+			date("Y-m-d")."','".$U_MAILG."','1234','2','".$result[0]["primarygroupid"][0]."','0')";
+			mysql_query($adduser) or die (TRANS('ERR_INSERT').$s_usuario);
+			$addarea = "INSERT INTO `usuarios_areas` (`uarea_uid`,`uarea_sid`) VALUES ('".$rowUSER['user_id']."','".$result[0]["primarygroupid"][0]."')";
+			mysql_query($addarea) or die (TRANS('ERR_INSERT').$s_usuario);
 			}
-			$uAreas = substr($uAreas,0,-1);
-			$s_uareas = $uAreas;
-
-			/*CHECA QUAIS OS MÓDULOS PODEM SER ACESSADOS PELAS ÁREAS QUE O USUÁRIO PERTENCE*/
-			$qry = "SELECT * FROM permissoes where perm_area in (".$uAreas.")";
-			$exec = mysql_query($qry) or die('IMPOSSÍVEL ACESSAR A BASE DE PERMISSÕES: LOGIN.PHP');
-
-			while($row_perm = mysql_fetch_array($exec)){
-				$s_permissoes[]=$row_perm['perm_modulo'];
+			// ************************************************************************************************
+			$rwGroup=$adldap -> user_groups($_POST['login']);
+			$qruy="SELECT * FROM `sistemas` WHERE `sis_id` = '".$result[0]["primarygroupid"][0]."'";
+			$qruy3 = mysql_query($qruy) or die('Impossível aceder à base de dados de utilizadores!!!');
+			$rowGroup = mysql_fetch_array($qruy3);
+			if (($rowGroup['sis_id'])!=($result[0]["primarygroupid"][0])){
+			$addgroup = "INSERT INTO `sistemas` VALUES ('".$result[0]["primarygroupid"][0]."', '".$rwGroup[0]."','1', 'ti@meuemail.com.br', '0', null)";
+			$addpermi = "INSERT INTO `permissoes` (`perm_area`,`perm_modulo`,`perm_flag`) VALUES('".$result[0]["primarygroupid"][0]."', '1', '1')";
+			mysql_query($addgroup) or die (TRANS('ERR_INSERT').$rwGroup[0]);
+			mysql_query($addpermi) or die (TRANS('ERR_INSERT').$rwGroup[0]);
 			}
-			$s_ocomon = 0;
-			$s_invmon = 0;
-			for ($i=0;$i<count($s_permissoes); $i++){
-				if($s_permissoes[$i] == 1) $s_ocomon = 1;
-				if($s_permissoes[$i] == 2) $s_invmon = 1;
-			}
+			// ************************************************************************************************
+			$queryOK = "SELECT u.*, n.*,s.* FROM usuarios u left join sistemas as s on u.AREA = s.sis_id "."left join nivel as n on n.nivel_cod =u.nivel WHERE u.login = '".$_POST['login']."'";
 
-			$sqlPrefs = "SELECT * FROM uprefs WHERE upref_uid = ".$s_uid."";
-			$execPrefs = mysql_query($sqlPrefs);
-			$rowPref = mysql_fetch_array($execPrefs);			
-			
-			
-			$sqlFormatBar = "SELECT * FROM config";
-			$execFormatBar = mysql_query($sqlFormatBar) or die ('NÃO FOI POSSÍVEL ACESSAR A TABELA DE CONFIGURAÇÕES DO SISTEMA!');
-			$rowFormatBar = mysql_fetch_array($execFormatBar);
-			if (strpos($rowFormatBar['conf_formatBar'],'%oco%')) {
-				$formatBarOco = 1;
-			} else {
-				$formatBarOco = 0;
-			}
-			if (strpos($rowFormatBar['conf_formatBar'],'%mural%')) {
-				$formatBarMural = 1;
-			} else {
-				$formatBarMural = 0;
-			}
+		// Inicio do Script Original
+
+				$queryOK = "SELECT u.*, n.*,s.* FROM usuarios u left join sistemas as s on u.AREA = s.sis_id ".
+								"left join nivel as n on n.nivel_cod =u.nivel WHERE u.login = '".$_POST['login']."'";
+
+				$resultadoOK = mysql_query($queryOK) or die('IMPOSSÍVEL ACESSAR A BASE DE DADOS DE USUÁRIOS: LOGIN.PHP');
+				$row = mysql_fetch_array($resultadoOK);
+				$s_nivel = $row['nivel'];
+
+				if ($s_nivel<4){ //Verifica se não está desabilitado
+					$s_logado=1;
+				}
+
+				$s_nivel_desc = $row['nivel_nome'];
+				$s_area = $row['AREA'];
+				$s_uid = $row['user_id'];
+				$s_area_admin =  $row['user_admin'];
+				$s_screen = $row['sis_screen'];
+				$nome = explode(" ",$row['nome']);
+				$s_nome = $nome[0]." ".end($nome);
+
+				/*VERIFICA EM QUAIS ÁREAS O USUÁRIO ESTÁ CADASTRADO*/
+				$qryUa = "SELECT * FROM usuarios_areas where uarea_uid=".$s_uid.""; //and uarea_sid=".$s_area."
+				$execUa = mysql_query($qryUa) or die('IMPOSSIVEL ACESSAR A BASE DE USUARIOS 02: LOGIN.PHP');
+				$uAreas = "".$s_area.",";
+				while ($rowUa = mysql_fetch_array($execUa)){
+					$uAreas.=$rowUa['uarea_sid'].",";
+				}
+				$uAreas = substr($uAreas,0,-1);
+				$s_uareas = $uAreas;
+
+				/*CHECA QUAIS OS MÓDULOS PODEM SER ACESSADOS PELAS ÁREAS QUE O USUÁRIO PERTENCE*/
+				$qry = "SELECT * FROM permissoes where perm_area in (".$uAreas.")";
+				$exec = mysql_query($qry) or die('IMPOSSÍVEL ACESSAR A BASE DE PERMISSÕES: LOGIN.PHP');
+
+				while($row_perm = mysql_fetch_array($exec)){
+					$s_permissoes[]=$row_perm['perm_modulo'];
+				}
+				$s_ocomon = 0;
+				$s_invmon = 0;
+				for ($i=0;$i<count($s_permissoes); $i++){
+					if($s_permissoes[$i] == 1) $s_ocomon = 1;
+					if($s_permissoes[$i] == 2) $s_invmon = 1;
+				}
+
+				$sqlPrefs = "SELECT * FROM uprefs WHERE upref_uid = ".$s_uid."";
+				$execPrefs = mysql_query($sqlPrefs);
+				$rowPref = mysql_fetch_array($execPrefs);
+
+				$sqlFormatBar = "SELECT * FROM config";
+				$execFormatBar = mysql_query($sqlFormatBar) or die ('NÃO FOI POSSÍVEL ACESSAR A TABELA DE CONFIGURAÇÕES DO SISTEMA!');
+				$rowFormatBar = mysql_fetch_array($execFormatBar);
+				if (strpos($rowFormatBar['conf_formatBar'],'%oco%')) {
+					$formatBarOco = 1;
+				} else {
+					$formatBarOco = 0;
+				}
+				if (strpos($rowFormatBar['conf_formatBar'],'%mural%')) {
+					$formatBarMural = 1;
+				} else {
+					$formatBarMural = 0;
+				}
+
+				$_SESSION['s_logado'] = $s_logado;
+				$_SESSION['s_usuario'] = $s_usuario;
+				$_SESSION['s_nome'] = $s_nome;
+				$_SESSION['s_uid'] = $s_uid;
+//				$_SESSION['s_senha'] = $s_senha;
+				$_SESSION['s_nivel'] = $s_nivel;
+				$_SESSION['s_nivel_desc'] = $s_nivel_desc;
+				$_SESSION['s_area'] = $s_area;
+				$_SESSION['s_uareas'] = $s_uareas;
+				$_SESSION['s_permissoes'] = $s_permissoes;
+				$_SESSION['s_area_admin'] = $s_area_admin;
+				$_SESSION['s_ocomon'] = $s_ocomon;
+				$_SESSION['s_invmon'] = $s_invmon;
+				$_SESSION['s_allow_change_theme'] = $rowFormatBar['conf_allow_change_theme'];
+				$_SESSION['s_screen'] = $s_screen;
 
 
+				$_SESSION['s_formatBarOco'] = $formatBarOco;
+				$_SESSION['s_formatBarMural'] = $formatBarMural;
 
-			$_SESSION['s_logado'] = $s_logado;
-			$_SESSION['s_usuario'] = $s_usuario;
-			$_SESSION['s_uid'] = $s_uid;
-			$_SESSION['s_senha'] = $s_senha;
-			$_SESSION['s_nivel'] = $s_nivel;
-			$_SESSION['s_nivel_desc'] = $s_nivel_desc;
-			$_SESSION['s_area'] = $s_area;
-			$_SESSION['s_uareas'] = $s_uareas;
-			$_SESSION['s_permissoes'] = $s_permissoes;
-			$_SESSION['s_area_admin'] = $s_area_admin;
-			$_SESSION['s_ocomon'] = $s_ocomon;
-			$_SESSION['s_invmon'] = $s_invmon;
-			$_SESSION['s_allow_change_theme'] = $rowFormatBar['conf_allow_change_theme'];
-			$_SESSION['s_screen'] = $s_screen;			
+				if (!empty($rowPref['upref_lang'])){
+					$_SESSION['s_language'] = $rowPref['upref_lang'];			
+				} else {
+					$_SESSION['s_language'] = $rowFormatBar['conf_language'];
+				}
 
+				$_SESSION['s_date_format'] = $rowFormatBar['conf_date_format'];
 
-			$_SESSION['s_formatBarOco'] = $formatBarOco;
-			$_SESSION['s_formatBarMural'] = $formatBarMural;
+				$_SESSION['s_paging_full'] = 0;
 
-			if (!empty($rowPref['upref_lang'])){
-				$_SESSION['s_language'] = $rowPref['upref_lang'];			
-			} else {
-				$_SESSION['s_language'] = $rowFormatBar['conf_language'];
-			}
+				$_SESSION['s_page_size'] = $rowFormatBar['conf_page_size'];
 
-			$_SESSION['s_date_format'] = $rowFormatBar['conf_date_format'];
+				$_SESSION['s_allow_reopen'] = $rowFormatBar['conf_allow_reopen'];
 
-			$_SESSION['s_paging_full'] = 0;
+				$_SESSION['s_allow_date_edit'] = $rowFormatBar['conf_allow_date_edit'];
 
-			$_SESSION['s_page_size'] = $rowFormatBar['conf_page_size'];
+				$_SESSION['s_ocomon_site'] = $rowFormatBar['conf_ocomon_site'];
 
-			$_SESSION['s_allow_reopen'] = $rowFormatBar['conf_allow_reopen'];
-
-			$_SESSION['s_allow_date_edit'] = $rowFormatBar['conf_allow_date_edit'];
-			
-			$_SESSION['s_ocomon_site'] = $rowFormatBar['conf_ocomon_site'];
-
-			$sqlStyles = "SELECT * FROM temas t, uthemes u  WHERE u.uth_uid = ".$_SESSION['s_uid']." and t.tm_id = u.uth_thid";
-			$execStyles = mysql_query($sqlStyles) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DO TEMA!<BR>'.$sqlStyles);
-			$rowSty = mysql_fetch_array($execStyles);
-			$regs = mysql_num_rows($execStyles);
-			if ($regs==0){ //SE NÃO ENCONTROU TEMA ESPECÍFICO PARA O USUÁRIO
-				unset($rowSty);
-				$sqlStyles = "SELECT * FROM styles";
-				$execStyles = mysql_query($sqlStyles);
+				$sqlStyles = "SELECT * FROM temas t, uthemes u  WHERE u.uth_uid = ".$_SESSION['s_uid']." and t.tm_id = u.uth_thid";
+				$execStyles = mysql_query($sqlStyles) or die('ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DO TEMA!<BR>'.$sqlStyles);
 				$rowSty = mysql_fetch_array($execStyles);
+				$regs = mysql_num_rows($execStyles);
+				if ($regs==0){ //SE NÃO ENCONTROU TEMA ESPECÍFICO PARA O USUÁRIO
+					unset($rowSty);
+					$sqlStyles = "SELECT * FROM styles";
+					$execStyles = mysql_query($sqlStyles);
+					$rowSty = mysql_fetch_array($execStyles);
+				}
+
+				$_SESSION['s_colorDestaca'] = $rowSty['tm_color_destaca'];
+				$_SESSION['s_colorMarca'] = $rowSty['tm_color_marca'];
+
+				print "<script>redirect('../../index.php?".session_id()."');</script>";
+			} else {
+
+				print "<script>redirect('../../index.php?usu=".$_POST['login']."&inv=1');</script>";
+				$conec->desconLDAP();
+				$conecSec->desconLDAP();
+				exit;
 			}
-
-			$_SESSION['s_colorDestaca'] = $rowSty['tm_color_destaca'];
-			$_SESSION['s_colorMarca'] = $rowSty['tm_color_marca'];
-
-			print "<script>redirect('../../index.php?".session_id()."');</script>";
-		} else {
-
-			print "<script>redirect('../../index.php?usu=".$_POST['login']."&inv=1');</script>";
 			$conec->desconLDAP();
 			$conecSec->desconLDAP();
-			exit;
-		}
-		$conec->desconLDAP();
-		$conecSec->desconLDAP();
 
 	} else {
 
@@ -186,7 +219,8 @@
 			$s_uid = $row['user_id'];
 			$s_area_admin =  $row['user_admin'];
 			$s_screen = $row['sis_screen'];
-
+			$nome = explode(" ",$row['nome']);
+			$s_nome = $nome[0]." ".end($nome);
 
 			/*VERIFICA EM QUAIS ÁREAS O USUÁRIO ESTÁ CADASTRADO*/
 			$qryUa = "SELECT * FROM usuarios_areas where uarea_uid=".$s_uid.""; //and uarea_sid=".$s_area."
@@ -213,12 +247,11 @@
 				if($s_permissoes[$i] == 2) $s_invmon = 1;
 			}
 
-			
+
 			$sqlPrefs = "SELECT * FROM uprefs WHERE upref_uid = ".$s_uid."";
 			$execPrefs = mysql_query($sqlPrefs);
 			$rowPref = mysql_fetch_array($execPrefs);
-			
-			
+
 			$sqlFormatBar = "SELECT * FROM config"; //INFO FROM GENERAL CONF
 			$execFormatBar = mysql_query($sqlFormatBar) or die ('NÃO FOI POSSÍVEL ACESSAR A TABELA DE CONFIGURAÇÕES DO SISTEMA!');
 			$rowFormatBar = mysql_fetch_array($execFormatBar);
@@ -233,10 +266,11 @@
 				$formatBarMural = 0;
 			}
 
+			$_SESSION['s_nome'] = $s_nome;
 			$_SESSION['s_logado'] = $s_logado;
 			$_SESSION['s_usuario'] = $s_usuario;
 			$_SESSION['s_uid'] = $s_uid;
-			$_SESSION['s_senha'] = $s_senha;
+//			$_SESSION['s_senha'] = $s_senha;
 			$_SESSION['s_nivel'] = $s_nivel;
 			$_SESSION['s_nivel_desc'] = $s_nivel_desc;
 			$_SESSION['s_area'] = $s_area;
@@ -247,7 +281,7 @@
 			$_SESSION['s_invmon'] = $s_invmon;
 			$_SESSION['s_allow_change_theme'] = $rowFormatBar['conf_allow_change_theme'];
 			$_SESSION['s_screen'] = $s_screen;
-			
+
 
 			$_SESSION['s_formatBarOco'] = $formatBarOco;
 			$_SESSION['s_formatBarMural'] = $formatBarMural;
@@ -399,7 +433,5 @@
 				exit;
 		}
 	}
-
-
 
 ?>

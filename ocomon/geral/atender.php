@@ -111,7 +111,7 @@
 					" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 			//style='{padding-left:5px;}'
-			print "<tr><td colspan='6' ><div id='Assentamento' style='{display:none}'>"; //style='{display:none}'
+			print "<tr><td colspan='6' ><div id='Assentamento' style='display:none'>"; //style='{display:none}'
 			print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 			$i = 0;
 			while ($rowAssentamento = mysql_fetch_array($resultado2)){
@@ -135,7 +135,8 @@
 			print "<TD colspan='5' width='80%' align='left' bgcolor='WHITE'>";
 
 				if (!$_SESSION['s_formatBarOco']) {
-					print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."</textarea>";
+//					print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['s_usuario']."</textarea>";
+				        print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento'>".TRANS('TXTAREA_IN_ATTEND_BY')." ".$_SESSION['user_name']."</textarea>";
 				} else
 					print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
 				?>
@@ -151,7 +152,7 @@
 						oFCKeditor.Create() ;
 					}
 				</script>
-				<?php 
+				<?php
 		print "</TR>";
 
 		print "<TR>";

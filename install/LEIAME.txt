@@ -1,7 +1,8 @@
 #
-# OcoMon - versão 2.0RC6
-# Data: Setembro de 2009
+# OcoMon - versão 2.1RC1
+# Data: Maio de 2013
 # Autor: Flávio Ribeiro (flaviorib@gmail.com)
+# Autor: Rafael Foster  (rafaelgfoster@gmail.com) /* Atual desenvolvedor da versao 2.1RC1 */
 #
 # Linceça: GPL
 #
@@ -150,17 +151,13 @@ Toda a documentação do OcoMon está disponível no site do projeto:
 
 - Manual/wiki: http://sourceforge.net/apps/mediawiki/ocomonphp/index.php?title=Main_Page
 
-- Fórum: http://softwarelivre.unilasalle.edu.br/ocomon_forum
+- Fórum: http://sourceforge.net/p/ocomonphp/feature-requests/
 
-- Lista de discussões: http://svrmail.lasalle.tche.br/mailman/listinfo/ocomon-l
-
+- GitHub: https://github.com/rafeta124/ocomon
 
 
 Espero que esse sistema lhe seja útil e lhe ajude no seu gerenciamento de suporte e equipamentos de informática
 da mesma forma que já ajuda uma série de empresas no Brasil.
 
 Bom uso!! :)
-
-Flávio Ribeiro
-flaviorib@gmail.com
 

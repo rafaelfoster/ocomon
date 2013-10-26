@@ -18,6 +18,7 @@
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */session_start();
 
+	include ("../../includes/functions/funcoes_jquery.php");
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
@@ -62,11 +63,11 @@ if (!isset($_POST['ok']))
 	print "				</tr>";
 
 	print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'></td>";
 	print "				</tr>";
 	print "				<tr>";
 	print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'></td>";
 	print "				</tr>";
 
 	print "				<tr>";

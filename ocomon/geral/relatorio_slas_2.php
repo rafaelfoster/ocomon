@@ -18,6 +18,7 @@
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */session_start();
 
+	include ("../../includes/functions/funcoes_jquery.php");
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
@@ -26,7 +27,7 @@
 	$auth = new auth;
 	$auth->testa_user($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],2);
 
-	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+	print "<div id='idLoad' class='loading' style='display:none'><img src='../../includes/imgs/loading.gif'></div>";
 
 	if (!isset($_POST['ok'])) { //&& $_POST['ok'] != 'Pesquisar')
 		print "<html>";
@@ -87,11 +88,11 @@
 
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td><INPUT type='text' name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'></td>";
 		print "				</tr>";
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
-		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td><INPUT type='text' name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'></td>";
 		print "				</tr>";
 
 		print "				<tr>";
@@ -246,7 +247,7 @@
 							$criterio.="- Local: ".$rowLoc['local']."";
 						}
 							//echo "<br><br>";
-							$background = '#C7D0D9';
+							$background = '#339966';
 							print "<p class='titulo'>".TRANS('TLT_REP_SLAS_INDICES')."".$criterio."</p>";
                             			print "<table class='centro' cellspacing='0' border='1' >";
 
@@ -263,7 +264,7 @@
 							<td ><b><a title='tempo em equipamento de backup ou alterado após encerramento'>".TRANS('COL_IT_ARRE_DEPEN')."</a></td></B>
 							<td ><b><a title='Tempo de solução menos o tempo em pendência do usuário'>".TRANS('COL_RECALC_SOLUTION')."</a></td></B>
 							<td ><b><a title='indicador atualizado descontando a pendência do usuário'>".TRANS('COL_POINTER_UPDATE')."</a></td></B>
-							</tr>";
+							</tr></font>";
 
 						//INICIALIZANDO CONTADORES!!
 						$sla_green=0;
@@ -590,9 +591,9 @@
 
 			print "<table align='center' cellspacing='0'>";
 			print "  <tr><td colspan =4></td><td ></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>".TRANS('FIELD_PERIOD').": ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan=4 align=center><b>".TRANS('FIELD_HOURS_VALID_TOTAL').": ".$hValido."</b></td></tr>";
-			print "  <tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_CALL_CLOSED_PERIOD').": ".$linhas.".</b></td></tr>";
+			print "  <tr bgcolor='".$background."'><td colspan=4 align=center><b>".TRANS('FIELD_PERIOD').": ".$_POST['d_ini']." a ".$_POST['d_fim']."</b></td></tr>";
+			print "  <tr bgcolor='".$background."'><td colspan=4 align=center><b>".TRANS('FIELD_HOURS_VALID_TOTAL').": ".$hValido."</b></td></tr>";
+			print "  <tr bgcolor='".$background."'><td colspan='4' align='center'><b>".TRANS('FIELD_CALL_CLOSED_PERIOD').": ".$linhas.".</b></td></tr>";
                         print "  <tr><td colspan =4></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_REPLY_IN_EVEN')." ".$slaR2M." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla1."> ".$slaR_green." ".TRANS('FIELD_CALL')." = </font></TD><td ><font color=".$corSla1.">".$perc_ate_slaR2."%</font></td><td ></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_REPLY_IN_EVEN')." ".$slaR3M." ".TRANS('FIELD_HOURS').":</b></TD><td ><font color=".$corSla2."> ".$slaR_yellow." ".TRANS('FIELD_CALL')."s = </font></TD><td ><font color=".$corSla2.">".$perc_ate_slaR3."%</font></td><td ></td></tr>";
@@ -624,7 +625,7 @@
 			$perc_checkedSR = (round($c_slaSR_checked*100/$linhas,2));
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_REPLY_SLA')."</b></td></tr>";
+			print "<tr bgcolor='".$background."'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_REPLY_SLA')."</b></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_REPLY_INSIDE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRgreen."')\">".$c_slaR_blue."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_REPLY_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRyellow."')\">".$c_slaR_yellow."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_yellowR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_REPLY_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA')."</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRred."')\">".$c_slaR_red."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_redR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
@@ -632,7 +633,7 @@
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_SOLUTION_SLA')."</b></td></tr>";
+			print "<tr bgcolor='".$background."'><td colspan='4' align='center'><b>".TRANS('FIELD_TIMES_SOLUTION_SLA')."</b></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td >".$c_slaS_blue." ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td >".$c_slaS_yellow." ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td >".$c_slaS_red." ".TRANS('FIELD_CALL')."</td><td >".$perc_redS."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
@@ -640,14 +641,14 @@
 			print "  <tr><td colspan=4><hr></td></tr>";
 
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_TO_LEAVE')."</b></td></tr>";
+			print "<tr bgcolor='".$background."'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_TO_LEAVE')."</b></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td >".$c_slaM_blue." ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td >".$c_slaM_yellow." ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td >".$c_slaM_red." ".TRANS('FIELD_CALL')."</td><td >".$perc_redM."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_TIME_SOLUTION_NOT_DEFINE_PROB').":</b></td><td >".$c_slaM_checked." ".TRANS('FIELD_CALL')."</td><td >".$perc_checkedM."%</td><td ><img height='14' width='14' src='../../includes/imgs/checked.png'></td></tr>";
 			print "  <tr><td colspan=4><hr></td></tr>";
 
-			print "<tr bgcolor='#C7D0D9'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_RECALC')."</b></td></tr>";
+			print "<tr bgcolor='".$background."'><td colspan='4' align='center'><b>".TRANS('FIELD_SOLUTION_TIME_RECALC')."</b></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_INSIDE_SLA').":</td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosGreen."')\">".$c_slaSR_blue."</a></font> ".TRANS('FIELD_CALL')."</b></td><td >".$perc_blueSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla1.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_EVEN')." ".$percLimit."% ".TRANS('FIELD_ABOVE_SLA').":</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosYellow."')\">".$c_slaSR_yellow."</a></font> ".TRANS('FIELD_CALL')."</td><td >".$perc_yellowSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla2.png'></td></tr>";
 			print "<tr><td ><b>".TRANS('FIELD_SOLUTION_ABOVE')." ".$percLimit."% ".TRANS('FIELD_OF_THE_SLA').":</b></td><td ><font color='blue'><a onClick= \"javascript: popup_alerta('mostra_chamados.php?popup=true&numero=".$numerosRed."')\">".$c_slaSR_red."</a></font> ".TRANS('FIELD_CALL')."</td><td >".$perc_redSR."%</td><td ><img height='14' width='14' src='../../includes/imgs/sla3.png'></td></tr>";
@@ -680,7 +681,7 @@
 							"ORDER BY segundos desc, A.sistema,T.ts_status";
 			$exec_cada_status = mysql_query($sql_cada_status);
 			print "<tr><td colspan='4' align='center'><b>".TRANS('FIELD_BOARD_CALLS_TIMES_STATUS')."</b></td></tr>";
-			print "<tr bgcolor='#C7D0D9'><td >".strtoupper(TRANS('MNL_STATUS'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
+			print "<tr bgcolor='".$background."'><td >".strtoupper(TRANS('MNL_STATUS'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
 
 			//print $sql_cada_status."<br>";
 			while ($row_cada_status = mysql_fetch_array($exec_cada_status)) {
@@ -716,7 +717,7 @@
 			$exec_vinc = mysql_query($sql_vinc_status);
 
 			print "<tr><td colspan='4' align='center'><b>".TRANS('FIELD_BOARD_CALLS_TIMES_DEPEND')."</b></td></tr>";
-			print "<tr bgcolor='#C7D0D9'><td >".strtoupper(TRANS('MNL_DEPEND'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
+			print "<tr bgcolor='".$background."'><td >".strtoupper(TRANS('MNL_DEPEND'))."</td><td colspan='2'>".TRANS('FIELD_TIME')."</td><td >".TRANS('FIELD_PERCENTAGE')."</td></tr>";
 			while ($row_vinc = mysql_fetch_array($exec_vinc)) {
 				print "<tr><td >".$row_vinc['dependencia']."</td><td colspan='2'>".$row_vinc['tempo']."</td><td >".$row_vinc['porcento']."</td></tr>";
 			}

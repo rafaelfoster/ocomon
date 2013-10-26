@@ -364,7 +364,7 @@ session_start();
         //print "</TD>";
 
         print "<TD  class='line' >";
-        print "<TABLE class='header_centro'  STYLE='{border-top: thin solid #999999;}' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
+        print "<TABLE class='header_centro'  STYLE='border-top: thin solid #999999;' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
 
         print "<TR class='header'>";
         print "<TD  class='line'  nowrap>N.º&nbsp;/&nbsp;<a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=AREA')\" title='Ordena por Área de atendimento'>Área".$ICON_ORDER_AREA."</a></TD>".

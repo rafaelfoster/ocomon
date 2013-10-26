@@ -25,13 +25,14 @@
 
 	$imgsPath = "../../includes/imgs/";
 
+	$prob_atual = $_GET['prob_atual'];
+
 	$auth = new auth;
 	$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
 
 			//print "<tr><td colspan='6' ><div id='Problema'>"; //style='{display:none}'
 			print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
-
 
 				$qry_config = "SELECT * FROM config ";
  				$exec_config = mysql_query($qry_config) or die (TRANS('ERR_TABLE_CONFIG'));
@@ -67,7 +68,7 @@
 
 
 				$query .=" ORDER  BY s.sistema, p.problema";
-				
+
 				//print $query;
 				$resultado = mysql_query($query) or die(TRANS('ERR_QUERY'));
 				$registros = mysql_num_rows($resultado);
@@ -114,7 +115,7 @@
 						//------------------------------------------------------------- INICIO ALTERACAO --------------------------------------------------------------
 						if (isset($_GET['pathAdmin'])) //se o script estiver sendo chamado da path do módulo de administração
 							print " onClick=\"ajaxFunction('divInformacaoProblema', '../../ocomon/geral/showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea' , 'radio_prob=idRadioProb".$row['prob_id']."');\"";
-						else	
+						else
 							print " onClick=\"ajaxFunction('divInformacaoProblema', 'showInformacaoProb.php', 'idLoad', 'prob=idProblema', 'area_cod=idArea' , 'radio_prob=idRadioProb".$row['prob_id']."');\"";
 						//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 						print ">".$row['problema']."</td>";

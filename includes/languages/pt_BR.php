@@ -1020,13 +1020,13 @@ $TRANS['FIELD_OPEN_BY'] = "Aberto Por";
 $TRANS['FIELD_TAG_EQUIP'] = "Etiqueta do equipamento";
 $TRANS['FIELD_LAST_OPERATOR'] = "Último operador";
 $TRANS['FIELD_DATE_CLOSING'] = "Data de encerramento";
-$TRANS['FIELD_NESTING_FOR_OCCO'] = "assentamento(s) para essa ocorrência";
+$TRANS['FIELD_NESTING_FOR_OCCO'] = "registro(s) para essa ocorrência";
 $TRANS['MSG_ERR_NOT_INFO_IMAGE'] = "NÃO FOI POSSÍVEL RECUPERAR AS INFORMAÇÕES DA TABELA DE IMAGENS!";
 $TRANS['MSG_ERR_RESCUE_INFO_SUBCALL'] = "ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE SUB-CHAMADOS!";
 $TRANS['MSG_ERR_RESCUE_INFO_STATUS_CALL_SON'] = "ERRO NA TENTATIVA DE RECUPERAR AS INFORMAÇÕES DE STATUS DOS CHAMADOS FILHOS!";
 $TRANS['MSG_ERR_RESCUE_DATA_OCCO'] = "ERRO NA TENTATIVA DE RECUPERAR OS DADOS DAS OCORRÊNCIAS!";
 $TRANS['FIELD_CALL_SUBCALL_DEPEND'] = "Chamado com vínculos' > Sub-Chamados / Dependências";
-$TRANS['FIELD_NESTING'] = "Assentamento";
+$TRANS['FIELD_NESTING'] = "Registro";
 
 //ENCERRAMENTO.PHP
 $TRANS['MSG_ALERT_OCCO_IS_LOCKED_UP'] = "ALERTA: Essa ocorrência já foi encerrada uma vez no sistema! Contate o Administrador do Sistema se desejar encerrá-la novamente!";
@@ -1040,7 +1040,7 @@ $TRANS['TXT_DESC_TEC_PROB'] = "Descrição técnica do problema";
 $TRANS['TXT_SOLUTION_PROB'] = "Solução para este problema";
 $TRANS['MSG_SEND_EMAIL_AREA_ATTEND_CALL'] = "Envia e-mail para a área de atendimento do chamado";
 $TRANS['MSG_OPT_CALL_OPEN_USER'] = "Essa opção só fica habilitada para chamados abertos pelo próprio usuário";
-$TRANS['MSG_ERR_INSERT_NESTING'] = "ERRO AO TENTAR INCLUIR ASSENTAMENTO!";
+$TRANS['MSG_ERR_INSERT_NESTING'] = "ERRO AO TENTAR INCLUIR REGISTRO!";
 $TRANS['MSG_ERR_INSERT_SOLUTION'] = "ERRO AO TENTAR INCLUIR SOLUCÃO!";
 $TRANS['MSG_ERR_INSERT_DATA_SYSTEM'] = "Um erro ocorreu ao tentar incluir dados no sistema.";
 $TRANS['MSG_ERR_UPDATE_TIME_DOC_CALL'] = "ERRO NA TENTATIVA DE ATUALIZAR O TEMPO DE DOCUMENTAÇÃO DO CHAMADO!";
@@ -1066,7 +1066,7 @@ $TRANS['FIELD_ATTACH'] = "Anexo";
 $TRANS['FIELD_ATTACH_IMAGE'] = "Anexar imagem";
 $TRANS['HNT_SENDMAIL_AREA_SEL_CALL'] = "Envia email para a área selecionada para esse chamado";
 $TRANS['HNT_SENDMAIL_OPERATOR_SEL_CALL'] = "Envia e-mail para o operador selecionado no chamado";
-$TRANS['HNT_NOT_MARK_OPT_FIRST_REPLY_CALL'] = "Desmarque essa opção se esse assentamento não corresponder a uma primeira resposta do chamado";
+$TRANS['HNT_NOT_MARK_OPT_FIRST_REPLY_CALL'] = "Desmarque essa opção se esse asseregistro não corresponder a uma primeira resposta do chamado";
 $TRANS['FIELD_FIRST_REPLY'] = "1.ª Resposta";
 $TRANS['MSG_ERR_NOT_ACCESS_INFO_CONFIG'] = "NÃO FOI POSSÍVEL ACESSAR AS INFORMAÇÕES DE CONFIGURAÇÃO, A TABELA CONF FOI CRIADA?";
 $TRANS['MSG_ERR_NOT_ATTACH_FILE'] = "NÃO FOI POSSÍVEL ANEXAR O ARQUIVO!";
@@ -1087,7 +1087,7 @@ $TRANS['TTL_ATTEND_OCCO'] = "Atendimento de ocorrências";
 $TRANS['TXTAREA_IN_ATTEND_BY'] = "Em atendimento por";
 $TRANS['MSG_ERR_INSERT_DATA_SYSTEM'] = "Um erro ocorreu ao tentar incluir dados no sistema - INSERT.";
 $TRANS['MSG_ERR_UPDATE_DATA_SYSTEM'] = "Um erro ocorreu ao tentar incluir dados no sistema - UPDATE.";
-$TRANS['MSG_INCLUDE_NESTING_OK'] = "OK. Assentamento de atendimento incluido com sucesso.";
+$TRANS['MSG_INCLUDE_NESTING_OK'] = "OK. registro de atendimento incluido com sucesso.";
 $TRANS['TXT_FINISH'] = "Encerrar";
 
 //TEMPO_DOC.PHP

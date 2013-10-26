@@ -1,4 +1,4 @@
-<?php 
+<?php
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -18,6 +18,8 @@
          Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
 
+error_reporting(0);
+
 is_file( "./includes/config.inc.php" )
 	or die( "Você precisa configurar o arquivo config.inc.php em OCOMON/INCLUDES/para iniciar o uso do OCOMON!<br>Leia o arquivo <a href='LEIAME.txt'>LEIAME.TXT</a> para obter as principais informações sobre a instalação do OCOMON!".
 		"<br><br>You have to configure the config.inc.php file in OCOMON/INCLUDES/ to start using Ocomon!<br>Read the file <a href='README.txt'>README.TXT</a>to get the main informations about the Ocomon Installation!" );
@@ -30,21 +32,25 @@ is_file( "./includes/config.inc.php" )
 	if (!isset($_SESSION['s_logado']))  $_SESSION['s_logado']= "";
 	if (!isset($_SESSION['s_nivel']))  $_SESSION['s_nivel']= "";
 
+	include ("questionario.php");
+
 	include ("PATHS.php");
 	//include ("".$includesPath."var_sessao.php");
 	include ("includes/functions/funcoes.inc");
+	include ("includes/functions/funcoes_jquery.php");
 	include ("includes/javascript/funcoes.js");
 	include ("includes/queries/queries.php");
 	include ("".$includesPath."config.inc.php");
 	//require_once ("includes/languages/".LANGUAGE."");
 	include ("".$includesPath."versao.php");
 
-	include("includes/classes/conecta.class.php");
+//	include("includes/classes/conecta.class.php");
+
 	$conec = new conexao;
 	$conec->conecta('MYSQL') ;
 
-	if (is_file("./includes/icons/favicon.ico")) {
-		print "<link rel='shortcut icon' href='./includes/icons/favicon.ico'>";
+	if (is_file("./includes/icons/fiv.gif")) {
+		print "<link rel='shortcut icon' href='./includes/icons/fiv.gif'>";
 	}
 
 	$qryLang = "SELECT * FROM config";
@@ -52,6 +58,8 @@ is_file( "./includes/config.inc.php" )
 	$rowLang = mysql_fetch_array($execLang);
 	if (!isset($_SESSION['s_language'])) $_SESSION['s_language']= $rowLang['conf_language'];
 
+	// Alertas e Notificacoes
+	$notifications = "<script> check_notifications(); </script>";
 
 	$uLogado = $_SESSION['s_usuario'];
 	if (empty($uLogado)) {
@@ -59,39 +67,46 @@ is_file( "./includes/config.inc.php" )
 		$uLogado = TRANS('MNS_NAO_LOGADO'); //$TRANS['MNS_NAO_LOGADO'];
 		$logInfo = "<font class='topo'>".TRANS('MNS_LOGON')."</font>"; //$TRANS['MNS_LOGON']
 		$hnt = TRANS('HNT_LOGON');
+		$alertas = "0";
 	} else {
 		if ($_SESSION['s_nivel'] < 3) {
 			$USER_TYPE = TRANS('MNS_OPERADOR');
-		} else
+			$alertas = "1";
+		} else {
 			$USER_TYPE = TRANS('MNS_USUARIO');
+			$alertas = "0";
+		}
 		$logInfo = "<font color='red'>".TRANS('MNS_LOGOFF')."</font>";
 		$hnt = TRANS('HNT_LOGOFF');
 	}
 	$marca = "HOME";
 
-
+        $usertmp = str_replace("."," ",$uLogado);
+        $_SESSION['user_name'] = ucwords($usertmp);
 
 //print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"http://www.w3.org/TR/html4/loose.dtd\">";
 print "<html>";
 print "<head>";
 
-print "<title>OCOMON ".VERSAO."</title>";
+print "<title>HelpDesk - OcoMon</title>";
 print "<link rel='stylesheet' href='includes/css/estilos.css.php'>"; //type='text/css'
-print "</head><body onLoad=\"setHeight('centro'); setHeight('centro2')\">";
+print "</head><body onLoad=\"setHeight('centro'); setHeight('centro2'); \">";
 
 print "<table width='100%' border='0px' id='geral'><tr><td colspan='2'>";
 
 print "<table class='topo' border='0' id='cabecalho'>
 	<tr>
-		<td ><img src='MAIN_LOGO.png' height='46' width='300'></td>
-		<td align='center'>".$USER_TYPE.":<b> ".$uLogado."</b></td><td >|</td>
-		<td ><a href='".$commonPath."logout.php' title='".$hnt."'>".$logInfo."&nbsp;<img src='includes/icons/password2.png' style=\"{vertical-align:middle;}\" height='15' width='15' border='0'></a></td><td >|</td>
+		<td ><img src='MAIN_LOGO.png' height='46' width='300'><br> <!-- <font color='gray' size='1'><b> Versão: 2.1.20120721</font>--> </td>
+		<td align='center'>".$USER_TYPE.":<b> ".$_SESSION['user_name']."</b> </td><td> |</td>
+<!--		<td align='center'>".$USER_TYPE.":<b> ".$uLogado."</b> </td><td> |</td> -->
+		<td ><a href='".$commonPath."logout.php' title='".$hnt."'>".$logInfo."&nbsp;<img src='includes/icons/password2.png' style=\"{vertical-align:botton;}\" height='30' width='30' border='0'></a></td><td> |</td>
 		<td ><select class='help' id='idHelp' name='help' onChange=\"showPopup('idHelp')\">
 		<option value=1 selected>".TRANS('MNS_AJUDA')."</option>
 		<option value=2>".TRANS('MNS_SOBRE')."</option>
 		</select>
-		</td>
-	</tr></table>";
+		</td>";
+		if($alertas == 1) echo "$notifications";
+print "	</tr></table>";
 print "<table class='barra' border='0px' id='barra'><tr>";
 
 	if (empty($_SESSION['s_permissoes'])&& $_SESSION['s_nivel']!=1){
@@ -102,11 +117,6 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 		print "<td width='76%'>&nbsp;</td>";
 		$conec->desconecta('MYSQL');
 	} else{
-
-// 		include("includes/classes/conecta.class.php");
-// 		$conec = new conexao;
-// 		$conec->conecta('MYSQL') ;
-
 
 		$qryconf = $QRY["useropencall"];
 		$execconf = mysql_query($qryconf) or die('Não foi possível ler as informações de configuração do sistema!');
@@ -145,7 +155,7 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 			$sistem = "abertura_user.php?action=listall";
 			$marca = "OCOMON";
 		} else
-			print "<td width='7%' STYLE='{border-right: thin solid #C7C8C6; color:#C7C8C6}'>&nbsp;".TRANS('MNS_OCORRENCIAS')."&nbsp;</td>";
+			print "<td width='7%' STYLE='border-right: thin solid #C7C8C6; color:#C7C8C6'>&nbsp;".TRANS('MNS_OCORRENCIAS')."&nbsp;</td>";
 
 		if ($_SESSION['s_invmon']==1){
 			print "<td id='INVMON' width='7%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('INVMON')\" onMouseOut=\"libera('INVMON')\" onclick=\"loadIframe('menu.php?sis=i','menu','".$invDirPath."abertura.php','centro',2,'INVMON')\">&nbsp;".TRANS('MNS_INVENTARIO')."&nbsp;</a></td>"; //abertura.php   -   ".$invDirPath."".$invHome."
@@ -154,8 +164,9 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 			$sistem = "abertura.php";
 			if ($marca=="") $marca = "INVMON";
 			//$home = "home=true";
+
 		} else
-			print "<td width='7%' STYLE='{border-right: thin solid #C7C8C6; color:#C7C8C6}'>&nbsp;".TRANS('MNS_INVENTARIO')."&nbsp;</td>";
+			print "<td width='7%' STYLE='border-right: thin solid #C7C8C6; color:#C7C8C6'>&nbsp;".TRANS('MNS_INVENTARIO')."&nbsp;</td>";
 // 		if ($_SESSION['s_nivel']==1) {
 // 			print "<td id='ADMIN' width='5%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('ADMIN')\" onMouseOut=\"libera('ADMIN')\" onclick=\"loadIframe('menu.php?sis=a','menu','','','1','ADMIN')\">&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</a></td>";
 // 			if ($sis=="") $sis="sis=a";
@@ -163,8 +174,8 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 // 			if ($sistem=="") $sistem = "menu.php";
 // 			if ($marca=="")$marca = "ADMIN";
 // 			//$home = "home=true";
-// 		} 
-		
+// 		}
+
 		if ($_SESSION['s_nivel']==1 || (isset($_SESSION['s_area_admin']) && $_SESSION['s_area_admin'] == '1')) {
 			print "<td id='ADMIN' width='5%'  class='barraMenu'><a class='barra' onMouseOver=\"destaca('ADMIN')\" onMouseOut=\"libera('ADMIN')\" onclick=\"loadIframe('menu.php?sis=a','menu','','','2','ADMIN')\">&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</a></td>";
 			if ($sis=="") $sis="sis=a";
@@ -172,8 +183,9 @@ print "<table class='barra' border='0px' id='barra'><tr>";
 			if ($sistem=="") $sistem = "menu.php";
 			if ($marca=="")$marca = "ADMIN";
 			//$home = "home=true";
-		} else
-			print "<td width='5%' STYLE='{border-right: thin solid #C7C8C6; color:#C7C8C6}'>&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</td>";
+		}
+
+//			print "<td width='5%' STYLE='{border-right: thin solid #C7C8C6; color:#C7C8C6}'>&nbsp;".TRANS('MNS_ADMIN')."&nbsp;</td>";
 
 		print "<td width='72%'></td>";
 		$conec->desconecta('MYSQL');
@@ -193,20 +205,21 @@ if ($_SESSION['s_logado']){
  	}else
  		$PARAM = "";
 
-	print "<tr><td style=\"{width:15%;}\" id='centro'>";//id='centro'
-	print "<iframe class='frm_menu' src='menu.php?".$sis."".$PARAM."' name='menu' align='left' width='100%' height='100%' frameborder='0' STYLE='{border-right: thin solid #999999; border-bottom: thin solid #999999;}'></iframe>";
+	print "<tr><td style=\"width:10%;\" id='centro'>";//id='centro'
+	print "<iframe class='frm_menu' src='menu.php?".$sis."".$PARAM."' name='menu' align='left' width='100%' height='100%' frameborder='0' STYLE='border-right: thin solid #999999; border-bottom: thin solid #999999;'></iframe>";
 	print "</td>";
-	print "<td style=\"{width:100%;}\" id='centro2'><iframe class='frm_centro' src='".$sisPath."".$sistem."'  name='centro' align='center' width='100%' height='100%' frameborder='0' STYLE='{border-bottom: thin solid #999999;}'></iframe></td>";
+	print "<td style=\"width:100%;\" id='centro2'><iframe class='frm_centro' src='".$sisPath."".$sistem."'  name='centro' align='center' width='100%' height='100%' frameborder='0' STYLE='border-bottom: thin solid #999999;'></iframe></td>";
 	print "</tr>";
 	} else {
 		//print "<form name='logar' method='post' action='".$commonPath."login.php?=".session_id()."' onSubmit=\"return valida()\">";
 		print "<form name='logar' method='post' action='".$commonPath."login.php?".session_id()."' onSubmit=\"return valida()\">";
-		print "<tr><td ><table id='login'>";
+
+		print "<tr><td><table id='login'>";
 
 		if (isset($_GET['inv']) ) {
 			if ($_GET['inv']=="1") {
 				print "<tr align=\"center\">".
-					"<td colspan=2 align=\"center\"><font color='red'>".TRANS('ERR_LOGON')."! <br>AUTH_TYPE: ".AUTH_TYPE."<font></td>".
+					"<td colspan=2 align=\"center\"><font color='red'>".TRANS('ERR_LOGON')."!</font></td>". //  <br>AUTH_TYPE: ".AUTH_TYPE."<font></td>".
 					"</tr>";
 			}
 		}
@@ -220,22 +233,26 @@ if ($_SESSION['s_logado']){
 			"<tr><td >".TRANS('MNS_SENHA').":</td><td ><input type='password' class='help' name='password'  id='idSenha' tabindex='2'></td></tr>"; //class='blogin'
 
 			print "<tr><td colspan='3'>&nbsp;</td></tr>";
-			print "<tr><td colspan='3'>".TRANS('MNS_MSG_CAD_ABERTURA_1')."<a onClick=\"mini_popup('./ocomon/geral/newUser.php')\"><b><u><font color='#5e515b'>".TRANS('MNS_MSG_CAD_ABERTURA_2')."!</font></u></b></a></td></tr>";
+// ** REMOVE TELA DE CADASTRO DE USUARIOS
+//			print "<tr><td colspan='3'>".TRANS('MNS_MSG_CAD_ABERTURA_1')."<a onClick=\"mini_popup('./ocomon/geral/newUser.php')\"><b><u><font color='#5e515b'>".TRANS('MNS_MSG_CAD_ABERTURA_2')."!</font></u></b></a></td></tr>";
 		print "</table></td></tr>";
 
 
 
 		print "</form>";
 	}
-print "<tr><td colspan='2' align='center'><a href='http://ocomonphp.sourceforge.net' target='_blank'>OcoMon</a> - ".TRANS('MNS_MSG_OCOMON').".<br>".TRANS('MNS_MSG_VERSAO').": ".VERSAO." - ".TRANS('MNS_MSG_LIC')." GPL</td></tr>";
-print "</table>";
+
+	print "<tr><td colspan='2' align='center'>";
+//        print $_SERVER['SERVER_NAME'].substr(substr(__FILE__, strlen(realpath($_SERVER['DOCUMENT_ROOT']))), 0, - 1 - strlen(basename(__FILE__)));
+	print "<a href='".$rowconf['conf_ocomon_site']."' target='_blank'>Sistema de Gestao de Chamados</a></tr>";
+	print "</table>";
 
 print "</body></html>";
-
 
 ?>
 <script type="text/javascript">
 <!--
+
 var GLArray = new Array();
 	function loadIframe(url1,iframeName1, url2,iframeName2,ACCESS,ID) {
 
@@ -291,7 +308,7 @@ var GLArray = new Array();
 	function popup(pagina)	{ //Exibe uma janela popUP
 		x = window.open(pagina,'Sobre','width=800,height=600,scrollbars=yes,statusbar=no,resizable=no');
 		x.moveTo(10,10);
-		return false
+		return false;
 	}
 
 	function showPopup(id){
@@ -306,7 +323,7 @@ var GLArray = new Array();
 
 		var obj = document.getElementById(id);
 		if (obj!=null) {
-			obj.style.height = screen.availHeight - 300;
+			obj.style.height = screen.availHeight - 220;
 			marca('<?php print $marca;?>');
 		} else {
 			document.logar.login.focus();

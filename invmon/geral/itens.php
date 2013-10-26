@@ -277,9 +277,11 @@
 			} else
 				$mdit_desc_capacidade = $_POST['item_capacidade'];
 
-
-			$qry = "select * from modelos_itens where mdit_desc = '".$_POST['item_descricao']."' AND ".
+			// Adicionado a verificacao com o Fabricante
+			$qry = "select * from modelos_itens where mdit_fabricante = '".$_POST['item_fabricante']."' AND ".
+					"mdit_desc = '".$_POST['item_descricao']."' AND ".
 					"mdit_desc_capacidade = '".$_POST['item_capacidade']."' ";
+
 			$exec= mysql_query($qry);
 			$achou = mysql_numrows($exec);
 			if ($achou){

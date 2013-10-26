@@ -20,6 +20,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	include ("../../includes/functions/funcoes_jquery.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
 
 	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
@@ -108,11 +109,11 @@
 
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-		print "					<td class='line'><INPUT name='d_ini' class='data' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td class='line'><INPUT id='idD_ini' name='d_ini' class='data' value='01-".date("m-Y")."'></td>";
 		print "				</tr>";
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
-		print "					<td class='line'><INPUT name='d_fim' class='data' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td class='line'><INPUT id='idD_fim' name='d_fim' class='data' value='".date("d-m-Y")."'></td>";
 		print "				</tr>";
 
 		print "				<tr>";
@@ -231,7 +232,7 @@
 					case -1:
 
 					echo "<br><br>";
-					$background = '#CDE5FF';
+					$background = '#339966';
 					print "<p class='titulo'>".TRANS('TTL_REP_CALL_CLOSED_X_PROBCAT')."</p>";
 					print "<table class='centro' cellspacing='0' border='1' align='center' >";
 

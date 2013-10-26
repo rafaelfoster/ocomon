@@ -890,7 +890,7 @@
 
 		//-->
 	</script>
-	<?php 
+	<?php
 
 print "</TABLE>";
 print "</FORM>";

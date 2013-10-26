@@ -92,9 +92,9 @@
 		print "<tr>";
 		print "<td class='line'>".TRANS('COL_DATE')."</td>".
 			"<td class='line'><input type='text' class='data' name='data' id='idData'>".
-				"<a onclick=\"displayCalendar(document.forms[0].data,'dd-mm-yyyy',this)\">".
+/*				"<a onclick=\"displayCalendar(document.forms[0].data,'dd-mm-yyyy',this)\">".
 				"<img height='16' width='16' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'>".
-				"</a>&nbsp;<input type='checkbox' name='permanente'>".TRANS('COL_PERSISTANT')."".
+				"</a>*/ "&nbsp;<input type='checkbox' name='permanente'>".TRANS('COL_PERSISTANT')."".
 			"</td>";
 		print "</tr>";
 		print "<tr><td class='line'><input type='submit'  class='button' name='submit' value='".TRANS('BT_CAD')."'></td>";

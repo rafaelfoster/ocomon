@@ -311,7 +311,7 @@
 
 				print "<TABLE border='1' style=\"{border-collapse:collapse;}\" align='center' width='100%'>";
 				print "<tr>";
-					print "<TD align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
+					print "<TD align='left' bgcolor='#EFFFF2'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 					print "<TD align='left'><a onClick= \"javascript: popup_alerta('mostra_consulta.php?popup=true&numero=".$row['numero']."&destaca=".$destacaProb."')\">".
 							"<font color='blue'>".$row['numero']."</font></a></TD>";
 					print "<TD align='left'>".TRANS('OCO_DATE').":</TD>";
@@ -320,12 +320,12 @@
 					print "<TD align='left'>".$row['nome']."</TD>";
 				print "</TR>";
 				print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('OCO_FIELD_PROB').":</TD>";
-					print "<TD colspan='5' width='80%' align='left'>".destaca($destacaProb, nl2br($row['problema']))."</TD>";
+					print "<TD width='20%' align='left' bgcolor='#EFFFF2' bgcolor='".TD_COLOR."' valign='top'>".TRANS('OCO_FIELD_PROB').":</TD>";
+					print "<TD colspan='5' width='80%' align='left' >".destaca($destacaProb, nl2br($row['problema']))."</TD>";
 				print "</TR>";
 
 				print "<TR>";
-					print "<TD width='20%' align='left' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_TIT_SOLUTION').":</TD>";
+					print "<TD width='20%' align='left' bgcolor='#EFFFF2' bgcolor='".TD_COLOR."' valign='top'>".TRANS('COL_TIT_SOLUTION').":</TD>";
 					print "<TD colspan='5' width='80%' align='left'>".destaca($destacaProb, nl2br($row['solucao']))."</TD>";
 				print "</TR>";
 

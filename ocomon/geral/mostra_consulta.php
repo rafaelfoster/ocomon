@@ -26,7 +26,7 @@
 	$auth = new auth;
 
 	$menuTable = false;
-	
+
 	if (isset($_GET['INDIV'])) {
 		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 		$menuTable = true;
@@ -44,24 +44,23 @@
 		exit;
 	}
 
-	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
-
 	$query = $QRY["ocorrencias_full_ini"]." where numero in (".$COD.") order by numero";
 	$resultado = mysql_query($query);
 	$row = mysql_fetch_array($resultado);
-	
-	//print $query;
-	
+
+	$sqlConf = mysql_query("SELECT conf_ocomon_site FROM config");
+	$rowConf = mysql_fetch_array($sqlConf);
+
 	$GLOBALACCESS = false;
-	
+
 	$qryId = "SELECT * FROM global_tickets WHERE gt_ticket = ".$COD."";
 	$execId = mysql_query($qryId);
-	$rowID = mysql_fetch_array($execId);	
-	
+	$rowID = mysql_fetch_array($execId);
+
 	if (isset($_GET['id'])){
 		if (!strcmp($_GET['id'],$rowID['gt_id'])) $GLOBALACCESS = true; else $GLOBALACCESS = false;
 	}
-	
+
 	if ($_SESSION['s_nivel'] == 3 && !$GLOBALACCESS){ //SOMENTE ABERTURA
 		if ($row['aberto_por_cod'] != $_SESSION['s_uid']){
 			print "".TRANS('MSG_ERR_NOT_ALLOWED')."";
@@ -71,21 +70,22 @@
 
         if ($_SESSION['s_nivel'] < 3) {
         	$query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia=".$COD."";
-        } else 
+        } else
         	$query2 = "select a.*, u.* from assentamentos a, usuarios u where a.responsavel=u.user_id and a.ocorrencia=".$COD." and a.asset_privated = 0";
-        
         $resultado2 = mysql_query($query2);
         $linhas=mysql_numrows($resultado2);
 
-	
 	if (isset($_GET['GEN'])){
 		if (empty($rowID['gt_id'])){
 			$qryGenLink = "INSERT INTO global_tickets (gt_ticket, gt_id) values (".$COD.", ".random().")";
 			$execGenLink = mysql_query($qryGenLink) or die('ERROR TRYING TO GENERATE_GLOBAL_LINK');
 		}
 	}
-	
-	
+
+	$sql_aval = mysql_query("SELECT ID FROM avaliacao WHERE ID = '$COD' ");
+	$row_aval_linhas = mysql_num_rows($sql_aval);
+
+
 // 	if ($_SESSION['s_nivel'] == 1) $linkEdita = "<td align='right' width='10%' ><a href='altera_dados_ocorrencia.php?numero=".$COD."'>".TRANS('FIELD_EDIT_ADMIN')."</a>&nbsp;|&nbsp;</td>"; else //&nbsp;|&nbsp;
 // 		$linkEdita = "";
 
@@ -120,8 +120,8 @@
 		}
 
 	</script>
-	<?php 
-	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+	<?php
+	print "<div id='idLoad' class='loading' style='display:none'><img src='../../includes/imgs/loading.gif'></div>";
 
 	print "<BR><B>".TRANS('TTL_CONS_OCCO')."</B><BR>".$msgPai."</br>";
 
@@ -133,16 +133,19 @@
 		//exit;
 	}
 
-	
 	$menuTable? print "<table width='80%'><tr>":"";
 
-	if ($row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
+	if ( $row['status_cod'] != 12 && $row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
 		print "<TD align='right' width='10%' ><a href='encerramento.php?numero=".$row['numero']."'>".TRANS('FIELD_FINISH_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //
 	}
 
 	print "<TD align='right' width='10%' ><a href='mostra_relatorio_individual.php?numero=".$row['numero']."' target='_blank'>".TRANS('FIELD_PRINT_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
-	if ($_SESSION['s_nivel'] < 3)
+
+	if ( $row['status_cod'] != 12 && $row['status_cod'] != 4 && $_SESSION['s_nivel'] < 3)
 		print "<TD align='right' width='10%' ><a href='encaminhar.php?numero=".$row['numero']."'>".TRANS('FIELD_EDIT_OCCO')."</a>&nbsp;|&nbsp;</TD>"; //".$linkEdita."
+
+        if ( ($row['status_cod'] != 1) && ($row['status_cod'] != 4) && ($row['status_cod'] != 12) && ($_SESSION['s_nivel'] < 3) )
+		print "<a STYLE=\"cursor: pointer;\" id='btn_registro'>Inserir Registro </a> | ";
 
 	if (($row['status_cod']!=2) && ($row['status_cod']!=4) && ($_SESSION['s_nivel'] < 3)) {
 		print "<TD align='right' width='10%' ><a href='atender.php?numero=".$COD."'>".TRANS('FIELD_ADVERT')."</a>&nbsp;|&nbsp;</TD>"; //&nbsp;|&nbsp;
@@ -150,13 +153,31 @@
 
 	print "<TD align='right' width='10%' ><a onClick=\"javascript:popup('mostra_sla_definido.php?popup=true&numero=".$row['numero']."')\">".TRANS('COL_SLA')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
 
+	if ($row['status_cod']==4 && $row_aval_linhas == 0 ) {
+		print "<a STYLE=\"cursor: pointer;\" id='btn_avaliacao'> Avaliar Atendimento </a> | ";
+	}
+
 	if ($row['status_cod']!=4 && $_SESSION['s_nivel'] < 3) {
 		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."' ><a onClick=\"javascript:popup_alerta('incluir.php?popup=true".
 				"&pai=".$row['numero']."&invTag=".$row['etiqueta']."&invInst=".$row['unidade_cod']."&invLoc=".$row['setor_cod']."".
 				"&contato=".$row['contato']."&telefone=".$row['telefone']."')\">".TRANS('FIELD_OPEN_SUBCALL')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
 	}
 
-	if ($row['status_cod']==4 && $_SESSION['s_allow_reopen']) {//CHECAGEM PARA PERMITIR QUE O CHAMADO SEJA REABERTO NO SISTEMA.
+        // ---------------- Reabertura de Chamados ------------------------------------ //
+        // Por Rafael Foster
+        // Esta alteracao bloqueia o usuario de reabrir o chamado caso ele ja tenha sido avaliado
+        // OU caso ele ja tenha passado de 7 dias de encerrado
+
+        $data1 = new DateTime($row['data_fechamento']);
+        $data2 = new DateTime(date('y-m-d H:i:s'));
+
+        $diferenca_datas = $data1->diff($data2);
+        $data_diff = $diferenca_datas->format('%a');
+//      echo "<font color='red'> Diferenca de: $data_diff - Data: ".$row['data_fechamento']."</font>";
+
+
+ //	if ($row['status_cod']==4 && $_SESSION['s_allow_reopen']) {//CHECAGEM PARA PERMITIR QUE O CHAMADO SEJA REABERTO NO SISTEMA.
+        if ($row['status_cod']==4 && $_SESSION['s_allow_reopen'] && $data_diff <= 7 && $row_aval_linhas == 0) {//CHECAGEM PARA PERMITIR QUE O CHAMADO SEJA REABERTO NO $
 		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."' >".
 			"<a onClick=\"confirma('".TRANS('ENSURE_REOPEN')."?','".$_SERVER['PHP_SELF']."?action=reopen&numero=".$COD."')\">
 				".TRANS('FIELD_REOPEN_CALL')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
@@ -166,8 +187,12 @@
 			$qryDelSolution = "DELETE FROM solucoes WHERE numero = ".$COD."";
 			$execDelSolution = mysql_query($qryDelSolution) or die(TRANS('ERR_QUERY'));
 
-			$qryUpdStatus = "UPDATE ocorrencias SET `status`=1,data_fechamento=NULL WHERE numero=".$COD."";
+			$qryUpdStatus = "UPDATE ocorrencias SET `status`=28,data_fechamento=NULL WHERE numero=".$COD."";
 			$execUpdStatus = mysql_query($qryUpdStatus) or die(TRANS('ERR_QUERY'));
+			$queryA = "INSERT INTO assentamentos (ocorrencia, assentamento, data, responsavel, asset_privated) values (".$COD.",'Chamado reaberto por ".$_SESSION['s_usuario']."','".date('Y-m-d H:i:s')."','".$_SESSION['s_uid']."',0)";
+			$sql = mysql_query($queryA);
+
+			$sql = mysql_query("DELETE FROM avaliacao WHERE OCORRENCIA = $COD");
 
 			print "<script>redirect('".$_SERVER['PHP_SELF']."?numero=".$COD."')</script>";
 		}
@@ -175,29 +200,29 @@
 
 
 	print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."'  ><a onClick=\"javascript:popup('tempo_doc.php?popup=true".
-			"&cod=".$row['numero']."')\">".TRANS('FIELD_TIME_DOCUMENTATION')."</a>&nbsp;|&nbsp;</TD>";//&nbsp;|&nbsp;
+			"&cod=".$row['numero']."')\">".TRANS('FIELD_TIME_DOCUMENTATION')."</a></TD>";//&nbsp;|&nbsp;
 
-	if ($_SESSION['s_nivel'] < 3) {
+/*	if ($_SESSION['s_nivel'] < 3) {
 		print "<TD align='right' width='10%' bgcolor='".BODY_COLOR."'><a onClick=\"javascript:popupS('form_send_mail.php?popup=true".
 			"&numero=".$row['numero']."')\">".TRANS('SEND_EMAIL')."</a></TD>"; //&nbsp;|&nbsp;
-	}
+	} */
 
 	$menuTable? print "</tr></table>":"";
-	
+
 
 	print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 
-				
+
 		Print "<tr>";
 			print "<td colspan='7'>";
 				print "<div id='divSla'>";
 					print "<input type='hidden' name='slaNumero' id='idSlaNumero' value='".$row['numero']."'>";
 					print "<input type='hidden' name='SCHEDULED' id='idScheduled' value='".$row['oco_scheduled']."'>";
 				print "</div>";
-            		print "</TD>";		
-		Print "</tr>";				
-				
-		
+            		print "</TD>";
+		Print "</tr>";
+
+
 		$getPriorityDesc = "SELECT * FROM prior_atend WHERE pr_cod = '".$row['oco_prior']."'";
 		$execGetPrior = mysql_query($getPriorityDesc);
 		$rowGet = mysql_fetch_array($execGetPrior);
@@ -206,7 +231,7 @@
 			print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' disabled></TD>";
 			//print "<TD width='30%' align='left'><input class='disable' value='".$rowGet['pr_desc']."' style='{background-color:".$rowGet['pr_color'].";}'; disabled></TD>";
 		print "</TR>";
-	
+
 	print "<TR>";
 		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('OCO_FIELD_NUMBER').":</TD>";
 		print "<TD width='30%' align='left'><input class='disable' value='".$row['numero']."' disabled></TD>";
@@ -220,7 +245,7 @@
 		$execQryScript = mysql_query($qryScript);
 		if (mysql_num_rows($execQryScript)>0)
 			$ShowlinkScript = "<a onClick=\"popup_alerta('../../admin/geral/scripts.php?action=popup&prob=".$row['prob_cod']."')\"><img height='16' width='16' src='".ICONS_PATH."help-16.png' title='".TRANS('HNT_SCRIPT_PROB')."'></a>";
-		
+
 		print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_PROB').":</TD>";
 		print "<TD width='30%' align='left' ><input class='disable' value='".$row['problema']."' disabled>".$ShowlinkScript."</TD>";
 		print "<TD width='20%' align='left' bgcolor='". TD_COLOR."'>".TRANS('FIELD_OPEN_BY').":</TD>";
@@ -346,47 +371,44 @@
 					"<b><font color='blue'><u><a onClick=\"popup_alerta_mini('mostra_hist_status.php?numero=".$COD."&popup=true')\">".
 					"".$row['chamado_status']."</u></a></font></b>".
 				"</TD>";
-			
-			
+
 			$qryId = "SELECT * FROM global_tickets WHERE gt_ticket = ".$COD."";
 			$execId = mysql_query($qryId);
-			$rowID = mysql_fetch_array($execId);			
-			
+			$rowID = mysql_fetch_array($execId);
+
 			$global_link = "";
 			if (!empty($rowID['gt_id'])) {
-				$global_link = $_SESSION['s_ocomon_site']."ocomon/geral/mostra_consulta.php?numero=".$COD."&id=".$rowID['gt_id'];
+				$global_link = $_SESSION['s_ocomon_site']."/ocomon/geral/mostra_consulta.php?numero=".$COD."&id=".$rowID['gt_id'];
 			} else {
 				$global_link = "<a href='".$_SERVER['PHP_SELF']."?numero=".$COD."&GEN=1'>".TRANS('GENERATE_GLOBAL_LINK')."</a>";
 			}
-			
-			
+
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('GLOBAL_LINK').":</td>".
-				"<td>".$global_link."</td>";
+				"<td><a href='$global_link'><font color='red'>".$global_link."</font></a></td>";
 		print "</TR>";
 
-		
+
 		if ($row['oco_scheduled']==1){
 			print "<tr>";
 			print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('OCO_FIELD_SCHEDULED_TO').":</TD>";
 			print "<TD width='30%' align='left' ><input class='disable' value='".$os_DataAgendamento."' disabled></TD>";
 			print "</tr>";
 		}
-		
-		
+
 // 		Print "<tr>";
 // 			print "<td colspan='7'>";
 // 				print "<div id='divSla'>";
 // 					print "<input type='hidden' name='slaNumero' id='idSlaNumero' value='".$row['numero']."'>";
 // 				print "</div>";
-//             		print "</TD>";		
+//             		print "</TD>";
 // 		Print "</tr>";
-		
+
 
 	}
 
 	if ($linhas != 0) { //ASSENTAMENTOS DO CHAMADO
 		print "<tr><td colspan='6'><IMG ID='imgAssentamento2' SRC='../../includes/icons/close.png' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento2')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas."</font>".
+				"STYLE=\"cursor: pointer;\" onClick=\"invertView('Assentamento2')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas."</font>".
 				" ".TRANS('FIELD_NESTING_FOR_OCCO').".</b></td></tr>";
 
 		//style='{padding-left:5px;}'
@@ -418,7 +440,7 @@
 		print "</table></div></td></tr>";
 	}
 
-	
+
 	if ($_SESSION['s_nivel']== 3) {
 		print "<form name='short' method='post' action='".$_SERVER['PHP_SELF']."'>";
 		print "<input type='hidden' name='hidNumero' id='idNumero' value='".$COD."'>";
@@ -429,7 +451,7 @@
 			print "<tr><td colspan='4'><input type='button' class='button' onClick=\"ajaxFunction('idDivDetails', 'insert_comment.php', 'idLoad', 'numero=idNumero');\" value='".TRANS('INSERT_COMMENT','Inserir comentário',0)."'></td></tr>";
 		//print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";//style='{display:none;}'
 		print "</form>";
-		print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";	
+		print "<tr><td colspan='4'><div id='idDivDetails'></div></td></tr>";
 	}
 		######################################################
 		## E-MAILS ENVIADOS SOBRE ESSA OCORRï¿½NCIA
@@ -441,16 +463,14 @@
 		{
 
 
-			print "<tr STYLE=\"{cursor: pointer;}\" onClick=\"invertView('idMail');\"><TD width='20%' bgcolor='".TD_COLOR."'>".
+			print "<tr STYLE=\"cursor: pointer;\" onClick=\"invertView('idMail');\"><TD width='20%' bgcolor='".TD_COLOR."'>".
 					"<img src='../../includes/icons/mail_generic.png' width='16px' height='16px' border='0'>&nbsp;".
 					"".TRANS('MAIL_SENT').":&nbsp;<IMG ID='imgidMail' SRC='../../includes/icons/open.png' width='9' height='9'>&nbsp;</td>".
 					"<td colspan='3'></td></tr>";
 
 
-			print "<tr><td colspan='6' ><div id='idMail' style='{display:none}'>"; //style='{display:none}'
+			print "<tr><td colspan='6' ><div id='idMail' style='display:none'>"; //style='{display:none}'
 			print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
-
-
 
 					print "<TABLE border='0' cellpadding='1' cellspacing='0' width='90%'>";
 					print "<tr class='header'>";
@@ -476,14 +496,14 @@
 							$shortBody = substr($shortBody,0,($limite-4))."...";
 						}
 
-						print "<tr class=".$trClass." id='imglinhax".$j."' onMouseOver=\"destaca('imglinhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('imglinhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('imglinhax".$j."','".$_SESSION['s_colorMarca']."');\" onClick=\"invertView('linhax".$j."');\" STYLE=\"{cursor: pointer;}\">";
+						print "<tr class=".$trClass." id='imglinhax".$j."' onMouseOver=\"destaca('imglinhax".$j."','".$_SESSION['s_colorDestaca']."');\" onMouseOut=\"libera('imglinhax".$j."','".$_SESSION['s_colorLinPar']."','".$_SESSION['s_colorLinImpar']."');\"  onMouseDown=\"marca('imglinhax".$j."','".$_SESSION['s_colorMarca']."');\" onClick=\"invertView('linhax".$j."');\" STYLE=\"cursor: pointer;\">";
 						print "<td class='line'>".$rowMail['mhist_subject']."</td><td class='line'>".NVL($rowMail['mhist_listname'])."</td>".
 							"<td class='line'>".$shortBody."</td>".
 							"<td class='line'>".formatDate($rowMail['mhist_date'])."</td><td class='line'>".$rowMail['nome']."</td>";
 						print "</tr>";
 
 
-						print "<tr><td colspan='6' ><div id='linhax".$j."' style='{display:none}'>"; //style='{display:none}'
+						print "<tr><td colspan='6' ><div id='linhax".$j."' style='display:none'>"; //style='{display:none}'
 						print "<TABLE border='0' cellpadding='2' cellspacing='0' width='90%'>";
 
 							print "<tr><td class='line'><b>".TRANS('MAIL_FIELD_TO').":</b> ".toHtml($rowMail['mhist_address'])."</td></tr>";
@@ -531,7 +551,6 @@
 	print "</table>";
 	print "<br>";
 
-
         $qrySubCall = "select * from ocodeps where dep_pai = ".$row['numero']."";
         $execSubCall = mysql_query($qrySubCall) or die(TRANS('MSG_ERR_RESCUE_INFO_SUBCALL').'<br>'.$qrySubCall);
 	$existeSub = mysql_num_rows($execSubCall);
@@ -552,10 +571,10 @@
 		}
 
 		print "<tr><td  colspan='6'><IMG ID='imgSubCalls' SRC='../../includes/icons/open.png' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('SubCalls')\">&nbsp;<b><img src='".$imgSub."' width='16' height='16' title='".TRANS('FIELD_CALL_SUBCALL_DEPEND').":</b></td></tr>";//<span style=\"background:yellow\">
+				"STYLE=\"cursor: pointer;\" onClick=\"invertView('SubCalls')\">&nbsp;<b><img src='".$imgSub."' width='16' height='16' title='".TRANS('FIELD_CALL_SUBCALL_DEPEND').":</b></td></tr>";//<span style=\"background:yellow\">
 
 		print "<tr><td colspan='6'></td></tr>";
-		print "<tr><td colspan='6'><div id='SubCalls' style='{display:none}'>"; //style='{display:none}'	//style='{padding-left:5px;}'
+		print "<tr><td colspan='6'><div id='SubCalls' style='display:none'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 		print "<TABLE border='0' style='{padding-left:10px;}' cellpadding='5' cellspacing='0' align='left' width='90%'>";
 		print "<tr class='header'><td class='line'>".TRANS('OCO_FIELD_NUMBER')."<br>".TRANS('OCO_AREA')."</td><td class='line'>".TRANS('OCO_FIELD_PROB')."</td><td class='line'>".TRANS('OCO_FIELD_CONTACT')."<br>".TRANS('OCO_PHONE')."</td><td class='line'>".TRANS('OCO_LOCAL')."<br>".TRANS('OCO_DESC')."</td><td class='line'>".TRANS('FIELD_LAST_OPERATOR')."<br>".TRANS('OCO_STATUS')."</td></tr>";
@@ -592,6 +611,46 @@
 
 print "</TABLE>";
 
+   print "<div id='modal_assentamento' title='Registro de atividades' style='display: none;' >";
+
+	print "Registrar Atividade:";
+	if (!$_SESSION['s_formatBarOco']) {
+		print "<TEXTAREA class='textarea' name='assentamento' id='idAssentamento' onkeyup=\"habilita_registro();\"></textarea>";
+	} else {
+		print "<script type='text/javascript' src='../../includes/fckeditor/fckeditor.js'></script>";
+	}
+	print "".TRANS('CHECK_ASSET_PRIVATED')."<input type='checkbox' id='idPrivado' name='check_asset_privated'>";
+
+   print "</div>";
+
+   $indicadores = array(
+        5=>"Muito satisfeito",
+        4=>"Satisfeito",
+        3=>"Indiferente",
+        2=>"Insatisfeito",
+	1=>"Muito insatisfeito",
+  );
+
+   print "<div id='modal_avaliacao' title='Inserir Avaliacao' style='display: none;'>";
+
+	print "<br>Insira sua avaliacao sobre este chamado:</b>";
+	print "<table>";
+	print "<tr>";
+	print "<TD colspan='2' width='20%' align='left' bgcolor='". TD_COLOR."'> Chamado: </td>";
+	print "<TD colspan='2' width='20%' align='left'> $COD  </td>";
+	print "<TD colspan='2' width='30%' align='left' bgcolor='". TD_COLOR."'>";
+	print "<p title='Indique o seu grau de satisfacao sobre o encerramento deste chamado'>Grau de Satisfacao: </p></td>";
+	print "<TD>";
+	print "<SELECT class='select'  id='cod_avaliacao'>";
+	for ( $i = sizeof($indicadores); $i >= 1; $i-- ){
+	    print "<option value='$i'> $i) $indicadores[$i] </option>";
+	}
+	print "</TD>";
+	print "</TR><TR>";
+	print "</table>";
+	print "<TEXTAREA class='textarea' name='desc_avaliacao' id='desc_avaliacao'></textarea>";
+
+   print "</div>";
 
 ?>
 <script type="text/javascript">
@@ -610,8 +669,113 @@ print "</TABLE>";
 			elementImg.src = address+'open.png';
 		}
 	}
+
+        function habilita_registro(){
+                var text_registro = document.getElementById("idAssentamento");
+                var button = $(".ui-dialog-buttonpane button:contains('OK')");
+                if(text_registro.value.length > 1){
+                        $(button).button("enable");
+                } else {
+                        $(button).button("disable");
+                }
+        }
+
+	$(function(){
+
+		$( "#modal_assentamento" ).dialog({
+                        open: function(){
+                                var button = $(".ui-dialog-buttonpane button:contains('OK')");
+                                $(button).button("disable");
+                        },
+			title: 'Registrar atividade',
+			autoOpen: false,
+			height: 250,
+			width: 600,
+			modal: true,
+			buttons: {
+				"OK": function(){
+					var registro = document.getElementById("idAssentamento").value;
+					var registro = registro.replace(/\n\r?/g, '<br />');
+					var registro = registro.replace(/'/g, '"');
+					var num = <?php print $COD; ?>;
+					var responsavel = <?php print $_SESSION['s_uid']; ?>;
+
+					if ( document.getElementById("idPrivado").checked == true) {
+						var privado = 1;
+					} else {
+						var privado = 0;
+					};
+
+					var url = "<?php print $rowConf['conf_ocomon_site']; ?>" + "/ocomon/geral/inserir_assentamentos.php?num=" + num + "&registro=" + registro + "&resp=" + responsavel +  "&privado=" + privado;
+					$.ajax({
+						type: "POST",
+						url: url,
+						async: false
+					});
+
+					$( this ).dialog( "close" );
+                                        var janela =  '<?php print "{$_SERVER['PHP_SELF']}?numero={$COD}"; ?>';
+                                        window.location.href = janela;
+				},
+			}
+		});
+
+		// janela Registro de Avaliacao
+		$( "#modal_avaliacao" ).dialog({
+			title: 'Registrar avaliacao',
+			autoOpen: false,
+			height: 270,
+			width: 600,
+			modal: true,
+			buttons: {
+				"OK": function(){
+					var cod = document.getElementById("cod_avaliacao").value;
+					var desc_avaliacao = document.getElementById("desc_avaliacao").value;
+					var desc_avaliacao = desc_avaliacao.replace(/\n\r?/g, '<br />');
+					var desc_avaliacao = desc_avaliacao.replace(/'/g, '"');
+					var ocorrencia = <?php print $COD; ?>;
+					var responsavel = <?php print $_SESSION['s_uid']; ?>;
+//					var url = "<?php print $rowConf['conf_ocomon_site']; ?>" + "/ocomon/geral/inserir_avaliacao.php?num=" + ocorrencia + "&desc=" + desc_avaliacao + "&login=" + responsavel +  "&cod=" + cod;
+					var url = "./inserir_avaliacao.php?num=" + ocorrencia + "&desc=" + desc_avaliacao + "&login=" + responsavel +  "&cod=" + cod;
+					console.log(url);
+					$.ajax({
+						type: "POST",
+						url: url,
+						async: false,
+                                                success: function(data) {
+							$("<p><font color='red'><b>Avaliacao concluida.<br>Avaliacao Registradao com Sucesso!</p></b></font>").dialog({
+								position: "top+70",
+								modal: true,
+								open: function(){
+									$( this ).siblings( 'div.ui-dialog-titlebar' ).remove();
+								},
+								buttons: {
+									"OK": function(){
+										$( "#modal_avaliacao" ).dialog( "close" );
+										$( this ).dialog( "close" );
+									},
+								},
+							});
+						},
+
+					});
+
+//					$( this ).dialog( "close" );
+				},
+			}
+		});
+
+		$( "#btn_registro" ).click(function() {
+			$( "#modal_assentamento" ).dialog( "open" );
+		});
+
+		$( "#btn_avaliacao" ).click(function() {
+			$( "#modal_avaliacao" ).dialog( "open" );
+		});
+	});
+
 </script>
-<?php 
+<?php
 print "</body>";
 print "</html>";
 ?>

@@ -316,8 +316,8 @@
         	print "<TR>";
                	print "<TD width='20%' align='left' bgcolor='".TD_COLOR."'>".TRANS('COL_DATE_BUY').":</TD>";
 		print "<TD  align='left' bgcolor='".BODY_COLOR."'><INPUT type='text' class='text' ".$readOnlyDateField." name='estoque_date_buy' id='idDatebuy'>".
-				"<a onclick=\"displayCalendar(document.forms[0].estoque_date_buy,'dd-mm-yyyy',this)\">".
-				"<img height='16' width='16' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'>".
+//				"<a onclick=\"displayCalendar(document.forms[0].estoque_date_buy,'dd-mm-yyyy',this)\">".
+//				"<img height='16' width='16' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('SEL_DATE')."'>".
 				"</a>".
 			"</TD>";
         	print "</TR>";

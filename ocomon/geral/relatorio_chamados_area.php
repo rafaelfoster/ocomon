@@ -20,6 +20,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	include ("../../includes/functions/funcoes_jquery.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
 
 	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
@@ -53,11 +54,11 @@
 		print "				</tr>";
 
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_BEGIN').":</td>";
-		print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_ini,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td class='line'><INPUT name='d_ini' class='data' id='idD_ini' value='01-".date("m-Y")."'></td>";
 		print "				</tr>";
 		print "				<tr>";
 		print "					<td bgcolor=".TD_COLOR.">".TRANS('OCO_FIELD_DATE_FINISH').":</td>";
-		print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'><a onclick=\"displayCalendar(document.forms[0].d_fim,'dd-mm-yyyy',this)\"><img src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='".TRANS('HNT_SEL_DATE')."'></a></td>";
+		print "					<td class='line'><INPUT name='d_fim' class='data' id='idD_fim' value='".date("d-m-Y")."'></td>";
 		print "				</tr>";
 
 		print "				<tr>";
@@ -113,8 +114,8 @@
 
 				print "<p align='center'>".TRANS('TTL_GENERAL_BOARD_CALL_ATTEND')."</p>";
 				print "<table cellspacing='0' border='1' align='center'>";
-				print "<tr><td class='line'><b>".TRANS('COL_ATTEN_AREA')."</b></TD><td colspan='3' align='center'><b>".TRANS('COL_CALL')."</b></td></tr>";
-				print "<tr><td class='line'>&nbsp;</td><td class='line'>".TRANS('COL_OPENED')."</td><td class='line'>".TRANS('COL_CLOSED')."</td><td class='line'>".TRANS('COL_CANCELLED')."</td></tr>";
+				print "<tr bgcolor='#339966'><td class='line'><b>".TRANS('COL_ATTEN_AREA')."</b></TD><td colspan='3' align='center'><b>".TRANS('COL_CALL')."</b></td></tr>";
+				print "<tr bgcolor='#339966'><td >&nbsp;</td><td class='line'>".TRANS('COL_OPENED')."</td><td class='line'>".TRANS('COL_CLOSED')."</td><td class='line'>".TRANS('COL_CANCELLED')."</td></tr>";
 
 
 				if (isset($_POST['area']) && ($_POST['area'] == -1)) {

@@ -98,10 +98,10 @@ function browser_version( $browser_user_agent, $search_string )
 
 	// which parameter is calling it determines what is returned
 	$start_pos = strpos( $browser_user_agent, $search_string );
-	
+
 	// start the substring slice 1 space after the search string
 	$start_pos += strlen( $search_string ) + 1;
-	
+
 	// slice out the largest piece that is numeric, going down to zero, if zero, function returns ''.
 	for ( $i = $string_length; $i > 0 ; $i-- )
 	{

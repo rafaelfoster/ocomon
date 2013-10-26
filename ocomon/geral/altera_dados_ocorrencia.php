@@ -330,11 +330,11 @@
 
 			if ($linhas2 !=0) { //ASSENTAMENTOS DO CHAMADO
 				print "<tr><td colspan='6'><IMG ID='imgAssentamento' SRC='../../includes/icons/open.png' width='9' height='9' ".
-						"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Assentamento')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas2."</font>".
+						"STYLE=\"cursor: pointer;\" onClick=\"invertView('Assentamento')\">&nbsp;<b>".TRANS('THERE_IS_ARE')." <font color='red'>".$linhas2."</font>".
 						" ".TRANS('FIELD_NESTING_FOR_OCCO')."</b></td></tr>";
 
 				//style='{padding-left:5px;}'
-				print "<tr><td colspan='6' ><div id='Assentamento' style='{display:none}'>"; //style='{display:none}'
+				print "<tr><td colspan='6' ><div id='Assentamento' style='display:none'>"; //style='{display:none}'
 				print "<TABLE border='0'  align='center' width='100%' bgcolor='".BODY_COLOR."'>";
 				$i = 0;
 				while ($rowAssentamento = mysql_fetch_array($resultado2)){

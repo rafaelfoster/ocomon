@@ -55,7 +55,12 @@ print "<TABLE border='0'  align='left'  width='40%'>";
                 $linhas = mysql_numrows($resultado);
                 while ($row = mysql_fetch_array($resultado))
                 {
-			print "<option value='".$row['inst_cod']."' selected>".$row['inst_nome']."</option>";
+                        if ( $row['inst_nome'] == "Matriz" ){
+				print "<option value='".$row['inst_cod']."' selected >".$row['inst_nome']."</option>";
+			} else {
+				print "<option value='".$row['inst_cod']."' >".$row['inst_nome']."</option>";
+			}
+//			print "<option value='".$row['inst_cod']."' selected>".$row['inst_nome']."</option>";
 		}
 			print "<option value=-1>".TRANS('ALL')."</option>";
 		print "</SELECT>";

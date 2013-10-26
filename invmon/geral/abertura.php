@@ -122,10 +122,7 @@
 		print "<tr><td width=60% align=center><input type='button' class='button' value='".TRANS('grafico','Gráfico',0)."' ".
 			"onClick=\"return popup('graph_geral_barras.php?".$valores."&".$nome."&instituicao=".$msgInst."')\"></td></tr>";
 
-
-		print "<tr><td width=60% align=center><b>".TRANS('em_desenv')." <a ".
-			"href=http://www.intranet.lasalle.tche.br/cinfo/helpdesk TARGET=_blank title='".TRANS('hint_desenv')."'>".
-			"Helpdesk Unilasalle</a>.</b></td></tr>";
+		print "<tr align'center'><td width=60% align=center><b> Modulo de Inventarios - <a href='".$rowconfig['conf_ocomon_site']."'> Inventarios - Sistema de Gestao de Chamados </a>.</b></td></tr>";
 
 
 		print "</TABLE>";
@@ -133,6 +130,15 @@
 
 	$cab->set_foot();
 
+
 ?>
 
+<script type='text/javascript'>
 
+	function popup(pagina)  { //Exibe uma janela popUP
+		x = window.open(pagina,'popup','dependent=yes,width=800,height=600,scrollbars=yes,statusbar=no,resizable=yes');
+		x.moveTo(window.parent.screenX+100, window.parent.screenY+100);
+		return false
+	}
+
+</script>

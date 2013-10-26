@@ -21,8 +21,10 @@
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
 
+	$imgsPath = "../../includes/imgs/";
+
 	$auth = new auth;
-	$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
+		$auth->testa_user_hidden($_SESSION['s_usuario'],$_SESSION['s_nivel'],$_SESSION['s_nivel_desc'],4);
 
 				if (isset($_GET['unidade']) && isset($_GET['etiqueta'])) {
 					$qryDesc = "SELECT * FROM equipamentos where comp_inst = '".$_GET['unidade']."' AND comp_inv ='".$_GET['etiqueta']."' ";
@@ -52,10 +54,10 @@
 							else if (isset($_REQUEST['invLoc']) && $rowi['loc_id'] == $_REQUEST['invLoc']) print " selected"; 
 							//------------------------------------------------------------- FIM ALTERACAO --------------------------------------------------------------
 							//if ($rowi['loc_id'] == $rowDesc['comp_local']) print " selected";
-						print ">".$rowi['local']." - ".$rowi['predio']."</option>";
+						print ">".$rowi['local']." ".$rowi['predio']."</option>";
 					}
 				print "</SELECT>";
-
+				print "<a onClick=\"checa_por_local()\"> &nbsp;&nbsp;<img title='".TRANS('CONS_EQUIP_LOCAL')."' width='15' height='15' src='".$imgsPath."consulta.gif' border='0'></a>";
 
 	                //print "</TD>";
 

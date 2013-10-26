@@ -2,7 +2,8 @@
 
 print "<HTML><HEAD><TITLE>-=[InvMon - Monitor de Inventário]=-</TITLE></HEAD>";
 
-print "<link REL= 'SHORTCUT ICON' HREF='favicon.ico'>";
+print "<link REL= 'SHORTCUT ICON' HREF='./includes/icons/fiv.gif'>";
+//print "<link REL= 'SHORTCUT ICON' HREF='favicon.ico'>";
 
 print "<body bgcolor=".BODY_COLOR." onLoad='document.logar.login.focus()'>";
 print "<FONT FACE='Arial, Helvetica'>";

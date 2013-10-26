@@ -20,6 +20,7 @@
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
+	include ("../../includes/functions/funcoes_jquery.php");
 	print "<link rel='stylesheet' href='../../includes/css/calendar.css.php' media='screen'></LINK>";
 
 	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
@@ -52,11 +53,11 @@ if ($ok != 'Pesquisar')
 	print "				</tr>";
 	print "				<tr>";
 	print "					<td bgcolor=".TD_COLOR.">Data Inicial:</td>";
-	print "					<td class='line'><INPUT name='d_ini' class='data'><a href=\"javascript:cal1.popup();\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td class='line'><INPUT id='idD_ini' name='d_ini' class='data'></td>";
 	print "				</tr>";
 	print "				<tr>";
 	print "					<td bgcolor=".TD_COLOR.">Data Final:</td>";
-	print "					<td class='line'><INPUT name='d_fim' class='data'><a href=\"javascript:cal2.popup();\"><img height='14' width='14' src='../../includes/javascript/img/cal.gif' width='16' height='16' border='0' alt='Selecione a data'></a></td>";
+	print "					<td class='line'><INPUT id='idD_fim' name='d_fim' class='data'></td>";
 	print "				</tr>";
 
 	print "				<tr>";
@@ -170,7 +171,7 @@ else //if $ok==Pesquisar
 						case -1:
 
                             echo "<br><br>";
-							$background = '#CDE5FF';
+							$background = '#339966';
 							print "<p class='titulo'>RELATÓRIO DE SLAS: INDICADORES DE RESPOSTA e INDICADORES DE SOLUÇÃO</p>";
                             print "<table class='centro' cellspacing='0' border='1' >";
 

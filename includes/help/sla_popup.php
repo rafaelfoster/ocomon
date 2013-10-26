@@ -21,7 +21,7 @@ print "</head><body class='corpo'>";
         print "<tr class='linha'><td valign='top'><img height='14' width='14' src='../../includes/imgs/checked.png'></td><td class='line'>Indica que o chamado já teve um primeiro atendimento.</td></tr>";
         print "</table>";
     } else {
-        print "<p>SLA - Tempo de solucão: baseado no tipo de problema do chamado.</p>";
+        print "<p>SLA - Tempo de solucão: baseado no tipo de problema do chamado.o<p>";
         print "<table class='pop'>";
         print "<tr class='linha'><td valign='top'><img height='14' width='14' src='../../includes/imgs/sla1.png'></td><td class='line'>Indica que o chamado ainda não foi concluído mas está dentro do prazo estipulado para sua solução;</td></tr>";
         print "<tr class='linha'><td valign='top'><img height='14' width='14' src='../../includes/imgs/sla2.png'></td><td class='line'>Indica que o chamado ainda não foi concluído e o tempo decorrido deste a sua abertura está até 20% acima do limite máximo estipulado para sua solução;</td></tr>";

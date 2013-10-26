@@ -1,4 +1,4 @@
-<?php 
+<?php
  /*                        Copyright 2005 Flávio Ribeiro
 
          This file is part of OCOMON.
@@ -26,7 +26,7 @@
 	$hoje = date("d-m-Y H:i:s");
 	$hojeDia = date("y-m-d");
 	$hoje_termo = date("d/m/Y H:i:s");
-	$logo = LOGO_PATH.'/logo_lasalle.gif';
+	$logo = LOGO_PATH.'/logo_lasalle.png';
 
 
 
@@ -44,7 +44,7 @@
 		$header = $_REQUEST['header'];
 
 
-	print "<div id='idLoad' class='loading' style='{display:none}'><img src='../../includes/imgs/loading.gif'></div>";
+	print "<div id='idLoad' class='loading' style='display:none'><img src='../../includes/imgs/loading.gif'></div>";
 
 
 	$qry = "SELECT conf_page_size AS page FROM config";
@@ -239,7 +239,7 @@
 
 
 	if (empty($logico)) {
-		$logico = " and ";
+		$logico = " AND ";
 	}
 
 	if (empty($sinal)) {
@@ -386,7 +386,7 @@
 	if (isset($_REQUEST['comp_nome'])) {
 		if (!empty($_REQUEST['comp_nome'])) {
 			$comp_nome_flag = true;
-			$query.= "$logico (c.comp_nome = ".$_REQUEST['comp_nome'].") ";
+			$query.= "$logico (c.comp_nome = '".$_REQUEST['comp_nome']."') ";
 		}
         }
 
@@ -1017,15 +1017,15 @@
 			print "<p class='parag'>".TRANS('TXT_TERM_COMP_HW')."</p>";
 			print "<br>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' >";//bgcolor= 'black'
-			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+			$color = "#339966";
+			print "<TR><font color='white'><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_NF')."</TD>".
-				"</tr>";
+				"</font></tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='transito') {
@@ -1036,15 +1036,15 @@
 			print "<p class='parag'>".TRANS('TXT_FORM_TRANSIT_EQUIP_INFO')."</p>";
 			print "<br>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='80%' >";//bgcolor= 'black'
-			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
+			$color = "#339966";
+			print "<TR><font color='white'><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_UNIT')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_MODEL')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_SN')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_NF')."</TD>".
-				"</tr>";
+				"</font></tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='config') {
@@ -1062,8 +1062,8 @@
 			print "<TR><TD bgcolor='".TD_COLOR."'><B>".TRANS('FOUND')." <font color='red'>".$linhas."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>: </B></TD></TR>";
 			print "<TR><TD bgcolor='".TD_COLOR."'><B><a href='consulta_comp.php'>[ ".TRANS('LINK_NEW_REPORT')." ]</a>.</B></TD></TR>";
 			print "<TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='100%'  bgcolor='white'>";//
-			$color = "#A3A352";
-			print "<TR><TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('OCO_FIELD_TAG')."</a></TD>
+			$color = "#339966";
+			print "<TR><font color='white'><TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('OCO_FIELD_TAG')."</a></TD>
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=instituicao,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('FIELD_INSTITUTION')."</a></TD>
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_TYPE')."</a></TD>
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_MODEL')."</a></TD>
@@ -1071,13 +1071,13 @@
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=nota&visualiza=relatorio".$param."&header=".$header."'>".TRANS('FIELD_FISCAL_NOTES')."</a></TD>
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=situac_nome,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_SITUAC')."</a></TD>
 				<TD bgcolor='".$color."'><b><a href='mostra_consulta_comp.php?ordena=local,equipamento,fab_nome,modelo,etiqueta&visualiza=relatorio".$param."&header=".$header."'>".TRANS('COL_LOCALIZATION')."</a></TD>
-				</tr>";
+				</font></tr>";
 		} else
 
 		if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='mantenedora1') {
 			print cabecalho($logo,'<a href=abertura.php>OcoMon</a>',$hoje,TRANS('TTL_REPORT_INV_EQUIP_INFO')."<br>".$texto."");
 			print "<br><br><TABLE border='0' cellpadding='4' cellspacing='1' align='center' width='100%' bgcolor= white>";
-			$color = "#A3A352";
+			$color = "#339966";
 			print "<TR><TD bgcolor='".$color."'><b>".TRANS('OCO_FIELD_TAG')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_TYPE')."</TD>".
 				"<TD bgcolor='".$color."'><b>".TRANS('COL_MANUFACTURE')."</TD>".
@@ -1114,8 +1114,8 @@
 			print "<FORM method='post' action='".$_SERVER['PHP_SELF']."'>";
 			print "<TR>";
 			$min++;
-			$stilo = "style='{height:17px; width:30px; background-color:#DDDCC5; color:#5E515B; font-size:11px;}'"; //Estilo dos botões de navegação
-			$stilo2 = "style='{height:17px; width:50px; background-color:#DDDCC5; color:#5E515B;font-size:11px;}'";
+			$stilo = "style='height:17px; width:30px; background-color:#DDDCC5; color:#5E515B; font-size:11px;'"; //Estilo dos botões de navegação
+			$stilo2 = "style='height:17px; width:50px; background-color:#DDDCC5; color:#5E515B;font-size:11px;'";
 			//if ($avanca==$TRANS["bt_todos"]) {$top=$linhasTotal;} else$top=$min+($max-1);
 			print "<TD width='750' align='left' ><B>".TRANS('FOUND')." <font color='red'>".$linhasTotal."</font> ".TRANS('TXT_REG_ORDER_BY')." <u>".$traduzOrdena."</u>. ".TRANS('TXT_SHOW_OF')." <font color='red'>".$min."</font> ".TRANS('TXT_THE')." <font color='red'>".$top."</font>.</B></TD>";
 			//print "<TD width='50' align='left' ></td>";
@@ -1316,59 +1316,59 @@
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_TAG')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('OCO_FIELD_TAG')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_SN')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['serial']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['serial']."</P>";
 				print "			</TH>";
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_MODEL')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_MODEL')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['modelo']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['modelo']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_NF')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_NF')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['nota']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['nota']."</P>";
 				print "			</TH>";
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['situac_nome']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['situac_nome']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='10%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['local']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['local']."</P>";
 				print "			</TH>";
 				print "		</TR>";
 				print "		<TR VALIGN='TOP'>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['instituicao']."</P>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['instituicao']."</P>";
 				print "			</TH>";
 				print "			<TD WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><BR>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><BR>";
 				print "				</P>";
 				print "			</TD>";
 				print "			<TH WIDTH='20%'>";
-				print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><BR>";
+				print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><BR>";
 				print "				</P>";
 				print "			</TH>";
 				print "		</TR>";
@@ -1403,7 +1403,7 @@
 		}
 
 		//Linha que mostra o total de registros mostrados
-		$cor2='#A8A8A8';
+		$cor2='#339966';
 
 	print "</TABLE><br><br>";
 		//print "</fieldset>";
@@ -1475,7 +1475,6 @@
 		print "<p class='parag'>".TRANS('TXT_SIGNATURE').":__________________________________</P>";
 		print "<p class='parag'>".TRANS('TXT_CITY').", ".$hoje_termo.".</p>";
 		print "<br><br><br><br><br>";
-		print "<div id='footer'><B><a href=abertura.php>OcoMon</a> - ".TRANS('TXT_DIFINE_OCOMON')."</B></div>";
 		print "</div>";
 	} else
 
@@ -1512,59 +1511,59 @@
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(".TRANS('OCO_FIELD_TAG').")."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(".TRANS('OCO_FIELD_TAG').")."</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><a href='mostra_consulta_inv.php?comp_inv=".$row['etiqueta']."&comp_inst=".$row['cod_inst']."'>".$row['etiqueta']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_SN')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($row['serial'])."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper($row['serial'])."</P>";
 			print "			</TH>";
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_MODEL')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_MODEL')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['modelo']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['modelo']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_NF')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_NF')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['nota']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['nota']."</P>";
 			print "			</TH>";
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_SITUAC')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['situac_nome']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['situac_nome']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_LOCALIZATION')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='10%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['local']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['local']."</P>";
 			print "			</TH>";
 			print "		</TR>";
 			print "		<TR VALIGN='TOP'>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('OCO_FIELD_UNIT')).":</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$row['instituicao']."</P>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'>".$row['instituicao']."</P>";
 			print "			</TH>";
 			print "			<TD WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><BR>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><BR>";
 			print "				</P>";
 			print "			</TD>";
 			print "			<TH WIDTH='20%'>";
-			print "				<P ALIGN='LEFT' STYLE='{font-weight: medium}'><BR>";
+			print "				<P ALIGN='LEFT' STYLE='font-weight: medium'><BR>";
 			print "				</P>";
 			print "			</TH>";
 			print "		</TR>";
@@ -1657,11 +1656,11 @@
 
 
 				print "<TR>";
-				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper($rowPiece['item_nome']).":</P></td>";
-				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".$rowPiece['fabricante']." ".$rowPiece['modelo']." ".$rowPiece['capacidade']." ".$rowPiece['sufixo'].":</P></td>";
+				print "<td><P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper($rowPiece['item_nome']).":</P></td>";
+				print "<td><P ALIGN='LEFT' STYLE='font-weight: medium'>".$rowPiece['fabricante']." ".$rowPiece['modelo']." ".$rowPiece['capacidade']." ".$rowPiece['sufixo'].":</P></td>";
 
 				//print "<TD align='left' bgcolor='".TD_COLOR."'><b>".TRANS('COL_SN').":</b></TD>";
-				print "<td><P ALIGN='LEFT' STYLE='{font-weight: medium}'>".strtoupper(TRANS('COL_SN')).":</P></td>";
+				print "<td><P ALIGN='LEFT' STYLE='font-weight: medium'>".strtoupper(TRANS('COL_SN')).":</P></td>";
 				print "<TD align='left' ><a onClick=\"popup('estoque.php?action=details&cod=".$rowPiece['estoq_cod']."&cellStyle=true')\">".$rowPiece['estoq_sn']."</a></TD>";
 
 				print "</tr>";
@@ -1685,7 +1684,7 @@
 
 	if (isset($_REQUEST['visualiza'])  && $_REQUEST['visualiza'] =='relatorio') {
 
-		$color = "#A3A352";
+		$color = "#339966";
                 print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
 		$i=0;
 		$j=2;
@@ -1694,10 +1693,10 @@
 			{
 				if (($row['situac_destaque']=='1')) { //Situação de destaque
 					$color='#FF0000';
-					$alerta = "style='{color:white;}'";
+					$alerta = "style='color:white;'";
 				} else {
-					$color =  "#C8C8C8";
-					$alerta = "";
+					$color =  "#CCFFCC";
+					$alerta = "style='color:black;'";
 				}
 			}
 			else
@@ -1706,12 +1705,12 @@
 				if (($row['situac_destaque']=='1'))
 				{
 					$color='#FF0000';
-					$alerta = "style='{color:white;}'";
+					$alerta = "style='color:white;'";
 				}
 				else
 				{
-					$color =  "#EAEAEA";
-					$alerta = "";
+					$color =  "white";
+					$alerta = "style='color:black;'";
 				}
 			}
 			$j++;
@@ -1733,16 +1732,16 @@
 
 
 		//Linha que mostra o total de registros mostrados
-		$cor2='#A8A8A8';
+		$cor2='#339966';
 		print "<TR><TD colspan='6' bgcolor='".$cor2."'><b></TD>".
-				"<TD bgcolor='".$cor2."'><b>".TRANS('TOTAL')."</TD>".
+				"<TD bgcolor='".$cor2."'><b><font color='white'>".TRANS('TOTAL')."</TD>".
 				"<TD bgcolor='".$cor2."'><b><font color='red'>".$linhas."</font></TD>".
 			"</tr>";
 
 		print "</TABLE><br>";
 
 		print "<table width='90%'>".
-				"<tr><td class='line'><b><a href='abertura.php'>".TRANS('MENU_TTL_MOD_INV')."</a>. ".TRANS('OCO_DATE').": ".$hoje."</b></td>".
+				"<tr><td class='line'><b><a href='abertura.php'> HelpDesk - OCOMON </a>. ".TRANS('OCO_DATE').": ".$hoje."</b></td>".
 				"</tr>".
 			"</table>";
 
@@ -1753,17 +1752,17 @@
 		print "<link rel='stylesheet' type='text/css' href='./css/estilos.css.php'>";
 		$i=0;
 		$j=2;
-		$cor2="#A8A8A8";
+		$cor2="#339966";
 		while ($row = mysql_fetch_array($resultado)) {
 			if ($j % 2)
 			{
-				$color = '#C8C8C8';//BODY_COLOR;
-				$alerta = "style='{color:white;}'";
+				$color = '#CCFFCC';//BODY_COLOR;
+				$alerta = "style='color:black;'";
 			}
 			else
 			{
-				$color = '#EAEAEA';
-				$alerta = "";
+				$color = 'white';
+				$alerta = "style='color:black;'";
 			}
 			$j++;
 
@@ -1801,13 +1800,13 @@
 			"<TD bgcolor='".$cor2."'><b></TD>".
 			"<TD bgcolor='".$cor2."'><b></TD>".
 			"<TD bgcolor='".$cor2."'><b></TD>".
-			"<TD bgcolor='".$cor2."'><b>TOTAL</TD>".
+			"<TD bgcolor='".$cor2."'><b><font color='white'>TOTAL</TD>".
 			"<TD bgcolor='".$cor2."'><b><font color='red'>".$linhas."</font></TD>".
 			"</tr>";
 
 		print "</TABLE><br>";
 
-		print "<table width='90%'><tr><td class='line'><b><a href='abertura.php'>OcoMon</a> - ".TRANS('TXT_DIFINE_OCOMON')." ".TRANS('OCO_DATE').": ".$hoje.".</b></td></tr></table>";
+		print "<table width='90%'><tr><td class='line'><b><a href='abertura.php'> HelpDesk - OCOMON </a> - ".TRANS('OCO_DATE').": ".$hoje.".</b></td></tr></table>";
 
 	}  else
 
@@ -1850,7 +1849,7 @@
 	else ####### Mostra Consulta normal na tela principal do sistema!!
 	{
 		print "<fieldset><legend>".TRANS('MNL_VIS_EQUIP')."</legend>";
-		print "<TABLE border='0' cellpadding='3' cellspacing='0' align='center' width='100%'>";
+		print "<TABLE border='0' cellpadding='3' cellspacing='0' align='center' width='100%' id='tabela_consultgeral'>";
 		print "<TR class='header'>".
 				"<TD class='line' valign='middle'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=etiqueta&coluna=etiqueta&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_TAG').".'>".TRANS('OCO_FIELD_TAG')."</a>".$ICON_ORDER['etiqueta']."</TD>".
 				"<td class='line'><b><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?ordena=instituicao,etiqueta&coluna=instituicao&ordenado=".$ordenado."&".$param."')\" title='".TRANS('HNT_ORDER_BY_UNIT')."'.>".TRANS('OCO_FIELD_UNIT')."</a>".$ICON_ORDER['instituicao']."</TD>".
@@ -1872,7 +1871,7 @@
 			{
 				if (($row['situac_destaque']=='1')) {//Situação com destaque
 					$color="#FF0000";
-					$alerta = "style='{color:white;}'";
+					$alerta = "style='color:white;'";
 					$trClass = "lin_alerta_par";
 					$corDestaque = '#FF0000';
 				} else {
@@ -1886,7 +1885,7 @@
 			{
 				if (($row['situac_destaque']=='1')) {
 					$color='#FF0000';
-					$alerta = "style='{color:white;}'";
+					$alerta = "style='color:white;'";
 					$trClass = "lin_alerta_impar";
 					$corDestaque = '#FF0000';
 				} else {
@@ -1916,7 +1915,7 @@
 			}
 			print "</TR>";
 
-			print "<tr id='idTr".$j."' style='{display:none;}'><td colspan='8'><div id='idDivLinha".$j."' style='{display:none;}'></div></td></tr>";
+			print "<tr id='idTr".$j."' style='display:none;'><td colspan='8'><div id='idDivLinha".$j."' style='display:none;'></div></td></tr>";
 			print "<input type='hidden' name='etiquetaAjax".$j."' id='idEtiqueta".$j."' value='".$row['etiqueta']."'>";
 			print "<input type='hidden' name='unidadeAjax".$j."' id='idUnidade".$j."' value='".$row['cod_inst']."'>";
 			print "<input type='hidden' name='INDIV' id='idINDIV' value='INDIV'>";

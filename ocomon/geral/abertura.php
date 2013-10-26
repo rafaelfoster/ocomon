@@ -1,3 +1,5 @@
+<meta http-equiv="refresh" content="120">
+
 <?php session_start();
  /*                        Copyright 2005 Flávio Ribeiro
 
@@ -20,46 +22,57 @@
 
 	if (!isset($_SESSION['s_logado']) || $_SESSION['s_logado'] == 0)
 	{
-	        print "<script>window.open('../../index.php','_parent','')</script>";
+	        print "<script>window.open('../../index.php','_parent','') </script>";
 		exit;
 	}
 
 	include ("../../includes/include_geral.inc.php");
 	include ("../../includes/include_geral_II.inc.php");
-
 	include ("../../includes/classes/paging.class.php");
+
 	$PAGE = new paging;
 	$PAGE->setRegPerPage(10);
-
 
 	$_SESSION['s_page_ocomon'] = $_SERVER['PHP_SELF'];
 	//$_SESSION['s_page_ocomon'] = basename($_SERVER['PHP_SELF']);
 
-	$imgsPath = "../../includes/imgs/";
+		$imgsPath = "../../includes/imgs/";
 
 
 	//$hoje = date("Y-m-d H:i:s");
 	$valign = " VALIGN = TOP ";
 
 	if ($_SESSION['s_nivel']>2){
-			print "<script>window.open('../../index.php','_parent','')</script>";
+		print "<script>window.open('../../index.php','_parent','')</script>";
 	}
 
 	print "<html>";
 	print "<head>";
 
+	echo "<div id='teste'></div>";
+
 	?>
 	<script type="text/javascript">
 
-		function popup(pagina)	{ //Exibe uma janela popUP
-			x = window.open(pagina,'popup','dependent=yes,width=400,height=200,scrollbars=yes,statusbar=no,resizable=yes');
-			x.moveTo(window.parent.screenX+100, window.parent.screenY+100);
-			return false
+		function popup_jquery(pagina,tamX,tamY) {
+		   	$('#teste').dialog({
+				modal: true,
+				open: function ()
+				{
+				     $(this).load(pagina);
+				},
+				height: tamX,
+				width: tamY,
+				title: "Aviso!"
+			});
+
 		}
-		window.setInterval("redirect('abertura.php')",120000);
+
+
 	</script>
 
-	<?php 
+	<?php
+
 	print "</head>";
 	$auth = new auth;
 	if (isset($_GET['popup'])) {
@@ -73,9 +86,6 @@
 		print "<div class='bubble_middle'><span id='bubble_tooltip_content'></span></div>";
 		print "<div class='bubble_bottom'></div>";
 	print "</div>";
-
-
-
 
 	$dt = new dateOpers; //Criado o objeto $dt
 	$dta = new dateOpers;
@@ -105,9 +115,9 @@
 		print "<TR>";
 		print "<TD>";
 		//STYLE='{border-bottom:  thin solid #999999; }'
-		print "<TABLE class='header_centro' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
+		print "<TABLE id='tabela_consultgeral' class='header_centro' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
 		print "<TR class='header'>";
-		print "<TD>".TRANS('OCO_DATE','Data')."</TD><TD>".TRANS('OCO_NOTICE','Aviso')."</TD><TD>".TRANS('OCO_RESP','Responsável')."</TD><TD>".TRANS('OCO_TOAREA','Para área')."</TD>";
+		print "<TD>".TRANS('OCO_DATE','Data')."</TD><TD>".TRANS('OCO_NOTICE','Aviso')."</TD><TD>".TRANS('OCO_RESP','Responsï¿½vel')."</TD><TD>".TRANS('OCO_TOAREA','Para ï¿½rea')."</TD>";
 		$j=2;
 		while ($resposta = mysql_fetch_array($resultado))
 		{
@@ -119,13 +129,13 @@
 			$j++;
 
 			print "<TR class='".$trClass."'>";
-			print "<TD  class='line'>".formatDate($resposta['data'])."</TD>";
-			print "<TD class='line'>".nl2br($resposta['avisos'])."</TD>";
-			print "<TD class='line'>".$resposta['login']."</TD>";
+			print "<TH  class='line'>".formatDate($resposta['data'])."</TH>";
+			print "<TH class='line'>".nl2br($resposta['avisos'])."</TH>";
+			print "<TH class='line'>".$resposta['login']."</TH>";
 			if (isIn($resposta['sis_id'],$uareas))
 				$area_aviso = $resposta['sistema']; else
 				$area_aviso = "".TRANS('OCO_ALL_AREAS','TODAS')."";
-			print "<TD class='line'>".$area_aviso."</TD>";
+			print "<TH class='line'>".$area_aviso."</TH>";
 			print "</TR>";
         	}
 		print "</TR>";
@@ -144,7 +154,6 @@
         print "</TR>";
 
         print "<TD class='line' >";
-
         $query = "SELECT aviso_id FROM avisos WHERE upper(status) = 'NORMAL' and area in (".$uareas.")"; //area=".$_SESSION['s_area'].")
         $resultado = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
         $linhas = mysql_num_rows($resultado);
@@ -161,11 +170,6 @@
                 print "<TR><TD class='line' >".TRANS('FOUND_ONE','Foi encontrado')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_LENDING_ONE','empréstimo pendente para este usuário').".</TD></TR><BR>";
         if ($linhas>1)
                 print "<TR><TD class='line' ><b>".TRANS('FOUND','Foram encontrados')."&nbsp;".$linhas."&nbsp;".TRANS('OCO_LENDING','empréstimos pendentes para este usuário').".</b></TD></TR><tr><td class='line'>&nbsp;</td></tr>";
-
-
-
-
-
 
 
         #######################################################
@@ -185,33 +189,33 @@
 
 
 			if (!isset($_SESSION['CHAVE2'])) {
-				$_SESSION['CHAVE2'] = "{display:none}";
+				$_SESSION['CHAVE2'] = "display:none";
 				$_SESSION['ICON_CHAVE2']="open.png";
 			} else
 			if (isset($_GET['CHAVE2'])) {
 				if ($_GET['CHAVE2'] == "") {
-					$_SESSION['CHAVE2'] = "{display:none}";
+					$_SESSION['CHAVE2'] = "display:none";
 					$_SESSION['ICON_CHAVE2']="open.png";
 				} else {
-					$_SESSION['CHAVE2'] = "";
+					$_SESSION['CHAVE2'] = "display:none";
 					$_SESSION['ICON_CHAVE2']="close.png";
 				}
 			}
 
   			if (!isset($_SESSION['ICON_CHAVE2'])) {
-  				$_SESSION['ICON_CHAVE2']="open.png";
+  				$_SESSION['ICON_CHAVE2']="close.png";
   			}
 
 
 			print "<tr><TD><IMG ID='imgAgendados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE2']."' width='9' height='9' ".
-				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Agendados') ; ajaxFunction('idDivSessionAgendados', 'updateCollapseSession.php', 'idLoad', 'CHAVE2=idChave2');".
+				"STYLE=\"cursor: pointer;\" onClick=\"invertView('Agendados') ; ajaxFunction('idDivSessionAgendados', 'updateCollapseSession.php', 'idLoad', 'CHAVE2=idChave2');".
 				"\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
 				"".TRANS('OCO_SCHEDULED')."&nbsp; ".TRANS('OCO_IN_THE_SYSTEM')."</b></td></tr>";
 
 			if (isset($_SESSION['CHAVE2'])){
 				print "<input type='hidden' name='chave2' id='idChave2' value='".$_SESSION['CHAVE2']."'>";
 			}
-			print "<div id='idDivSessionAgendados' style='{display:none;}'></div>";
+			print "<div id='idDivSessionAgendados' style='display:none;'></div>";
 
 
 		} else {
@@ -219,7 +223,7 @@
 		}
 
 		print "<tr><td colspan='4'></td></tr>";
-		$style_chave2 = "";
+		$style_chave2 = "display:none";
 		if (isset($_SESSION['CHAVE2'])){
 			$style_chave2 = $_SESSION['CHAVE2'];
 		}
@@ -272,9 +276,9 @@
 				}
 			}
 			if ($comDeps) {
-				$imgSub = "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'></a>";
+				$imgSub = "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php',200,200)\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'></a>";
 			} else
-				$imgSub =  "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'></a>";
+				$imgSub =  "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php',300,400)\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'></a>";
 		} else
 			$imgSub = "";
 
@@ -283,8 +287,8 @@
 		print "<TD  class='line'  ".$valign."><b>".$rowAT['contato']."</b><br>".$rowAT['telefone']."</TD>";
 		print "<TD  class='line'  ".$valign."><b>".$rowAT['setor']."</b><br>";
 		$texto = trim($rowAT['descricao']);
-		if (strlen($texto)>200){
-			$texto = substr($texto,0,195)." ..... ";
+		if (strlen($texto)>100){
+			$texto = substr($texto,0,100)." ..... ";
 		};
 	        print "<a class='no' href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$texto."</a>";
 	        print "</TD>";
@@ -418,7 +422,8 @@
         //OCORRÊNCIAS VINCULADAS AO OPERADOR
         //PAINEL 1 É O PAINEL SUPERIOR DA TELA DE ABERTURA
 
-	$query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (1) and o.operador = ".$_SESSION['s_uid']." ".
+//	$query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel in (1) and o.operador = ".$_SESSION['s_uid']." ".
+	$query = $QRY["ocorrencias_full_ini"]." WHERE s.stat_painel not in (3) and o.operador = ".$_SESSION['s_uid']." ".
 				"and o.oco_scheduled=0 ORDER BY numero";
 	$resultado_oco = mysql_query($query) or die (TRANS('ERR_QUERY').$query);
         $linhas = mysql_num_rows($resultado_oco);
@@ -453,12 +458,12 @@
 // 				"".TRANS('OCO_PENDING')."</font>&nbsp;".TRANS('OCO_TO_USER','para o usuário')."&nbsp;".$_SESSION['s_usuario'].".</b></td></tr>";
 
  			print "<tr><TD><IMG ID='imgVinculados' SRC='../../includes/icons/".$_SESSION['ICON_CHAVE']."' width='9' height='9' ".
- 				"STYLE=\"{cursor: pointer;}\" onClick=\"invertView('Vinculados') ; ajaxFunction('idDivSessionPendentes', 'updateCollapseSession.php', 'idLoad', 'CHAVE=idChave');".
+ 				"STYLE=\"cursor: pointer;\" onClick=\"invertView('Vinculados') ; ajaxFunction('idDivSessionPendentes', 'updateCollapseSession.php', 'idLoad', 'CHAVE=idChave');".
  				"\">&nbsp;<b>".TRANS('THEREARE','Existem')."&nbsp;<font color='red'>".$linhas."&nbsp;".TRANS('OCO_OCORRENCIAS')."&nbsp;".
  				"".TRANS('OCO_PENDING')."</font>&nbsp;".TRANS('OCO_TO_USER','para o usuário')."&nbsp;".$_SESSION['s_usuario'].".</b></td></tr>";
 
 			print "<input type='hidden' name='chave' id='idChave' value='".$_SESSION['CHAVE']."'>";
-			print "<div id='idDivSessionPendentes' style='{display:none;}'></div>";
+			print "<div id='idDivSessionPendentes' style='display:none;'></div>";
 
 
 		} else {
@@ -466,23 +471,24 @@
 		}
 		//print "<TD  class='line' >";
 
-		
+
 		$style_chave = "";
 		if (isset($_SESSION['CHAVE'])){
 			$style_chave = $_SESSION['CHAVE'];
-		}		
+		}
 		print "<tr><td colspan='4'></td></tr>";
 		print "<tr><td colspan='4'><div id='Vinculados' style='".$style_chave."'>"; //style='{display:none}'	//style='{padding-left:5px;}'
 
 		print "<TABLE class='header_centro'  border-top: thin solid #999999;}' border='0' cellpadding='5' cellspacing='0' align='center' width='100%' bgcolor='".$cor."'>";
 		print "<TR class='header'>";
-			print "<TD  class='line' >".TRANS('OCO_NUMBER_BRIEF')."</TD><TD class='line' >".TRANS('OCO_PROB','Problema')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
-				"<TD  class='line'  WIDTH='250'>".TRANS('OCO_LOCAL')."</TD>".
-				"<TD  class='line' >".TRANS('OCO_STATUS')."</TD>".
-				"<TD  class='line' ><a title='".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."</a></TD>".
-				"<TD  class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
-				"<TD class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC','SOLUC.')."</a></TD>";
+			  print "<TD width='2%'  class='line' >".TRANS('OCO_NUMBER_BRIEF')."</TD>".
+				"<TD width='2%'  class='line' >".TRANS('OCO_PROB','Problema')."</TD>".
+				"<TD width='10%'  class='line' >".TRANS('OCO_CONTACT')."<BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
+				"<TD class='line'  WIDTH='250'>".TRANS('OCO_LOCAL')."</TD>".
+				"<TD width='5%' class='line' >".TRANS('OCO_STATUS')."</TD>".
+				"<TD width='2%' class='line' ><a title='".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."</a></TD>".
+				"<TD width='2%' class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
+				"<TD width='2%' class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC','SOLUC.')."</a></TD>";
 		print "</TR>";
         }
         $i=0;
@@ -524,9 +530,9 @@
 				}
 			}
 			if ($comDeps) {
-				$imgSub = "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'></a>";
+				$imgSub = "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com vínculos pendentes'></a>";
 			} else
-				$imgSub =  "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'></a>";
+				$imgSub =  "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem pendências'></a>";
 		} else
 			$imgSub = "";
 
@@ -539,7 +545,7 @@
 			$texto = substr($texto,0,195)." ..... ";
 		};
 		//print $texto;
-	        print "<a class='no' href='mostra_consulta.php?numero=".$rowAT['numero']."'>".$texto."</a>";
+		print "<a class='no' href='mostra_consulta.php?numero=".$rowAT['numero']."'\">".$texto."</a>";
 	        print "</TD>";
             	print "<TD  class='line'  ".$valign.">".$rowAT['chamado_status']."</TD>";
 
@@ -590,8 +596,8 @@
 			$imgSlaS = 'checked.png';
 		//-----------------------------------------------------
 
-		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
-		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
+		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup_jquery('../../includes/help/sla_popup.php?sla=r',250,500)\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
+		print "<TD  class='line'  ".$valign." align='center'><a onClick=\"javascript:popup_jquery('../../includes/help/sla_popup.php?sla=s',200,500)\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
 
 		print "</TR>";
 	        $i++;
@@ -835,21 +841,21 @@
         //print "</TD>";
 
         print "<TD  class='line' >";
-        print "<TABLE class='header_centro' STYLE='{border-top: thin solid #999999;}' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
+        print "<TABLE class='header_centro' STYLE='border-top: thin solid #999999;' border='0' cellpadding='2' cellspacing='0' align='center' width='100%'>";  //cellpadding='2' cellspacing='0'
 
 
 	//FILA DE CHAMADOS
-        print "<TR class='header'>";
-        print "<TD  class='line'  nowrap>".TRANS('OCO_NUMBER_BRIEF','N.º')."&nbsp;/&nbsp;<a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=AREA')\" title='Ordena por Área de atendimento'>".TRANS('OCO_AREA','Área')."".$ICON_ORDER_AREA."</a></TD>".
-        	"<TD  class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PROB')\" title='Ordena por tipo de problema'>".TRANS('OCO_PROB')."".$ICON_ORDER_PROB."</a></TD>".
-        	"<TD  class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=CONTATO')\" title='Ordena pelo contato'>".TRANS('OCO_CONTACT')."".$ICON_ORDER_CONTATO."</a><BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
-        	"<TD  class='line' WIDTH=250><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=LOCAL')\" title='Ordena por Localização'>".TRANS('OCO_LOCAL')."".$ICON_ORDER_LOCAL."</a><br>".TRANS('OCO_DESC')."</TD>".
-        	"<TD  class='line' nowrap><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=DATA')\" title='Order by ".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."".$ICON_ORDER_DATA."</a></TD>".
+          print "<TR class='header'>";
+          print "<TD width='10%' class='line'  nowrap>".TRANS('OCO_NUMBER_BRIEF','N.º')."&nbsp;/&nbsp;<a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=AREA')\" title='Ordena por Área de atendimento'>".TRANS('OCO_AREA','Área')."".$ICON_ORDER_AREA."</a></TD>".
+        	"<TD width='10%' class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PROB')\" title='Ordena por tipo de problema'>".TRANS('OCO_PROB')."".$ICON_ORDER_PROB."</a></TD>".
+        	"<TD width='10%' class='line' ><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=CONTATO')\" title='Ordena pelo contato'>".TRANS('OCO_CONTACT')."".$ICON_ORDER_CONTATO."</a><BR>".TRANS('OCO_PHONE','Ramal')."</TD>".
+        	"<TD width='50%' class='line' WIDTH=250><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=LOCAL')\" title='Ordena por Localização'>".TRANS('OCO_LOCAL')."".$ICON_ORDER_LOCAL."</a><br>".TRANS('OCO_DESC')."</TD>".
+        	"<TD width='15%' class='line' nowrap><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=DATA')\" title='Order by ".TRANS('HNT_VALID_TIME')."'>".TRANS('OCO_VALID_TIME')."".$ICON_ORDER_DATA."</a></TD>".
         	//<td class='line'>Ação</TD>
         	//"<TD  class='line' nowrap><a title='".TRANS('HNT_PRIORITY')."' onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PRIOR')\">".TRANS('P')."".$ICON_ORDER_PRIOR."</a></TD>".
-        	"<TD  class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PRIOR')\" title='Ordena por ".TRANS('HNT_PRIORITY')."'>".TRANS('P')."".$ICON_ORDER_PRIOR."</a></TD>".
-        	"<TD  class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
-        	"<TD  class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC')."</a></TD>";
+        	"<TD width='2%' class='line'><a onClick=\"redirect('".$_SERVER['PHP_SELF']."?&ORDERBY=PRIOR')\" title='Ordena por ".TRANS('HNT_PRIORITY')."'>".TRANS('P')."".$ICON_ORDER_PRIOR."</a></TD>".
+        	"<TD width='2%' class='line' ><a title='".TRANS('HNT_RESPONSE_TIME')."'>".TRANS('OCO_RESPONSE')."</a></TD>".
+        	"<TD width='2%' class='line' ><a title='".TRANS('HNT_SOLUTION_TIME')."'>".TRANS('OCO_SOLUC')."</a></TD>";
         print "</TR>";
         $i=0;
         $j=2;
@@ -884,9 +890,9 @@
 				}
 			}
 			if ($comDeps) {
-				$imgSub = "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com restrições para encerramento'></a>";
+				$imgSub = "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php',300,400)\"><img src='".ICONS_PATH."view_tree_red.png' width='16' height='16' title='Chamado com restrições para encerramento'></a>";
 			} else
-				$imgSub =  "<a onClick=\"javascript:popup('../../includes/help/help_depends.php')\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem restrições de encerramento'></a>";
+				$imgSub =  "<a onClick=\"javascript:popup_jquery('../../includes/help/help_depends.php',300,400)\"><img src='".ICONS_PATH."view_tree_green.png' width='16' height='16' title='Chamado com vínculos mas sem restrições de encerramento'></a>";
 		} else
 			$imgSub = "";
 
@@ -899,18 +905,17 @@
 			$linkImg = "<a onClick=\"javascript:popup_wide('listFiles.php?COD=".$row['numero']."')\"><img src='../../includes/icons/attach2.png'></a>";
 		} else $linkImg = "";
 
-		
-		
-		
+
+
 		print "<TD  class='line'  ".$valign."><b><a href='mostra_consulta.php?numero=".$row['numero']."'>".$row['numero']."</a></b>".$imgSub."<br>".($row['area']==''?'&nbsp;':$row['area'])."</td>";
-		
+
 		print "<TD  class='line'  ".$valign.">".$linkImg."&nbsp;".($row['problema']==''?'&nbsp;':$row['problema'])."</td>";
 		print "<TD  class='line'  ".$valign."><b>".$row['contato']."</b><br>".$row['telefone']."</td>";
 
-		$limite = 150;
+		$limite = 100;
 		$texto = trim($row['descricao']);
 
-		$hnt = " title='Clique aqui para ver os detalhes do chamado!'";
+//		$hnt = " title='Clique aqui para ver os detalhes do chamado!'";
 		if ((strlen(toHtml($texto))>$limite) || (strlen($texto) > $limite) ){
 			$hnt = "";
 
@@ -919,8 +924,8 @@
 				$hnt.=trim($arrayHNT[$i]);
 			}
 			$hnt = noHtml($hnt);
-			//$texto = substr($texto,0,($limite-4))."<a href='#' onmousemove=\"showToolTip(event,'".$hnt."', 'bubble_tooltip', 'bubble_tooltip_content'); return false\" onmouseout=\"hideToolTip('bubble_tooltip')\"> ...</a> ";
-			$texto = substr($texto,0,($limite-4))."...";
+			$texto = substr($texto,0,($limite-4))."<a href='#' onmousemove=\"showToolTip(event,'".$hnt."', 'bubble_tooltip', 'bubble_tooltip_content'); return false\" onmouseout=\"hideToolTip('bubble_tooltip')\"> ...</a> ";
+//			$texto = substr($texto,0,($limite-4))."...";
 			$hnt = "onmousemove=\"showToolTip(event,'".$hnt."', 'bubble_tooltip', 'bubble_tooltip_content'); return false\" onmouseout=\"hideToolTip('bubble_tooltip')\"";
 		};
 		print "<TD  class='line'  ".$valign."><b>".$row['setor']."</b><br><a class='no' href='mostra_consulta.php?numero=".$row['numero']."' ".$hnt.">".$texto."</a></td>";
@@ -938,7 +943,7 @@
 		if ($sep[0]>20) { //Se o chamado estiver aberto a mais de 20 dias o tempo é mostrado em dias para não ficar muito pesado.
 			$imgSlaR = 'checked.png';
 			$imgSlaS = 'checked.png';
-			print "<TD  class='line'  ".$valign."><font color='red'><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\">".$sep[0]." dias</a></font>".
+			print "<TD  class='line'  ".$valign."><font color='red'><a onClick=\"javascript:popup_jquery('mostra_hist_status.php?popup=true&numero=".$row['numero']."',300,400)\">".$sep[0]." dias</a></font>".
 					"<br>".$row['chamado_status']."</TD>";
 		} else {
 
@@ -971,7 +976,7 @@
 			} else
 				$imgSlaS = 'checked.png';
 
-			print "<TD  class='line'  ".$valign."><a onClick=\"javascript:popup('mostra_hist_status.php?popup=true&numero=".$row['numero']."')\">".$dt->tValido."</a>".
+			print "<TD  class='line'  ".$valign."><a onClick=\"javascript:popup_jquery('mostra_hist_status.php?popup=true&numero=".$row['numero']."',300,400)\">".$dt->tValido."</a>".
 				"<br>".$row['chamado_status']."</TD>";
 		}
 
@@ -985,13 +990,13 @@
 			$COR = $row['cor'];
 		}
 		//style='{background-color:".$row['pr_color'].";}';
-		print "<TD  class='line' ".$valign." align='center'><input type='text' class='quadro' disabled style='{background-color:".$COR.";}';></TD>";
+		print "<TD  class='line' ".$valign." align='center'><input type='text' class='quadro' disabled style='background-color:".$COR.";';></TD>";
 
-		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=r')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
-		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup('../../includes/help/sla_popup.php?sla=s')\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
+		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup_jquery('../../includes/help/sla_popup.php?sla=r',200,500)\"><img height='14' width='14' src='".$imgsPath."".$imgSlaR."'></a></TD>";
+		print "<TD  class='line' ".$valign." align='center'><a onClick=\"javascript:popup_jquery('../../includes/help/sla_popup.php?sla=s',200,500)\"><img height='14' width='14' src='".$imgsPath."".$imgSlaS."'></a></TD>";
 
 		echo "</TR>";
-		
+
             	$i++;
         }//while
 

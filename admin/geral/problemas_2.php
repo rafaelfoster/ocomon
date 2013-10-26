@@ -1,6 +1,8 @@
 <?php 
  /*                        Copyright 2005 Flávio Ribeiro
 
+
+
          This file is part of OCOMON.
 
          OCOMON is free software; you can redistribute it and/or modify
