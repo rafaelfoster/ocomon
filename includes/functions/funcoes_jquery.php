@@ -144,7 +144,7 @@
 						buttons: {
 							"instalar Complemento": function() {
 								$( this ).dialog( "close" );
-								var url = "http://" + window.location.hostname + "/public/downloads/html_desktop_notifications-1.0.7-fx.xpi";
+								var url = "http://" + window.location.hostname + "/public/downloads/tab_notifier-2.13-sm+fx-linux.xpi";
 								janela_popup = window.open(url,"Download - Complemento","location=1,status=1,scrollbars=1, width=100,height=100");
 							},
 							"Cancelar": function() {
