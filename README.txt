@@ -8,6 +8,9 @@
 #
 
 
+# Changelog
+https://github.com/rafeta124/ocomon/wiki/Changelog
+
 ATENÇÃO:
 =========
 
