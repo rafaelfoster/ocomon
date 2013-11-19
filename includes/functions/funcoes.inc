@@ -186,11 +186,18 @@
 		mysql_close($conexao);
 	}
 
-	function senha_system($user,$password,$tabela)
-	{
-		// $user = usuário para login, $senha = senha do usuário, $tabela = nome da tabela de usuários
-		$login = md5($password);
-		$query = "SELECT * from ".$tabela." where (login = '".$user."' and password = '".$login."')";
+function senha_system($user,$password,$tabela)
+{
+ //Tratamento do usuario
+ $user=strtr($user, "'", "*");
+ 
+//Tratamento da senha
+ $password=strtr($password, "'", "*");
+
+ // $user = usuário para login, $senha = senha do usuário, $tabela = nome da tabela de usuários
+ $login = md5($password);
+
+ $query = "SELECT * FROM ".$tabela." WHERE (login = '".$user."' and password = '".$login."')";
 
 		$resultado = mysql_query($query) or die(mysql_error());
 		if ($resultado == 0)
@@ -210,10 +217,17 @@
 	}
 
 	function senha_ldap($user,$password,$tabela)
-	{
-		// $user = usuário para login, $senha = senha do usuário, $tabela = nome da tabela de usuários
-		$login = md5($password);
-		$query = "SELECT * from $tabela where (login = '$user')";
+{
+ //Tratamento do usuario
+ $user=strtr($user, "'", "*");
+ 
+//Tratamento da senha
+ $password=strtr($password, "'", "*");
+
+ // $user = usuário para login, $senha = senha do usuário, $tabela = nome da tabela de usuários
+ $login = md5($password);
+ 
+$query = "SELECT * FROM ".$tabela." WHERE (login = '".$user."')";
 
 		$resultado = mysql_query($query) or die(mysql_error());
 		if ($resultado == 0)
