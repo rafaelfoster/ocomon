@@ -1,3 +1,4 @@
 *.old
 *.working
 *.default
+/nbproject/private/
