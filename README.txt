@@ -9,10 +9,10 @@
 
 
 # Changelog
-https://github.com/rafeta124/ocomon/wiki/Changelog
+https://github.com/rafaelfoster/ocomon/wiki/Changelog
 
 # Tasklist
-https://github.com/rafeta124/ocomon/wiki/Tasklist
+https://github.com/rafaelfoster/ocomon/wiki/Tasklist
 
 ATENÇÃO:
 =========
@@ -159,7 +159,7 @@ Toda a documentação do OcoMon está disponível no site do projeto:
 
 - Fórum: http://sourceforge.net/p/ocomonphp/feature-requests/
 
-- GitHub: https://github.com/rafeta124/ocomon
+- GitHub: https://github.com/rafaelfoster/ocomon
 
 
 Espero que esse sistema lhe seja útil e lhe ajude no seu gerenciamento de suporte e equipamentos de informática
